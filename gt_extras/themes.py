@@ -115,3 +115,61 @@ def gt_theme_nytimes(gt: GT) -> GT:
         )
     )
     return gt_themed
+
+
+def gt_theme_guardian(gt: GT) -> GT:
+    gt_themed = (
+        gt.opt_table_font(font=[google_font("Noto Sans")])
+        .tab_style(
+            style=style.borders(sides="top", color="white", weight="0px"),
+
+            # A place we might see a difference from R – I've tested it and it should work the same
+            locations=loc.body(rows=0),
+        )
+        .tab_style(
+            style=style.text(color="#005689", size="22px", weight=700),
+            locations=loc.title(),
+        )
+        .tab_style(
+            style=style.text(color="#005689", size="16px", weight=700),
+            locations=loc.subtitle(),
+        )
+        .tab_options(
+            row_striping_include_table_body=True,
+            table_background_color="#f6f6f6",
+            row_striping_background_color="#ececec",
+            column_labels_background_color="#f6f6f6",
+            column_labels_font_weight="bold",
+            table_border_top_width="1px",
+            table_border_top_color="#40c5ff",
+            table_border_bottom_width="3px",
+            table_border_bottom_color="white",
+            source_notes_border_bottom_width="0px",
+            table_body_border_bottom_width="3px",
+            table_body_border_bottom_color="white",
+            table_body_hlines_width="white",
+            table_body_hlines_color="white",
+            row_group_border_top_width="1px",
+            row_group_border_top_color="grey",
+            row_group_border_bottom_width="1px",
+            row_group_border_bottom_color="grey",
+            row_group_font_weight="bold",
+            column_labels_border_top_width="1px",
+            
+            # Slight modification from the R version:
+            column_labels_border_top_color="#ececec" if gt._heading.title else "#40c5ff",
+            
+            column_labels_border_bottom_width="2px",
+            column_labels_border_bottom_color="#ececec",
+            heading_border_bottom_width="0px",
+            data_row_padding="4px",
+            source_notes_font_size="12px",
+            table_font_size="16px",
+            heading_align="left",
+        )
+
+        # this replaces footnotes_border_bottom_width="0px", because that functionality doesn't
+        # exist in the Python API
+        .tab_style(style=style.borders(sides="bottom", weight="0"), locations=loc.footer()) 
+    )
+    return gt_themed

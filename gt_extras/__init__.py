@@ -3,5 +3,6 @@
 from .themes import gt_theme_538
 from .themes import gt_theme_espn
 from .themes import gt_theme_nytimes
+from .themes import gt_theme_guardian
 
-__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_nytimes"]
+__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_nytimes", "gt_theme_guardian"]
