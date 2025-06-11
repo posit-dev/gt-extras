@@ -1,0 +1,7 @@
+``` {python}
+from gt_extras import x
+from great_tables import GT
+from polars import dataframe
+from great_tables import l
+x
+```
