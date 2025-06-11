@@ -65,10 +65,7 @@ def gt_theme_espn(gt: GT) -> GT:
         gt.opt_all_caps()
         .opt_table_font(font=google_font("Lato"), weight=400)
         .opt_row_striping()
-        .tab_style(
-            style=style.text(weight="bold"),
-            locations=loc.column_header()
-        )
+        .tab_style(style=style.text(weight="bold"), locations=loc.column_header())
         .tab_options(
             row_striping_background_color="#fafafa",
             table_body_hlines_color="#f6f7f7",
@@ -82,4 +79,39 @@ def gt_theme_espn(gt: GT) -> GT:
         )
     )
 
+    return gt_themed
+
+
+def gt_theme_nytimes(gt: GT) -> GT:
+    gt_themed = (
+        gt.tab_options(
+            heading_align="left",
+            column_labels_border_top_style="none",
+            table_border_top_style="none",
+            column_labels_border_bottom_style="none",
+            column_labels_border_bottom_width="1px",
+            column_labels_border_bottom_color="#334422",
+            table_body_border_top_style="none",
+            table_body_border_bottom_color="white",
+            heading_border_bottom_style="none",
+            data_row_padding="7px",
+            column_labels_font_size="12px",
+        )
+        .tab_style(
+            style=style.text(
+                color="darkgrey",
+                font=google_font("Source Sans Pro"),
+                transform="uppercase",
+            ),
+            locations=[loc.column_labels(), loc.stubhead()],
+        )
+        .tab_style(
+            style=style.text(font=google_font("Libre Franklin"), weight=800),
+            locations=loc.title(),
+        )
+        .tab_style(
+            style=style.text(font=google_font("Source Sans Pro"), weight=400),
+            locations=loc.body(),
+        )
+    )
     return gt_themed
