@@ -6,7 +6,6 @@ __all__ = ["gt_theme_538"]
 
 
 def gt_theme_538(gt: GT) -> GT:
-
     gt_themed = (
         gt.opt_table_font(font=google_font("Cairo"), weight=400)
         .tab_style(
@@ -60,3 +59,27 @@ def gt_theme_538(gt: GT) -> GT:
 
     return gt_themed
 
+
+def gt_theme_espn(gt: GT) -> GT:
+    gt_themed = (
+        gt.opt_all_caps()
+        .opt_table_font(font=google_font("Lato"), weight=400)
+        .opt_row_striping()
+        .tab_style(
+            style=style.text(weight="bold"),
+            locations=loc.column_header()
+        )
+        .tab_options(
+            row_striping_background_color="#fafafa",
+            table_body_hlines_color="#f6f7f7",
+            source_notes_font_size="12px",
+            table_font_size="16px",
+            heading_align="left",
+            heading_title_font_size="24px",
+            table_border_top_color="white",
+            table_border_top_width="3px",
+            data_row_padding="7px",
+        )
+    )
+
+    return gt_themed
