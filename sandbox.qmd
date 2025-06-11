@@ -1,7 +1,15 @@
 ``` {python}
-from gt_extras import x
-from great_tables import GT
-from polars import dataframe
-from great_tables import l
-x
+from great_tables import GT, exibble
+
+# from polars import dataframe
+import gt_extras as gte
+
+gt = GT(exibble)
+# gte.gt_theme_538(gt).show("browser")
+(
+    GT(exibble)
+    .pipe(gte.gt_theme_538)
+    .pipe(gte.gt_theme_538)
+)
+
 ```
