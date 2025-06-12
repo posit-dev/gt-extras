@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes"]
+__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes", "gt_theme_excel"]
 
 def gt_theme_538(gt: GT) -> GT:
     gt_themed = (
@@ -58,7 +58,6 @@ def gt_theme_538(gt: GT) -> GT:
 
     return gt_themed
 
-
 def gt_theme_espn(gt: GT) -> GT:
     gt_themed = (
         gt.opt_all_caps()
@@ -79,7 +78,6 @@ def gt_theme_espn(gt: GT) -> GT:
     )
 
     return gt_themed
-
 
 def gt_theme_nytimes(gt: GT) -> GT:
     gt_themed = (
@@ -114,7 +112,6 @@ def gt_theme_nytimes(gt: GT) -> GT:
         )
     )
     return gt_themed
-
 
 def gt_theme_guardian(gt: GT) -> GT:
     gt_themed = (
@@ -172,3 +169,82 @@ def gt_theme_guardian(gt: GT) -> GT:
         .tab_style(style=style.borders(sides="bottom", style="hidden"), locations=loc.footer()) 
     )
     return gt_themed
+
+def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
+    # n_cols = len(gt._tbl_data.columns)
+    # n_rows = len(gt._tbl_data.rows)
+
+    gt_themed = (
+        gt.opt_row_striping()
+        .tab_style(
+            style=style.borders(sides="all", weight="1px", color="black"),
+            locations=loc.body(),
+        )
+
+        # .tab_style(
+        #     style=style.borders(sides="left", weight="2px", color="black"),
+        #     locations=[
+        #         loc.body(columns=0),
+        #         loc.column_labels(columns=0),
+        #         loc.stub()
+        #     ],
+        # )
+
+        # .tab_style(
+        #     style=style.borders(sides="left", weight="1px", color="black"),
+        #     locations=loc.row_groups(),
+        # )
+
+        # .tab_style(
+        #     style=style.borders(sides="right", weight="2px", color="black"),
+        #     locations=[
+        #         loc.body(columns=n_cols - 1),
+        #         loc.column_labels(columns=n_cols - 1),
+        #         loc.row_groups()
+        #     ],
+        # )
+
+        # .tab_style(
+        #     style=style.borders(sides="bottom", weight="2px", color="black"),
+        #     locations=[
+        #         loc.body(rows=n_rows - 1),
+        #         loc.stub(rows=n_rows - 1)
+        #     ],
+        # )
+        .opt_table_font(font="Calibri")
+        .tab_options(
+            heading_align="left",
+            heading_border_bottom_color="black",
+            column_labels_background_color="black",
+            column_labels_font_weight="bold",
+            stub_background_color="white",
+            stub_border_color="black",
+            row_group_background_color="white",
+            row_group_border_top_color="black",
+            row_group_border_bottom_color="black",
+            row_group_border_left_color="black",
+            row_group_border_right_color="black",
+            row_group_border_left_width="1px",
+            row_group_border_right_width="1px",
+            column_labels_font_size="85%",
+            column_labels_border_top_style="none",
+            column_labels_border_bottom_color="black",
+            column_labels_border_bottom_width="2px",
+            table_border_left_color="black",
+            table_border_left_style="solid",
+            table_border_right_style="solid",
+            table_border_left_width="2px",
+            table_border_right_width="2px",
+            table_border_right_color="black",
+            table_border_bottom_width="2px",
+            table_border_bottom_color="black",
+            table_border_top_width="2px",
+            table_border_top_color="black",
+            row_striping_background_color=color,
+            table_body_hlines_color="black",
+            table_body_vlines_color="black",
+            data_row_padding="1px",
+        )
+    )
+    return gt_themed
+
