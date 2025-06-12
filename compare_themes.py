@@ -4,15 +4,16 @@ import gt_extras as gte
 import os
 import subprocess
 
-mtcars_url = "https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv"
-mtcars = pd.read_csv(mtcars_url)
-mtcars_head = mtcars.head(6)
 theme_fns = [
     gte.gt_theme_guardian,
     gte.gt_theme_538,
     gte.gt_theme_espn,
     gte.gt_theme_nytimes,
 ]
+
+mtcars_url = "https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv"
+mtcars = pd.read_csv(mtcars_url)
+mtcars_head = mtcars.head(6)
 
 python_tables = []
 r_tables = []
@@ -67,7 +68,6 @@ for (theme_name, py_html), (_, r_html) in zip(python_tables, r_tables):
             {r_html}
         </div>
     </div>
-    <hr>
     """
 
 combined_html = f"""
