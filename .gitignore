@@ -116,4 +116,6 @@ latex_testing.pdf
 latex_examples.qmd
 latex_examples.pdf
 
+# misc files for debugging
 sandbox.qmd
+compare_tables.html
