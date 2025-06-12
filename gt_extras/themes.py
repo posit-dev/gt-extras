@@ -121,8 +121,8 @@ def gt_theme_guardian(gt: GT) -> GT:
     gt_themed = (
         gt.opt_table_font(font=[google_font("Noto Sans")])
         .tab_style(
-            style=style.borders(sides="top", color="white", weight="0px"),
-
+            ## style hidden or weight 0px?
+            style=style.borders(sides="top", color="white", style="hidden"),
             # A place we might see a difference from R – I've tested it and it should work the same
             locations=loc.body(rows=0),
         )
