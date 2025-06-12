@@ -38,7 +38,8 @@ dev = [
     "pyarrow",
     "pytest>=3",
     "pytest-cov",
-    "syrupy"
+    "syrupy",
+    "ipykernel>=6.29.5",
 ]
 
 

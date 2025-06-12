@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-__all__ = ["gt_theme_538"]
-
+__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes"]
 
 def gt_theme_538(gt: GT) -> GT:
     gt_themed = (
