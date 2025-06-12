@@ -1,0 +1,2908 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Python vs R Table Theme Comparison</title>
+    <style>
+        .container {
+            display: flex;
+            gap: 5px;
+        }
+        .table-block {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python vs R Table Theme Comparison</h1>
+    
+    <div class="container">
+        <div class="table-block">
+            <h2>Python: gt_theme_guardian</h2>
+            <div id="hehacszwjg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+#hehacszwjg table {
+          font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#hehacszwjg thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#hehacszwjg p { margin: 0; padding: 0; }
+ #hehacszwjg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #f6f6f6; width: auto; border-top-style: solid; border-top-width: 1px; border-top-color: #40c5ff; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #hehacszwjg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #hehacszwjg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #f6f6f6; border-bottom-width: 0; }
+ #hehacszwjg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #f6f6f6; border-top-width: 0; }
+ #hehacszwjg .gt_heading { background-color: #f6f6f6; text-align: left; border-bottom-color: #f6f6f6; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hehacszwjg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 0px; border-bottom-color: #D3D3D3; }
+ #hehacszwjg .gt_col_headings { border-top-style: solid; border-top-width: 1px; border-top-color: #ececec; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hehacszwjg .gt_col_heading { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #hehacszwjg .gt_column_spanner_outer { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #hehacszwjg .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #hehacszwjg .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #hehacszwjg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #hehacszwjg .gt_spanner_row { border-bottom-style: hidden; }
+ #hehacszwjg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #hehacszwjg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; vertical-align: middle; }
+ #hehacszwjg .gt_from_md> :first-child { margin-top: 0; }
+ #hehacszwjg .gt_from_md> :last-child { margin-bottom: 0; }
+ #hehacszwjg .gt_row { padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: white; border-top-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #hehacszwjg .gt_stub { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #hehacszwjg .gt_stub_row_group { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #hehacszwjg .gt_row_group_first td { border-top-width: 1px; }
+ #hehacszwjg .gt_row_group_first th { border-top-width: 1px; }
+ #hehacszwjg .gt_striped { background-color: #ececec; }
+ #hehacszwjg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; }
+ #hehacszwjg .gt_sourcenotes { color: #333333; background-color: #f6f6f6; border-bottom-style: none; border-bottom-width: 0px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #hehacszwjg .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #hehacszwjg .gt_left { text-align: left; }
+ #hehacszwjg .gt_center { text-align: center; }
+ #hehacszwjg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #hehacszwjg .gt_font_normal { font-weight: normal; }
+ #hehacszwjg .gt_font_bold { font-weight: bold; }
+ #hehacszwjg .gt_font_italic { font-style: italic; }
+ #hehacszwjg .gt_super { font-size: 65%; }
+ #hehacszwjg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #hehacszwjg .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_title gt_font_normal" style="color: #005689;font-size: 22px;font-weight: 700;">Theme: gt_theme_guardian</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">21.0</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">6</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">160.0</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">110</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">3.9</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">2.62</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">16.46</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">0</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">1</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">4</td>
+    <td style="border-top: 1px hidden white;" class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">21.0</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">160.0</td>
+    <td class="gt_row gt_right gt_striped">110</td>
+    <td class="gt_row gt_right gt_striped">3.9</td>
+    <td class="gt_row gt_right gt_striped">2.875</td>
+    <td class="gt_row gt_right gt_striped">17.02</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">4</td>
+    <td class="gt_row gt_right gt_striped">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">22.8</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">108.0</td>
+    <td class="gt_row gt_right">93</td>
+    <td class="gt_row gt_right">3.85</td>
+    <td class="gt_row gt_right">2.32</td>
+    <td class="gt_row gt_right">18.61</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">21.4</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">258.0</td>
+    <td class="gt_row gt_right gt_striped">110</td>
+    <td class="gt_row gt_right gt_striped">3.08</td>
+    <td class="gt_row gt_right gt_striped">3.215</td>
+    <td class="gt_row gt_right gt_striped">19.44</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">3</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">18.7</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">360.0</td>
+    <td class="gt_row gt_right">175</td>
+    <td class="gt_row gt_right">3.15</td>
+    <td class="gt_row gt_right">3.44</td>
+    <td class="gt_row gt_right">17.02</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">2</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">18.1</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">225.0</td>
+    <td class="gt_row gt_right gt_striped">105</td>
+    <td class="gt_row gt_right gt_striped">2.76</td>
+    <td class="gt_row gt_right gt_striped">3.46</td>
+    <td class="gt_row gt_right gt_striped">20.22</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">3</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+        </div>
+        <div class="table-block">
+            <h2>R: gt_theme_guardian</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+
+</head>
+<body>
+<div id="nlinfscntd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+  <style>@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#nlinfscntd table {
+  font-family: 'Noto Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nlinfscntd thead, #nlinfscntd tbody, #nlinfscntd tfoot, #nlinfscntd tr, #nlinfscntd td, #nlinfscntd th {
+  border-style: none;
+}
+
+#nlinfscntd p {
+  margin: 0;
+  padding: 0;
+}
+
+#nlinfscntd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #F6F6F6;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #40C5FF;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nlinfscntd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #F6F6F6;
+  border-bottom-width: 0;
+}
+
+#nlinfscntd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #F6F6F6;
+  border-top-width: 0;
+}
+
+#nlinfscntd .gt_heading {
+  background-color: #F6F6F6;
+  text-align: left;
+  border-bottom-color: #F6F6F6;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #ECECEC;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #ECECEC;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_col_heading {
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nlinfscntd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nlinfscntd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nlinfscntd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nlinfscntd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #ECECEC;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nlinfscntd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nlinfscntd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #BEBEBE;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #BEBEBE;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nlinfscntd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: bold;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #BEBEBE;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #BEBEBE;
+  vertical-align: middle;
+}
+
+#nlinfscntd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nlinfscntd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nlinfscntd .gt_row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: white;
+  border-top-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nlinfscntd .gt_stub {
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nlinfscntd .gt_stub_row_group {
+  color: #333333;
+  background-color: #F6F6F6;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nlinfscntd .gt_row_group_first td {
+  border-top-width: 1px;
+}
+
+#nlinfscntd .gt_row_group_first th {
+  border-top-width: 1px;
+}
+
+#nlinfscntd .gt_summary_row {
+  color: #333333;
+  background-color: #F6F6F6;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nlinfscntd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nlinfscntd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #F6F6F6;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nlinfscntd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_striped {
+  background-color: #ECECEC;
+}
+
+#nlinfscntd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #FFFFFF;
+}
+
+#nlinfscntd .gt_footnotes {
+  color: #333333;
+  background-color: #F6F6F6;
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nlinfscntd .gt_sourcenotes {
+  color: #333333;
+  background-color: #F6F6F6;
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nlinfscntd .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nlinfscntd .gt_left {
+  text-align: left;
+}
+
+#nlinfscntd .gt_center {
+  text-align: center;
+}
+
+#nlinfscntd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nlinfscntd .gt_font_normal {
+  font-weight: normal;
+}
+
+#nlinfscntd .gt_font_bold {
+  font-weight: bold;
+}
+
+#nlinfscntd .gt_font_italic {
+  font-style: italic;
+}
+
+#nlinfscntd .gt_super {
+  font-size: 65%;
+}
+
+#nlinfscntd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nlinfscntd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nlinfscntd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nlinfscntd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nlinfscntd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nlinfscntd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nlinfscntd .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#nlinfscntd .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#nlinfscntd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="color: #005689; font-size: 22px; font-weight: 700;">Theme: gt_theme_guardian</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="mpg" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">21.0</td>
+<td headers="cyl" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">6</td>
+<td headers="disp" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">160</td>
+<td headers="hp" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">110</td>
+<td headers="drat" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">3.90</td>
+<td headers="wt" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">2.620</td>
+<td headers="qsec" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">16.46</td>
+<td headers="vs" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">0</td>
+<td headers="am" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">1</td>
+<td headers="gear" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">4</td>
+<td headers="carb" class="gt_row gt_right" style="border-top-width: 0px; border-top-style: solid; border-top-color: white;">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">21.0</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">160</td>
+<td headers="hp" class="gt_row gt_right gt_striped">110</td>
+<td headers="drat" class="gt_row gt_right gt_striped">3.90</td>
+<td headers="wt" class="gt_row gt_right gt_striped">2.875</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">17.02</td>
+<td headers="vs" class="gt_row gt_right gt_striped">0</td>
+<td headers="am" class="gt_row gt_right gt_striped">1</td>
+<td headers="gear" class="gt_row gt_right gt_striped">4</td>
+<td headers="carb" class="gt_row gt_right gt_striped">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="disp" class="gt_row gt_right">108</td>
+<td headers="hp" class="gt_row gt_right">93</td>
+<td headers="drat" class="gt_row gt_right">3.85</td>
+<td headers="wt" class="gt_row gt_right">2.320</td>
+<td headers="qsec" class="gt_row gt_right">18.61</td>
+<td headers="vs" class="gt_row gt_right">1</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">21.4</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">258</td>
+<td headers="hp" class="gt_row gt_right gt_striped">110</td>
+<td headers="drat" class="gt_row gt_right gt_striped">3.08</td>
+<td headers="wt" class="gt_row gt_right gt_striped">3.215</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">19.44</td>
+<td headers="vs" class="gt_row gt_right gt_striped">1</td>
+<td headers="am" class="gt_row gt_right gt_striped">0</td>
+<td headers="gear" class="gt_row gt_right gt_striped">3</td>
+<td headers="carb" class="gt_row gt_right gt_striped">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+<td headers="cyl" class="gt_row gt_right">8</td>
+<td headers="disp" class="gt_row gt_right">360</td>
+<td headers="hp" class="gt_row gt_right">175</td>
+<td headers="drat" class="gt_row gt_right">3.15</td>
+<td headers="wt" class="gt_row gt_right">3.440</td>
+<td headers="qsec" class="gt_row gt_right">17.02</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">0</td>
+<td headers="gear" class="gt_row gt_right">3</td>
+<td headers="carb" class="gt_row gt_right">2</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">18.1</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">225</td>
+<td headers="hp" class="gt_row gt_right gt_striped">105</td>
+<td headers="drat" class="gt_row gt_right gt_striped">2.76</td>
+<td headers="wt" class="gt_row gt_right gt_striped">3.460</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">20.22</td>
+<td headers="vs" class="gt_row gt_right gt_striped">1</td>
+<td headers="am" class="gt_row gt_right gt_striped">0</td>
+<td headers="gear" class="gt_row gt_right gt_striped">3</td>
+<td headers="carb" class="gt_row gt_right gt_striped">1</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</body>
+</html>
+
+        </div>
+    </div>
+    <hr>
+    
+    <div class="container">
+        <div class="table-block">
+            <h2>Python: gt_theme_538</h2>
+            <div id="vguwcmrjcc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chivo&display=swap');
+#vguwcmrjcc table {
+          font-family: Cairo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#vguwcmrjcc thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#vguwcmrjcc p { margin: 0; padding: 0; }
+ #vguwcmrjcc .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: 400; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: none; border-top-width: 3px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #vguwcmrjcc .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #vguwcmrjcc .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #vguwcmrjcc .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #vguwcmrjcc .gt_heading { background-color: #FFFFFF; text-align: left; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #vguwcmrjcc .gt_bottom_border { border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #vguwcmrjcc .gt_col_headings { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: black; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #vguwcmrjcc .gt_col_heading { color: #333333; background-color: white; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #vguwcmrjcc .gt_column_spanner_outer { color: #333333; background-color: white; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #vguwcmrjcc .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #vguwcmrjcc .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #vguwcmrjcc .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: black; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #vguwcmrjcc .gt_spanner_row { border-bottom-style: hidden; }
+ #vguwcmrjcc .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: none; border-top-width: 2px; border-top-color: black; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #vguwcmrjcc .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: none; border-top-width: 2px; border-top-color: black; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: white; vertical-align: middle; }
+ #vguwcmrjcc .gt_from_md> :first-child { margin-top: 0; }
+ #vguwcmrjcc .gt_from_md> :last-child { margin-bottom: 0; }
+ #vguwcmrjcc .gt_row { padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #vguwcmrjcc .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 0px; border-right-color: white; padding-left: 5px; padding-right: 5px; }
+ #vguwcmrjcc .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #vguwcmrjcc .gt_row_group_first td { border-top-width: 2px; }
+ #vguwcmrjcc .gt_row_group_first th { border-top-width: 2px; }
+ #vguwcmrjcc .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #vguwcmrjcc .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #vguwcmrjcc .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #vguwcmrjcc .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #vguwcmrjcc .gt_left { text-align: left; }
+ #vguwcmrjcc .gt_center { text-align: center; }
+ #vguwcmrjcc .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #vguwcmrjcc .gt_font_normal { font-weight: normal; }
+ #vguwcmrjcc .gt_font_bold { font-weight: bold; }
+ #vguwcmrjcc .gt_font_italic { font-style: italic; }
+ #vguwcmrjcc .gt_super { font-size: 65%; }
+ #vguwcmrjcc .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #vguwcmrjcc .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_title gt_font_normal" style="font-family: Chivo;font-weight: 700;">Theme: gt_theme_538</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="mpg">mpg</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="cyl">cyl</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="disp">disp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="drat">drat</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="wt">wt</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="qsec">qsec</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="vs">vs</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="am">am</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="gear">gear</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="carb">carb</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">21.0</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">160.0</td>
+    <td class="gt_row gt_right">110</td>
+    <td class="gt_row gt_right">3.9</td>
+    <td class="gt_row gt_right">2.62</td>
+    <td class="gt_row gt_right">16.46</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">21.0</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">160.0</td>
+    <td class="gt_row gt_right">110</td>
+    <td class="gt_row gt_right">3.9</td>
+    <td class="gt_row gt_right">2.875</td>
+    <td class="gt_row gt_right">17.02</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">22.8</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">108.0</td>
+    <td class="gt_row gt_right">93</td>
+    <td class="gt_row gt_right">3.85</td>
+    <td class="gt_row gt_right">2.32</td>
+    <td class="gt_row gt_right">18.61</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">21.4</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">258.0</td>
+    <td class="gt_row gt_right">110</td>
+    <td class="gt_row gt_right">3.08</td>
+    <td class="gt_row gt_right">3.215</td>
+    <td class="gt_row gt_right">19.44</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">18.7</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">360.0</td>
+    <td class="gt_row gt_right">175</td>
+    <td class="gt_row gt_right">3.15</td>
+    <td class="gt_row gt_right">3.44</td>
+    <td class="gt_row gt_right">17.02</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">2</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">18.1</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">225.0</td>
+    <td class="gt_row gt_right">105</td>
+    <td class="gt_row gt_right">2.76</td>
+    <td class="gt_row gt_right">3.46</td>
+    <td class="gt_row gt_right">20.22</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">1</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+        </div>
+        <div class="table-block">
+            <h2>R: gt_theme_538</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+
+</head>
+<body>
+<div id="ginlfdtojk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+  <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#ginlfdtojk table {
+  font-family: Cairo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ginlfdtojk thead, #ginlfdtojk tbody, #ginlfdtojk tfoot, #ginlfdtojk tr, #ginlfdtojk td, #ginlfdtojk th {
+  border-style: none;
+}
+
+#ginlfdtojk p {
+  margin: 0;
+  padding: 0;
+}
+
+#ginlfdtojk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ginlfdtojk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ginlfdtojk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ginlfdtojk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ginlfdtojk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ginlfdtojk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ginlfdtojk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ginlfdtojk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ginlfdtojk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ginlfdtojk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ginlfdtojk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#ginlfdtojk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ginlfdtojk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ginlfdtojk .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ginlfdtojk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: #FFFFFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ginlfdtojk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ginlfdtojk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ginlfdtojk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ginlfdtojk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ginlfdtojk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ginlfdtojk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ginlfdtojk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ginlfdtojk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ginlfdtojk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ginlfdtojk .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ginlfdtojk .gt_left {
+  text-align: left;
+}
+
+#ginlfdtojk .gt_center {
+  text-align: center;
+}
+
+#ginlfdtojk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ginlfdtojk .gt_font_normal {
+  font-weight: normal;
+}
+
+#ginlfdtojk .gt_font_bold {
+  font-weight: bold;
+}
+
+#ginlfdtojk .gt_font_italic {
+  font-style: italic;
+}
+
+#ginlfdtojk .gt_super {
+  font-size: 65%;
+}
+
+#ginlfdtojk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ginlfdtojk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ginlfdtojk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ginlfdtojk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ginlfdtojk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ginlfdtojk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ginlfdtojk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ginlfdtojk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ginlfdtojk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+
+#ginlfdtojk tbody tr:last-child {
+  border-bottom: 2px solid #ffffff00;
+}
+</style>
+  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="font-family: Chivo; font-weight: 700;">Theme: gt_theme_538</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="mpg">mpg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="cyl">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="disp">disp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="hp">hp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="drat">drat</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="wt">wt</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="qsec">qsec</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="vs">vs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="am">am</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="gear">gear</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black; font-family: Chivo; font-size: 14px; vertical-align: bottom; font-weight: 200; text-transform: uppercase;" scope="col" id="carb">carb</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="disp" class="gt_row gt_right">160</td>
+<td headers="hp" class="gt_row gt_right">110</td>
+<td headers="drat" class="gt_row gt_right">3.90</td>
+<td headers="wt" class="gt_row gt_right">2.620</td>
+<td headers="qsec" class="gt_row gt_right">16.46</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="disp" class="gt_row gt_right">160</td>
+<td headers="hp" class="gt_row gt_right">110</td>
+<td headers="drat" class="gt_row gt_right">3.90</td>
+<td headers="wt" class="gt_row gt_right">2.875</td>
+<td headers="qsec" class="gt_row gt_right">17.02</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="disp" class="gt_row gt_right">108</td>
+<td headers="hp" class="gt_row gt_right">93</td>
+<td headers="drat" class="gt_row gt_right">3.85</td>
+<td headers="wt" class="gt_row gt_right">2.320</td>
+<td headers="qsec" class="gt_row gt_right">18.61</td>
+<td headers="vs" class="gt_row gt_right">1</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">21.4</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="disp" class="gt_row gt_right">258</td>
+<td headers="hp" class="gt_row gt_right">110</td>
+<td headers="drat" class="gt_row gt_right">3.08</td>
+<td headers="wt" class="gt_row gt_right">3.215</td>
+<td headers="qsec" class="gt_row gt_right">19.44</td>
+<td headers="vs" class="gt_row gt_right">1</td>
+<td headers="am" class="gt_row gt_right">0</td>
+<td headers="gear" class="gt_row gt_right">3</td>
+<td headers="carb" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+<td headers="cyl" class="gt_row gt_right">8</td>
+<td headers="disp" class="gt_row gt_right">360</td>
+<td headers="hp" class="gt_row gt_right">175</td>
+<td headers="drat" class="gt_row gt_right">3.15</td>
+<td headers="wt" class="gt_row gt_right">3.440</td>
+<td headers="qsec" class="gt_row gt_right">17.02</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">0</td>
+<td headers="gear" class="gt_row gt_right">3</td>
+<td headers="carb" class="gt_row gt_right">2</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">18.1</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="disp" class="gt_row gt_right">225</td>
+<td headers="hp" class="gt_row gt_right">105</td>
+<td headers="drat" class="gt_row gt_right">2.76</td>
+<td headers="wt" class="gt_row gt_right">3.460</td>
+<td headers="qsec" class="gt_row gt_right">20.22</td>
+<td headers="vs" class="gt_row gt_right">1</td>
+<td headers="am" class="gt_row gt_right">0</td>
+<td headers="gear" class="gt_row gt_right">3</td>
+<td headers="carb" class="gt_row gt_right">1</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</body>
+</html>
+
+        </div>
+    </div>
+    <hr>
+    
+    <div class="container">
+        <div class="table-block">
+            <h2>Python: gt_theme_espn</h2>
+            <div id="rppxpgognv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+#rppxpgognv table {
+          font-family: Lato, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#rppxpgognv thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#rppxpgognv p { margin: 0; padding: 0; }
+ #rppxpgognv .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: 400; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 3px; border-top-color: white; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #rppxpgognv .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #rppxpgognv .gt_title { color: #333333; font-size: 24px; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #rppxpgognv .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #rppxpgognv .gt_heading { background-color: #FFFFFF; text-align: left; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #rppxpgognv .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #rppxpgognv .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #rppxpgognv .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 80%; font-weight: 400; text-transform: uppercase; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #rppxpgognv .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 80%; font-weight: 400; text-transform: uppercase; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #rppxpgognv .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #rppxpgognv .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #rppxpgognv .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #rppxpgognv .gt_spanner_row { border-bottom-style: hidden; }
+ #rppxpgognv .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 80%; font-weight: bolder; text-transform: uppercase; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #rppxpgognv .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 80%; font-weight: bolder; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #rppxpgognv .gt_from_md> :first-child { margin-top: 0; }
+ #rppxpgognv .gt_from_md> :last-child { margin-bottom: 0; }
+ #rppxpgognv .gt_row { padding-top: 7px; padding-bottom: 7px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #f6f7f7; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #rppxpgognv .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 80%; font-weight: bolder; text-transform: uppercase; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #rppxpgognv .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #rppxpgognv .gt_row_group_first td { border-top-width: 2px; }
+ #rppxpgognv .gt_row_group_first th { border-top-width: 2px; }
+ #rppxpgognv .gt_striped { background-color: #fafafa; }
+ #rppxpgognv .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #rppxpgognv .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #rppxpgognv .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #rppxpgognv .gt_left { text-align: left; }
+ #rppxpgognv .gt_center { text-align: center; }
+ #rppxpgognv .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #rppxpgognv .gt_font_normal { font-weight: normal; }
+ #rppxpgognv .gt_font_bold { font-weight: bold; }
+ #rppxpgognv .gt_font_italic { font-style: italic; }
+ #rppxpgognv .gt_super { font-size: 65%; }
+ #rppxpgognv .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #rppxpgognv .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_title gt_font_normal">Theme: gt_theme_espn</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="mpg">mpg</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="cyl">cyl</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="disp">disp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="drat">drat</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="wt">wt</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="qsec">qsec</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="vs">vs</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="am">am</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="gear">gear</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-weight: bold;" scope="col" id="carb">carb</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">21.0</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">160.0</td>
+    <td class="gt_row gt_right">110</td>
+    <td class="gt_row gt_right">3.9</td>
+    <td class="gt_row gt_right">2.62</td>
+    <td class="gt_row gt_right">16.46</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">21.0</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">160.0</td>
+    <td class="gt_row gt_right gt_striped">110</td>
+    <td class="gt_row gt_right gt_striped">3.9</td>
+    <td class="gt_row gt_right gt_striped">2.875</td>
+    <td class="gt_row gt_right gt_striped">17.02</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">4</td>
+    <td class="gt_row gt_right gt_striped">4</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">22.8</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">108.0</td>
+    <td class="gt_row gt_right">93</td>
+    <td class="gt_row gt_right">3.85</td>
+    <td class="gt_row gt_right">2.32</td>
+    <td class="gt_row gt_right">18.61</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">21.4</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">258.0</td>
+    <td class="gt_row gt_right gt_striped">110</td>
+    <td class="gt_row gt_right gt_striped">3.08</td>
+    <td class="gt_row gt_right gt_striped">3.215</td>
+    <td class="gt_row gt_right gt_striped">19.44</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">3</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">18.7</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">360.0</td>
+    <td class="gt_row gt_right">175</td>
+    <td class="gt_row gt_right">3.15</td>
+    <td class="gt_row gt_right">3.44</td>
+    <td class="gt_row gt_right">17.02</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">2</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right gt_striped">18.1</td>
+    <td class="gt_row gt_right gt_striped">6</td>
+    <td class="gt_row gt_right gt_striped">225.0</td>
+    <td class="gt_row gt_right gt_striped">105</td>
+    <td class="gt_row gt_right gt_striped">2.76</td>
+    <td class="gt_row gt_right gt_striped">3.46</td>
+    <td class="gt_row gt_right gt_striped">20.22</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+    <td class="gt_row gt_right gt_striped">0</td>
+    <td class="gt_row gt_right gt_striped">3</td>
+    <td class="gt_row gt_right gt_striped">1</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+        </div>
+        <div class="table-block">
+            <h2>R: gt_theme_espn</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+
+</head>
+<body>
+<div id="ojwnazkvix" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+  <style>@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#ojwnazkvix table {
+  font-family: Lato, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ojwnazkvix thead, #ojwnazkvix tbody, #ojwnazkvix tfoot, #ojwnazkvix tr, #ojwnazkvix td, #ojwnazkvix th {
+  border-style: none;
+}
+
+#ojwnazkvix p {
+  margin: 0;
+  padding: 0;
+}
+
+#ojwnazkvix .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ojwnazkvix .gt_title {
+  color: #333333;
+  font-size: 24px;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ojwnazkvix .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ojwnazkvix .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ojwnazkvix .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ojwnazkvix .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ojwnazkvix .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ojwnazkvix .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ojwnazkvix .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ojwnazkvix .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ojwnazkvix .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ojwnazkvix .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ojwnazkvix .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ojwnazkvix .gt_row {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #F6F7F7;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ojwnazkvix .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ojwnazkvix .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ojwnazkvix .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ojwnazkvix .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ojwnazkvix .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ojwnazkvix .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ojwnazkvix .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ojwnazkvix .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_striped {
+  background-color: #FAFAFA;
+}
+
+#ojwnazkvix .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ojwnazkvix .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ojwnazkvix .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ojwnazkvix .gt_left {
+  text-align: left;
+}
+
+#ojwnazkvix .gt_center {
+  text-align: center;
+}
+
+#ojwnazkvix .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ojwnazkvix .gt_font_normal {
+  font-weight: normal;
+}
+
+#ojwnazkvix .gt_font_bold {
+  font-weight: bold;
+}
+
+#ojwnazkvix .gt_font_italic {
+  font-style: italic;
+}
+
+#ojwnazkvix .gt_super {
+  font-size: 65%;
+}
+
+#ojwnazkvix .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ojwnazkvix .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ojwnazkvix .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ojwnazkvix .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ojwnazkvix .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ojwnazkvix .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ojwnazkvix .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ojwnazkvix .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ojwnazkvix div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Theme: gt_theme_espn</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg">mpg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cyl">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="disp">disp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drat">drat</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wt">wt</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="qsec">qsec</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="vs">vs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="am">am</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="gear">gear</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="carb">carb</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="mpg" class="gt_row gt_right">21.0</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="disp" class="gt_row gt_right">160</td>
+<td headers="hp" class="gt_row gt_right">110</td>
+<td headers="drat" class="gt_row gt_right">3.90</td>
+<td headers="wt" class="gt_row gt_right">2.620</td>
+<td headers="qsec" class="gt_row gt_right">16.46</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">21.0</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">160</td>
+<td headers="hp" class="gt_row gt_right gt_striped">110</td>
+<td headers="drat" class="gt_row gt_right gt_striped">3.90</td>
+<td headers="wt" class="gt_row gt_right gt_striped">2.875</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">17.02</td>
+<td headers="vs" class="gt_row gt_right gt_striped">0</td>
+<td headers="am" class="gt_row gt_right gt_striped">1</td>
+<td headers="gear" class="gt_row gt_right gt_striped">4</td>
+<td headers="carb" class="gt_row gt_right gt_striped">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">22.8</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="disp" class="gt_row gt_right">108</td>
+<td headers="hp" class="gt_row gt_right">93</td>
+<td headers="drat" class="gt_row gt_right">3.85</td>
+<td headers="wt" class="gt_row gt_right">2.320</td>
+<td headers="qsec" class="gt_row gt_right">18.61</td>
+<td headers="vs" class="gt_row gt_right">1</td>
+<td headers="am" class="gt_row gt_right">1</td>
+<td headers="gear" class="gt_row gt_right">4</td>
+<td headers="carb" class="gt_row gt_right">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">21.4</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">258</td>
+<td headers="hp" class="gt_row gt_right gt_striped">110</td>
+<td headers="drat" class="gt_row gt_right gt_striped">3.08</td>
+<td headers="wt" class="gt_row gt_right gt_striped">3.215</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">19.44</td>
+<td headers="vs" class="gt_row gt_right gt_striped">1</td>
+<td headers="am" class="gt_row gt_right gt_striped">0</td>
+<td headers="gear" class="gt_row gt_right gt_striped">3</td>
+<td headers="carb" class="gt_row gt_right gt_striped">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right">18.7</td>
+<td headers="cyl" class="gt_row gt_right">8</td>
+<td headers="disp" class="gt_row gt_right">360</td>
+<td headers="hp" class="gt_row gt_right">175</td>
+<td headers="drat" class="gt_row gt_right">3.15</td>
+<td headers="wt" class="gt_row gt_right">3.440</td>
+<td headers="qsec" class="gt_row gt_right">17.02</td>
+<td headers="vs" class="gt_row gt_right">0</td>
+<td headers="am" class="gt_row gt_right">0</td>
+<td headers="gear" class="gt_row gt_right">3</td>
+<td headers="carb" class="gt_row gt_right">2</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right gt_striped">18.1</td>
+<td headers="cyl" class="gt_row gt_right gt_striped">6</td>
+<td headers="disp" class="gt_row gt_right gt_striped">225</td>
+<td headers="hp" class="gt_row gt_right gt_striped">105</td>
+<td headers="drat" class="gt_row gt_right gt_striped">2.76</td>
+<td headers="wt" class="gt_row gt_right gt_striped">3.460</td>
+<td headers="qsec" class="gt_row gt_right gt_striped">20.22</td>
+<td headers="vs" class="gt_row gt_right gt_striped">1</td>
+<td headers="am" class="gt_row gt_right gt_striped">0</td>
+<td headers="gear" class="gt_row gt_right gt_striped">3</td>
+<td headers="carb" class="gt_row gt_right gt_striped">1</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</body>
+</html>
+
+        </div>
+    </div>
+    <hr>
+    
+    <div class="container">
+        <div class="table-block">
+            <h2>Python: gt_theme_nytimes</h2>
+            <div id="hlzfboectx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+#hlzfboectx table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#hlzfboectx thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#hlzfboectx p { margin: 0; padding: 0; }
+ #hlzfboectx .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: none; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #hlzfboectx .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #hlzfboectx .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #hlzfboectx .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #hlzfboectx .gt_heading { background-color: #FFFFFF; text-align: left; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hlzfboectx .gt_bottom_border { border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #hlzfboectx .gt_col_headings { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #334422; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hlzfboectx .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 12px; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #hlzfboectx .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 12px; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #hlzfboectx .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #hlzfboectx .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #hlzfboectx .gt_column_spanner { border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #334422; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #hlzfboectx .gt_spanner_row { border-bottom-style: hidden; }
+ #hlzfboectx .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #hlzfboectx .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #hlzfboectx .gt_from_md> :first-child { margin-top: 0; }
+ #hlzfboectx .gt_from_md> :last-child { margin-bottom: 0; }
+ #hlzfboectx .gt_row { padding-top: 7px; padding-bottom: 7px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #hlzfboectx .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #hlzfboectx .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #hlzfboectx .gt_row_group_first td { border-top-width: 2px; }
+ #hlzfboectx .gt_row_group_first th { border-top-width: 2px; }
+ #hlzfboectx .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #hlzfboectx .gt_table_body { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: white; }
+ #hlzfboectx .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #hlzfboectx .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #hlzfboectx .gt_left { text-align: left; }
+ #hlzfboectx .gt_center { text-align: center; }
+ #hlzfboectx .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #hlzfboectx .gt_font_normal { font-weight: normal; }
+ #hlzfboectx .gt_font_bold { font-weight: bold; }
+ #hlzfboectx .gt_font_italic { font-style: italic; }
+ #hlzfboectx .gt_super { font-size: 65%; }
+ #hlzfboectx .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #hlzfboectx .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_title gt_font_normal" style="font-family: Libre Franklin;font-weight: 800;">Theme: gt_theme_nytimes</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="mpg">mpg</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="cyl">cyl</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="disp">disp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="drat">drat</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="wt">wt</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="qsec">qsec</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="vs">vs</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="am">am</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="gear">gear</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: darkgrey;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="carb">carb</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">21.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">6</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">160.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">110</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.9</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2.62</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">16.46</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">21.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">6</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">160.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">110</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.9</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2.875</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">17.02</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+  </tr>
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">22.8</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">108.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">93</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.85</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2.32</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">18.61</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">4</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">21.4</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">6</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">258.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">110</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.08</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.215</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">19.44</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+  </tr>
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">18.7</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">8</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">360.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">175</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.15</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.44</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">17.02</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2</td>
+  </tr>
+  <tr>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">18.1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">6</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">225.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">105</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2.76</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3.46</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">20.22</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">3</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">1</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+        </div>
+        <div class="table-block">
+            <h2>R: gt_theme_nytimes</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+
+</head>
+<body>
+<div id="rwisoxgwvq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+  <style>@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#rwisoxgwvq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rwisoxgwvq thead, #rwisoxgwvq tbody, #rwisoxgwvq tfoot, #rwisoxgwvq tr, #rwisoxgwvq td, #rwisoxgwvq th {
+  border-style: none;
+}
+
+#rwisoxgwvq p {
+  margin: 0;
+  padding: 0;
+}
+
+#rwisoxgwvq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rwisoxgwvq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rwisoxgwvq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rwisoxgwvq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: #334422;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rwisoxgwvq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rwisoxgwvq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rwisoxgwvq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rwisoxgwvq .gt_column_spanner {
+  border-bottom-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: #334422;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rwisoxgwvq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rwisoxgwvq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rwisoxgwvq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rwisoxgwvq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rwisoxgwvq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rwisoxgwvq .gt_row {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rwisoxgwvq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwisoxgwvq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rwisoxgwvq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rwisoxgwvq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rwisoxgwvq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwisoxgwvq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rwisoxgwvq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwisoxgwvq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rwisoxgwvq .gt_table_body {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #FFFFFF;
+}
+
+#rwisoxgwvq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwisoxgwvq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rwisoxgwvq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwisoxgwvq .gt_left {
+  text-align: left;
+}
+
+#rwisoxgwvq .gt_center {
+  text-align: center;
+}
+
+#rwisoxgwvq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rwisoxgwvq .gt_font_normal {
+  font-weight: normal;
+}
+
+#rwisoxgwvq .gt_font_bold {
+  font-weight: bold;
+}
+
+#rwisoxgwvq .gt_font_italic {
+  font-style: italic;
+}
+
+#rwisoxgwvq .gt_super {
+  font-size: 65%;
+}
+
+#rwisoxgwvq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rwisoxgwvq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rwisoxgwvq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rwisoxgwvq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rwisoxgwvq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rwisoxgwvq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rwisoxgwvq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rwisoxgwvq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rwisoxgwvq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="font-family: 'Libre Franklin'; font-weight: 800;">Theme: gt_theme_nytimes</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="mpg">mpg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="cyl">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="disp">disp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="hp">hp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="drat">drat</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="wt">wt</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="qsec">qsec</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="vs">vs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="am">am</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="gear">gear</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase;" scope="col" id="carb">carb</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">21.0</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">160</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">110</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.90</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2.620</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">16.46</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">21.0</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">160</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">110</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.90</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2.875</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">17.02</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">22.8</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">108</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">93</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.85</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2.320</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">18.61</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">21.4</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">258</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">110</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.08</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.215</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">19.44</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">18.7</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">8</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">360</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">175</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.15</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.440</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">17.02</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2</td></tr>
+    <tr><td headers="mpg" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">18.1</td>
+<td headers="cyl" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="disp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">225</td>
+<td headers="hp" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">105</td>
+<td headers="drat" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2.76</td>
+<td headers="wt" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3.460</td>
+<td headers="qsec" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">20.22</td>
+<td headers="vs" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="am" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="gear" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">3</td>
+<td headers="carb" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</body>
+</html>
+
+        </div>
+    </div>
+    <hr>
+    
+</body>
+</html>

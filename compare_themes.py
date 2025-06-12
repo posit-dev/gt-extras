@@ -7,23 +7,29 @@ import subprocess
 mtcars_url = "https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv"
 mtcars = pd.read_csv(mtcars_url)
 mtcars_head = mtcars.head(6)
-theme_fns = [gte.gt_theme_guardian, gte.gt_theme_538, gte.gt_theme_espn]
+theme_fns = [
+    gte.gt_theme_guardian,
+    gte.gt_theme_538,
+    gte.gt_theme_espn,
+    gte.gt_theme_nytimes,
+]
 
 python_tables = []
 r_tables = []
 
 for theme_fn in theme_fns:
     theme_name = theme_fn.__name__
-    # Python table
-    gt = GT(mtcars_head.iloc[:, 1:])
+    gt = GT(mtcars_head.iloc[:, 1:])  ## sync datase to mtcars from R
+
+    ## make gt
     gt_with_header = gt.tab_header(title=f"Theme: {theme_name}")
     themed_tab = gt_with_header.pipe(theme_fn)
-    py_html_file = f"tablePython_{theme_name}.html"
-    with open(py_html_file, "w") as file:
-        file.write(themed_tab.as_raw_html())
-    with open(py_html_file) as f:
-        python_tables.append((theme_name, f.read()))
 
+    ## save themed gt in file, then write to group file
+    py_html = themed_tab.as_raw_html()
+    python_tables.append((theme_name, py_html))
+
+    ## The r-script executes the same as the python code but using gtExtras instead of this package
     r_script = f"""
 library(gt)
 library(dplyr)
@@ -41,14 +47,11 @@ apply_gt_theme <- function(data, theme_fn) {{
 themed_tab <- apply_gt_theme(head(mtcars), {theme_name})
 gtsave(themed_tab, "tableR_{theme_name}.html")
 """
-    subprocess.run(
-        ["Rscript", "-"],
-        input=r_script.encode("utf-8"),
-        check=True
-    )
+    subprocess.run(["Rscript", "-"], input=r_script.encode("utf-8"), check=True)
     r_html_file = f"tableR_{theme_name}.html"
     with open(r_html_file) as f:
         r_tables.append((theme_name, f.read()))
+    os.remove(r_html_file)
 
 # Combine all tables into one HTML file
 table_blocks = ""
