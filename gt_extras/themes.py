@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-__all__ = ["gt_theme_538"]
-
+__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes"]
 
 def gt_theme_538(gt: GT) -> GT:
     gt_themed = (
@@ -170,6 +169,6 @@ def gt_theme_guardian(gt: GT) -> GT:
 
         # this replaces footnotes_border_bottom_width="0px", because that functionality doesn't
         # exist in the Python API
-        .tab_style(style=style.borders(sides="bottom", weight="0"), locations=loc.footer()) 
+        .tab_style(style=style.borders(sides="bottom", style="hidden"), locations=loc.footer()) 
     )
     return gt_themed
