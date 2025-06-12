@@ -170,6 +170,6 @@ def gt_theme_guardian(gt: GT) -> GT:
 
         # this replaces footnotes_border_bottom_width="0px", because that functionality doesn't
         # exist in the Python API
-        .tab_style(style=style.borders(sides="bottom", weight="0"), locations=loc.footer()) 
+        .tab_style(style=style.borders(sides="bottom", style="hidden"), locations=loc.footer()) 
     )
     return gt_themed

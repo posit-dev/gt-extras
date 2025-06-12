@@ -1,3 +1,9 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
 [project]
 name = "gt-extras"
 version = "0.1.0"
@@ -8,11 +14,13 @@ license.file = "LICENSE"
 dependencies = [
     "great-tables>=0.17.0",
 ]
+
 authors = [
     { name = "Jules Walzer-Goldfeld", email = "jules.walzergoldfeld@gmail.com"},
     { name = "Michael Chow", email = "mc_al_github@fastmail.com" },
     { name = "Rich Iannone", email = "rich@posit.co"}
 ]
+
 classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
