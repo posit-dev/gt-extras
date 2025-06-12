@@ -40,6 +40,8 @@ dev = [
     "pytest-cov",
     "syrupy",
     "ipykernel>=6.29.5",
+    "selenium>=4.33.0",
+    "pillow>=11.2.1",
 ]
 
 
