@@ -346,10 +346,12 @@ def gt_theme_pff(
 
     # Handle spanners if provided
     if spanners:
+        span_cols = [col for spanner in gt._spanners for col in spanner.vars]
+
         # Add a blank spanner
         gt_themed = (
             gt_themed.tab_spanner(
-                columns=[col for col in gt._data.columns if col not in spanners],
+                columns=[col for col in gt._boxhead._get_column_labels() if col not in span_cols],
                 label=" ",
                 id="blank",
             )
@@ -360,7 +362,7 @@ def gt_theme_pff(
                     style.borders(sides="left", color="transparent", weight="3px"),
                     style.borders(sides="top", color="transparent", weight="3px"),
                 ],
-                locations=loc.column_spanners(spanners="blank"),
+                locations=loc.spanner_labels(ids=["blank"]),
             )
             # Add real spanners and style
             .tab_style(
@@ -370,7 +372,7 @@ def gt_theme_pff(
                     style.borders(sides="left", color="white", weight="3px"),
                     style.borders(sides="top", color="white", weight="3px"),
                 ],
-                locations=loc.column_spanners(spanners=spanners),
+                locations=loc.spanner_labels(ids=spanners),
             )
         )
 
@@ -394,7 +396,6 @@ def gt_theme_pff(
             locations=loc.body(columns=rank_col),
         ).cols_align("center", columns=rank_col)
 
-    # Final style for column labels and stubhead
     gt_themed = gt_themed.tab_style(
         style=[
             style.fill(color="#585d63"),
