@@ -10,12 +10,15 @@ def highlight_cols(
     gt: GT,
     columns: SelectExpr = None,  ## Todo check that this is good
     fill: str = "#80bcd8",
-    alpha: int = 1,
-    font_weight: Literal["str"] | int = "normal",  # Todo choose options
+    alpha: int = 1,  ## Todo this doesn't exist in Python
+    font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
 ) -> GT:
     """
-    Highlight one or mor
+    Add color highlighting to one or more specific columns
+
+    The `gt_highlight_cols()` function takes an existing `GT` object and adds highlighting color
+    to the cell background of a specific column(s).
 
     Parameters
     ----------
@@ -27,35 +30,32 @@ def highlight_cols(
         provided in a list. If `None`, the alignment is applied to all columns.
 
     fill
-        A character string indicating the fill color. If nothing is provided, then "#80bcd8"
+        A character string indicating the fill color. If nothing is provided, then `"#80bcd8"`
         (light blue) will be used as a default.
+    TODO see if the color can be displayed in some cool way
 
     alpha??
         TODO
 
     font_weight
         A string or number indicating the weight of the font. Can be a text-based keyword such as
-        "normal", "bold", "lighter", "bolder", or, a numeric value between 1 and 1000, inclusive.
-        Note that only variable fonts may support the numeric mapping of weight.
+        `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between `1` and `1000`,
+        inclusive. Note that only variable fonts may support the numeric mapping of weight.
 
     font_color
-        A character string indicating the text color. If nothing is provided, then "#000000"
+        A character string indicating the text color. If nothing is provided, then `"#000000"`
         (black) will be used as a default.
 
     Returns
     -------
     GT
-        The GT object is returned. This is the same object that the method is called on so that we
-        can facilitate method chaining.
-
-    Notes
-    -----
-    GT always selects columns using their name in the underlying data. This means that a column's
-    label is purely for final presentation.
+        The `GT` object is returned. This is the same object that the method is called on so that
+        we can facilitate method chaining.
 
     Examples
     --------
 
+    TODO
     The example below relabels columns from the `countrypops` data to start with uppercase.
 
     ```{python}
