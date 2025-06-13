@@ -28,10 +28,11 @@ def gt_theme_538(gt: GT) -> GT:
             ],
             locations=[loc.column_labels(), loc.stubhead()],
         )
-        .tab_style(
-            style=style.borders(sides="bottom", color="black", weight="1px"),
-            locations=loc.row_groups(),
-        )
+        # Altered wrt R package
+        # .tab_style(
+        #     style=style.borders(sides="bottom", color="black", weight="1px"),
+        #     locations=loc.row_groups(),
+        # )
         .tab_options(
             column_labels_background_color="white",
             data_row_padding="3px",
@@ -46,7 +47,8 @@ def gt_theme_538(gt: GT) -> GT:
             row_group_border_top_style="none",
             row_group_border_top_color="black",
             row_group_border_bottom_width="1px",
-            row_group_border_bottom_color="white",
+            # row_group_border_bottom_color="white", # Altered wrt R package
+            row_group_border_bottom_color="black", # Altered wrt R package
             stub_border_color="white",
             stub_border_width="0px",
             source_notes_font_size="12px",
@@ -114,14 +116,16 @@ def gt_theme_nytimes(gt: GT) -> GT:
     return gt_themed
 
 def gt_theme_guardian(gt: GT) -> GT:
+    ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
         gt.opt_table_font(font=[google_font("Noto Sans")])
-        .tab_style(
-            ## style hidden or weight 0px?
-            style=style.borders(sides="top", color="white", style="hidden"),
-            # A place we might see a difference from R – I've tested it and it should work the same
-            locations=loc.body(rows=0),
-        )
+        ## Altered wrt R package
+        # .tab_style(
+        #     ## style hidden or weight 0px?
+        #     style=style.borders(sides="top", color="white", style="hidden"),
+        #     ## A place we might see a difference from R
+        #     locations=loc.body(rows=0),
+        # )
         .tab_style(
             style=style.text(color="#005689", size="22px", weight=700),
             locations=loc.title(),
@@ -143,7 +147,7 @@ def gt_theme_guardian(gt: GT) -> GT:
             source_notes_border_bottom_width="0px",
             table_body_border_bottom_width="3px",
             table_body_border_bottom_color="white",
-            table_body_hlines_width="white",
+            table_body_hlines_width="0px", # Raise issue in gtExtras R
             table_body_hlines_color="white",
             row_group_border_top_width="1px",
             row_group_border_top_color="grey",
