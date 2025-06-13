@@ -313,5 +313,95 @@ def gt_theme_dark(gt: GT) -> GT:
     return gt_themed
 
 
-def gt_theme_pff(gt: GT) -> GT:
-    pass
+def gt_theme_pff(
+    gt: GT,
+    divider: str | None = None,
+    spanners: list[str] | None = None,
+    rank_col: str | None = None,
+) -> GT:
+    gt_themed = (
+        gt.opt_row_striping()
+        .opt_all_caps()
+        .tab_options(
+            table_body_hlines_color="transparent",
+            table_border_top_width="3px",
+            table_border_top_color="transparent",
+            table_border_bottom_color="lightgrey",
+            table_border_bottom_width="1px",
+            column_labels_border_top_width="3px",
+            column_labels_padding="6px",
+            column_labels_border_top_color="transparent",
+            column_labels_border_bottom_width="3px",
+            column_labels_border_bottom_color="transparent",
+            row_striping_background_color="#f5f5f5",
+            data_row_padding="6px",
+            heading_align="left",
+            heading_title_font_size="30px",
+            heading_title_font_weight="bold",
+            heading_subtitle_font_size="16px",
+            table_font_size="12px",
+        )
+        .opt_table_font(font=google_font("Roboto"))
+    )
+
+    # Handle spanners if provided
+    if spanners:
+        # Add a blank spanner
+        gt_themed = (
+            gt_themed.tab_spanner(
+                columns=[col for col in gt._data.columns if col not in spanners],
+                label=" ",
+                id="blank",
+            )
+            .tab_style(
+                style=[
+                    style.fill(color="transparent"),
+                    style.text(color="transparent", size="9px", weight="bold"),
+                    style.borders(sides="left", color="transparent", weight="3px"),
+                    style.borders(sides="top", color="transparent", weight="3px"),
+                ],
+                locations=loc.column_spanners(spanners="blank"),
+            )
+            # Add real spanners and style
+            .tab_style(
+                style=[
+                    style.fill(color="#f5f5f5"),
+                    style.text(color="#878e94", size="10px", weight="bold"),
+                    style.borders(sides="left", color="white", weight="3px"),
+                    style.borders(sides="top", color="white", weight="3px"),
+                ],
+                locations=loc.column_spanners(spanners=spanners),
+            )
+        )
+
+    # Handle divider if provided
+    if divider:
+        gt_themed = gt_themed.tab_style(
+            style=style.borders(sides="left", color="lightgrey", weight="2px"),
+            locations=loc.body(columns=divider),
+        ).tab_style(
+            style=style.borders(sides="left", color="#212426", weight="2px"),
+            locations=loc.column_labels(columns=divider),
+        )
+
+    # Handle rank_col if provided
+    if rank_col:
+        gt_themed = gt_themed.tab_style(
+            style=[
+                style.fill(color="#e4e8ec"),
+                style.borders(color="#e4e8ec"),
+            ],
+            locations=loc.body(columns=rank_col),
+        ).cols_align("center", columns=rank_col)
+
+    # Final style for column labels and stubhead
+    gt_themed = gt_themed.tab_style(
+        style=[
+            style.fill(color="#585d63"),
+            style.text(color="white", size="10px", weight="bold"),
+            style.borders(sides="bottom", color="#585d63", weight="2.5px"),
+        ],
+        locations=[loc.column_labels(), loc.stubhead()],
+    )
+
+    return gt_themed
