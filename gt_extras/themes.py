@@ -2,8 +2,17 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes",
-            "gt_theme_excel", "gt_theme_dot_matrix", "gt_theme_dark", "gt_theme_pff"]
+__all__ = [
+    "gt_theme_538",
+    "gt_theme_espn",
+    "gt_theme_guardian",
+    "gt_theme_nytimes",
+    "gt_theme_excel",
+    "gt_theme_dot_matrix",
+    "gt_theme_dark",
+    "gt_theme_pff",
+]
+
 
 def gt_theme_538(gt: GT) -> GT:
     gt_themed = (
@@ -49,7 +58,7 @@ def gt_theme_538(gt: GT) -> GT:
             row_group_border_top_color="black",
             row_group_border_bottom_width="1px",
             # row_group_border_bottom_color="white", # Altered wrt R package
-            row_group_border_bottom_color="black", # Altered wrt R package
+            row_group_border_bottom_color="black",  # Altered wrt R package
             stub_border_color="white",
             stub_border_width="0px",
             source_notes_font_size="12px",
@@ -60,6 +69,7 @@ def gt_theme_538(gt: GT) -> GT:
     )
 
     return gt_themed
+
 
 def gt_theme_espn(gt: GT) -> GT:
     gt_themed = (
@@ -81,6 +91,7 @@ def gt_theme_espn(gt: GT) -> GT:
     )
 
     return gt_themed
+
 
 def gt_theme_nytimes(gt: GT) -> GT:
     gt_themed = (
@@ -116,6 +127,7 @@ def gt_theme_nytimes(gt: GT) -> GT:
     )
     return gt_themed
 
+
 def gt_theme_guardian(gt: GT) -> GT:
     ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
@@ -148,7 +160,7 @@ def gt_theme_guardian(gt: GT) -> GT:
             source_notes_border_bottom_width="0px",
             table_body_border_bottom_width="3px",
             table_body_border_bottom_color="white",
-            table_body_hlines_width="0px", # Raise issue in gtExtras R
+            table_body_hlines_width="0px",  # Raise issue in gtExtras R
             table_body_hlines_color="white",
             row_group_border_top_width="1px",
             row_group_border_top_color="grey",
@@ -156,10 +168,10 @@ def gt_theme_guardian(gt: GT) -> GT:
             row_group_border_bottom_color="grey",
             row_group_font_weight="bold",
             column_labels_border_top_width="1px",
-            
             # Slight modification from the R version:
-            column_labels_border_top_color="#ececec" if gt._heading.title else "#40c5ff",
-            
+            column_labels_border_top_color="#ececec"
+            if gt._heading.title
+            else "#40c5ff",
             column_labels_border_bottom_width="2px",
             column_labels_border_bottom_color="#ececec",
             heading_border_bottom_width="0px",
@@ -168,12 +180,14 @@ def gt_theme_guardian(gt: GT) -> GT:
             table_font_size="16px",
             heading_align="left",
         )
-
         # this replaces footnotes_border_bottom_width="0px", because that functionality doesn't
         # exist in the Python API
-        .tab_style(style=style.borders(sides="bottom", style="hidden"), locations=loc.footer()) 
+        .tab_style(
+            style=style.borders(sides="bottom", style="hidden"), locations=loc.footer()
+        )
     )
     return gt_themed
+
 
 def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
     gt_themed = (
@@ -182,7 +196,6 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
             style=style.borders(sides="all", weight="1px", color="black"),
             locations=loc.body(),
         )
-
         # This does not appear to achieve anything
         # .tab_style(
         #     style=style.borders(sides="left", weight="2px", color="black"),
@@ -192,13 +205,11 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
         #         loc.stub()
         #     ],
         # )
-
         # This does not appear to achieve anything
         # .tab_style(
         #     style=style.borders(sides="left", weight="1px", color="black"),
         #     locations=loc.row_groups(),
         # )
-
         .opt_table_font(font="Calibri")
         .tab_options(
             heading_align="left",
@@ -265,27 +276,20 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
 
 def gt_theme_dark(gt: GT) -> GT:
     gt_themed = (
-        gt
-        .tab_style(
+        gt.tab_style(
             style=style.text(
                 color="white",
                 font=google_font("Source Sans Pro"),
-                transform="uppercase"
+                transform="uppercase",
             ),
             locations=[loc.column_labels(), loc.stubhead()],
         )
         .tab_style(
-            style=style.text(
-                font=google_font("Libre Franklin"),
-                weight=800
-            ),
+            style=style.text(font=google_font("Libre Franklin"), weight=800),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(
-                font=google_font("Source Sans Pro"),
-                weight=400
-            ),
+            style=style.text(font=google_font("Source Sans Pro"), weight=400),
             locations=loc.body(),
         )
         .tab_options(
@@ -305,7 +309,6 @@ def gt_theme_dark(gt: GT) -> GT:
             column_labels_border_bottom_color="white",
             data_row_padding="7px",
         )
-        
     )
     return gt_themed
 
