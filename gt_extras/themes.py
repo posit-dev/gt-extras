@@ -175,9 +175,6 @@ def gt_theme_guardian(gt: GT) -> GT:
     return gt_themed
 
 def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
-    # n_cols = len(gt._tbl_data.columns)
-    # n_rows = len(gt._tbl_data.rows)
-
     gt_themed = (
         gt.opt_row_striping()
         .tab_style(
@@ -185,6 +182,7 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
             locations=loc.body(),
         )
 
+        # This does not appear to achieve anything
         # .tab_style(
         #     style=style.borders(sides="left", weight="2px", color="black"),
         #     locations=[
@@ -194,27 +192,12 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
         #     ],
         # )
 
+        # This does not appear to achieve anything
         # .tab_style(
         #     style=style.borders(sides="left", weight="1px", color="black"),
         #     locations=loc.row_groups(),
         # )
 
-        # .tab_style(
-        #     style=style.borders(sides="right", weight="2px", color="black"),
-        #     locations=[
-        #         loc.body(columns=n_cols - 1),
-        #         loc.column_labels(columns=n_cols - 1),
-        #         loc.row_groups()
-        #     ],
-        # )
-
-        # .tab_style(
-        #     style=style.borders(sides="bottom", weight="2px", color="black"),
-        #     locations=[
-        #         loc.body(rows=n_rows - 1),
-        #         loc.stub(rows=n_rows - 1)
-        #     ],
-        # )
         .opt_table_font(font="Calibri")
         .tab_options(
             heading_align="left",
