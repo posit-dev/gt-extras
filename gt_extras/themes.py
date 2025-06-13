@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes", "gt_theme_excel"]
+__all__ = ["gt_theme_538", "gt_theme_espn", "gt_theme_guardian", "gt_theme_nytimes",
+            "gt_theme_excel", "gt_theme_dot_matrix", "gt_theme_dark", "gt_theme_pff"]
 
 def gt_theme_538(gt: GT) -> GT:
     gt_themed = (
@@ -83,20 +84,7 @@ def gt_theme_espn(gt: GT) -> GT:
 
 def gt_theme_nytimes(gt: GT) -> GT:
     gt_themed = (
-        gt.tab_options(
-            heading_align="left",
-            column_labels_border_top_style="none",
-            table_border_top_style="none",
-            column_labels_border_bottom_style="none",
-            column_labels_border_bottom_width="1px",
-            column_labels_border_bottom_color="#334422",
-            table_body_border_top_style="none",
-            table_body_border_bottom_color="white",
-            heading_border_bottom_style="none",
-            data_row_padding="7px",
-            column_labels_font_size="12px",
-        )
-        .tab_style(
+        gt.tab_style(
             style=style.text(
                 color="darkgrey",
                 font=google_font("Source Sans Pro"),
@@ -111,6 +99,19 @@ def gt_theme_nytimes(gt: GT) -> GT:
         .tab_style(
             style=style.text(font=google_font("Source Sans Pro"), weight=400),
             locations=loc.body(),
+        )
+        .tab_options(
+            heading_align="left",
+            column_labels_border_top_style="none",
+            table_border_top_style="none",
+            column_labels_border_bottom_style="none",
+            column_labels_border_bottom_width="1px",
+            column_labels_border_bottom_color="#334422",
+            table_body_border_top_style="none",
+            table_body_border_bottom_color="white",
+            heading_border_bottom_style="none",
+            data_row_padding="7px",
+            column_labels_font_size="12px",
         )
     )
     return gt_themed
@@ -235,3 +236,79 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
     )
     return gt_themed
 
+
+def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
+    gt_themed = (
+        gt.opt_row_striping()
+        .opt_table_font(font="Courier")
+        .tab_options(
+            heading_align="left",
+            heading_border_bottom_color="white",
+            column_labels_text_transform="lowercase",
+            column_labels_font_size="85%",
+            column_labels_border_top_style="none",
+            column_labels_border_bottom_color="black",
+            column_labels_border_bottom_width="2px",
+            table_border_bottom_style="none",
+            table_border_bottom_width="2px",
+            table_border_bottom_color="white",
+            table_border_top_style="none",
+            row_striping_background_color=color,
+            table_body_hlines_style="none",
+            table_body_vlines_style="none",
+            data_row_padding="1px",
+        )
+    )
+
+    return gt_themed
+
+
+def gt_theme_dark(gt: GT) -> GT:
+    gt_themed = (
+        gt
+        .tab_style(
+            style=style.text(
+                color="white",
+                font=google_font("Source Sans Pro"),
+                transform="uppercase"
+            ),
+            locations=[loc.column_labels(), loc.stubhead()],
+        )
+        .tab_style(
+            style=style.text(
+                font=google_font("Libre Franklin"),
+                weight=800
+            ),
+            locations=loc.title(),
+        )
+        .tab_style(
+            style=style.text(
+                font=google_font("Source Sans Pro"),
+                weight=400
+            ),
+            locations=loc.body(),
+        )
+        .tab_options(
+            heading_align="left",
+            heading_border_bottom_style="none",
+            table_background_color="#333333",
+            table_font_color_light="white",
+            table_border_top_style="none",
+            table_border_bottom_color="#333333",
+            table_border_left_color="#333333",
+            table_border_right_color="#333333",
+            table_body_border_top_style="none",
+            table_body_border_bottom_color="#333333",
+            column_labels_border_top_style="none",
+            column_labels_background_color="#333333",
+            column_labels_border_bottom_width="3px",
+            column_labels_border_bottom_color="white",
+            data_row_padding="7px",
+        )
+        
+    )
+    return gt_themed
+
+
+def gt_theme_pff(gt: GT) -> GT:
+    pass
