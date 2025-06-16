@@ -5,10 +5,14 @@ import os
 import subprocess
 
 theme_fns = [
-    gte.gt_theme_guardian,
     gte.gt_theme_538,
     gte.gt_theme_espn,
     gte.gt_theme_nytimes,
+    gte.gt_theme_guardian,
+    gte.gt_theme_excel,
+    gte.gt_theme_dot_matrix,
+    gte.gt_theme_dark,
+    gte.gt_theme_pff
 ]
 
 mtcars_url = "https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv"
@@ -20,7 +24,8 @@ r_tables = []
 
 for theme_fn in theme_fns:
     theme_name = theme_fn.__name__
-    gt = GT(mtcars_head.iloc[:, 1:])  ## sync datase to mtcars from R
+    ## align database to mtcars from R
+    gt = GT(mtcars_head.iloc[:, 1:], rowname_col="mpg", groupname_col="carb")  
 
     ## make gt
     gt_with_header = gt.tab_header(title=f"Theme: {theme_name}")
@@ -39,7 +44,7 @@ library(gtExtras)
 apply_gt_theme <- function(data, theme_fn) {{
   theme_name <- deparse(substitute(theme_fn))
   themed_tab <- data %>%
-    gt() %>%
+    gt(rowname_col="mpg", groupname_col="carb") %>%
     tab_header(title = paste("Theme:", theme_name)) %>%
     theme_fn()
   return(themed_tab)
