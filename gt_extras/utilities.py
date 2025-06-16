@@ -4,7 +4,7 @@ from typing import Literal
 from great_tables import GT, style, loc
 from great_tables._tbl_data import SelectExpr
 
-import matplotlib.colors as mcolors
+from great_tables._data_color import data_color
 
 
 def gt_highlight_cols(
@@ -73,35 +73,15 @@ def gt_highlight_cols(
     gte.gt_highlight_cols(gt, columns="hp")
     ```
     """
-
-    def _to_alpha_hex_color(color: str, alpha: int | None) -> str:
-        """
-        Return a hex color string with the specified alpha (transparency) channel.
-        If alpha is outside [0, 1], it is clamped to that range. If alpha is None, the original
-        color is returned.
-        """
-        # TODO Can we do it without importing mcolors?
-        if alpha is None:
-            return color
-        try:
-            rbg_color = mcolors.to_rgb(color)
-            rbg_color_with_alpha = rbg_color + (alpha,)
-            hex_color_with_alpha = mcolors.to_hex(rbg_color_with_alpha, keep_alpha=True)
-            return hex_color_with_alpha
-        except ValueError:
-            raise ValueError(f"Invalid color value: {color}")
-
-    if alpha is not None:
-        alpha = min(max(alpha, 0), 1)
-    fill_with_alpha = _to_alpha_hex_color(fill, alpha=alpha)
-
-    res = gt.tab_style(
-        style=[
-            style.fill(color=fill_with_alpha),
-            style.text(weight=font_weight, color=font_color),
-            style.borders(sides=["top", "bottom"], color=fill_with_alpha),
-        ],
-        locations=loc.body(columns=columns),
+    res = (
+        gt.data_color(columns=columns, palette=[fill, fill], alpha=alpha)
+        .tab_style(
+            style=[
+                style.text(weight=font_weight, color=font_color),
+                style.borders(sides=["top", "bottom"], color=fill),
+            ],
+            locations=loc.body(columns=columns),
+        )
     )
 
     return res
