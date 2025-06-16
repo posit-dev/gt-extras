@@ -1,0 +1,1 @@
+Provides additional functions for creating beautiful tables with 'great-tables'.
