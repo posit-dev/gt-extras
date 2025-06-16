@@ -18,7 +18,7 @@ website:
 quartodoc:
   package: gt_extras
   dir: reference
-  style: pkgdown
+  # style: pkgdown
   title: API Reference
 
   # write sidebar data
