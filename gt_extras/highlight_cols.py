@@ -5,6 +5,8 @@ from great_tables._tbl_data import SelectExpr
 
 from typing import Literal
 
+import matplotlib.colors as mcolors
+
 
 def highlight_cols(
     gt: GT,
@@ -78,9 +80,25 @@ def highlight_cols(
     """
 
     # Altered wrt R package - no alpha
+    def _to_alpha_hex_color(color: str, alpha: int) -> str:
+        """
+        Function description 
+        TODO Can we do it without importing mcolors?
+        """
+        try:
+            rbg_color = mcolors.to_rgb(color)        
+            rbg_color_with_alpha = rbg_color + (alpha, )
+            hex_color_with_alpha = mcolors.to_hex(rbg_color_with_alpha, keep_alpha=True)
+            return hex_color_with_alpha
+        except ValueError:
+            raise ValueError(f"Invalid color value: {color}")
+
+    alpha = min(max(alpha, 0), 1)
+    fill_with_alpha = _to_alpha_hex_color(fill, alpha=alpha)
+
     res = gt.tab_style(
         style=[
-            style.fill(color=fill),
+            style.fill(color=fill_with_alpha),
             style.text(weight=font_weight, color=font_color),
             style.borders(sides=["top", "bottom"], color=fill),
         ],
