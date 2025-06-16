@@ -4,3 +4,19 @@
 gt_theme_dot_matrix(gt, color='#b5dbb6')
 ```
 
+Applies a dot-matrix-inspired theme to a GT table.
+
+This function styles a `GT` object with a look reminiscent of dot-matrix printouts.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description                                                                                                              | Default     |
+|--------|--------|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| gt     | GT     | An existing `GT` object.                                                                                                 | _required_  |
+| color  | str    | A string indicating the color of the row striping, defaults to a light green. Accepts either named colors or hex colors. | `'#b5dbb6'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                           |
+|--------|--------|-------------------------------------------------------|
+|        | GT     | The themed `GT` object, allowing for method chaining. |

@@ -4,3 +4,21 @@
 gt_theme_538(gt)
 ```
 
+Applies a FiveThirtyEight-inspired theme to a GT table.
+
+This function styles a `GT` object with a look inspired by the FiveThirtyEight (538) website.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description              | Default    |
+|--------|--------|--------------------------|------------|
+| gt     | GT     | An existing `GT` object. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                           |
+|--------|--------|-------------------------------------------------------|
+|        | GT     | The themed `GT` object, allowing for method chaining. |
+
+## Examples {.doc-section .doc-section-examples}
+

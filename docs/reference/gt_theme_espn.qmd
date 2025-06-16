@@ -4,3 +4,18 @@
 gt_theme_espn(gt)
 ```
 
+Applies an ESPN-inspired theme to a GT table.
+
+This function styles a `GT` object with a look inspired by ESPN's data tables.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description              | Default    |
+|--------|--------|--------------------------|------------|
+| gt     | GT     | An existing `GT` object. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                           |
+|--------|--------|-------------------------------------------------------|
+|        | GT     | The themed `GT` object, allowing for method chaining. |

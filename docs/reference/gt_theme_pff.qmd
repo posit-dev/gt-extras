@@ -4,3 +4,22 @@
 gt_theme_pff(gt, divider=None, spanners=None, rank_col=None)
 ```
 
+Applies a Pro Football Focus (PFF)-inspired theme to a GT table.
+
+This function styles a `GT` object with a look inspired by Pro Football Focus tables,
+supporting custom spanners, dividers, and rank column highlighting.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                | Description                                                                | Default    |
+|----------|---------------------|----------------------------------------------------------------------------|------------|
+| gt       | GT                  | An existing `GT` object.                                                   | _required_ |
+| divider  | str \| None         | Zero or more column names to visually divide with a preceding border.      | `None`     |
+| spanners | list\[str\] \| None | Optional list of spanners to style, as referenced by the `GT` spanner ids. | `None`     |
+| rank_col | str \| None         | Optional single column name to highlight as a rank column.                 | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                           |
+|--------|--------|-------------------------------------------------------|
+|        | GT     | The themed `GT` object, allowing for method chaining. |

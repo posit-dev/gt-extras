@@ -15,6 +15,24 @@ __all__ = [
 
 
 def gt_theme_538(gt: GT) -> GT:
+    """Applies a FiveThirtyEight-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by the FiveThirtyEight (538) website.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    Returns
+    ----------
+    GT
+        The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+
+    """
     gt_themed = (
         gt.opt_table_font(font=google_font("Cairo"), weight=400)
         .tab_style(
@@ -72,6 +90,20 @@ def gt_theme_538(gt: GT) -> GT:
 
 
 def gt_theme_espn(gt: GT) -> GT:
+    """Applies an ESPN-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by ESPN's data tables.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.opt_all_caps()
         .opt_table_font(font=google_font("Lato"), weight=400)
@@ -94,6 +126,20 @@ def gt_theme_espn(gt: GT) -> GT:
 
 
 def gt_theme_nytimes(gt: GT) -> GT:
+    """Applies a New York Times-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by New York Times tables.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.tab_style(
             style=style.text(
@@ -129,6 +175,20 @@ def gt_theme_nytimes(gt: GT) -> GT:
 
 
 def gt_theme_guardian(gt: GT) -> GT:
+    """Applies a Guardian-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by The Guardian's data tables.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
         gt.opt_table_font(font=[google_font("Noto Sans")])
@@ -190,6 +250,23 @@ def gt_theme_guardian(gt: GT) -> GT:
 
 
 def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
+    """Applies an Excel-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by Microsoft Excel tables.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+    color
+        A string indicating the color of the row striping, defaults to a light gray.
+        Accepts either named colors or hex colors.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.opt_row_striping()
         .tab_style(
@@ -249,6 +326,23 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
 
 
 def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
+    """Applies a dot-matrix-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look reminiscent of dot-matrix printouts.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+    color
+        A string indicating the color of the row striping, defaults to a light green.
+        Accepts either named colors or hex colors.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.opt_row_striping()
         .opt_table_font(font="Courier")
@@ -275,6 +369,20 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
 
 
 def gt_theme_dark(gt: GT) -> GT:
+    """Applies a dark mode theme to a GT table.
+
+    This function styles a `GT` object with a dark background and light text.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.tab_style(
             style=style.text(
@@ -319,6 +427,27 @@ def gt_theme_pff(
     spanners: list[str] | None = None,
     rank_col: str | None = None,
 ) -> GT:
+    """Applies a Pro Football Focus (PFF)-inspired theme to a GT table.
+
+    This function styles a `GT` object with a look inspired by Pro Football Focus tables,
+    supporting custom spanners, dividers, and rank column highlighting.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+    divider
+        Zero or more column names to visually divide with a preceding border.
+    spanners
+        Optional list of spanners to style, as referenced by the `GT` spanner ids.
+    rank_col
+        Optional single column name to highlight as a rank column.
+
+    Returns
+    -------
+    GT
+        The themed `GT` object, allowing for method chaining.
+    """
     gt_themed = (
         gt.opt_row_striping()
         .opt_all_caps()

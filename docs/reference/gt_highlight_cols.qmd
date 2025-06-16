@@ -11,7 +11,7 @@ gt_highlight_cols(
 )
 ```
 
-Add color highlighting to one or more specific columns
+Add color highlighting to one or more specific columns.
 
 The `gt_highlight_cols()` function takes an existing `GT` object and adds highlighting color
 to the cell background of a specific column(s).
@@ -20,7 +20,7 @@ to the cell background of a specific column(s).
 
 | Name        | Type                                                            | Description                                                                                                                                                                                                                                                                                               | Default     |
 |-------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| gt          | GT                                                              | An existing `GT` object                                                                                                                                                                                                                                                                                   | _required_  |
+| gt          | GT                                                              | An existing `GT` object.                                                                                                                                                                                                                                                                                  | _required_  |
 | columns     | SelectExpr                                                      | The columns to target. Can either be a single column name or a series of column names provided in a list. If `None`, the alignment is applied to all columns.                                                                                                                                             | `None`      |
 | fill        | str                                                             | A character string indicating the fill color. If nothing is provided, then `"#80bcd8"` (light blue) will be used as a default.                                                                                                                                                                            | `'#80bcd8'` |
 | alpha       | int \| None                                                     | An integer `[0, 1]` for the alpha transparency value for the color as single value in the range of `0` (fully transparent) to `1` (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the `"#RRGGBBAA"` format. | `None`      |
