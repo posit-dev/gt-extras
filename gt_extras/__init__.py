@@ -4,7 +4,7 @@ from .themes import gt_theme_espn
 from .themes import gt_theme_nytimes
 from .themes import gt_theme_guardian
 
-from .highlight_cols import highlight_cols
+from .utilities import highlight_cols
 
 __all__ = [
     "gt_theme_538",
