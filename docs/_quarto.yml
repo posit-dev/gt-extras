@@ -4,9 +4,16 @@ project:
 metadata-files: 
   - _sidebar.yml
 
+website: 
+  title: gt-extras
+  description: "A Collection of Helper Functions for the Great-Tables Package."
+
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: gt_extras
+  dir: reference
+  style: pkgdown
+  title: API Reference
 
   # write sidebar data
   sidebar: _sidebar.yml
