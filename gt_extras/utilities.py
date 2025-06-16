@@ -79,8 +79,8 @@ def highlight_cols(
         Return a hex color string with the specified alpha (transparency) channel.
         If alpha is outside [0, 1], it is clamped to that range. If alpha is None, the original
         color is returned. 
-        TODO Can we do it without importing mcolors?
         """
+        # TODO Can we do it without importing mcolors?
         if alpha is None:
             return color
         try:
