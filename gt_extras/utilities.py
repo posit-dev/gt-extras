@@ -1,14 +1,13 @@
 from __future__ import annotations
+from typing import Literal
 
 from great_tables import GT, style, loc
 from great_tables._tbl_data import SelectExpr
 
-from typing import Literal
-
 import matplotlib.colors as mcolors
 
 
-def highlight_cols(
+def gt_highlight_cols(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "#80bcd8",
@@ -78,14 +77,14 @@ def highlight_cols(
         """
         Return a hex color string with the specified alpha (transparency) channel.
         If alpha is outside [0, 1], it is clamped to that range. If alpha is None, the original
-        color is returned. 
+        color is returned.
         """
         # TODO Can we do it without importing mcolors?
         if alpha is None:
             return color
         try:
-            rbg_color = mcolors.to_rgb(color)        
-            rbg_color_with_alpha = rbg_color + (alpha, )
+            rbg_color = mcolors.to_rgb(color)
+            rbg_color_with_alpha = rbg_color + (alpha,)
             hex_color_with_alpha = mcolors.to_hex(rbg_color_with_alpha, keep_alpha=True)
             return hex_color_with_alpha
         except ValueError:

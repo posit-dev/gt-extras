@@ -8,24 +8,17 @@ from .themes import gt_theme_dot_matrix
 from .themes import gt_theme_dark
 from .themes import gt_theme_pff
 
-
-<<<<<<< gt-highlight-cols
 from .utilities import highlight_cols
 
-=======
->>>>>>> main
 __all__ = [
     "gt_theme_538",
     "gt_theme_espn",
     "gt_theme_nytimes",
     "gt_theme_guardian",
-<<<<<<< gt-highlight-cols
-    
-    "highlight_cols",
-=======
     "gt_theme_excel",
     "gt_theme_dot_matrix",
     "gt_theme_dark",
     "gt_theme_pff",
->>>>>>> main
+
+    "highlight_cols",
 ]
