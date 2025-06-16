@@ -33,7 +33,7 @@ keywords = ["tables", "html"]
 [dependency-groups]
 dev = [
     "quartodoc>=0.8.1; python_version >= '3.9'",
-    "griffe==0.38.1",
+    "griffe",
     "polars",
     "pandas",
     "pyarrow",

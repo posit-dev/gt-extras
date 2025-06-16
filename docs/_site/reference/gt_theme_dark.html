@@ -76,11 +76,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -109,10 +109,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar floating fullcontent quarto-light">
+<body class="nav-sidebar floating nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">gt-extras</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <span class="nav-link">
+<span class="menu-text">Get Started</span>
+    </span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../reference/index.html" aria-current="page"> 
+<span class="menu-text">API Reference</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -121,26 +149,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_dark.html">gt_theme_dark</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">gt-extras</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -303,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="dd2766d2" class="cell" data-execution_count="1">
+<div id="cceccd95" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
@@ -318,105 +333,107 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_theme_dark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="qpiqvlmuvo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="hxtlwvfmmq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
-#qpiqvlmuvo table {
+#hxtlwvfmmq table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#qpiqvlmuvo thead, tbody, tfoot, tr, td, th { border-style: none; }
+#hxtlwvfmmq thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#qpiqvlmuvo p { margin: 0; padding: 0; }
- #qpiqvlmuvo .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #FFFFFF; font-size: 16px; font-weight: normal; font-style: normal; background-color: #333333; width: auto; border-top-style: none; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #333333; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #333333; border-left-style: none; border-left-width: 2px; border-left-color: #333333; }
- #qpiqvlmuvo .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #qpiqvlmuvo .gt_title { color: #FFFFFF; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #333333; border-bottom-width: 0; }
- #qpiqvlmuvo .gt_subtitle { color: #FFFFFF; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #333333; border-top-width: 0; }
- #qpiqvlmuvo .gt_heading { background-color: #333333; text-align: left; border-bottom-color: #333333; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qpiqvlmuvo .gt_bottom_border { border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #qpiqvlmuvo .gt_col_headings { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qpiqvlmuvo .gt_col_heading { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #qpiqvlmuvo .gt_column_spanner_outer { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #qpiqvlmuvo .gt_column_spanner_outer:first-child { padding-left: 0; }
- #qpiqvlmuvo .gt_column_spanner_outer:last-child { padding-right: 0; }
- #qpiqvlmuvo .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #qpiqvlmuvo .gt_spanner_row { border-bottom-style: hidden; }
- #qpiqvlmuvo .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #qpiqvlmuvo .gt_empty_group_heading { padding: 0.5px; color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #qpiqvlmuvo .gt_from_md> :first-child { margin-top: 0; }
- #qpiqvlmuvo .gt_from_md> :last-child { margin-bottom: 0; }
- #qpiqvlmuvo .gt_row { padding-top: 7px; padding-bottom: 7px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #qpiqvlmuvo .gt_stub { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #qpiqvlmuvo .gt_stub_row_group { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #qpiqvlmuvo .gt_row_group_first td { border-top-width: 2px; }
- #qpiqvlmuvo .gt_row_group_first th { border-top-width: 2px; }
- #qpiqvlmuvo .gt_striped { background-color: rgba(128,128,128,0.05); }
- #qpiqvlmuvo .gt_table_body { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #333333; }
- #qpiqvlmuvo .gt_sourcenotes { color: #FFFFFF; background-color: #333333; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #qpiqvlmuvo .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #qpiqvlmuvo .gt_left { text-align: left; }
- #qpiqvlmuvo .gt_center { text-align: center; }
- #qpiqvlmuvo .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #qpiqvlmuvo .gt_font_normal { font-weight: normal; }
- #qpiqvlmuvo .gt_font_bold { font-weight: bold; }
- #qpiqvlmuvo .gt_font_italic { font-style: italic; }
- #qpiqvlmuvo .gt_super { font-size: 65%; }
- #qpiqvlmuvo .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #qpiqvlmuvo .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#hxtlwvfmmq p { margin: 0; padding: 0; }
+ #hxtlwvfmmq .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #FFFFFF; font-size: 16px; font-weight: normal; font-style: normal; background-color: #333333; width: auto; border-top-style: none; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #333333; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #333333; border-left-style: none; border-left-width: 2px; border-left-color: #333333; }
+ #hxtlwvfmmq .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #hxtlwvfmmq .gt_title { color: #FFFFFF; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #333333; border-bottom-width: 0; }
+ #hxtlwvfmmq .gt_subtitle { color: #FFFFFF; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #333333; border-top-width: 0; }
+ #hxtlwvfmmq .gt_heading { background-color: #333333; text-align: left; border-bottom-color: #333333; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hxtlwvfmmq .gt_bottom_border { border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #hxtlwvfmmq .gt_col_headings { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hxtlwvfmmq .gt_col_heading { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #hxtlwvfmmq .gt_column_spanner_outer { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #hxtlwvfmmq .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #hxtlwvfmmq .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #hxtlwvfmmq .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #hxtlwvfmmq .gt_spanner_row { border-bottom-style: hidden; }
+ #hxtlwvfmmq .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #hxtlwvfmmq .gt_empty_group_heading { padding: 0.5px; color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #hxtlwvfmmq .gt_from_md> :first-child { margin-top: 0; }
+ #hxtlwvfmmq .gt_from_md> :last-child { margin-bottom: 0; }
+ #hxtlwvfmmq .gt_row { padding-top: 7px; padding-bottom: 7px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #hxtlwvfmmq .gt_stub { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #hxtlwvfmmq .gt_stub_row_group { color: #FFFFFF; background-color: #333333; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #hxtlwvfmmq .gt_row_group_first td { border-top-width: 2px; }
+ #hxtlwvfmmq .gt_row_group_first th { border-top-width: 2px; }
+ #hxtlwvfmmq .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #hxtlwvfmmq .gt_table_body { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #333333; }
+ #hxtlwvfmmq .gt_sourcenotes { color: #FFFFFF; background-color: #333333; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #hxtlwvfmmq .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #hxtlwvfmmq .gt_left { text-align: left; }
+ #hxtlwvfmmq .gt_center { text-align: center; }
+ #hxtlwvfmmq .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #hxtlwvfmmq .gt_font_normal { font-weight: normal; }
+ #hxtlwvfmmq .gt_font_bold { font-weight: bold; }
+ #hxtlwvfmmq .gt_font_italic { font-style: italic; }
+ #hxtlwvfmmq .gt_super { font-size: 65%; }
+ #hxtlwvfmmq .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #hxtlwvfmmq .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
-<tr class="gt_heading header">
-<th colspan="4" class="gt_heading gt_title gt_font_normal" style="font-family: Libre Franklin; font-weight: 800">Car Collection</th>
-</tr>
-<tr class="gt_col_headings even">
-<th id="<em>Car</em>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="color: white; font-family: Source Sans Pro; text-transform: uppercase" scope="col"><em>Car</em></th>
-<th id="year" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="color: white; font-family: Source Sans Pro; text-transform: uppercase" scope="col">year</th>
-<th id="hp" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="color: white; font-family: Source Sans Pro; text-transform: uppercase" scope="col">hp</th>
-<th id="trq" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="color: white; font-family: Source Sans Pro; text-transform: uppercase" scope="col">trq</th>
+
+  <tr class="gt_heading">
+    <td colspan="4" class="gt_heading gt_title gt_font_normal" style="font-family: Libre Franklin;font-weight: 800;">Car Collection</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: white;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="<em>Car</em>"><em>Car</em></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: white;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: white;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: white;font-family: Source Sans Pro;text-transform: uppercase;" scope="col" id="trq">trq</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">GT</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">2017</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">647.0</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">550.0</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">458 Speciale</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">2015</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">597.0</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">398.0</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">458 Spider</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">2015</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">562.0</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">398.0</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">458 Italia</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">2014</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">562.0</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">398.0</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">488 GTB</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">2016</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">661.0</td>
-<td class="gt_row gt_right" style="font-family: Source Sans Pro; font-weight: 400">561.0</td>
-</tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GT</th>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2017</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">647.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">550.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">458 Speciale</th>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2015</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">597.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">398.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">458 Spider</th>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2015</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">562.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">398.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">458 Italia</th>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2014</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">562.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">398.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">488 GTB</th>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">2016</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">661.0</td>
+    <td style="font-family: Source Sans Pro;font-weight: 400;" class="gt_row gt_right">561.0</td>
+  </tr>
 </tbody>
+
+
 </table>
 
-
 </div>
+        
 </div>
 </div>
 

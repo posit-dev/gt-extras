@@ -4,12 +4,18 @@ project:
 metadata-files: 
   - _sidebar.yml
 
+html-table-processing: none
+
 website: 
   title: gt-extras
   description: "A Collection of Helper Functions for the Great-Tables Package."
+  navbar:
+    left:
+      - text: Get Started
+      # file: page here
+      - reference/index.qmd
 
 quartodoc:
-  # the name used to import the package you want to create reference docs for
   package: gt_extras
   dir: reference
   style: pkgdown
