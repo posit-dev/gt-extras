@@ -31,7 +31,21 @@ def gt_theme_538(gt: GT) -> GT:
 
     Examples
     ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
 
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_538)
+    ```
     """
     gt_themed = (
         gt.opt_table_font(font=google_font("Cairo"), weight=400)
@@ -103,6 +117,24 @@ def gt_theme_espn(gt: GT) -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_espn)
+    ```
     """
     gt_themed = (
         gt.opt_all_caps()
@@ -139,6 +171,24 @@ def gt_theme_nytimes(gt: GT) -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_nytimes)
+    ```
     """
     gt_themed = (
         gt.tab_style(
@@ -188,6 +238,24 @@ def gt_theme_guardian(gt: GT) -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_guardian)
+    ```
     """
     ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
@@ -266,6 +334,24 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_excel)
+    ```
     """
     gt_themed = (
         gt.opt_row_striping()
@@ -342,6 +428,24 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+    
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_dot_matrix)
+    ```
     """
     gt_themed = (
         gt.opt_row_striping()
@@ -382,6 +486,24 @@ def gt_theme_dark(gt: GT) -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+    
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gt.pipe(gte.gt_theme_dark)
+    ```
     """
     gt_themed = (
         gt.tab_style(
@@ -447,6 +569,24 @@ def gt_theme_pff(
     -------
     GT
         The themed `GT` object, allowing for method chaining.
+
+    Examples
+    ----------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+        .tab_header(title="Car Collection")
+    )
+
+    gte.gt_theme_pff(gt, rank_col="trq")
+    ```
     """
     gt_themed = (
         gt.opt_row_striping()

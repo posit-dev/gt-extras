@@ -19,3 +19,21 @@ This function styles a `GT` object with a dark background and light text.
 | Name   | Type   | Description                                           |
 |--------|--------|-------------------------------------------------------|
 |        | GT     | The themed `GT` object, allowing for method chaining. |
+
+## Examples {.doc-section .doc-section-examples}
+
+```{python}
+from great_tables import GT, md
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label=md("*Car*"))
+    .tab_header(title="Car Collection")
+)
+
+gt.pipe(gte.gt_theme_dark)
+```
