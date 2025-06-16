@@ -10,12 +10,13 @@ import matplotlib.colors as mcolors
 
 def highlight_cols(
     gt: GT,
-    columns: SelectExpr = None,  ## Todo check that this is good
+    columns: SelectExpr = None,
     fill: str = "#80bcd8",
-    alpha: int = 1,  ## Todo this doesn't exist in Python
+    alpha: int | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
 ) -> GT:
+    # TODO see if the color can be displayed in some cool way in the docs
     """
     Add color highlighting to one or more specific columns
 
@@ -34,10 +35,12 @@ def highlight_cols(
     fill
         A character string indicating the fill color. If nothing is provided, then `"#80bcd8"`
         (light blue) will be used as a default.
-    TODO see if the color can be displayed in some cool way
 
-    alpha??
-        TODO
+    alpha
+        An integer `[0, 1]` for the alpha transparency value for the color as single value in the
+        range of `0` (fully transparent) to `1` (fully opaque). If not provided the fill color will
+        either be fully opaque or use alpha information from the color value if it is supplied in
+        the `"#RRGGBBAA"` format.
 
     font_weight
         A string or number indicating the weight of the font. Can be a text-based keyword such as
@@ -56,35 +59,30 @@ def highlight_cols(
 
     Examples
     --------
-
-    TODO
-    The example below relabels columns from the `countrypops` data to start with uppercase.
-
     ```{python}
-    from great_tables import GT
-    from great_tables.data import countrypops
+    from great_tables import GT, md
+    from great_tables.data import gtcars
 
-    countrypops_mini = countrypops.loc[countrypops["country_name"] == "Uganda"][
-        ["country_name", "year", "population"]
-    ].tail(5)
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
 
-    (
-        GT(countrypops_mini)
-        .cols_label(
-            country_name="Country Name",
-            year="Year",
-            population="Population"
-        )
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
     )
+
+    gte.highlight_cols(gt, columns="hp")
     ```
     """
 
-    # Altered wrt R package - no alpha
-    def _to_alpha_hex_color(color: str, alpha: int) -> str:
+    def _to_alpha_hex_color(color: str, alpha: int | None) -> str:
         """
-        Function description 
+        Return a hex color string with the specified alpha (transparency) channel.
+        If alpha is outside [0, 1], it is clamped to that range. If alpha is None, the original
+        color is returned. 
         TODO Can we do it without importing mcolors?
         """
+        if alpha is None:
+            return color
         try:
             rbg_color = mcolors.to_rgb(color)        
             rbg_color_with_alpha = rbg_color + (alpha, )
@@ -93,14 +91,18 @@ def highlight_cols(
         except ValueError:
             raise ValueError(f"Invalid color value: {color}")
 
-    alpha = min(max(alpha, 0), 1)
+    if alpha is not None:
+        alpha = min(max(alpha, 0), 1)
     fill_with_alpha = _to_alpha_hex_color(fill, alpha=alpha)
+
+    # TODO remove
+    print(f"alpha: {alpha}, fill: {fill}, fill-with-alpha: {fill_with_alpha}")
 
     res = gt.tab_style(
         style=[
             style.fill(color=fill_with_alpha),
             style.text(weight=font_weight, color=font_color),
-            style.borders(sides=["top", "bottom"], color=fill),
+            style.borders(sides=["top", "bottom"], color=fill_with_alpha),
         ],
         locations=loc.body(columns=columns),
     )
