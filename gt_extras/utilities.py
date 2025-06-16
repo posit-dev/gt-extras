@@ -105,3 +105,26 @@ def gt_highlight_cols(
     )
 
     return res
+
+
+def gt_hulk_col_numeric(
+    gt: GT,
+    columns: SelectExpr = None,
+    palette: str | list[str] | None = None,
+    domain: list[str] | list[int] | list[float] | None = None,
+    na_color: str | None = None,
+    alpha: int | float | None = None,
+    reverse: bool = False,
+    autocolor_text: bool = True,
+) -> GT:
+    res = gt.data_color(
+        columns=columns,
+        palette=palette,
+        domain=domain,
+        na_color=na_color,
+        alpha=alpha,
+        reverse=reverse,
+        autocolor_text=autocolor_text,
+    )
+
+    return res
