@@ -8,6 +8,7 @@ from .themes import gt_theme_dot_matrix
 from .themes import gt_theme_dark
 from .themes import gt_theme_pff
 
+from .utilities import gt_highlight_cols
 
 __all__ = [
     "gt_theme_538",
@@ -18,4 +19,6 @@ __all__ = [
     "gt_theme_dot_matrix",
     "gt_theme_dark",
     "gt_theme_pff",
+    
+    "gt_highlight_cols",
 ]

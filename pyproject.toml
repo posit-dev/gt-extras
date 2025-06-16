@@ -13,6 +13,7 @@ requires-python = ">=3.9"
 license.file = "LICENSE"
 dependencies = [
     "great-tables>=0.17.0",
+    "matplotlib>=3.9.4",
 ]
 
 authors = [
