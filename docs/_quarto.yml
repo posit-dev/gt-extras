@@ -1,0 +1,45 @@
+project:
+  type: website
+
+metadata-files: 
+  - _sidebar.yml
+
+html-table-processing: none
+
+website: 
+  title: gt-extras
+  description: "A Collection of Helper Functions for the Great-Tables Package."
+  navbar:
+    left:
+      - text: Get Started
+      # file: page here
+      - reference/index.qmd
+
+
+quartodoc:
+  package: gt_extras
+  dir: reference
+  # style: pkgdown
+  title: API Reference
+
+  # write sidebar data
+  sidebar: _sidebar.yml
+  #css: reference/_styles-quartodoc.css
+
+  sections:
+    - title: Themes
+      desc: Functions to generate themes.
+      contents:
+        - gt_theme_538
+        - gt_theme_espn
+        - gt_theme_guardian
+        - gt_theme_nytimes
+        - gt_theme_excel
+        - gt_theme_dot_matrix
+        - gt_theme_dark
+        - gt_theme_pff
+
+    - title: Utilities
+      desc: "" #todo
+      contents:
+        - gt_highlight_cols

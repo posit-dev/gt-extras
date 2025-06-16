@@ -17,7 +17,7 @@ def gt_highlight_cols(
 ) -> GT:
     # TODO see if the color can be displayed in some cool way in the docs
     """
-    Add color highlighting to one or more specific columns
+    Add color highlighting to one or more specific columns.
 
     The `gt_highlight_cols()` function takes an existing `GT` object and adds highlighting color
     to the cell background of a specific column(s).
@@ -25,7 +25,7 @@ def gt_highlight_cols(
     Parameters
     ----------
     gt
-        An existing `GT` object
+        An existing `GT` object.
 
     columns
         The columns to target. Can either be a single column name or a series of column names
@@ -61,6 +61,7 @@ def gt_highlight_cols(
     ```{python}
     from great_tables import GT, md
     from great_tables.data import gtcars
+    import gt_extras as gte
 
     gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
 
@@ -69,7 +70,7 @@ def gt_highlight_cols(
         .tab_stubhead(label=md("*Car*"))
     )
 
-    gte.highlight_cols(gt, columns="hp")
+    gte.gt_highlight_cols(gt, columns="hp")
     ```
     """
 
@@ -93,9 +94,6 @@ def gt_highlight_cols(
     if alpha is not None:
         alpha = min(max(alpha, 0), 1)
     fill_with_alpha = _to_alpha_hex_color(fill, alpha=alpha)
-
-    # TODO remove
-    print(f"alpha: {alpha}, fill: {fill}, fill-with-alpha: {fill_with_alpha}")
 
     res = gt.tab_style(
         style=[

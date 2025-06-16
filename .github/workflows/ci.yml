@@ -32,6 +32,49 @@ jobs:
         run: |
           uv run pytest
 
+  docs-build:
+    name: "Build Docs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # python ----
+      - uses: actions/checkout@v2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      # quarto ----
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Build docs
+        run: |
+          cd docs && uv run quartodoc build --verbose && uv run quarto render
+
+      # save ----
+      - name: Save docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: docs/_site
+
+  docs-preview:
+    name: "Docs Preview"
+    needs: [docs-build]
+    uses: ./.github/workflows/_preview.yml
+    with:
+      artifact-name: "docs"
+    secrets:
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_NAME: ${{ secrets.NETLIFY_SITE_NAME }}
+
   release-pypi:
     name: "Release to PyPI"
     runs-on: ubuntu-latest
