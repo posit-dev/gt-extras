@@ -1,0 +1,6 @@
+# gt_theme_dot_matrix { #gt_extras.gt_theme_dot_matrix }
+
+```python
+gt_theme_dot_matrix(gt, color='#b5dbb6')
+```
+

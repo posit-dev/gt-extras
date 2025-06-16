@@ -1,0 +1,19 @@
+website:
+  sidebar:
+  - contents:
+    - reference/index.qmd
+    - contents:
+      - reference/gt_theme_538.qmd
+      - reference/gt_theme_espn.qmd
+      - reference/gt_theme_guardian.qmd
+      - reference/gt_theme_nytimes.qmd
+      - reference/gt_theme_excel.qmd
+      - reference/gt_theme_dot_matrix.qmd
+      - reference/gt_theme_dark.qmd
+      - reference/gt_theme_pff.qmd
+      section: Themes
+    - contents:
+      - reference/gt_highlight_cols.qmd
+      section: Utilities
+    id: reference
+  - id: dummy-sidebar

@@ -1,0 +1,178 @@
+[
+  {
+    "objectID": "reference/gt_theme_excel.html",
+    "href": "reference/gt_theme_excel.html",
+    "title": "gt_theme_excel",
+    "section": "",
+    "text": "gt_theme_excel\ngt_theme_excel(gt, color='lightgrey')",
+    "crumbs": [
+      "Themes",
+      "gt_theme_excel"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_espn.html",
+    "href": "reference/gt_theme_espn.html",
+    "title": "gt_theme_espn",
+    "section": "",
+    "text": "gt_theme_espn\ngt_theme_espn(gt)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_espn"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_nytimes.html",
+    "href": "reference/gt_theme_nytimes.html",
+    "title": "gt_theme_nytimes",
+    "section": "",
+    "text": "gt_theme_nytimes\ngt_theme_nytimes(gt)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_nytimes"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_guardian.html",
+    "href": "reference/gt_theme_guardian.html",
+    "title": "gt_theme_guardian",
+    "section": "",
+    "text": "gt_theme_guardian\ngt_theme_guardian(gt)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_guardian"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_dark.html",
+    "href": "reference/gt_theme_dark.html",
+    "title": "gt_theme_dark",
+    "section": "",
+    "text": "gt_theme_dark\ngt_theme_dark(gt)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_dark"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "gt-extras",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "reference/gt_theme_dot_matrix.html",
+    "href": "reference/gt_theme_dot_matrix.html",
+    "title": "gt_theme_dot_matrix",
+    "section": "",
+    "text": "gt_theme_dot_matrix\ngt_theme_dot_matrix(gt, color='#b5dbb6')",
+    "crumbs": [
+      "Themes",
+      "gt_theme_dot_matrix"
+    ]
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\n\n\n\ngt_theme_espn\n\n\n\ngt_theme_guardian\n\n\n\ngt_theme_nytimes\n\n\n\ngt_theme_excel\n\n\n\ngt_theme_dot_matrix\n\n\n\ngt_theme_dark\n\n\n\ngt_theme_pff\n\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns",
+    "crumbs": [
+      "Function reference"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#themes",
+    "href": "reference/index.html#themes",
+    "title": "Function reference",
+    "section": "",
+    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\n\n\n\ngt_theme_espn\n\n\n\ngt_theme_guardian\n\n\n\ngt_theme_nytimes\n\n\n\ngt_theme_excel\n\n\n\ngt_theme_dot_matrix\n\n\n\ngt_theme_dark\n\n\n\ngt_theme_pff",
+    "crumbs": [
+      "Function reference"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_pff.html",
+    "href": "reference/gt_theme_pff.html",
+    "title": "gt_theme_pff",
+    "section": "",
+    "text": "gt_theme_pff\ngt_theme_pff(gt, divider=None, spanners=None, rank_col=None)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_pff"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_538.html",
+    "href": "reference/gt_theme_538.html",
+    "title": "gt_theme_538",
+    "section": "",
+    "text": "gt_theme_538\ngt_theme_538(gt)",
+    "crumbs": [
+      "Themes",
+      "gt_theme_538"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html",
+    "href": "reference/gt_highlight_cols.html",
+    "title": "gt_highlight_cols",
+    "section": "",
+    "text": "gt_highlight_cols(\n    gt,\n    columns=None,\n    fill='#80bcd8',\n    alpha=None,\n    font_weight='normal',\n    font_color='#000000',\n)\nAdd color highlighting to one or more specific columns\nThe gt_highlight_cols() function takes an existing GT object and adds highlighting color to the cell background of a specific column(s).",
+    "crumbs": [
+      "Utilities",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html#parameters",
+    "href": "reference/gt_highlight_cols.html#parameters",
+    "title": "gt_highlight_cols",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ngt\nGT\nAn existing GT object\nrequired\n\n\ncolumns\nSelectExpr\nThe columns to target. Can either be a single column name or a series of column names provided in a list. If None, the alignment is applied to all columns.\nNone\n\n\nfill\nstr\nA character string indicating the fill color. If nothing is provided, then \"#80bcd8\" (light blue) will be used as a default.\n'#80bcd8'\n\n\nalpha\nint | None\nAn integer [0, 1] for the alpha transparency value for the color as single value in the range of 0 (fully transparent) to 1 (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the \"#RRGGBBAA\" format.\nNone\n\n\nfont_weight\nLiteral['normal', 'bold', 'bolder', 'lighter'] | int\nA string or number indicating the weight of the font. Can be a text-based keyword such as \"normal\", \"bold\", \"lighter\", \"bolder\", or, a numeric value between 1 and 1000, inclusive. Note that only variable fonts may support the numeric mapping of weight.\n'normal'\n\n\nfont_color\nstr\nA character string indicating the text color. If nothing is provided, then \"#000000\" (black) will be used as a default.\n'#000000'",
+    "crumbs": [
+      "Utilities",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html#returns",
+    "href": "reference/gt_highlight_cols.html#returns",
+    "title": "gt_highlight_cols",
+    "section": "Returns",
+    "text": "Returns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nGT\nThe GT object is returned. This is the same object that the method is called on so that we can facilitate method chaining.",
+    "crumbs": [
+      "Utilities",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html#examples",
+    "href": "reference/gt_highlight_cols.html#examples",
+    "title": "gt_highlight_cols",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(5)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n)\n\ngte.gt_highlight_cols(gt, columns=\"hp\")\n\nalpha: None, fill: #80bcd8, fill-with-alpha: #80bcd8\n\n\n\n\n\n\n\n\nCar\nyear\nhp\ntrq\n\n\n\n\nGT\n2017\n647.0\n550.0\n\n\n458 Speciale\n2015\n597.0\n398.0\n\n\n458 Spider\n2015\n562.0\n398.0\n\n\n458 Italia\n2014\n562.0\n398.0\n\n\n488 GTB\n2016\n661.0\n561.0",
+    "crumbs": [
+      "Utilities",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#utilities",
+    "href": "reference/index.html#utilities",
+    "title": "Function reference",
+    "section": "",
+    "text": "gt_highlight_cols\nAdd color highlighting to one or more specific columns",
+    "crumbs": [
+      "Function reference"
+    ]
+  }
+]

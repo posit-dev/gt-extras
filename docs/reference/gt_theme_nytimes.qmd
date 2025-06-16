@@ -1,0 +1,6 @@
+# gt_theme_nytimes { #gt_extras.gt_theme_nytimes }
+
+```python
+gt_theme_nytimes(gt)
+```
+

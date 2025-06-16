@@ -1,0 +1,6 @@
+# gt_theme_dark { #gt_extras.gt_theme_dark }
+
+```python
+gt_theme_dark(gt)
+```
+

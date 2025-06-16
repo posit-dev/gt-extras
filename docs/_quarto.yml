@@ -1,0 +1,31 @@
+project:
+  type: website
+
+metadata-files: 
+  - _sidebar.yml
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: gt_extras
+
+  # write sidebar data
+  sidebar: _sidebar.yml
+  #css: reference/_styles-quartodoc.css
+
+  sections:
+    - title: Themes
+      desc: Functions to generate themes.
+      contents:
+        - gt_theme_538
+        - gt_theme_espn
+        - gt_theme_guardian
+        - gt_theme_nytimes
+        - gt_theme_excel
+        - gt_theme_dot_matrix
+        - gt_theme_dark
+        - gt_theme_pff
+
+    - title: Utilities
+      desc: "" #todo
+      contents:
+        - gt_highlight_cols

@@ -1,0 +1,24 @@
+# Function reference {.doc .doc-index}
+
+## Themes
+
+Functions to generate themes.
+
+| | |
+| --- | --- |
+| [gt_theme_538](gt_theme_538.qmd#gt_extras.gt_theme_538) |  |
+| [gt_theme_espn](gt_theme_espn.qmd#gt_extras.gt_theme_espn) |  |
+| [gt_theme_guardian](gt_theme_guardian.qmd#gt_extras.gt_theme_guardian) |  |
+| [gt_theme_nytimes](gt_theme_nytimes.qmd#gt_extras.gt_theme_nytimes) |  |
+| [gt_theme_excel](gt_theme_excel.qmd#gt_extras.gt_theme_excel) |  |
+| [gt_theme_dot_matrix](gt_theme_dot_matrix.qmd#gt_extras.gt_theme_dot_matrix) |  |
+| [gt_theme_dark](gt_theme_dark.qmd#gt_extras.gt_theme_dark) |  |
+| [gt_theme_pff](gt_theme_pff.qmd#gt_extras.gt_theme_pff) |  |
+
+## Utilities
+
+
+
+| | |
+| --- | --- |
+| [gt_highlight_cols](gt_highlight_cols.qmd#gt_extras.gt_highlight_cols) | Add color highlighting to one or more specific columns |

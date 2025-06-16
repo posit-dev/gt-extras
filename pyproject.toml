@@ -43,6 +43,8 @@ dev = [
     "ipykernel>=6.29.5",
     "selenium>=4.33.0",
     "pillow>=11.2.1",
+    "quartodoc>=0.11.1",
+    "quarto>=0.1.0",
 ]
 
 

@@ -1,0 +1,6 @@
+# gt_theme_excel { #gt_extras.gt_theme_excel }
+
+```python
+gt_theme_excel(gt, color='lightgrey')
+```
+

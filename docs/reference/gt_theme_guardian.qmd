@@ -1,0 +1,6 @@
+# gt_theme_guardian { #gt_extras.gt_theme_guardian }
+
+```python
+gt_theme_guardian(gt)
+```
+

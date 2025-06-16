@@ -1,0 +1,6 @@
+# gt_theme_538 { #gt_extras.gt_theme_538 }
+
+```python
+gt_theme_538(gt)
+```
+

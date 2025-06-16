@@ -1,0 +1,6 @@
+# gt_theme_pff { #gt_extras.gt_theme_pff }
+
+```python
+gt_theme_pff(gt, divider=None, spanners=None, rank_col=None)
+```
+
