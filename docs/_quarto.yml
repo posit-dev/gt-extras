@@ -15,6 +15,7 @@ website:
       # file: page here
       - reference/index.qmd
 
+
 quartodoc:
   package: gt_extras
   dir: reference
