@@ -95,9 +95,6 @@ def gt_highlight_cols(
         alpha = min(max(alpha, 0), 1)
     fill_with_alpha = _to_alpha_hex_color(fill, alpha=alpha)
 
-    # TODO remove
-    print(f"alpha: {alpha}, fill: {fill}, fill-with-alpha: {fill_with_alpha}")
-
     res = gt.tab_style(
         style=[
             style.fill(color=fill_with_alpha),
