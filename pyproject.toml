@@ -12,6 +12,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license.file = "LICENSE"
 dependencies = [
+    "fontawesome>=5.10.1.post1",
     "great-tables>=0.17.0",
 ]
 

@@ -475,6 +475,15 @@ wheels = [
 ]
 
 [[package]]
+name = "fontawesome"
+version = "5.10.1.post1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d4/5c/7bd784c3f6dc8dc148a6a6ad3e7d4bf0e3c5a53f9565cc0385d7f3dcee29/fontawesome-5.10.1.post1.tar.gz", hash = "sha256:1b5e8f2ed12a74b88aef6f404ff770af425324041bc5620523a802d5406595b8", size = 20372, upload-time = "2019-08-11T07:30:08.525Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b9/fa/84705d3713db9a528ab489cc8e213cafb6425407a437a1a7a6148d6bf98f/fontawesome-5.10.1.post1-py3-none-any.whl", hash = "sha256:642d74da5f4726bb2c8f035a2f4a98fdc4294d213a291994ee0b3d845166f9e8", size = 20214, upload-time = "2019-08-11T07:30:05.265Z" },
+]
+
+[[package]]
 name = "great-tables"
 version = "0.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -511,6 +520,7 @@ wheels = [
 name = "gt-extras"
 source = { editable = "." }
 dependencies = [
+    { name = "fontawesome" },
     { name = "great-tables" },
 ]
 
@@ -531,7 +541,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "great-tables", specifier = ">=0.17.0" }]
+requires-dist = [
+    { name = "fontawesome", specifier = ">=5.10.1.post1" },
+    { name = "great-tables", specifier = ">=0.17.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
