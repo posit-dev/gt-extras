@@ -13,7 +13,7 @@ def fa_icon_repeat(
     fill_opacity: int | str | None = 1,
     stroke: str | None = None,
     stroke_width: str | None = None,
-    stroke_opacity: str | None = None,
+    stroke_opacity: int | str | None = None,
     height: str | None = None,
     width: str | None = None,
     margin_left: str | None = "auto",
@@ -40,7 +40,7 @@ def fa_icon_repeat(
         The fill color for the icon (e.g., `"yellow"`, `"#ffcc00"`). If `None`, uses the default.
 
     fill_opacity
-        The opacity of the fill color as a string (`0.0` - `1.0`).
+        The opacity of the fill color (`0.0` - `1.0`).
 
     stroke
         The stroke color for the icon outline.
@@ -75,7 +75,7 @@ def fa_icon_repeat(
     Returns
     -------
     str
-        An HTML string containing the repeated SVG icons.
+        An HTML string containing the repeated SVG icons. If `repeats = 0`, this string will be empty.
 
     Examples
     --------
@@ -100,6 +100,9 @@ def fa_icon_repeat(
     --------
     See `icon_svg()` in the `faicons` package for further implementation details.
     """
+    if repeats < 0:
+        raise ValueError("repeats must be >= 0")
+
     icon = icon_svg(
         name=name,
         fill=fill,
