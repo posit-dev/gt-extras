@@ -3,7 +3,7 @@ from typing import Literal
 
 from faicons import icon_svg
 
-__all__ = "fa_icon_repeat"
+__all__ = ["fa_icon_repeat"]
 
 
 def fa_icon_repeat(

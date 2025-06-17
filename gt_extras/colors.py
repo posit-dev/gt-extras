@@ -6,6 +6,8 @@ from great_tables._tbl_data import SelectExpr
 
 from great_tables._data_color.base import _html_color
 
+__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric"]
+
 
 def gt_highlight_cols(
     gt: GT,
@@ -74,17 +76,15 @@ def gt_highlight_cols(
     ```
     """
     if alpha:
-        fill =_html_color(colors=[fill], alpha=alpha)[0]
+        fill = _html_color(colors=[fill], alpha=alpha)[0]
 
-    res = (      
-        gt.tab_style(
-            style=[
-                style.fill(color=fill),
-                style.text(weight=font_weight, color=font_color),
-                style.borders(sides=["top", "bottom"], color=fill),
-            ],
-            locations=loc.body(columns=columns),
-        )
+    res = gt.tab_style(
+        style=[
+            style.fill(color=fill),
+            style.text(weight=font_weight, color=font_color),
+            style.borders(sides=["top", "bottom"], color=fill),
+        ],
+        locations=loc.body(columns=columns),
     )
 
     return res
@@ -96,7 +96,7 @@ def gt_hulk_col_numeric(
     palette: str | list[str] | None = "PRGn",
     domain: list[str] | list[int] | list[float] | None = None,
     na_color: str | None = None,
-    alpha: int | float | None = None, # TODO see note
+    alpha: int | float | None = None,  # TODO see note
     reverse: bool = False,
     autocolor_text: bool = True,
 ) -> GT:
@@ -165,7 +165,7 @@ def gt_hulk_col_numeric(
         palette=palette,
         domain=domain,
         na_color=na_color,
-        alpha=alpha, # TODO note alpha is not supported in data_color
+        alpha=alpha,  # TODO note alpha is not supported in data_color
         reverse=reverse,
         autocolor_text=autocolor_text,
     )
