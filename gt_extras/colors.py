@@ -145,7 +145,7 @@ def gt_hulk_col_numeric(
 
     Examples
     --------
-    ```python
+    ```{python}
     from great_tables import GT
     from great_tables.data import gtcars
     import gt_extras as gte
