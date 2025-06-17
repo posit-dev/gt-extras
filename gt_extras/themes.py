@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from great_tables import GT, style, loc, google_font
 
-#empty commit
-
 __all__ = [
     "gt_theme_538",
     "gt_theme_espn",
@@ -430,7 +428,7 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
-    
+
     Examples
     ----------
     ```{python}
@@ -488,7 +486,7 @@ def gt_theme_dark(gt: GT) -> GT:
     -------
     GT
         The themed `GT` object, allowing for method chaining.
-    
+
     Examples
     ----------
     ```{python}
@@ -622,7 +620,11 @@ def gt_theme_pff(
         # Add a blank spanner
         gt_themed = (
             gt_themed.tab_spanner(
-                columns=[col for col in gt._boxhead._get_column_labels() if col not in span_cols],
+                columns=[
+                    col
+                    for col in gt._boxhead._get_column_labels()
+                    if col not in span_cols
+                ],
                 label=" ",
                 id="blank",
             )

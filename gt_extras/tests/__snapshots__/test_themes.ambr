@@ -1,0 +1,34 @@
+# serializer version: 1
+# name: test_theme_538_fonts_snap
+  '''
+  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Chivo&display=swap');
+  '''
+# ---
+# name: test_theme_dark_fonts_snap
+  '''
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+  '''
+# ---
+# name: test_theme_dot_matrix_fonts_snap
+  ''
+# ---
+# name: test_theme_espn_fonts_snap
+  "@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');"
+# ---
+# name: test_theme_excel_fonts_snap
+  ''
+# ---
+# name: test_theme_guardian_fonts_snap
+  "@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');"
+# ---
+# name: test_theme_nytimes_fonts_snap
+  '''
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+  '''
+# ---
+# name: test_theme_pff_fonts_snap
+  "@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');"
+# ---
