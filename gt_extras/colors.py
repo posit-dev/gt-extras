@@ -165,7 +165,7 @@ def gt_hulk_col_numeric(
         palette=palette,
         domain=domain,
         na_color=na_color,
-        alpha=alpha,  # TODO note alpha is not supported in data_color
+        alpha=alpha,  # TODO: note alpha is not supported in data_color
         reverse=reverse,
         autocolor_text=autocolor_text,
     )
