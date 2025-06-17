@@ -8,6 +8,15 @@ from great_tables import GT, exibble
 
 import pytest
 
+__all__ = [
+    "mini_gt",
+    "assert_rendered_global_imports",
+    "assert_rendered_source_notes",
+    "assert_rendered_heading",
+    "assert_rendered_columns",
+    "assert_rendered_body",
+]
+
 @pytest.fixture(scope="module")
 def mini_gt():
     mini_exibble = exibble.head(3)
@@ -19,11 +28,6 @@ def assert_rendered_global_imports(snapshot, gt: GT):
     assert snapshot == global_imports
 
 def _extract_global_imports(html: str) -> str:
-    """
-    Extract the first <style>...</style> block from an HTML string.
-    Returns the style content including the <style> tags.
-    If not found, returns an empty string.
-    """
     start = html.find("<style>")
     end = html.find("</style>", start)
     if start == -1 or end == -1:
