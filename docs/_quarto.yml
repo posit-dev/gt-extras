@@ -43,3 +43,4 @@ quartodoc:
       desc: "" #todo
       contents:
         - gt_highlight_cols
+        - gt_hulk_col_numeric

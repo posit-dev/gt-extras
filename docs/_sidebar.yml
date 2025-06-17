@@ -14,6 +14,7 @@ website:
       section: Themes
     - contents:
       - reference/gt_highlight_cols.qmd
+      - reference/gt_hulk_col_numeric.qmd
       section: Utilities
     id: reference
   - id: dummy-sidebar

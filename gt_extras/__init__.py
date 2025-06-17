@@ -9,6 +9,7 @@ from .themes import gt_theme_dark
 from .themes import gt_theme_pff
 
 from .utilities import gt_highlight_cols
+from .utilities import gt_hulk_col_numeric
 
 __all__ = [
     "gt_theme_538",
@@ -21,4 +22,5 @@ __all__ = [
     "gt_theme_pff",
     
     "gt_highlight_cols",
+    "gt_hulk_col_numeric",
 ]
