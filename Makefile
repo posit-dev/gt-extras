@@ -1,7 +1,7 @@
 .PHONY: check
 
 test:
-	pytest --cov=great_tables --cov-report=xml --cov-report=term-missing
+	pytest --cov-report=xml
 
 test-update:
 	pytest --snapshot-update

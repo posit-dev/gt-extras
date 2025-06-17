@@ -6,10 +6,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra --cov=gt_extras"
-testpaths = ["tests"]
-
-
+addopts = "-ra --cov=gt_extras --cov-report=term-missing"
+testpaths = ["gt_extras/tests"]
 
 [project]
 name = "gt-extras"
@@ -55,9 +53,11 @@ dev = [
     ]
 
 
-
 [tool.coverage.report]
 exclude_also = [
     "if TYPE_CHECKING:"
 ]
 include = ["gt_extras/*"]
+omit = [
+    "gt_extras/tests/*"
+]
