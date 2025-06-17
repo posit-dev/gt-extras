@@ -14,7 +14,7 @@ def test_fa_icon_repeat_multiple():
 def test_fa_icon_repeat_fill_and_stroke():
     html = fa_icon_repeat(name="star", repeats=2, fill="gold", stroke="black", stroke_width="2")
     assert "fill:gold" in html
-    assert 'stroke="black"' in html or "stroke:black" in html
+    assert "stroke:black" in html
     assert html.count("<svg") == 2
 
 def test_fa_icon_repeat_zero():
