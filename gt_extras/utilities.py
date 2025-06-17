@@ -4,7 +4,7 @@ from typing import Literal
 from great_tables import GT, style, loc
 from great_tables._tbl_data import SelectExpr
 
-from great_tables._data_color import data_color
+from great_tables._data_color.base import _html_color
 
 
 def gt_highlight_cols(
@@ -73,10 +73,13 @@ def gt_highlight_cols(
     gte.gt_highlight_cols(gt, columns="hp")
     ```
     """
-    res = (
-        gt.data_color(columns=columns, palette=[fill, fill], alpha=alpha)
-        .tab_style(
+    if alpha:
+        fill =_html_color(colors=[fill], alpha=alpha)[0]
+
+    res = (      
+        gt.tab_style(
             style=[
+                style.fill(color=fill),
                 style.text(weight=font_weight, color=font_color),
                 style.borders(sides=["top", "bottom"], color=fill),
             ],
