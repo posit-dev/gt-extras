@@ -117,6 +117,7 @@ def gt_hulk_col_numeric(
     reverse: bool = False,
     autocolor_text: bool = True,
 ) -> GT:
+    # TODO alpha is incomplete
     """
     Apply a color gradient to numeric columns in a `GT` table.
 
@@ -145,7 +146,6 @@ def gt_hulk_col_numeric(
         The color to use for missing (`NA`) values. If `None`, a default color is used.
 
     alpha
-        TODO this is incomplete
         The alpha (transparency) value for the colors, as a float between `0` (fully transparent)
         and `1` (fully opaque).
 
