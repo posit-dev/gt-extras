@@ -4,6 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra --cov=gt_extras"
+testpaths = ["tests"]
+
+
+
 [project]
 name = "gt-extras"
 dynamic = ["version"]
@@ -52,3 +59,4 @@ dev = [
 exclude_also = [
     "if TYPE_CHECKING:"
 ]
+include = ["gt_extras/*"]
