@@ -39,8 +39,13 @@ quartodoc:
         - gt_theme_dark
         - gt_theme_pff
 
-    - title: Utilities
-      desc: "" #todo
+    - title: Colors
+      desc: "" # TODO: add desc
       contents:
         - gt_highlight_cols
         - gt_hulk_col_numeric
+    
+    - title: Icons and Images
+      desc: "" # TODO: add desc
+      contents:
+        - fa_icon_repeat
