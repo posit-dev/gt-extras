@@ -4,8 +4,14 @@ from great_tables._utils_render_html import (
     create_source_notes_component_h,
     create_heading_component_h
 )
+from great_tables import GT, exibble
 
-from great_tables import GT
+import pytest
+
+@pytest.fixture(scope="module")
+def mini_gt():
+    mini_exibble = exibble.head(3)
+    return GT(mini_exibble, id="mini_table")
 
 def assert_rendered_global_imports(snapshot, gt: GT):
     html = gt.as_raw_html()

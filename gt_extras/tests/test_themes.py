@@ -19,41 +19,34 @@ from conftest import (
 )
 
 
-def test_theme_538_fonts_snap(snapshot):
-    themed_gt = gt_theme_538(gt=GT(exibble, id="538_table"))
+def test_theme_538_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_538(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_espn_fonts_snap(snapshot):
-    themed_gt = gt_theme_espn(gt=GT(exibble, id="espn_table"))
+def test_theme_espn_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_espn(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_nytimes_fonts_snap(snapshot):
-    themed_gt = gt_theme_nytimes(gt=GT(exibble, id="nytimes_table"))
+def test_theme_nytimes_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_nytimes(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_guardian_fonts_snap(snapshot):
-    themed_gt = gt_theme_guardian(gt=GT(exibble, id="guardian_table"))
+def test_theme_guardian_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_guardian(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_excel_fonts_snap(snapshot):
-    themed_gt = gt_theme_excel(gt=GT(exibble, id="excel_table"))
+def test_theme_excel_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_excel(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_dot_matrix_fonts_snap(snapshot):
-    themed_gt = gt_theme_dot_matrix(gt=GT(exibble, id="dot_matrix_table"))
+def test_theme_dot_matrix_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_dot_matrix(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_dark_fonts_snap(snapshot):
-    themed_gt = gt_theme_dark(gt=GT(exibble, id="dark_table"))
+def test_theme_dark_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_dark(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
 
-
-def test_theme_pff_fonts_snap(snapshot):
-    themed_gt = gt_theme_pff(gt=GT(exibble, id="pff_table"))
+def test_theme_pff_fonts_snap(snapshot, mini_gt):
+    themed_gt = gt_theme_pff(gt=mini_gt)
     assert_rendered_global_imports(snapshot, themed_gt)
