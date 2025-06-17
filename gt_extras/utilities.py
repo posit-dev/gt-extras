@@ -110,19 +110,79 @@ def gt_highlight_cols(
 def gt_hulk_col_numeric(
     gt: GT,
     columns: SelectExpr = None,
-    palette: str | list[str] | None = None,
+    palette: str | list[str] | None = "PRGn",
     domain: list[str] | list[int] | list[float] | None = None,
     na_color: str | None = None,
-    alpha: int | float | None = None,
+    alpha: int | float | None = None, # TODO see note
     reverse: bool = False,
     autocolor_text: bool = True,
 ) -> GT:
+    """
+    Apply a color gradient to numeric columns in a `GT` table.
+
+    The `gt_hulk_col_numeric()` function takes an existing `GT` object and applies a color gradient
+    to the background of specified numeric columns, based on their values. This is useful for
+    visually emphasizing the distribution or magnitude of numeric data within a table.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    columns
+        The columns to target. Can be a single column name or a list of column names. If `None`,
+        the color gradient is applied to all columns.
+
+    palette
+        The color palette to use for the gradient. Can be a string referencing a palette name or a
+        list of color hex codes. Defaults to the `"PRGn"` palette from the ColorBrewer package.
+
+    domain
+        The range of values to map to the color palette. Should be a list of two values (min and
+        max). If `None`, the domain is inferred from the data.
+
+    na_color
+        The color to use for missing (`NA`) values. If `None`, a default color is used.
+
+    alpha
+        TODO this is incomplete
+        The alpha (transparency) value for the colors, as a float between `0` (fully transparent)
+        and `1` (fully opaque).
+
+    reverse
+        If `True`, reverses the color palette direction.
+
+    autocolor_text
+        If `True`, automatically adjusts text color for readability against the background.
+
+    Returns
+    -------
+    GT
+        The modified `GT` object, allowing for method chaining.
+
+    Examples
+    --------
+    ```python
+    from great_tables import GT
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label="Car")
+    )
+
+    gte.gt_hulk_col_numeric(gt, columns=["hp", "trq"])
+    ```
+    """
     res = gt.data_color(
         columns=columns,
         palette=palette,
         domain=domain,
         na_color=na_color,
-        alpha=alpha,
+        alpha=alpha, # TODO note alpha is not supported in data_color
         reverse=reverse,
         autocolor_text=autocolor_text,
     )
