@@ -5,6 +5,32 @@ from great_tables._utils_render_html import (
     create_heading_component_h
 )
 
+from great_tables import GT
+
+def assert_rendered_global_imports(snapshot, gt: GT):
+    html = gt.as_raw_html()
+    global_imports = _extract_global_imports(html)
+    assert snapshot == global_imports
+
+def _extract_global_imports(html: str) -> str:
+    """
+    Extract the first <style>...</style> block from an HTML string.
+    Returns the style content including the <style> tags.
+    If not found, returns an empty string.
+    """
+    start = html.find("<style>")
+    end = html.find("</style>", start)
+    if start == -1 or end == -1:
+        return ""
+    
+    style_block = html[start:end]
+    lines = [line.strip() for line in style_block.splitlines() if line.strip()]
+
+    # Grab all @import lines
+    import_lines = [line for line in lines if line.startswith("@import url")]
+    
+    return "\n".join(import_lines)
+
 
 def assert_rendered_source_notes(snapshot, gt):
     built = gt._build_data("html")
