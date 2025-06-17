@@ -511,6 +511,7 @@ wheels = [
 name = "gt-extras"
 source = { editable = "." }
 dependencies = [
+    { name = "faicons" },
     { name = "great-tables" },
 ]
 
@@ -531,7 +532,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "great-tables", specifier = ">=0.17.0" }]
+requires-dist = [
+    { name = "faicons", specifier = ">=0.2.2" },
+    { name = "great-tables", specifier = ">=0.17.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [

@@ -15,6 +15,9 @@ website:
     - contents:
       - reference/gt_highlight_cols.qmd
       - reference/gt_hulk_col_numeric.qmd
-      section: Utilities
+      section: Colors
+    - contents:
+      - reference/fa_icon_repeat.qmd
+      section: Icons and Images
     id: reference
   - id: dummy-sidebar

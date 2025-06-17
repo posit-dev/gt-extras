@@ -12,6 +12,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license.file = "LICENSE"
 dependencies = [
+    "faicons>=0.2.2",
     "great-tables>=0.17.0",
 ]
 

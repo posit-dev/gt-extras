@@ -63,7 +63,7 @@ def gt_highlight_cols(
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(5)
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(9)
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
