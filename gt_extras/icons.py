@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Literal
 
-import faicons
+from faicons import icon_svg
 
 __all__ = "fa_icon_repeat"
 
@@ -9,18 +9,18 @@ __all__ = "fa_icon_repeat"
 def fa_icon_repeat(
     name: str = "star",
     repeats: int = 1,
-    fill: str | None = None,
-    fill_opacity: str | None = None,
+    fill: str | None = "black",
+    fill_opacity: int | str | None = 1,
     stroke: str | None = None,
     stroke_width: str | None = None,
     stroke_opacity: str | None = None,
     height: str | None = None,
     width: str | None = None,
-    margin_left: str | None = None,
-    margin_right: str | None = None,
-    position: str | None = None,
+    margin_left: str | None = "auto",
+    margin_right: str | None = "0.2em",
+    position: str | None = "relative",
     title: str | None = None,
-    a11y: Literal["deco", "sem"] | None = None,
+    a11y: Literal["deco", "sem"] | None = "deco",
 ) -> str:
     """
     Create repeated FontAwesome SVG icons as HTML.
@@ -100,7 +100,7 @@ def fa_icon_repeat(
     --------
     See `icon_svg()` in the `faicons` package for further implementation details.
     """
-    icon = faicons.icon_svg(
+    icon = icon_svg(
         name=name,
         fill=fill,
         fill_opacity=fill_opacity,
