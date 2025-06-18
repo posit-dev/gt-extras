@@ -19,7 +19,8 @@ def gt_plt_bar(
     columns: SelectExpr | None = None,  # Better to have no default?
     color: str = "purple",
     # keep_columns: bool = False,
-    width: int = 40,
+    # width: int | None = None,
+    height: int = 40
     # scale_type: str | None = None,
     # text_color: str = "white",
 ) -> GT:
@@ -39,7 +40,7 @@ def gt_plt_bar(
         gt = gt.fmt_nanoplot(
             columns=column,
             plot_type="bar",
-            plot_height=width,
+            plot_height=height,
             options=nanoplot_options(
                 data_bar_fill_color=color,
                 data_bar_negative_fill_color=color,
