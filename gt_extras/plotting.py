@@ -5,6 +5,9 @@ from great_tables._locations import resolve_cols_c
 
 __all__ = ["gt_plt_bar"]
 
+# TODO: At a high level, should I be writing more of the plotting myself?
+# That's what's happening in gtExtras, with ggplot.
+
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
 
@@ -40,7 +43,7 @@ def gt_plt_bar(
             options=nanoplot_options(
                 data_bar_fill_color=color,
                 data_bar_negative_fill_color=color,
-                data_bar_negative_stroke_width="0",  # this can't be an int on account ofa bug in fmt_nanoplot
+                data_bar_negative_stroke_width="0",  # this can't be an int on account of a bug in fmt_nanoplot
                 data_bar_stroke_width=0,
             ),
         )
