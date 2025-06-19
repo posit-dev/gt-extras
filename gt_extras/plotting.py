@@ -2,7 +2,7 @@ from __future__ import annotations
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr
 
-# from great_tables._locations import resolve_cols_c
+from great_tables._locations import resolve_cols_c, resolve_cols_i
 import io
 
 from plotnine import (
@@ -26,6 +26,7 @@ __all__ = ["gt_plt_bar"]
 
 # TODO: scale_type and text_color can't be implemented by simply wrapping fmt_nanoplot
 
+# TODO: make sure numeric type passed in?
 
 def gt_plt_bar(
     gt: GT,
@@ -41,6 +42,8 @@ def gt_plt_bar(
     The `gt_plt_bar()` function takes an existing `gt` object and adds horizontal barplots via
     `GT.fmt_nanoplot()`.
     """
+    # A semi-functional version with fmt_nanoplot()
+
     # Get names of columns
     # columns_resolved = resolve_cols_c(data=gt, expr=columns)
 
@@ -62,7 +65,15 @@ def gt_plt_bar(
     #         ),
     #     )
 
-    def _make_bar_html(val: int, fill: str, height: int) -> str:
+    ##################
+
+    # A passing version with plotnine
+    def _make_bar_html(
+        val: int,
+        fill: str,
+        height: int,
+        range_x: tuple[int, int],
+    ) -> str:
         plot = (
             ggplot()
             + aes(
@@ -71,14 +82,14 @@ def gt_plt_bar(
             )
             + geom_hline(yintercept=0)
             + geom_col(width=height, fill=fill, show_legend=False)
-            + scale_y_continuous(limits=(0, 1))
+            + scale_y_continuous(limits=range_x)
             + scale_x_continuous(limits=(0.5, 1.5))
             + coord_flip()
             + theme_void()
         )
 
         buf = io.StringIO()
-        plot.save(buf, format="svg", dpi=96, width=0.5, height=0.5)
+        plot.save(buf, format="svg", dpi=96, width=0.5, height=0.5, verbose=False)
         buf.seek(0)
         svg_content = buf.getvalue()
         buf.close()
@@ -86,10 +97,20 @@ def gt_plt_bar(
         html = f"<div>{svg_content}</div>"
         return html
 
-    def make_bar(val: int) -> str:
-        print("calling mbh ", val, color, height)
-        return _make_bar_html(val=val, fill=color, height=height)
+    def make_bar(val: int, range_x: tuple[int, int]) -> str:
+        return _make_bar_html(val=val, fill=color, height=height, range_x=range_x)
 
-    res = gt.fmt(make_bar, columns=columns)
+    # Get names of columns
+    columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
+    res = gt
+    for column in columns_resolved:
+        full_col = gt._tbl_data[column]
+        range_x = (0, max(full_col) * 1.02)
+
+        res = res.fmt(
+            lambda x, rng=range_x: make_bar(x, range_x=rng),
+            columns=column,
+        )
 
     return res
