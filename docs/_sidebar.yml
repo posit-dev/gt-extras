@@ -3,6 +3,13 @@ website:
   - contents:
     - reference/index.qmd
     - contents:
+      - reference/gt_plt_bar.qmd
+      section: Plotting
+    - contents:
+      - reference/gt_highlight_cols.qmd
+      - reference/gt_hulk_col_numeric.qmd
+      section: Colors
+    - contents:
       - reference/gt_theme_538.qmd
       - reference/gt_theme_espn.qmd
       - reference/gt_theme_guardian.qmd
@@ -13,14 +20,10 @@ website:
       - reference/gt_theme_pff.qmd
       section: Themes
     - contents:
-      - reference/gt_highlight_cols.qmd
-      - reference/gt_hulk_col_numeric.qmd
-      section: Colors
-    - contents:
       - reference/fa_icon_repeat.qmd
       section: Icons and Images
     - contents:
-      - reference/gt_plt_bar.qmd
-      section: Plotting
+      - reference/gt_hyperlink.qmd
+      section: HTML Helpers
     id: reference
   - id: dummy-sidebar
