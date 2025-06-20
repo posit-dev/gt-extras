@@ -114,17 +114,17 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\n\n\n\n\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.",
+    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nFunctions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\n\n\n\n\n\n\n\ngt_hyperlink\nCreate HTML hyperlinks for use in GT object cells.",
     "crumbs": [
       "API Reference"
     ]
   },
   {
-    "objectID": "reference/index.html#themes",
-    "href": "reference/index.html#themes",
+    "objectID": "reference/index.html#plotting",
+    "href": "reference/index.html#plotting",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.",
+    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -140,6 +140,16 @@
     ]
   },
   {
+    "objectID": "reference/index.html#themes",
+    "href": "reference/index.html#themes",
+    "title": "API Reference",
+    "section": "",
+    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.",
+    "crumbs": [
+      "API Reference"
+    ]
+  },
+  {
     "objectID": "reference/index.html#icons-and-images",
     "href": "reference/index.html#icons-and-images",
     "title": "API Reference",
@@ -150,11 +160,11 @@
     ]
   },
   {
-    "objectID": "reference/index.html#plotting",
-    "href": "reference/index.html#plotting",
+    "objectID": "reference/index.html#html-helpers",
+    "href": "reference/index.html#html-helpers",
     "title": "API Reference",
     "section": "",
-    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.",
+    "text": "gt_hyperlink\nCreate HTML hyperlinks for use in GT object cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -208,99 +218,87 @@
     ]
   },
   {
-    "objectID": "reference/gt_theme_dot_matrix.html",
-    "href": "reference/gt_theme_dot_matrix.html",
-    "title": "gt_theme_dot_matrix",
+    "objectID": "reference/gt_hyperlink.html",
+    "href": "reference/gt_hyperlink.html",
+    "title": "gt_hyperlink",
     "section": "",
-    "text": "gt_theme_dot_matrix(gt, color='#b5dbb6')\nApplies a dot-matrix-inspired theme to a GT object.\nThis function styles a GT object with a look reminiscent of dot-matrix printouts.",
+    "text": "gt_hyperlink(text, url, new_tab=True)\nCreate HTML hyperlinks for use in GT object cells.\nThe gt_hyperlink() function creates properly formatted HTML hyperlink elements that can be used within table cells.\n\n\n\ntext : str\n\nA character string that will be displayed as the clickable link text.\n\nurl : str\n\nA character string indicating the destination URL for the hyperlink.\n\nnew_tab : bool = True\n\nA boolean indicating whether the link should open in a new browser tab or the current tab.\n\n\n\n\n\n\n : str\n\nAn string containing the HTML formatted hyperlink element.",
     "crumbs": [
       "API Reference",
-      "Themes",
-      "gt_theme_dot_matrix"
+      "HTML Helpers",
+      "gt_hyperlink"
     ]
   },
   {
-    "objectID": "reference/gt_theme_dot_matrix.html#parameters",
-    "href": "reference/gt_theme_dot_matrix.html#parameters",
-    "title": "gt_theme_dot_matrix",
-    "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolor : str = '#b5dbb6'\n\nA string indicating the color of the row striping, defaults to a light green. Accepts either named colors or hex colors.",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_dot_matrix"
-    ]
-  },
-  {
-    "objectID": "reference/gt_theme_dot_matrix.html#returns",
-    "href": "reference/gt_theme_dot_matrix.html#returns",
-    "title": "gt_theme_dot_matrix",
-    "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe themed GT object, allowing for method chaining.",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_dot_matrix"
-    ]
-  },
-  {
-    "objectID": "reference/gt_theme_dot_matrix.html#examples",
-    "href": "reference/gt_theme_dot_matrix.html#examples",
-    "title": "gt_theme_dot_matrix",
-    "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(5)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n    .tab_header(title=\"Car Collection\")\n)\n\ngt.pipe(gte.gt_theme_dot_matrix)\n\n\n\n\n\n\n  \n    Car Collection\n  \n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_dot_matrix"
-    ]
-  },
-  {
-    "objectID": "reference/gt_hulk_col_numeric.html",
-    "href": "reference/gt_hulk_col_numeric.html",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_hyperlink.html#parameters",
+    "href": "reference/gt_hyperlink.html#parameters",
+    "title": "gt_hyperlink",
     "section": "",
-    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT object.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
+    "text": "text : str\n\nA character string that will be displayed as the clickable link text.\n\nurl : str\n\nA character string indicating the destination URL for the hyperlink.\n\nnew_tab : bool = True\n\nA boolean indicating whether the link should open in a new browser tab or the current tab.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_hulk_col_numeric"
+      "HTML Helpers",
+      "gt_hyperlink"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#parameters",
-    "href": "reference/gt_hulk_col_numeric.html#parameters",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_hyperlink.html#returns",
+    "href": "reference/gt_hyperlink.html#returns",
+    "title": "gt_hyperlink",
+    "section": "",
+    "text": ": str\n\nAn string containing the HTML formatted hyperlink element.",
+    "crumbs": [
+      "API Reference",
+      "HTML Helpers",
+      "gt_hyperlink"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html",
+    "href": "reference/gt_highlight_cols.html",
+    "title": "gt_highlight_cols",
+    "section": "",
+    "text": "gt_highlight_cols(\n    gt,\n    columns=None,\n    fill='#80bcd8',\n    alpha=None,\n    font_weight='normal',\n    font_color='#000000',\n)\nAdd color highlighting to one or more specific columns.\nThe gt_highlight_cols() function takes an existing GT object and adds highlighting color to the cell background of a specific column(s).",
+    "crumbs": [
+      "API Reference",
+      "Colors",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/gt_highlight_cols.html#parameters",
+    "href": "reference/gt_highlight_cols.html#parameters",
+    "title": "gt_highlight_cols",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column name or a list of column names. If None, the color gradient is applied to all columns.\n\npalette : str | list[str] | None = 'PRGn'\n\nThe color palette to use for the gradient. Can be a string referencing a palette name or a list of color hex codes. Defaults to the \"PRGn\" palette from the ColorBrewer package.\n\ndomain : list[str] | list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred from the data.\n\nna_color : str | None = None\n\nThe color to use for missing (NA) values. If None, a default color is used.\n\nalpha : int | float | None = None\n\nThe alpha (transparency) value for the colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nreverse : bool = False\n\nIf True, reverses the color palette direction.\n\nautocolor_text : bool = True\n\nIf True, automatically adjusts text color for readability against the background.",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can either be a single column name or a series of column names provided in a list. If None, the alignment is applied to all columns.\n\nfill : str = '#80bcd8'\n\nA character string indicating the fill color. If nothing is provided, then \"#80bcd8\" (light blue) will be used as a default.\n\nalpha : int | None = None\n\nAn integer [0, 1] for the alpha transparency value for the color as single value in the range of 0 (fully transparent) to 1 (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the \"#RRGGBBAA\" format.\n\nfont_weight : Literal['normal', 'bold', 'bolder', 'lighter'] | int = 'normal'\n\nA string or number indicating the weight of the font. Can be a text-based keyword such as \"normal\", \"bold\", \"lighter\", \"bolder\", or, a numeric value between 1 and 1000, inclusive. Note that only variable fonts may support the numeric mapping of weight.\n\nfont_color : str = '#000000'\n\nA character string indicating the text color. If nothing is provided, then \"#000000\" (black) will be used as a default.",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_hulk_col_numeric"
+      "gt_highlight_cols"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#returns",
-    "href": "reference/gt_hulk_col_numeric.html#returns",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_highlight_cols.html#returns",
+    "href": "reference/gt_highlight_cols.html#returns",
+    "title": "gt_highlight_cols",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
+    "text": "Returns\n\n : GT\n\nThe GT object is returned. This is the same object that the method is called on so that we can facilitate method chaining.",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_hulk_col_numeric"
+      "gt_highlight_cols"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#examples",
-    "href": "reference/gt_hulk_col_numeric.html#examples",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_highlight_cols.html#examples",
+    "href": "reference/gt_highlight_cols.html#examples",
+    "title": "gt_highlight_cols",
     "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(9)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngte.gt_hulk_col_numeric(gt, columns=[\"hp\", \"trq\"])\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0\n  \n  \n    F12Berlinetta\n    2015\n    731.0\n    509.0",
+    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(9)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n)\n\ngte.gt_highlight_cols(gt, columns=\"hp\")\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0\n  \n  \n    F12Berlinetta\n    2015\n    731.0\n    509.0",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_hulk_col_numeric"
+      "gt_highlight_cols"
     ]
   },
   {
@@ -364,51 +362,99 @@
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html",
-    "href": "reference/gt_highlight_cols.html",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_hulk_col_numeric.html",
+    "href": "reference/gt_hulk_col_numeric.html",
+    "title": "gt_hulk_col_numeric",
     "section": "",
-    "text": "gt_highlight_cols(\n    gt,\n    columns=None,\n    fill='#80bcd8',\n    alpha=None,\n    font_weight='normal',\n    font_color='#000000',\n)\nAdd color highlighting to one or more specific columns.\nThe gt_highlight_cols() function takes an existing GT object and adds highlighting color to the cell background of a specific column(s).",
+    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT object.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_highlight_cols"
+      "gt_hulk_col_numeric"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#parameters",
-    "href": "reference/gt_highlight_cols.html#parameters",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_hulk_col_numeric.html#parameters",
+    "href": "reference/gt_hulk_col_numeric.html#parameters",
+    "title": "gt_hulk_col_numeric",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can either be a single column name or a series of column names provided in a list. If None, the alignment is applied to all columns.\n\nfill : str = '#80bcd8'\n\nA character string indicating the fill color. If nothing is provided, then \"#80bcd8\" (light blue) will be used as a default.\n\nalpha : int | None = None\n\nAn integer [0, 1] for the alpha transparency value for the color as single value in the range of 0 (fully transparent) to 1 (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the \"#RRGGBBAA\" format.\n\nfont_weight : Literal['normal', 'bold', 'bolder', 'lighter'] | int = 'normal'\n\nA string or number indicating the weight of the font. Can be a text-based keyword such as \"normal\", \"bold\", \"lighter\", \"bolder\", or, a numeric value between 1 and 1000, inclusive. Note that only variable fonts may support the numeric mapping of weight.\n\nfont_color : str = '#000000'\n\nA character string indicating the text color. If nothing is provided, then \"#000000\" (black) will be used as a default.",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column name or a list of column names. If None, the color gradient is applied to all columns.\n\npalette : str | list[str] | None = 'PRGn'\n\nThe color palette to use for the gradient. Can be a string referencing a palette name or a list of color hex codes. Defaults to the \"PRGn\" palette from the ColorBrewer package.\n\ndomain : list[str] | list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred from the data.\n\nna_color : str | None = None\n\nThe color to use for missing (NA) values. If None, a default color is used.\n\nalpha : int | float | None = None\n\nThe alpha (transparency) value for the colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nreverse : bool = False\n\nIf True, reverses the color palette direction.\n\nautocolor_text : bool = True\n\nIf True, automatically adjusts text color for readability against the background.",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_highlight_cols"
+      "gt_hulk_col_numeric"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#returns",
-    "href": "reference/gt_highlight_cols.html#returns",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_hulk_col_numeric.html#returns",
+    "href": "reference/gt_hulk_col_numeric.html#returns",
+    "title": "gt_hulk_col_numeric",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe GT object is returned. This is the same object that the method is called on so that we can facilitate method chaining.",
+    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_highlight_cols"
+      "gt_hulk_col_numeric"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#examples",
-    "href": "reference/gt_highlight_cols.html#examples",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_hulk_col_numeric.html#examples",
+    "href": "reference/gt_hulk_col_numeric.html#examples",
+    "title": "gt_hulk_col_numeric",
     "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(9)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n)\n\ngte.gt_highlight_cols(gt, columns=\"hp\")\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0\n  \n  \n    F12Berlinetta\n    2015\n    731.0\n    509.0",
+    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(9)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngte.gt_hulk_col_numeric(gt, columns=[\"hp\", \"trq\"])\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0\n  \n  \n    F12Berlinetta\n    2015\n    731.0\n    509.0",
     "crumbs": [
       "API Reference",
       "Colors",
-      "gt_highlight_cols"
+      "gt_hulk_col_numeric"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_dot_matrix.html",
+    "href": "reference/gt_theme_dot_matrix.html",
+    "title": "gt_theme_dot_matrix",
+    "section": "",
+    "text": "gt_theme_dot_matrix(gt, color='#b5dbb6')\nApplies a dot-matrix-inspired theme to a GT object.\nThis function styles a GT object with a look reminiscent of dot-matrix printouts.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_dot_matrix"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_dot_matrix.html#parameters",
+    "href": "reference/gt_theme_dot_matrix.html#parameters",
+    "title": "gt_theme_dot_matrix",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolor : str = '#b5dbb6'\n\nA string indicating the color of the row striping, defaults to a light green. Accepts either named colors or hex colors.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_dot_matrix"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_dot_matrix.html#returns",
+    "href": "reference/gt_theme_dot_matrix.html#returns",
+    "title": "gt_theme_dot_matrix",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nThe themed GT object, allowing for method chaining.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_dot_matrix"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_dot_matrix.html#examples",
+    "href": "reference/gt_theme_dot_matrix.html#examples",
+    "title": "gt_theme_dot_matrix",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(5)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n    .tab_header(title=\"Car Collection\")\n)\n\ngt.pipe(gte.gt_theme_dot_matrix)\n\n\n\n\n\n\n  \n    Car Collection\n  \n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_dot_matrix"
     ]
   },
   {
