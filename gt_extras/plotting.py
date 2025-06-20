@@ -161,7 +161,7 @@ def gt_plt_bar(
             ],
         )
         return canvas.as_str()
-    
+
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
