@@ -14,10 +14,10 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     Parameters
     ----------
     text
-        A character string that will be displayed as the clickable link text.
+        A string that will be displayed as the clickable link text.
 
     url
-        A character string indicating the destination URL for the hyperlink.
+        A string indicating the destination URL for the hyperlink.
 
     new_tab
         A boolean indicating whether the link should open in a new browser tab or the current tab.
@@ -44,16 +44,24 @@ def with_tooltip(
     Create HTML text with tooltip functionality for use in GT table cells.
 
     The `with_tooltip()` function creates an HTML `<abbr>` element with a tooltip that appears
-    when users hover over the text. The text is styled with an underline and blue color to
-    indicate it's interactive.
+    when users hover over the text. The text can be styled with customizable underline styles
+    and colors to indicate it's interactive.
 
     Parameters
     ----------
     label
-        A character string that will be displayed as the visible text.
+        A string that will be displayed as the visible text.
 
     tooltip
-        A character string that will appear as the tooltip when hovering over the label.
+        A string that will appear as the tooltip when hovering over the label.
+
+    text_decoration_style
+        A string indicating the style of underline decoration. Options are `"underline"`,
+        `"dotted"`, or `None`. If nothing is provided, then `"dotted"` will be used as a default.
+
+    color
+        A string indicating the text color. If `None`, no color styling is applied.
+        If nothing is provided, then `"blue"` will be used as a default.
 
     Returns
     -------

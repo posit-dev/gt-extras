@@ -34,7 +34,7 @@ def gt_highlight_cols(
         provided in a list. If `None`, the alignment is applied to all columns.
 
     fill
-        A character string indicating the fill color. If nothing is provided, then `"#80bcd8"`
+        A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
         (light blue) will be used as a default.
 
     alpha
@@ -49,7 +49,7 @@ def gt_highlight_cols(
         inclusive. Note that only variable fonts may support the numeric mapping of weight.
 
     font_color
-        A character string indicating the text color. If nothing is provided, then `"#000000"`
+        A string indicating the text color. If nothing is provided, then `"#000000"`
         (black) will be used as a default.
 
     Returns
