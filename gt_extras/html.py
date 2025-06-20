@@ -37,7 +37,7 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
 def with_tooltip(
     label: str,
     tooltip: str,
-    text_decoration_style: Literal["underline", "dotted"] | None = "dotted",
+    text_decoration_style: Literal["solid", "dotted"] | None = "dotted",
     color: str | None = "blue",
 ) -> str:
     """
@@ -56,7 +56,7 @@ def with_tooltip(
         A string that will appear as the tooltip when hovering over the label.
 
     text_decoration_style
-        A string indicating the style of underline decoration. Options are `"underline"`,
+        A string indicating the style of underline decoration. Options are `"solid"`,
         `"dotted"`, or `None`. If nothing is provided, then `"dotted"` will be used as a default.
 
     color
@@ -68,6 +68,10 @@ def with_tooltip(
     str
         An HTML string containing the formatted tooltip element.
     """
+
+    # Throw if `text_decoration_style` is not one of the three allowed values
+    if text_decoration_style not in [None, "solid", "dotted"]:
+        raise ValueError("Text_decoration_style must be one of `None`, 'solid', or 'dotted'")
 
     style = "cursor: help; "
 
