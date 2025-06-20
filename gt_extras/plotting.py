@@ -1,9 +1,11 @@
 from __future__ import annotations
+from typing import Literal
+
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr
 from great_tables._locations import resolve_cols_c
 
-from svg import SVG, Line, Rect
+from svg import SVG, Line, Rect, Text
 
 # import io
 
@@ -25,6 +27,7 @@ __all__ = ["gt_plt_bar"]
 
 # TODO: make sure numeric type passed in?
 
+# TODO: default font for labels?
 
 def gt_plt_bar(
     gt: GT,
@@ -34,13 +37,20 @@ def gt_plt_bar(
     width: int = 60,
     height: int = 30,
     stroke_color: str = "black",
+    scale_type: Literal["percent", "number"] | None = None,
+    scale_color: str = "white",
     # keep_columns: bool = False,
-    # scale_type: str | None = None,
-    # text_color: str = "white",
 ) -> GT:
     """
     The `gt_plt_bar()` function takes an existing `gt` object and adds horizontal barplots via svg.py`.
     """
+    if bar_height > height:
+        bar_height = height
+        # TODO: warn the user
+
+    if bar_height < 0:
+        bar_height = 0
+        # TODO: warn the user
 
     # A version with svg.py
     def _make_bar_html(
@@ -51,7 +61,15 @@ def gt_plt_bar(
         width: int,
         max_val: int,
         stroke_color: str,
+        scale_type: Literal["percent", "number"] | None,
+        scale_color: str,
     ) -> str:
+        text = ""
+        if scale_type == "percent":
+            text = str(round((val/max_val) * 100)) + "%"
+        if scale_type == "number":
+            text = val
+
         canvas = SVG(
             width=width,
             height=height,
@@ -64,6 +82,15 @@ def gt_plt_bar(
                     fill=fill,
                     # onmouseover="this.style.fill= 'blue';",
                     # onmouseout=f"this.style.fill='{fill}';",
+                ),
+                Text(
+                    text=text,
+                    x=(width * val / max_val) * 0.98,
+                    y=height / 2,
+                    fill=scale_color,
+                    font_size=bar_height * 0.6,
+                    text_anchor="end",
+                    dominant_baseline="central",
                 ),
                 Line(
                     x1=0,
@@ -86,6 +113,8 @@ def gt_plt_bar(
             width=width,
             max_val=max_val,
             stroke_color=stroke_color,
+            scale_type=scale_type,
+            scale_color=scale_color,
         )
 
     # Get names of columns
