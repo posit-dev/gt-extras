@@ -19,7 +19,7 @@ license.file = "LICENSE"
 dependencies = [
     "faicons>=0.2.2",
     "great-tables>=0.17.0",
-    "plotnine>=0.13.6",
+    "svg-py>=1.6.0",
 ]
 
 authors = [
