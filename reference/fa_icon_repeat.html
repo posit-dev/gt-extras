@@ -65,6 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../reference/gt_plt_bar.html" rel="next">
+<link href="../reference/gt_hulk_col_numeric.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -74,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-dda6bcf18c14475f7348b817eb15352b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4d737b4f434ecdb4a7a7d2fd23c80286.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,9 +109,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../reference/_styles-quartodoc.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -127,9 +131,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <span class="nav-link">
-<span class="menu-text">Get Started</span>
-    </span>
+    <a class="nav-link" href="../get-started/index.html"> 
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../reference/index.html" aria-current="page"> 
@@ -153,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
@@ -285,9 +288,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fa_icon_repeat.html">Icons and Images</a></li><li class="breadcrumb-item"><a href="../reference/fa_icon_repeat.html">fa_icon_repeat</a></li></ol></nav>
 <div class="quarto-title">
@@ -296,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -328,136 +342,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>fa_icon_repeat()</code> function generates one or more FontAwesome SVG icons using the <code>faicons</code> package and returns them as a single HTML string.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 23%">
-<col style="width: 57%">
-<col style="width: 8%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>name</td>
-<td>str</td>
-<td>The name of the FontAwesome icon to use (e.g., <code>"star"</code>, <code>"thumbs-up"</code>).</td>
-<td><code>'star'</code></td>
-</tr>
-<tr class="even">
-<td>repeats</td>
-<td>int</td>
-<td>The number of times to repeat the icon.</td>
-<td><code>1</code></td>
-</tr>
-<tr class="odd">
-<td>fill</td>
-<td>str | None</td>
-<td>The fill color for the icon (e.g., <code>"yellow"</code>, <code>"#ffcc00"</code>). If <code>None</code>, uses the default.</td>
-<td><code>'black'</code></td>
-</tr>
-<tr class="even">
-<td>fill_opacity</td>
-<td>int | str | None</td>
-<td>The opacity of the fill color (<code>0.0</code> - <code>1.0</code>).</td>
-<td><code>1</code></td>
-</tr>
-<tr class="odd">
-<td>stroke</td>
-<td>str | None</td>
-<td>The stroke color for the icon outline.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td>stroke_width</td>
-<td>str | None</td>
-<td>The width of the icon outline.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="odd">
-<td>stroke_opacity</td>
-<td>int | str | None</td>
-<td>The opacity of the outline (<code>0.0</code> - <code>1.0</code>).</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td>height</td>
-<td>str | None</td>
-<td>The height of the icon.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="odd">
-<td>width</td>
-<td>str | None</td>
-<td>The width of the icon.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td>margin_left</td>
-<td>str | None</td>
-<td>The left margin for the icon.</td>
-<td><code>'auto'</code></td>
-</tr>
-<tr class="odd">
-<td>margin_right</td>
-<td>str | None</td>
-<td>The right margin for the icon.</td>
-<td><code>'0.2em'</code></td>
-</tr>
-<tr class="even">
-<td>position</td>
-<td>str | None</td>
-<td>The CSS position property for the icon (e.g., <code>"absolute"</code>, <code>"relative"</code>, etc).</td>
-<td><code>'relative'</code></td>
-</tr>
-<tr class="odd">
-<td>title</td>
-<td>str | None</td>
-<td>The title (tooltip) for the icon.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td>a11y</td>
-<td>Literal['deco', 'sem'] | None</td>
-<td>Accessibility mode: <code>"deco"</code> for decorative, <code>"sem"</code> for semantic.</td>
-<td><code>'deco'</code></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>name</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'star'</span></code></dt>
+<dd>
+<p>The name of the FontAwesome icon to use (e.g., <code>"star"</code>, <code>"thumbs-up"</code>).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>repeats</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dd>
+<p>The number of times to repeat the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>fill</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'black'</span></code></dt>
+<dd>
+<p>The fill color for the icon (e.g., <code>"yellow"</code>, <code>"#ffcc00"</code>). If <code>None</code>, uses the default.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>fill_opacity</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int | str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dd>
+<p>The opacity of the fill color (<code>0.0</code> - <code>1.0</code>).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>stroke</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The stroke color for the icon outline.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>stroke_width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The width of the icon outline.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>stroke_opacity</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int | str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The opacity of the outline (<code>0.0</code> - <code>1.0</code>).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The height of the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The width of the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>margin_left</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'auto'</span></code></dt>
+<dd>
+<p>The left margin for the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>margin_right</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'0.2em'</span></code></dt>
+<dd>
+<p>The right margin for the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>position</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'relative'</span></code></dt>
+<dd>
+<p>The CSS position property for the icon (e.g., <code>"absolute"</code>, <code>"relative"</code>, etc).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>title</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The title (tooltip) for the icon.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>a11y</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['deco', 'sem'] | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'deco'</span></code></dt>
+<dd>
+<p>Accessibility mode: <code>"deco"</code> for decorative, <code>"sem"</code> for semantic.</p>
+</dd>
+</dl>
 </section>
 <section id="returns" class="level2 doc-section doc-section-returns">
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 85%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td>str</td>
-<td>An HTML string containing the repeated SVG icons. If <code>repeats = 0</code>, this string will be empty.</td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dd>
+<p>An HTML string containing the repeated SVG icons. If <code>repeats = 0</code>, this string will be empty.</p>
+</dd>
+</dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="991218f6" class="cell" data-execution_count="1">
+<div id="1278fa75" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
@@ -473,52 +428,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>GT(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="qocdxomjoj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="cgiyhaxgbh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#qocdxomjoj table {
+#cgiyhaxgbh table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#qocdxomjoj thead, tbody, tfoot, tr, td, th { border-style: none; }
+#cgiyhaxgbh thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#qocdxomjoj p { margin: 0; padding: 0; }
- #qocdxomjoj .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #qocdxomjoj .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #qocdxomjoj .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #qocdxomjoj .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #qocdxomjoj .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qocdxomjoj .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #qocdxomjoj .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qocdxomjoj .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #qocdxomjoj .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #qocdxomjoj .gt_column_spanner_outer:first-child { padding-left: 0; }
- #qocdxomjoj .gt_column_spanner_outer:last-child { padding-right: 0; }
- #qocdxomjoj .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #qocdxomjoj .gt_spanner_row { border-bottom-style: hidden; }
- #qocdxomjoj .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #qocdxomjoj .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #qocdxomjoj .gt_from_md> :first-child { margin-top: 0; }
- #qocdxomjoj .gt_from_md> :last-child { margin-bottom: 0; }
- #qocdxomjoj .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #qocdxomjoj .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #qocdxomjoj .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #qocdxomjoj .gt_row_group_first td { border-top-width: 2px; }
- #qocdxomjoj .gt_row_group_first th { border-top-width: 2px; }
- #qocdxomjoj .gt_striped { background-color: rgba(128,128,128,0.05); }
- #qocdxomjoj .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #qocdxomjoj .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #qocdxomjoj .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #qocdxomjoj .gt_left { text-align: left; }
- #qocdxomjoj .gt_center { text-align: center; }
- #qocdxomjoj .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #qocdxomjoj .gt_font_normal { font-weight: normal; }
- #qocdxomjoj .gt_font_bold { font-weight: bold; }
- #qocdxomjoj .gt_font_italic { font-style: italic; }
- #qocdxomjoj .gt_super { font-size: 65%; }
- #qocdxomjoj .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #qocdxomjoj .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#cgiyhaxgbh p { margin: 0; padding: 0; }
+ #cgiyhaxgbh .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #cgiyhaxgbh .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #cgiyhaxgbh .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #cgiyhaxgbh .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #cgiyhaxgbh .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #cgiyhaxgbh .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #cgiyhaxgbh .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #cgiyhaxgbh .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #cgiyhaxgbh .gt_spanner_row { border-bottom-style: hidden; }
+ #cgiyhaxgbh .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #cgiyhaxgbh .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #cgiyhaxgbh .gt_from_md> :first-child { margin-top: 0; }
+ #cgiyhaxgbh .gt_from_md> :last-child { margin-bottom: 0; }
+ #cgiyhaxgbh .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #cgiyhaxgbh .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #cgiyhaxgbh .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #cgiyhaxgbh .gt_row_group_first td { border-top-width: 2px; }
+ #cgiyhaxgbh .gt_row_group_first th { border-top-width: 2px; }
+ #cgiyhaxgbh .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #cgiyhaxgbh .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #cgiyhaxgbh .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #cgiyhaxgbh .gt_left { text-align: left; }
+ #cgiyhaxgbh .gt_center { text-align: center; }
+ #cgiyhaxgbh .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #cgiyhaxgbh .gt_font_normal { font-weight: normal; }
+ #cgiyhaxgbh .gt_font_bold { font-weight: bold; }
+ #cgiyhaxgbh .gt_font_italic { font-style: italic; }
+ #cgiyhaxgbh .gt_super { font-size: 65%; }
+ #cgiyhaxgbh .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #cgiyhaxgbh .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
@@ -632,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/posit-dev\.github\.io\/gt-extras\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -959,6 +914,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../reference/gt_hulk_col_numeric.html" class="pagination-link" aria-label="gt_hulk_col_numeric">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_hulk_col_numeric</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../reference/gt_plt_bar.html" class="pagination-link" aria-label="gt_plt_bar">
+        <span class="nav-page-text">gt_plt_bar</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
