@@ -7,19 +7,6 @@ from great_tables._locations import resolve_cols_c
 
 from svg import SVG, Line, Rect, Text
 
-# import io
-
-# from plotnine import (
-#     ggplot,
-#     geom_hline,
-#     aes,
-#     geom_col,
-#     scale_x_continuous,
-#     scale_y_continuous,
-#     coord_flip,
-#     theme_void,
-# )
-
 __all__ = ["gt_plt_bar"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
@@ -29,21 +16,88 @@ __all__ = ["gt_plt_bar"]
 
 # TODO: default font for labels?
 
+
 def gt_plt_bar(
     gt: GT,
     columns: SelectExpr | None = None,
     fill: str = "purple",
     bar_height: int = 20,
-    width: int = 60,
     height: int = 30,
-    stroke_color: str = "black",
+    width: int = 60,
+    stroke_color: str | None = "black",
     scale_type: Literal["percent", "number"] | None = None,
     scale_color: str = "white",
     # keep_columns: bool = False,
 ) -> GT:
     """
-    The `gt_plt_bar()` function takes an existing `gt` object and adds horizontal barplots via svg.py`.
+    Create horizontal bar plots in `GT` cells.
+
+    The `gt_plt_bar()` function takes an existing `GT` object and adds horizontal bar charts to
+    specified columns. Each cell value is represented as a horizontal bar with length proportional
+    to the cell's numeric value relative to the column's maximum value.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    columns
+        The columns to target. Can be a single column name or a list of column names. If `None`,
+        the bar plot is applied to all numeric columns.
+
+    fill
+        The fill color for the bars.
+
+    bar_height
+        The height of each individual bar in pixels.
+
+    height
+        The height of the bar plot in pixels.
+
+    width
+        The width of the maximum bar in pixels
+
+    stroke_color
+        The color of the vertical axis on the left side of the bar. The default is black, but if
+        `None` is passed no stroke will be drawn.
+
+    scale_type
+        The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
+        labels.
+
+    scale_color
+        The color of text labels on the bars (when `scale_type` is not `None`).
+
+    Returns
+    -------
+    GT
+        A `GT` object with horizontal bar plots added to the specified columns.
+
+    Examples
+    --------
+    
+    ```{python}
+    from great_tables import GT, style, loc
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars.iloc[0:8, list(range(0, 3)) + list(range(5, 11))]
+
+    gt = (
+        GT(gtcars_mini,rowname_col="model")
+        .tab_stubhead(label="Car")
+        .tab_style(style=style.css("text-align: center;"), locations=loc.column_labels())
+    )
+
+    gte.gt_plt_bar(gt, columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"])
+    ```
+
+    Note
+    --------
+    Each column's bars are scaled independently based on that column's min/max values.
     """
+    # A version with svg.py
+
     if bar_height > height:
         bar_height = height
         # TODO: warn the user
@@ -52,7 +106,7 @@ def gt_plt_bar(
         bar_height = 0
         # TODO: warn the user
 
-    # A version with svg.py
+    # Helper function to make the individual bars
     def _make_bar_html(
         val: int,
         fill: str,
@@ -66,7 +120,7 @@ def gt_plt_bar(
     ) -> str:
         text = ""
         if scale_type == "percent":
-            text = str(round((val/max_val) * 100)) + "%"
+            text = str(round((val / max_val) * 100)) + "%"
         if scale_type == "number":
             text = val
 
@@ -103,6 +157,10 @@ def gt_plt_bar(
             ],
         )
         return canvas.as_str()
+    
+    # Allow the user to hide the vertical stroke
+    if stroke_color is None:
+        stroke_color = "#FFFFFF00"
 
     def make_bar(val: int, max_val: int) -> str:
         return _make_bar_html(
@@ -122,6 +180,8 @@ def gt_plt_bar(
 
     res = gt
     for column in columns_resolved:
+        # Maybe a try-catch here to prevent str types?
+
         full_col = gt._tbl_data[column]
 
         res = res.fmt(
