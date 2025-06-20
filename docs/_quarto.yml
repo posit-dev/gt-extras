@@ -16,6 +16,7 @@ website:
       - text: Get Started
         file: get-started/index.qmd
       - reference/index.qmd
+  
 
 
 quartodoc:
@@ -23,6 +24,10 @@ quartodoc:
   dir: reference
   title: API Reference
   css: reference/_styles-quartodoc.css
+
+  renderer:
+    style: markdown
+    table_style: description-list
 
   # write sidebar data
   sidebar: _sidebar.yml
