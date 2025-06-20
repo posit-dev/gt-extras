@@ -20,32 +20,89 @@ from svg import SVG, Line, Rect
 
 __all__ = ["gt_plt_bar"]
 
-# TODO: At a high level, should I be writing more of the plotting myself?
-# That's what's happening in gtExtras, with ggplot.
-
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
-
-# TODO: scale_type and text_color can't be implemented by simply wrapping fmt_nanoplot
 
 # TODO: make sure numeric type passed in?
 
 
 def gt_plt_bar(
     gt: GT,
-    columns: SelectExpr | None = None,  # Better to have no default?
-    color: str = "purple",
-    zoom: int = 1,
+    columns: SelectExpr | None = None,
+    fill: str = "purple",
+    bar_height: int = 20,
+    width: int = 60,
+    height: int = 30,
+    stroke_color: str = "black",
     # keep_columns: bool = False,
-    # width: int | None = None,
-    height: int = 0.5,
     # scale_type: str | None = None,
     # text_color: str = "white",
 ) -> GT:
     """
-    The `gt_plt_bar()` function takes an existing `gt` object and adds horizontal barplots via
-    `GT.fmt_nanoplot()`.
+    The `gt_plt_bar()` function takes an existing `gt` object and adds horizontal barplots via svg.py`.
     """
+
+    # A version with svg.py
+    def _make_bar_html(
+        val: int,
+        fill: str,
+        bar_height: int,
+        height: int,
+        width: int,
+        max_val: int,
+        stroke_color: str,
+    ) -> str:
+        canvas = SVG(
+            width=width,
+            height=height,
+            elements=[
+                Rect(
+                    x=0,
+                    y=(height - bar_height) / 2,
+                    width=width * val / max_val,
+                    height=bar_height,
+                    fill=fill,
+                    # onmouseover="this.style.fill= 'blue';",
+                    # onmouseout=f"this.style.fill='{fill}';",
+                ),
+                Line(
+                    x1=0,
+                    x2=0,
+                    y1=0,
+                    y2=height,
+                    stroke_width=height / 10,
+                    stroke=stroke_color,
+                ),
+            ],
+        )
+        return canvas.as_str()
+
+    def make_bar(val: int, max_val: int) -> str:
+        return _make_bar_html(
+            val=val,
+            fill=fill,
+            bar_height=bar_height,
+            height=height,
+            width=width,
+            max_val=max_val,
+            stroke_color=stroke_color,
+        )
+
+    # Get names of columns
+    columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
+    res = gt
+    for column in columns_resolved:
+        full_col = gt._tbl_data[column]
+
+        res = res.fmt(
+            lambda x, m=max(full_col): make_bar(x, max_val=m),
+            columns=column,
+        )
+    return res
+
+    ##################
+
     # A semi-functional version with fmt_nanoplot()
 
     # Get names of columns
@@ -118,62 +175,3 @@ def gt_plt_bar(
     #     )
 
     # return res
-
-    ##################
-
-    # A version with svg.py
-    def _make_bar_html(
-        val: int,
-        fill: str,
-        height: int,
-        zoom: int,
-        max_val: int,
-    ) -> str:
-        DEFAULT_SIZE = 50
-
-        canvas = SVG(
-            width=DEFAULT_SIZE * zoom,
-            height=DEFAULT_SIZE * zoom,
-            elements=[
-                Rect(
-                    x=0,
-                    y=(DEFAULT_SIZE / 2) * (1 - height) * zoom,
-                    width=(val / max_val) * DEFAULT_SIZE * zoom,
-                    height=DEFAULT_SIZE * height * zoom,
-                    fill=fill,
-                    # onmouseover="this.style.fill= 'blue';",
-                    # onmouseout="this.style.fill='red';",
-                ),
-                Line(
-                    x1=0,
-                    x2=0,
-                    y1=0,
-                    y2=DEFAULT_SIZE * zoom,
-                    stroke_width=DEFAULT_SIZE / 20 * zoom,
-                    stroke="black",
-                ),
-            ],
-        )
-        return canvas.as_str()
-
-    def make_bar(val: int, max_val: int) -> str:
-        return _make_bar_html(
-            val=val, fill=color, height=height, zoom=zoom, max_val=max_val
-        )
-
-    # Get names of columns
-    columns_resolved = resolve_cols_c(data=gt, expr=columns)
-
-    res = gt
-    for column in columns_resolved:
-        full_col = gt._tbl_data[column]
-        max_val = max(full_col)
-
-        res = res.fmt(
-            lambda x, m=max_val: make_bar(x, max_val=m),
-            columns=column,
-        )
-    return res
-    # print(canvas)
-    # with open("my_drawing.svg", "w") as f:
-    #     f.write(canvas)
