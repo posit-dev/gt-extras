@@ -75,6 +75,13 @@ def gt_highlight_cols(
     gte.gt_highlight_cols(gt, columns="hp")
     ```
     """
+    # Throw if `font_weight` is not one of the allowed values
+    if isinstance(font_weight, str):
+        if font_weight not in ["normal", "bold", "bolder", "lighter"]:
+            raise ValueError("Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer")
+    elif not isinstance(font_weight, int):
+        raise TypeError("Font_weight must either be an int or a str")
+
     if alpha:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 

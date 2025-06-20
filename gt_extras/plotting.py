@@ -98,6 +98,10 @@ def gt_plt_bar(
     """
     # A version with svg.py
 
+    # Throw if `scale_type` is not one of the allowed values
+    if scale_type not in [None, "percent", "number"]:
+        raise ValueError("Scale_type must be one of `None`, 'percent', or 'number'")
+
     if bar_height > height:
         bar_height = height
         # TODO: warn the user
@@ -162,7 +166,7 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
 
-    def make_bar(val: int, max_val: int) -> str:
+    def _make_bar(val: int, max_val: int) -> str:
         return _make_bar_html(
             val=val,
             fill=fill,
@@ -185,7 +189,7 @@ def gt_plt_bar(
         full_col = gt._tbl_data[column]
 
         res = res.fmt(
-            lambda x, m=max(full_col): make_bar(x, max_val=m),
+            lambda x, m=max(full_col): _make_bar(x, max_val=m),
             columns=column,
         )
     return res
