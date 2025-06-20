@@ -19,5 +19,8 @@ website:
     - contents:
       - reference/fa_icon_repeat.qmd
       section: Icons and Images
+    - contents:
+      - reference/gt_plt_bar.qmd
+      section: Plotting
     id: reference
   - id: dummy-sidebar

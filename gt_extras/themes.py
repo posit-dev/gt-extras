@@ -15,7 +15,7 @@ __all__ = [
 
 
 def gt_theme_538(gt: GT) -> GT:
-    """Applies a FiveThirtyEight-inspired theme to a GT table.
+    """Applies a FiveThirtyEight-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by the FiveThirtyEight (538) website.
 
@@ -104,7 +104,7 @@ def gt_theme_538(gt: GT) -> GT:
 
 
 def gt_theme_espn(gt: GT) -> GT:
-    """Applies an ESPN-inspired theme to a GT table.
+    """Applies an ESPN-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by ESPN's data tables.
 
@@ -158,7 +158,7 @@ def gt_theme_espn(gt: GT) -> GT:
 
 
 def gt_theme_nytimes(gt: GT) -> GT:
-    """Applies a New York Times-inspired theme to a GT table.
+    """Applies a New York Times-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by New York Times tables.
 
@@ -225,7 +225,7 @@ def gt_theme_nytimes(gt: GT) -> GT:
 
 
 def gt_theme_guardian(gt: GT) -> GT:
-    """Applies a Guardian-inspired theme to a GT table.
+    """Applies a Guardian-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by The Guardian's data tables.
 
@@ -318,7 +318,7 @@ def gt_theme_guardian(gt: GT) -> GT:
 
 
 def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
-    """Applies an Excel-inspired theme to a GT table.
+    """Applies an Excel-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by Microsoft Excel tables.
 
@@ -412,7 +412,7 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
 
 
 def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
-    """Applies a dot-matrix-inspired theme to a GT table.
+    """Applies a dot-matrix-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look reminiscent of dot-matrix printouts.
 
@@ -473,7 +473,7 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
 
 
 def gt_theme_dark(gt: GT) -> GT:
-    """Applies a dark mode theme to a GT table.
+    """Applies a dark mode theme to a `GT` object.
 
     This function styles a `GT` object with a dark background and light text.
 
@@ -549,7 +549,7 @@ def gt_theme_pff(
     spanners: list[str] | None = None,
     rank_col: str | None = None,
 ) -> GT:
-    """Applies a Pro Football Focus (PFF)-inspired theme to a GT table.
+    """Applies a Pro Football Focus (PFF)-inspired theme to a `GT` object.
 
     This function styles a `GT` object with a look inspired by Pro Football Focus tables,
     supporting custom spanners, dividers, and rank column highlighting.

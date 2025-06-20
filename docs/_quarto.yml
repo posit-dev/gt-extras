@@ -49,3 +49,8 @@ quartodoc:
       desc: "" # TODO: add desc
       contents:
         - fa_icon_repeat
+
+    - title: Plotting
+      desc: "" # TODO: add desc
+      contents:
+        - gt_plt_bar

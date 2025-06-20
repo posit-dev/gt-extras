@@ -102,7 +102,7 @@ def gt_hulk_col_numeric(
 ) -> GT:
     # TODO: alpha is incomplete
     """
-    Apply a color gradient to numeric columns in a `GT` table.
+    Apply a color gradient to numeric columns in a `GT` object.
 
     The `gt_hulk_col_numeric()` function takes an existing `GT` object and applies a color gradient
     to the background of specified numeric columns, based on their values. This is useful for

@@ -13,6 +13,8 @@ from .colors import gt_hulk_col_numeric
 
 from .icons import fa_icon_repeat
 
+from .plotting import gt_plt_bar
+
 __all__ = [
     "gt_theme_538",
     "gt_theme_espn",
@@ -27,4 +29,6 @@ __all__ = [
     "gt_hulk_col_numeric",
 
     "fa_icon_repeat",
+
+    "gt_plt_bar",
 ]

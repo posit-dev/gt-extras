@@ -117,5 +117,7 @@ latex_examples.qmd
 latex_examples.pdf
 
 # misc files for debugging
-sandbox.qmd
+sandbox.*
+possible_feats.*
 compare_tables.html
+.vscode
