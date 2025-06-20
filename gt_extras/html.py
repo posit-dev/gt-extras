@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["gt_hyperlink"]
+__all__ = ["gt_hyperlink", "with_tooltip"]
 
 
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
@@ -31,3 +31,7 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
         target = "_blank"
 
     return f'<a href="{url}" target="{target}">{text}</a>'
+
+
+def with_tooltip() -> str:
+    return ""

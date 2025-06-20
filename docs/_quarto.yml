@@ -66,6 +66,7 @@ quartodoc:
       desc: "" # TODO: add desc
       contents:
         - gt_hyperlink
+        - with_tooltip
         
 
 format:
