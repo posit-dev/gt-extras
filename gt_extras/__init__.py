@@ -15,6 +15,8 @@ from .icons import fa_icon_repeat
 
 from .plotting import gt_plt_bar
 
+from .html import gt_hyperlink
+
 __all__ = [
     "gt_theme_538",
     "gt_theme_espn",
@@ -31,4 +33,6 @@ __all__ = [
     "fa_icon_repeat",
 
     "gt_plt_bar",
+
+    "gt_hyperlink"
 ]

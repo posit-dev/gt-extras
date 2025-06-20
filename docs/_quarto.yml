@@ -34,6 +34,17 @@ quartodoc:
   #css: reference/_styles-quartodoc.css
 
   sections:
+    - title: Plotting
+      desc: "" # TODO: add desc
+      contents:
+        - gt_plt_bar
+
+    - title: Colors
+      desc: "" # TODO: add desc
+      contents:
+        - gt_highlight_cols
+        - gt_hulk_col_numeric
+
     - title: Themes
       desc: Functions to generate themes.
       contents:
@@ -45,22 +56,17 @@ quartodoc:
         - gt_theme_dot_matrix
         - gt_theme_dark
         - gt_theme_pff
-
-    - title: Colors
-      desc: "" # TODO: add desc
-      contents:
-        - gt_highlight_cols
-        - gt_hulk_col_numeric
     
     - title: Icons and Images
       desc: "" # TODO: add desc
       contents:
         - fa_icon_repeat
         
-    - title: Plotting
+    - title: HTML Helpers
       desc: "" # TODO: add desc
       contents:
-        - gt_plt_bar
+        - gt_hyperlink
+        
 
 format:
   html:
