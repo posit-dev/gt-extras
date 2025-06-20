@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_highlight_cols – gt-extras</title>
+<title>gt_plt_bar – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_highlight_cols.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_highlight_cols.html">gt_highlight_cols</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">gt_plt_bar</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -234,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_highlight_cols.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_highlight_cols.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_highlight_cols</span></a>
   </div>
 </li>
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_bar.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_plt_bar.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_plt_bar</span></a>
   </div>
 </li>
@@ -289,9 +289,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_highlight_cols.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_highlight_cols.html">gt_highlight_cols</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">gt_plt_bar</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_highlight_cols</h1>
+<h1 class="title">gt_plt_bar</h1>
 </div>
 
 
@@ -308,24 +308,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_highlight_cols(</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_bar(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">'#80bcd8'</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    font_weight<span class="op">=</span><span class="st">'normal'</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    font_color<span class="op">=</span><span class="st">'#000000'</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Add color highlighting to one or more specific columns.</p>
-<p>The <code>gt_highlight_cols()</code> function takes an existing <code>GT</code> object and adds highlighting color to the cell background of a specific column(s).</p>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">'purple'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    bar_height<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">60</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    stroke_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    scale_type<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    scale_color<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create horizontal bar plots in <code>GT</code> cells.</p>
+<p>The <code>gt_plt_bar()</code> function takes an existing <code>GT</code> object and adds horizontal bar charts to specified columns. Each cell value is represented as a horizontal bar with length proportional to the cell’s numeric value relative to the column’s maximum value.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 3%">
-<col style="width: 16%">
-<col style="width: 76%">
-<col style="width: 3%">
+<col style="width: 6%">
+<col style="width: 21%">
+<col style="width: 66%">
+<col style="width: 5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -339,38 +342,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>gt</td>
 <td>GT</td>
-<td>An existing <code>GT</code> object.</td>
+<td>A <code>GT</code> object to modify.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
 <td>columns</td>
-<td>SelectExpr</td>
-<td>The columns to target. Can either be a single column name or a series of column names provided in a list. If <code>None</code>, the alignment is applied to all columns.</td>
+<td>SelectExpr | None</td>
+<td>The columns to target. Can be a single column name or a list of column names. If <code>None</code>, the bar plot is applied to all numeric columns.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td>fill</td>
 <td>str</td>
-<td>A character string indicating the fill color. If nothing is provided, then <code>"#80bcd8"</code> (light blue) will be used as a default.</td>
-<td><code>'#80bcd8'</code></td>
+<td>The fill color for the bars.</td>
+<td><code>'purple'</code></td>
 </tr>
 <tr class="even">
-<td>alpha</td>
-<td>int | None</td>
-<td>An integer <code>[0, 1]</code> for the alpha transparency value for the color as single value in the range of <code>0</code> (fully transparent) to <code>1</code> (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the <code>"#RRGGBBAA"</code> format.</td>
+<td>bar_height</td>
+<td>int</td>
+<td>The height of each individual bar in pixels.</td>
+<td><code>20</code></td>
+</tr>
+<tr class="odd">
+<td>height</td>
+<td>int</td>
+<td>The height of the bar plot in pixels.</td>
+<td><code>30</code></td>
+</tr>
+<tr class="even">
+<td>width</td>
+<td>int</td>
+<td>The width of the maximum bar in pixels</td>
+<td><code>60</code></td>
+</tr>
+<tr class="odd">
+<td>stroke_color</td>
+<td>str | None</td>
+<td>The color of the vertical axis on the left side of the bar. The default is black, but if <code>None</code> is passed no stroke will be drawn.</td>
+<td><code>'black'</code></td>
+</tr>
+<tr class="even">
+<td>scale_type</td>
+<td>Literal['percent', 'number'] | None</td>
+<td>The type of value to show on bars. Options are <code>"number"</code>, <code>"percent"</code>, or <code>None</code> for no labels.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td>font_weight</td>
-<td>Literal['normal', 'bold', 'bolder', 'lighter'] | int</td>
-<td>A string or number indicating the weight of the font. Can be a text-based keyword such as <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a numeric value between <code>1</code> and <code>1000</code>, inclusive. Note that only variable fonts may support the numeric mapping of weight.</td>
-<td><code>'normal'</code></td>
-</tr>
-<tr class="even">
-<td>font_color</td>
+<td>scale_color</td>
 <td>str</td>
-<td>A character string indicating the text color. If nothing is provided, then <code>"#000000"</code> (black) will be used as a default.</td>
-<td><code>'#000000'</code></td>
+<td>The color of text labels on the bars (when <code>scale_type</code> is not <code>None</code>).</td>
+<td><code>'white'</code></td>
 </tr>
 </tbody>
 </table>
@@ -379,9 +400,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 88%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 82%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -394,139 +415,179 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td></td>
 <td>GT</td>
-<td>The <code>GT</code> object is returned. This is the same object that the method is called on so that we can facilitate method chaining.</td>
+<td>A <code>GT</code> object with horizontal bar plots added to the specified columns.</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="a8079833" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
+<div id="5ffda667" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars[[<span class="st">"model"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"trq"</span>]].head(<span class="dv">9</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars.iloc[<span class="dv">0</span>:<span class="dv">8</span>, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">3</span>)) <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">5</span>, <span class="dv">11</span>))]</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span>md(<span class="st">"*Car*"</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>gte.gt_highlight_cols(gt, columns<span class="op">=</span><span class="st">"hp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini,rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Car"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .tab_style(style<span class="op">=</span>style.css(<span class="st">"text-align: center;"</span>), locations<span class="op">=</span>loc.column_labels())</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gte.gt_plt_bar(gt, columns<span class="op">=</span>[<span class="st">"hp"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"mpg_c"</span>, <span class="st">"mpg_h"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="wkvkdlvnhg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="hziompnwnn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#wkvkdlvnhg table {
+#hziompnwnn table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#wkvkdlvnhg thead, tbody, tfoot, tr, td, th { border-style: none; }
+#hziompnwnn thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#wkvkdlvnhg p { margin: 0; padding: 0; }
- #wkvkdlvnhg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #wkvkdlvnhg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #wkvkdlvnhg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #wkvkdlvnhg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #wkvkdlvnhg .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #wkvkdlvnhg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #wkvkdlvnhg .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #wkvkdlvnhg .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #wkvkdlvnhg .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #wkvkdlvnhg .gt_column_spanner_outer:first-child { padding-left: 0; }
- #wkvkdlvnhg .gt_column_spanner_outer:last-child { padding-right: 0; }
- #wkvkdlvnhg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #wkvkdlvnhg .gt_spanner_row { border-bottom-style: hidden; }
- #wkvkdlvnhg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #wkvkdlvnhg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #wkvkdlvnhg .gt_from_md> :first-child { margin-top: 0; }
- #wkvkdlvnhg .gt_from_md> :last-child { margin-bottom: 0; }
- #wkvkdlvnhg .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #wkvkdlvnhg .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #wkvkdlvnhg .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #wkvkdlvnhg .gt_row_group_first td { border-top-width: 2px; }
- #wkvkdlvnhg .gt_row_group_first th { border-top-width: 2px; }
- #wkvkdlvnhg .gt_striped { background-color: rgba(128,128,128,0.05); }
- #wkvkdlvnhg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #wkvkdlvnhg .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #wkvkdlvnhg .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #wkvkdlvnhg .gt_left { text-align: left; }
- #wkvkdlvnhg .gt_center { text-align: center; }
- #wkvkdlvnhg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #wkvkdlvnhg .gt_font_normal { font-weight: normal; }
- #wkvkdlvnhg .gt_font_bold { font-weight: bold; }
- #wkvkdlvnhg .gt_font_italic { font-style: italic; }
- #wkvkdlvnhg .gt_super { font-size: 65%; }
- #wkvkdlvnhg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #wkvkdlvnhg .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#hziompnwnn p { margin: 0; padding: 0; }
+ #hziompnwnn .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #hziompnwnn .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #hziompnwnn .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #hziompnwnn .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #hziompnwnn .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hziompnwnn .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #hziompnwnn .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #hziompnwnn .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #hziompnwnn .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #hziompnwnn .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #hziompnwnn .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #hziompnwnn .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #hziompnwnn .gt_spanner_row { border-bottom-style: hidden; }
+ #hziompnwnn .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #hziompnwnn .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #hziompnwnn .gt_from_md> :first-child { margin-top: 0; }
+ #hziompnwnn .gt_from_md> :last-child { margin-bottom: 0; }
+ #hziompnwnn .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #hziompnwnn .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #hziompnwnn .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #hziompnwnn .gt_row_group_first td { border-top-width: 2px; }
+ #hziompnwnn .gt_row_group_first th { border-top-width: 2px; }
+ #hziompnwnn .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #hziompnwnn .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #hziompnwnn .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #hziompnwnn .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #hziompnwnn .gt_left { text-align: left; }
+ #hziompnwnn .gt_center { text-align: center; }
+ #hziompnwnn .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #hziompnwnn .gt_font_normal { font-weight: normal; }
+ #hziompnwnn .gt_font_bold { font-weight: bold; }
+ #hziompnwnn .gt_font_italic { font-style: italic; }
+ #hziompnwnn .gt_super { font-size: 65%; }
+ #hziompnwnn .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #hziompnwnn .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<em>Car</em>"><em>Car</em></th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Car">Car</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="mfr">mfr</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="hp_rpm">hp_rpm</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="trq_rpm">trq_rpm</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="mpg_c">mpg_c</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="text-align: center;" scope="col" id="mpg_h">mpg_h</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
     <th class="gt_row gt_left gt_stub">GT</th>
+    <td class="gt_row gt_left">Ford</td>
     <td class="gt_row gt_right">2017</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">647.0</td>
-    <td class="gt_row gt_right">550.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="57.088235294117645" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="55.94647058823529" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="41.666666666666664" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.83333333333333" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="58.8235294117647" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="57.647058823529406" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="59.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="57.82" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="41.25" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.425" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="46.95652173913044" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="46.017391304347825" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Speciale</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">597.0</td>
-    <td class="gt_row gt_right">398.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="52.6764705882353" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="51.62294117647059" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="42.5668449197861" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="41.71550802139038" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="48.75" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="47.775" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="44.34782608695652" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="43.46086956521739" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Spider</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
-    <td class="gt_row gt_right">398.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="49.588235294117645" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="48.59647058823529" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="42.5668449197861" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="41.71550802139038" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="48.75" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="47.775" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="44.34782608695652" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="43.46086956521739" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Italia</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2014</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
-    <td class="gt_row gt_right">398.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="49.588235294117645" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="48.59647058823529" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="42.5668449197861" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="41.71550802139038" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="48.75" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="47.775" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="44.34782608695652" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="43.46086956521739" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">488 GTB</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2016</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">661.0</td>
-    <td class="gt_row gt_right">561.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="58.3235294117647" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="57.15705882352941" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="53.333333333333336" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="52.266666666666666" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="30.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="29.4" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="56.25" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="55.125" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="57.391304347826086" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="56.243478260869566" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">California</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">553.0</td>
-    <td class="gt_row gt_right">557.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="48.794117647058826" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="47.81823529411765" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="50.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="49.0" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="59.57219251336898" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.3807486631016" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="47.5" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="46.55" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">GTC4Lusso</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2017</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">680.0</td>
-    <td class="gt_row gt_right">514.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="55.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="53.9" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="54.973262032085564" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="53.87379679144385" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="57.5" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="56.35" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="45.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="44.1" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="44.34782608695652" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="43.46086956521739" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">FF</th>
+    <td class="gt_row gt_left">Ferrari</td>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">652.0</td>
-    <td class="gt_row gt_right">504.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">F12Berlinetta</th>
-    <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">731.0</td>
-    <td class="gt_row gt_right">509.0</td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="57.529411764705884" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="56.37882352941177" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="53.333333333333336" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="52.266666666666666" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="53.903743315508024" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="52.82566844919786" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="41.25" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.425" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
+    <td class="gt_row gt_right"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="41.73913043478261" height="20" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.904347826086955" y="15.0"></text><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"></line></svg></td>
   </tr>
 </tbody>
 
@@ -537,6 +598,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         
 </div>
 </div>
+</section>
+<section id="note" class="level2 doc-section doc-section-note">
+<h2 class="doc-section doc-section-note anchored" data-anchor-id="note">Note</h2>
+<p>Each column’s bars are scaled independently based on that column’s min/max values.</p>
 
 
 </section>

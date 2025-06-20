@@ -11,7 +11,7 @@
     "href": "reference/gt_theme_excel.html",
     "title": "gt_theme_excel",
     "section": "",
-    "text": "gt_theme_excel(gt, color='lightgrey')\nApplies an Excel-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by Microsoft Excel tables.",
+    "text": "gt_theme_excel(gt, color='lightgrey')\nApplies an Excel-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by Microsoft Excel tables.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -59,7 +59,7 @@
     "href": "reference/gt_theme_guardian.html",
     "title": "gt_theme_guardian",
     "section": "",
-    "text": "gt_theme_guardian(gt)\nApplies a Guardian-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by The Guardian’s data tables.",
+    "text": "gt_theme_guardian(gt)\nApplies a Guardian-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by The Guardian’s data tables.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -167,7 +167,7 @@
     "href": "reference/gt_theme_pff.html",
     "title": "gt_theme_pff",
     "section": "",
-    "text": "gt_theme_pff(gt, divider=None, spanners=None, rank_col=None)\nApplies a Pro Football Focus (PFF)-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by Pro Football Focus tables, supporting custom spanners, dividers, and rank column highlighting.",
+    "text": "gt_theme_pff(gt, divider=None, spanners=None, rank_col=None)\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by Pro Football Focus tables, supporting custom spanners, dividers, and rank column highlighting.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -215,7 +215,7 @@
     "href": "reference/gt_theme_espn.html",
     "title": "gt_theme_espn",
     "section": "",
-    "text": "gt_theme_espn(gt)\nApplies an ESPN-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by ESPN’s data tables.",
+    "text": "gt_theme_espn(gt)\nApplies an ESPN-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by ESPN’s data tables.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -307,11 +307,71 @@
     ]
   },
   {
+    "objectID": "reference/gt_plt_bar.html",
+    "href": "reference/gt_plt_bar.html",
+    "title": "gt_plt_bar",
+    "section": "",
+    "text": "gt_plt_bar(\n    gt,\n    columns=None,\n    fill='purple',\n    bar_height=20,\n    height=30,\n    width=60,\n    stroke_color='black',\n    scale_type=None,\n    scale_color='white',\n)\nCreate horizontal bar plots in GT cells.\nThe gt_plt_bar() function takes an existing GT object and adds horizontal bar charts to specified columns. Each cell value is represented as a horizontal bar with length proportional to the cell’s numeric value relative to the column’s maximum value.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar.html#parameters",
+    "href": "reference/gt_plt_bar.html#parameters",
+    "title": "gt_plt_bar",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ngt\nGT\nA GT object to modify.\nrequired\n\n\ncolumns\nSelectExpr | None\nThe columns to target. Can be a single column name or a list of column names. If None, the bar plot is applied to all numeric columns.\nNone\n\n\nfill\nstr\nThe fill color for the bars.\n'purple'\n\n\nbar_height\nint\nThe height of each individual bar in pixels.\n20\n\n\nheight\nint\nThe height of the bar plot in pixels.\n30\n\n\nwidth\nint\nThe width of the maximum bar in pixels\n60\n\n\nstroke_color\nstr | None\nThe color of the vertical axis on the left side of the bar. The default is black, but if None is passed no stroke will be drawn.\n'black'\n\n\nscale_type\nLiteral['percent', 'number'] | None\nThe type of value to show on bars. Options are \"number\", \"percent\", or None for no labels.\nNone\n\n\nscale_color\nstr\nThe color of text labels on the bars (when scale_type is not None).\n'white'",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar.html#returns",
+    "href": "reference/gt_plt_bar.html#returns",
+    "title": "gt_plt_bar",
+    "section": "Returns",
+    "text": "Returns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nGT\nA GT object with horizontal bar plots added to the specified columns.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar.html#examples",
+    "href": "reference/gt_plt_bar.html#examples",
+    "title": "gt_plt_bar",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT, style, loc\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.iloc[0:8, list(range(0, 3)) + list(range(5, 11))]\n\ngt = (\n    GT(gtcars_mini,rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n    .tab_style(style=style.css(\"text-align: center;\"), locations=loc.column_labels())\n)\n\ngte.gt_plt_bar(gt, columns=[\"hp\", \"hp_rpm\", \"trq\", \"trq_rpm\", \"mpg_c\", \"mpg_h\"])\n\n\n\n\n\n\n\n  Car\n  mfr\n  year\n  hp\n  hp_rpm\n  trq\n  trq_rpm\n  mpg_c\n  mpg_h\n\n\n\n  \n    GT\n    Ford\n    2017\n    \n    \n    \n    \n    \n    \n  \n  \n    458 Speciale\n    Ferrari\n    2015\n    \n    \n    \n    \n    \n    \n  \n  \n    458 Spider\n    Ferrari\n    2015\n    \n    \n    \n    \n    \n    \n  \n  \n    458 Italia\n    Ferrari\n    2014\n    \n    \n    \n    \n    \n    \n  \n  \n    488 GTB\n    Ferrari\n    2016\n    \n    \n    \n    \n    \n    \n  \n  \n    California\n    Ferrari\n    2015\n    \n    \n    \n    \n    \n    \n  \n  \n    GTC4Lusso\n    Ferrari\n    2017\n    \n    \n    \n    \n    \n    \n  \n  \n    FF\n    Ferrari\n    2015",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar.html#note",
+    "href": "reference/gt_plt_bar.html#note",
+    "title": "gt_plt_bar",
+    "section": "Note",
+    "text": "Note\nEach column’s bars are scaled independently based on that column’s min/max values.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar"
+    ]
+  },
+  {
     "objectID": "reference/gt_hulk_col_numeric.html",
     "href": "reference/gt_hulk_col_numeric.html",
     "title": "gt_hulk_col_numeric",
     "section": "",
-    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT table.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
+    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT object.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
     "crumbs": [
       "API Reference",
       "Colors",
@@ -359,7 +419,7 @@
     "href": "reference/gt_theme_dot_matrix.html",
     "title": "gt_theme_dot_matrix",
     "section": "",
-    "text": "gt_theme_dot_matrix(gt, color='#b5dbb6')\nApplies a dot-matrix-inspired theme to a GT table.\nThis function styles a GT object with a look reminiscent of dot-matrix printouts.",
+    "text": "gt_theme_dot_matrix(gt, color='#b5dbb6')\nApplies a dot-matrix-inspired theme to a GT object.\nThis function styles a GT object with a look reminiscent of dot-matrix printouts.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -407,7 +467,7 @@
     "href": "reference/gt_theme_538.html",
     "title": "gt_theme_538",
     "section": "",
-    "text": "gt_theme_538(gt)\nApplies a FiveThirtyEight-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by the FiveThirtyEight (538) website.",
+    "text": "gt_theme_538(gt)\nApplies a FiveThirtyEight-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by the FiveThirtyEight (538) website.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -455,7 +515,7 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT table.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT table.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT table.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT table.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT table.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT table.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT table.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT table.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT table.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.",
+    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\n\n\n\n\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -465,7 +525,7 @@
     "href": "reference/index.html#themes",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT table.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT table.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT table.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT table.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT table.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT table.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT table.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT table.",
+    "text": "Functions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.",
     "crumbs": [
       "API Reference"
     ]
@@ -475,7 +535,7 @@
     "href": "reference/index.html#colors",
     "title": "API Reference",
     "section": "",
-    "text": "gt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT table.",
+    "text": "gt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.",
     "crumbs": [
       "API Reference"
     ]
@@ -491,11 +551,21 @@
     ]
   },
   {
+    "objectID": "reference/index.html#plotting",
+    "href": "reference/index.html#plotting",
+    "title": "API Reference",
+    "section": "",
+    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.",
+    "crumbs": [
+      "API Reference"
+    ]
+  },
+  {
     "objectID": "reference/gt_theme_dark.html",
     "href": "reference/gt_theme_dark.html",
     "title": "gt_theme_dark",
     "section": "",
-    "text": "gt_theme_dark(gt)\nApplies a dark mode theme to a GT table.\nThis function styles a GT object with a dark background and light text.",
+    "text": "gt_theme_dark(gt)\nApplies a dark mode theme to a GT object.\nThis function styles a GT object with a dark background and light text.",
     "crumbs": [
       "API Reference",
       "Themes",
@@ -543,7 +613,7 @@
     "href": "reference/gt_theme_nytimes.html",
     "title": "gt_theme_nytimes",
     "section": "",
-    "text": "gt_theme_nytimes(gt)\nApplies a New York Times-inspired theme to a GT table.\nThis function styles a GT object with a look inspired by New York Times tables.",
+    "text": "gt_theme_nytimes(gt)\nApplies a New York Times-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by New York Times tables.",
     "crumbs": [
       "API Reference",
       "Themes",
