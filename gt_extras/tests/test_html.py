@@ -1,7 +1,7 @@
-# import pytest
+import pytest
 import pandas as pd
 from great_tables import GT
-from gt_extras.html import gt_hyperlink
+from gt_extras.html import gt_hyperlink, with_tooltip
 
 def test_gt_hyperlink_basic():
     result = gt_hyperlink("Google", "https://google.com")
@@ -39,3 +39,47 @@ def test_gt_hyperlink_in_table():
     assert "https://github.com" in html_output
     assert 'target="_blank"' in html_output
     assert 'target="_self"' in html_output
+
+
+def test_with_tooltip_basic():
+    result = with_tooltip("1", "Number One")
+    expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: dotted; color: blue; " title="Number One">1</abbr>'
+    assert result == expected
+
+def test_with_tooltip_underline_style():
+    result = with_tooltip("1", "Number One", text_decoration_style="solid")
+    expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: solid; color: blue; " title="Number One">1</abbr>'
+    assert result == expected
+
+def test_with_tooltip_underline_fail():
+    with pytest.raises(ValueError):
+        with_tooltip("1", "Number One", text_decoration_style="underline")
+
+def test_with_tooltip_no_decoration():
+    result = with_tooltip("1", "Number One", text_decoration_style=None)
+    expected = '<abbr style="cursor: help; text-decoration: none; color: blue; " title="Number One">1</abbr>'
+    assert result == expected
+
+def test_with_tooltip_no_color():
+    result = with_tooltip("1", "Number One", color=None)
+    expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: dotted; " title="Number One">1</abbr>'
+    assert result == expected
+
+def test_with_tooltip_in_table():    
+    df = pd.DataFrame({
+        "Number": ["1", "2"],
+        "Description": [
+            with_tooltip("1", "Number One"),
+            with_tooltip("2", "Number Two", text_decoration_style="solid", color="red")
+        ]
+    })
+    
+    html_output = GT(df).as_raw_html()
+    
+    assert 'title="Number One"' in html_output
+    assert 'title="Number Two"' in html_output
+    assert 'cursor: help' in html_output
+    assert 'text-decoration-style: dotted' in html_output
+    assert 'text-decoration-style: solid' in html_output
+    assert 'color: blue' in html_output
+    assert 'color: red' in html_output
