@@ -3,6 +3,7 @@ from typing import Literal
 
 __all__ = ["gt_hyperlink", "with_tooltip"]
 
+# TODO: Add example to docstrings in this module?
 
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     """
