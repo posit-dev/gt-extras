@@ -36,12 +36,11 @@ styled_gt.show("browser")
 
 ## Features
 
-- Color gradients for numeric columns
-- Highlighting for specific columns or cells
+- Color gradients and highlighting
+- Plots in cells for graphic data representation
 - FontAwesome icons and icon repetition
 - Pre-built themes for quick table styling
 - Helper utilities for common table tasks.
-<!-- See the [documentation]("") for a full function reference and more examples. -->
     
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).
@@ -68,4 +67,4 @@ url = {https://github.com/posit-dev/gt-extras}, version = {0.0.1}
 }
 ``` 
 
-For more information, see the [documentation website](https://posit-dev.github.io/gt-extras/) or [open an issue](https://github.com/posit-dev/gt-extras/issues) with questions or suggestions!
+For more information, see the [docs](https://posit-dev.github.io/gt-extras/reference) or [open an issue](https://github.com/posit-dev/gt-extras/issues) with questions or suggestions!
