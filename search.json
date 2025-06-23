@@ -422,6 +422,54 @@
     ]
   },
   {
+    "objectID": "reference/gt_plt_dot.html",
+    "href": "reference/gt_plt_dot.html",
+    "title": "gt_plt_dot",
+    "section": "",
+    "text": "gt_plt_dot(gt, category_col, data_col, domain=None, palette=None)\nCreate dot plots with thin horizontal bars in GT cells.\nThe gt_plt_dot() function takes an existing GT object and adds dot plots with horizontal bar charts to a specified category column. Each cell displays a colored dot with the category label and a horizontal bar representing the corresponding numeric value from the data column.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_dot"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_dot.html#parameters",
+    "href": "reference/gt_plt_dot.html#parameters",
+    "title": "gt_plt_dot",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncategory_col : SelectExpr\n\nThe column containing category labels that will be displayed next to colored dots.\n\ndata_col : SelectExpr\n\nThe column containing numeric values that will determine the length of the horizontal bars.\n\ndomain : list[int] | list[float] | None = None\n\nThe domain of values to use for the color scheme. This can be a list of floats or integers. If None, the domain is automatically set to [0, max(data_col)].\n\npalette : list[str] | str | None = None\n\nThe color palette to use. This should be a list of colors (e.g., [\"#FF0000\", \"#00FF00\", \"#0000FF\"]). A ColorBrewer palette could also be used, just supply the name (see GT.data_color() for additional reference). If None, then a default palette will be used.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_dot"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_dot.html#returns",
+    "href": "reference/gt_plt_dot.html#returns",
+    "title": "gt_plt_dot",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nA GT object with dot plots and horizontal bars added to the specified category column.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_dot"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_dot.html#examples",
+    "href": "reference/gt_plt_dot.html#examples",
+    "title": "gt_plt_dot",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT, style, loc\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.loc[8:20, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngte.gt_plt_dot(gt, category_col=\"mfr\", data_col=\"hp\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n\n\n\n  \n    F12Berlinetta\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    731.0\n    509.0\n    11.0\n  \n  \n    LaFerrari\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    949.0\n    664.0\n    12.0\n  \n  \n    NSX\n    \n            \n                Acura\n                \n                \n            \n            \n                   \n            \n        \n    573.0\n    476.0\n    21.0\n  \n  \n    GT-R\n    \n            \n                Nissan\n                \n                \n            \n            \n                   \n            \n        \n    545.0\n    436.0\n    16.0\n  \n  \n    Aventador\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    700.0\n    507.0\n    11.0\n  \n  \n    Huracan\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    610.0\n    413.0\n    16.0\n  \n  \n    Gallardo\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    550.0\n    398.0\n    12.0\n  \n  \n    Continental GT\n    \n            \n                Bentley\n                \n                \n            \n            \n                   \n            \n        \n    500.0\n    487.0\n    15.0\n  \n  \n    Granturismo\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    454.0\n    384.0\n    13.0\n  \n  \n    Quattroporte\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    404.0\n    406.0\n    16.0\n  \n  \n    Ghibli\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    345.0\n    369.0\n    17.0\n  \n  \n    6-Series\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    315.0\n    330.0\n    20.0\n  \n  \n    i8\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    357.0\n    420.0\n    28.0",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_dot"
+    ]
+  },
+  {
     "objectID": "reference/gt_highlight_cols.html",
     "href": "reference/gt_highlight_cols.html",
     "title": "gt_highlight_cols",
@@ -558,7 +606,7 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nFunctions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\n\n\n\n\n\n\n\ngt_hyperlink\nCreate HTML hyperlinks for use in GT object cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT table cells.",
+    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\n\n\n\n\n\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nFunctions to generate themes.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\n\n\n\n\n\n\n\ngt_hyperlink\nCreate HTML hyperlinks for use in GT object cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT table cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -568,7 +616,7 @@
     "href": "reference/index.html#plotting",
     "title": "API Reference",
     "section": "",
-    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.",
+    "text": "gt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.",
     "crumbs": [
       "API Reference"
     ]
