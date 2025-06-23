@@ -1,5 +1,7 @@
 from __future__ import annotations
 from typing import Literal
+import warnings
+
 
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
@@ -21,11 +23,7 @@ __all__ = ["gt_plt_bar", "gt_plt_dot"]
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
 
-# TODO: make sure numeric type passed in?
-
 # TODO: default font for labels?
-
-# TODO: let user pass domain?
 
 
 def gt_plt_bar(
@@ -112,15 +110,22 @@ def gt_plt_bar(
 
     if bar_height > height:
         bar_height = height
-        # TODO: warn the user
+        warnings.warn(
+            f"Bar_height must be less than or equal to the plot height. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
 
     if bar_height < 0:
         bar_height = 0
-        # TODO: warn the user
+        warnings.warn(
+            f"Bar_height cannot be negative. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
 
     # Helper function to make the individual bars
     def _make_bar_html(
-        val: int,
+        scaled_val: int,
+        original_val: int,
         fill: str,
         bar_height: int,
         height: int,
@@ -131,9 +136,9 @@ def gt_plt_bar(
     ) -> str:
         text = ""
         if scale_type == "percent":
-            text = str(round(val * 100)) + "%"
+            text = str(round(original_val * 100)) + "%"
         if scale_type == "number":
-            text = val
+            text = original_val
 
         canvas = SVG(
             width=width,
@@ -142,7 +147,7 @@ def gt_plt_bar(
                 Rect(
                     x=0,
                     y=(height - bar_height) / 2,
-                    width=width * val,
+                    width=width * scaled_val,
                     height=bar_height,
                     fill=fill,
                     # onmouseover="this.style.fill= 'blue';",
@@ -150,7 +155,7 @@ def gt_plt_bar(
                 ),
                 Text(
                     text=text,
-                    x=(width * val) * 0.98,
+                    x=(width * scaled_val) * 0.98,
                     y=height / 2,
                     fill=scale_color,
                     font_size=bar_height * 0.6,
@@ -173,9 +178,10 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
 
-    def make_bar(val: int) -> str:
+    def make_bar(scaled_val: int, original_val: int) -> str:
         return _make_bar_html(
-            val=val,
+            scaled_val=scaled_val,
+            original_val=original_val,
             fill=fill,
             bar_height=bar_height,
             height=height,
@@ -199,10 +205,15 @@ def gt_plt_bar(
 
         scaled_vals = _process_numeric_column(gt._tbl_data, col_name, col_vals, domain)
 
-        res = res.fmt(
-            lambda x: make_bar(x),
-            columns=column,
-        )
+        # Apply the scaled value for each row, so the bar is proportional
+        for i, scaled_val in enumerate(scaled_vals):
+            res = res.fmt(
+                lambda original_val, scaled_val=scaled_val: make_bar(
+                    scaled_val, original_val=original_val
+                ),
+                columns=column,
+                rows=[i],
+            )
     return res
 
 
