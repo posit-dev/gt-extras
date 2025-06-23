@@ -5,6 +5,10 @@ from great_tables import GT
 from great_tables._tbl_data import SelectExpr
 from great_tables._locations import resolve_cols_c
 
+from great_tables._data_color.palettes import GradientPalette
+from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from great_tables._data_color.base import _html_color, _rescale_factor, _get_domain_factor
+
 from svg import SVG, Line, Rect, Text
 
 __all__ = ["gt_plt_bar", "gt_plt_dot"]
@@ -15,6 +19,8 @@ __all__ = ["gt_plt_bar", "gt_plt_dot"]
 # TODO: make sure numeric type passed in?
 
 # TODO: default font for labels?
+
+# TODO: let user pass domain?
 
 
 def gt_plt_bar(
@@ -75,7 +81,7 @@ def gt_plt_bar(
 
     Examples
     --------
-    
+
     ```{python}
     from great_tables import GT, style, loc
     from great_tables.data import gtcars
@@ -157,7 +163,7 @@ def gt_plt_bar(
             ],
         )
         return f'<div style="display: flex;">{canvas.as_str()}</div>'
-    
+
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
@@ -264,3 +270,104 @@ def gt_plt_bar(
     #     )
 
     # return res
+
+
+def gt_plt_dot(
+    gt: GT,
+    category_col: SelectExpr,
+    data_col: SelectExpr,
+    domain: tuple[int, int] | None = None,  # TODO: Add this to `gt_plt_bar()`
+    palette: list[str] | str | None = None,  # TODO: pick default
+) -> GT:
+    def _make_bottom_bar_html(
+        val: int,
+        fill: str,
+        max_val: int,
+    ) -> str:
+        scaled_value = (val / max_val) * 100
+        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius: 2px;"></div>'
+        html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
+
+        return html
+
+    def _make_dot_and_bar_html(
+        bar_val: int,
+        max_val: int,
+        fill: str,
+        dot_category_label: str, # TODO: type?
+    ) -> str:
+        label_div_style = "display:inline-block; float:left; margin-right:0px;"
+
+        dot_style = (
+            f"height: 0.7em; width: 0.7em; background-color: {fill};"
+            "border-radius: 50%; margin-top:4px; display:inline-block;"
+            "float:left; margin-right:2px;"
+        )
+
+        padding_div_style = (
+            "display: inline-block; float:right; line-height:20px;padding: 0px 2.5px;"
+        )
+
+        bar_container_style = "position: relative; top: 1.2em;"
+
+        html = f'''
+        <div>
+            <div style="{label_div_style}">
+                {dot_category_label}
+                <div style="{dot_style}"></div>
+                <div style="{padding_div_style}"></div>
+            </div>
+            <div style="{bar_container_style}">
+                <div>{_make_bottom_bar_html(bar_val, fill=fill, max_val=max_val)}</div>
+            </div>
+        </div>
+        '''
+
+        return html.strip()
+
+    data_col_name = resolve_cols_c(data=gt, expr=data_col)[0]
+    data_col_vals = gt._tbl_data[data_col_name]
+    max_val = max(data_col_vals)
+
+    category_col_name = resolve_cols_c(data=gt, expr=category_col)[0]
+    category_col_vals = gt._tbl_data[category_col_name]
+
+    # If palette is not provided, use a default palette
+    if palette is None:
+        palette = DEFAULT_PALETTE
+    elif isinstance(palette, str):
+        # Check if the `palette` value refers to a ColorBrewer or viridis palette
+        # and, if it is, then convert it to a list of hexadecimal color values; otherwise,
+        # convert it to a list (this assumes that the value is a single color)
+        palette = ALL_PALETTES.get(palette, [palette])
+
+    # Standardize values in `palette` to hexadecimal color values
+    palette = _html_color(colors=palette)
+
+    domain = _get_domain_factor(df=gt._tbl_data, vals=category_col_vals)
+
+    scaled_vals = _rescale_factor(
+        df=gt._tbl_data, vals=category_col_vals, domain=domain, palette=palette
+    )
+
+    # Create a color scale function from the palette
+    color_scale_fn = GradientPalette(colors=palette)
+
+    # Call the color scale function on the scaled values to get a list of colors
+    color_vals = color_scale_fn(scaled_vals)
+
+    res = gt
+    for i in range(len(gt._tbl_data)):
+        # category_val = category_col_vals.iloc[i]
+        data_val = data_col_vals.iloc[i]
+        color_val = color_vals[i]
+
+        res = res.fmt(
+            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
+                dot_category_label=x, max_val=max_val, fill=fill, bar_val=data
+            ),
+            columns=category_col,
+            rows=[i],
+        )
+
+    return res
