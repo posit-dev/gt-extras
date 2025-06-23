@@ -2,12 +2,21 @@ from __future__ import annotations
 from typing import Literal
 
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr
+from great_tables._tbl_data import SelectExpr, is_na
 from great_tables._locations import resolve_cols_c
+
+from great_tables._data_color.palettes import GradientPalette
+from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from great_tables._data_color.base import (
+    _html_color,
+    _rescale_factor,
+    _get_domain_factor,
+    _rescale_numeric,
+)
 
 from svg import SVG, Line, Rect, Text
 
-__all__ = ["gt_plt_bar"]
+__all__ = ["gt_plt_bar", "gt_plt_dot"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -15,6 +24,8 @@ __all__ = ["gt_plt_bar"]
 # TODO: make sure numeric type passed in?
 
 # TODO: default font for labels?
+
+# TODO: let user pass domain?
 
 
 def gt_plt_bar(
@@ -75,7 +86,7 @@ def gt_plt_bar(
 
     Examples
     --------
-    
+
     ```{python}
     from great_tables import GT, style, loc
     from great_tables.data import gtcars
@@ -156,8 +167,8 @@ def gt_plt_bar(
                 ),
             ],
         )
-        return canvas.as_str()
-    
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
@@ -264,3 +275,206 @@ def gt_plt_bar(
     #     )
 
     # return res
+
+
+def gt_plt_dot(
+    gt: GT,
+    category_col: SelectExpr,
+    data_col: SelectExpr,
+    domain: list[int] | list[float] | None = None,
+    palette: list[str] | str | None = None,
+) -> GT:
+    """
+    Create dot plots with thin horizontal bars in `GT` cells.
+
+    The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
+    bar charts to a specified category column. Each cell displays a colored dot with the category
+    label and a horizontal bar representing the corresponding numeric value from the data column.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    category_col
+        The column containing category labels that will be displayed next to colored dots.
+
+    data_col
+        The column containing numeric values that will determine the length of the horizontal bars.
+
+    domain
+        The domain of values to use for the color scheme. This can be a list of floats or integers.
+        If `None`, the domain is automatically set to `[0, max(data_col)]`.
+
+    palette
+        The color palette to use. This should be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        If `None`, then a default palette will be used.
+
+    Returns
+    -------
+    GT
+        A `GT` object with dot plots and horizontal bars added to the specified category column.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT, style, loc
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label="Car")
+    )
+
+    gte.gt_plt_dot(gt, category_col="mfr", data_col="hp")
+    ```
+    """
+
+    def _make_bottom_bar_html(
+        val: float,
+        fill: str,
+    ) -> str:
+        scaled_value = val * 100
+        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius: 2px;"></div>'
+        html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
+
+        return html
+
+    def _make_dot_and_bar_html(
+        bar_val: float,
+        fill: str,
+        dot_category_label: str,
+    ) -> str:
+        label_div_style = "display:inline-block; float:left; margin-right:0px;"
+
+        dot_style = (
+            f"height: 0.7em; width: 0.7em; background-color: {fill};"
+            "border-radius: 50%; margin-top:4px; display:inline-block;"
+            "float:left; margin-right:2px;"
+        )
+
+        padding_div_style = (
+            "display: inline-block; float:right; line-height:20px;padding: 0px 2.5px;"
+        )
+
+        bar_container_style = "position: relative; top: 1.2em;"
+
+        html = f'''
+        <div>
+            <div style="{label_div_style}">
+                {dot_category_label}
+                <div style="{dot_style}"></div>
+                <div style="{padding_div_style}"></div>
+            </div>
+            <div style="{bar_container_style}">
+                <div>{_make_bottom_bar_html(bar_val, fill=fill)}</div>
+            </div>
+        </div>
+        '''
+
+        return html.strip()
+
+    # Get the underlying Dataframe
+    data_table = gt._tbl_data
+
+    # Get the data column
+    data_col_names = resolve_cols_c(data=gt, expr=data_col)
+    if len(data_col_names) == 0:
+        raise KeyError(f"Column '{data_col}' not found in the table.")
+    if len(data_col_names) > 1:
+        raise ValueError(
+            f"Expected a single column for data_col, but got multiple columns: {data_col_names}"
+        )
+
+    data_col_name = data_col_names[0]
+    data_col_vals = data_table[data_col_name].to_list()
+    data_col_vals_filtered = [x for x in data_col_vals if not is_na(data_table, x)]
+
+    # Check that data_col has numeric data
+    if len(data_col_vals_filtered) and all(
+        isinstance(x, (int, float)) for x in data_col_vals_filtered
+    ):
+        # If `domain` is not provided, then set it to [0, max]
+        # Note this is different from the default behavior in data_color()
+        if domain is None:
+            domain = [0, max(data_col_vals_filtered)]
+
+        # Rescale based on the given domain
+        scaled_data_vals = _rescale_numeric(
+            df=data_table, vals=data_col_vals, domain=domain
+        )
+    else:
+        raise TypeError(
+            f"Invalid column type provided ({data_col_name}). Please ensure that the column is numeric."
+        )
+
+    # Map scaled values back to original positions, using 0 for NAs
+    scaled_data_vals_fixed = []
+    for orig_val, scaled_val in zip(data_col_vals, scaled_data_vals):
+        if is_na(data_table, orig_val):
+            scaled_data_vals_fixed.append(0)
+        elif is_na(data_table, scaled_val):
+            # If original value < domain[0], set to 0; if > domain[1], set to 1
+            if orig_val < min(domain):
+                scaled_data_vals_fixed.append(0)
+            else:
+                scaled_data_vals_fixed.append(1)
+        else:
+            scaled_data_vals_fixed.append(scaled_val)
+    scaled_data_vals = scaled_data_vals_fixed
+
+    # Get the category column, used for colors
+    category_col_names = resolve_cols_c(data=gt, expr=category_col)
+    if len(category_col_names) == 0:
+        raise KeyError(f"Column '{category_col}' not found in the table.")
+    if len(category_col_names) > 1:
+        raise ValueError(
+            f"Expected a single column for category_col, but got multiple columns: {category_col_names}"
+        )
+
+    category_col_name = category_col_names[0]
+    category_col_vals = data_table[category_col_name].to_list()
+
+    # If palette is not provided, use a default palette
+    if palette is None:
+        palette = DEFAULT_PALETTE
+
+    # Otherwise get the palette from great_tables._data_color
+    elif isinstance(palette, str):
+        palette = ALL_PALETTES.get(palette, [palette])
+
+    # Standardize values in `palette` to hexadecimal color values
+    palette = _html_color(colors=palette)
+
+    # Rescale the category column for the purpose of assigning colors to each dot
+    category_domain = _get_domain_factor(df=data_table, vals=category_col_vals)
+    scaled_category_vals = _rescale_factor(
+        df=data_table, vals=category_col_vals, domain=category_domain, palette=palette
+    )
+
+    # Create a color scale function from the palette
+    color_scale_fn = GradientPalette(colors=palette)
+
+    # Call the color scale function on the scaled categoy values to get a list of colors
+    color_vals = color_scale_fn(scaled_category_vals)
+
+    # Apply gt.fmt() to each row individually, so we can access the data_value for that row
+    res = gt
+    for i in range(len(data_table)):
+        data_val = scaled_data_vals[i]
+        color_val = color_vals[i]
+
+        res = res.fmt(
+            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
+                dot_category_label=x, fill=fill, bar_val=data
+            ),
+            columns=category_col,
+            rows=[i],
+        )
+
+    return res
