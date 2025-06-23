@@ -197,7 +197,6 @@ def gt_plt_bar(
     res = gt
     for column in columns_resolved:
         # Validate this is a single column and get values
-
         col_name, col_vals = _validate_and_get_single_column(
             gt,
             column,
@@ -209,7 +208,8 @@ def gt_plt_bar(
         for i, scaled_val in enumerate(scaled_vals):
             res = res.fmt(
                 lambda original_val, scaled_val=scaled_val: make_bar(
-                    scaled_val, original_val=original_val
+                    original_val=original_val,
+                    scaled_val=scaled_val,
                 ),
                 columns=column,
                 rows=[i],
@@ -280,7 +280,7 @@ def gt_plt_dot(
         fill: str,
     ) -> str:
         scaled_value = val * 100
-        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius: 2px;"></div>'
+        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius:2px;"></div>'
         html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
 
         return html
@@ -293,16 +293,16 @@ def gt_plt_dot(
         label_div_style = "display:inline-block; float:left; margin-right:0px;"
 
         dot_style = (
-            f"height: 0.7em; width: 0.7em; background-color: {fill};"
-            "border-radius: 50%; margin-top:4px; display:inline-block;"
+            f"height:0.7em; width:0.7em; background-color:{fill};"
+            "border-radius:50%; margin-top:4px; display:inline-block;"
             "float:left; margin-right:2px;"
         )
 
         padding_div_style = (
-            "display: inline-block; float:right; line-height:20px;padding: 0px 2.5px;"
+            "display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"
         )
 
-        bar_container_style = "position: relative; top: 1.2em;"
+        bar_container_style = "position:relative; top:1.2em;"
 
         html = f'''
         <div>
@@ -391,9 +391,9 @@ def _validate_and_get_single_column(
 
     Parameters
     ----------
-    gt : GT
+    gt
         The GT object containing the data
-    expr : SelectExpr
+    expr
         The column expression to resolve
 
     Returns
@@ -436,17 +436,18 @@ def _process_numeric_column(
     ----------
     data_table
         The underlying data table
-    col_name : str
+    col_name
         Name of the column (for error messages)
-    col_vals : list
+    col_vals
         The column values
-    domain : list[int] | list[float] | None
+    domain
         The domain for scaling. If None, uses [0, max(values)]
 
     Returns
     -------
     list[float]
-        Scaled values with NAs mapped to 0
+        Scaled values with NAs mapped to 0, values above the domains mapped to 1,
+        and values below the domain mapped to 0.
 
     Raises
     ------
