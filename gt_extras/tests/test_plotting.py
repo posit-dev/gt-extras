@@ -122,12 +122,12 @@ def test_gt_plt_dot_invalid_category_col(mini_gt):
 
 
 def test_gt_plt_dot_multiple_data_cols(mini_gt):
-    with pytest.raises(ValueError, match="Expected a single column for data_col"):
+    with pytest.raises(ValueError, match="Expected a single column, but got multiple columns"):
         gt_plt_dot(gt=mini_gt, category_col="char", data_col=["num", "char"])
 
 
 def test_gt_plt_dot_multiple_category_cols(mini_gt):
-    with pytest.raises(ValueError, match="Expected a single column for category_col"):
+    with pytest.raises(ValueError, match="Expected a single column, but got multiple columns"):
         gt_plt_dot(gt=mini_gt, category_col=["char", "num"], data_col="num")
 
 
