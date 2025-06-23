@@ -38,6 +38,7 @@ def gt_plt_bar(
     stroke_color: str | None = "black",
     scale_type: Literal["percent", "number"] | None = None,
     scale_color: str = "white",
+    domain: list[int] | list[float] | None = None,
     # keep_columns: bool = False,
 ) -> GT:
     """
@@ -124,14 +125,13 @@ def gt_plt_bar(
         bar_height: int,
         height: int,
         width: int,
-        max_val: int,
         stroke_color: str,
         scale_type: Literal["percent", "number"] | None,
         scale_color: str,
     ) -> str:
         text = ""
         if scale_type == "percent":
-            text = str(round((val / max_val) * 100)) + "%"
+            text = str(round(val * 100)) + "%"
         if scale_type == "number":
             text = val
 
@@ -142,7 +142,7 @@ def gt_plt_bar(
                 Rect(
                     x=0,
                     y=(height - bar_height) / 2,
-                    width=width * val / max_val,
+                    width=width * val,
                     height=bar_height,
                     fill=fill,
                     # onmouseover="this.style.fill= 'blue';",
@@ -150,7 +150,7 @@ def gt_plt_bar(
                 ),
                 Text(
                     text=text,
-                    x=(width * val / max_val) * 0.98,
+                    x=(width * val) * 0.98,
                     y=height / 2,
                     fill=scale_color,
                     font_size=bar_height * 0.6,
@@ -173,14 +173,13 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
 
-    def make_bar(val: int, max_val: int) -> str:
+    def make_bar(val: int) -> str:
         return _make_bar_html(
             val=val,
             fill=fill,
             bar_height=bar_height,
             height=height,
             width=width,
-            max_val=max_val,
             stroke_color=stroke_color,
             scale_type=scale_type,
             scale_color=scale_color,
@@ -191,90 +190,20 @@ def gt_plt_bar(
 
     res = gt
     for column in columns_resolved:
-        # Maybe a try-catch here to prevent str types?
+        # Validate this is a single column and get values
 
-        full_col = gt._tbl_data[column]
+        col_name, col_vals = _validate_and_get_single_column(
+            gt,
+            column,
+        )
+
+        scaled_vals = _process_numeric_column(gt._tbl_data, col_name, col_vals, domain)
 
         res = res.fmt(
-            lambda x, m=max(full_col): make_bar(x, max_val=m),
+            lambda x: make_bar(x),
             columns=column,
         )
     return res
-
-    ##################
-
-    # A semi-functional version with fmt_nanoplot()
-
-    # Get names of columns
-    # columns_resolved = resolve_cols_c(data=gt, expr=columns)
-
-    # # if keep_columns:
-    # #     for column in columns_resolved:
-    # #         pass
-
-    # # Have to loop because fmt_nanoplot only supports single columns
-    # for column in columns_resolved:
-    #     gt = gt.fmt_nanoplot(
-    #         columns=column,
-    #         plot_type="bar",
-    #         plot_height=height,
-    #         options=nanoplot_options(
-    #             data_bar_fill_color=color,
-    #             data_bar_negative_fill_color=color,
-    #             data_bar_negative_stroke_width="0",  # this can't be an int on account of a bug in fmt_nanoplot
-    #             data_bar_stroke_width=0,
-    #         ),
-    #     )
-
-    ##################
-
-    # A passing version with plotnine
-    # def _make_bar_html(
-    #     val: int,
-    #     fill: str,
-    #     height: int,
-    #     range_x: tuple[int, int],
-    # ) -> str:
-    #     plot = (
-    #         ggplot()
-    #         + aes(
-    #             x=1,
-    #             y=val,
-    #         )
-    #         + geom_hline(yintercept=0)
-    #         + geom_col(width=height, fill=fill, show_legend=False)
-    #         + scale_y_continuous(limits=range_x)
-    #         + scale_x_continuous(limits=(0.5, 1.5))
-    #         + coord_flip()
-    #         + theme_void()
-    #     )
-
-    #     buf = io.StringIO()
-    #     plot.save(buf, format="svg", dpi=96, width=0.5, height=0.5, verbose=False)
-    #     buf.seek(0)
-    #     svg_content = buf.getvalue()
-    #     buf.close()
-
-    #     html = f"<div>{svg_content}</div>"
-    #     return html
-
-    # def make_bar(val: int, range_x: tuple[int, int]) -> str:
-    #     return _make_bar_html(val=val, fill=color, height=height, range_x=range_x)
-
-    # # Get names of columns
-    # columns_resolved = resolve_cols_c(data=gt, expr=columns)
-
-    # res = gt
-    # for column in columns_resolved:
-    #     full_col = gt._tbl_data[column]
-    #     range_x = (0, max(full_col) * 1.02)
-
-    #     res = res.fmt(
-    #         lambda x, rng=range_x: make_bar(x, range_x=rng),
-    #         columns=column,
-    #     )
-
-    # return res
 
 
 def gt_plt_dot(
@@ -382,63 +311,22 @@ def gt_plt_dot(
     # Get the underlying Dataframe
     data_table = gt._tbl_data
 
-    # Get the data column
-    data_col_names = resolve_cols_c(data=gt, expr=data_col)
-    if len(data_col_names) == 0:
-        raise KeyError(f"Column '{data_col}' not found in the table.")
-    if len(data_col_names) > 1:
-        raise ValueError(
-            f"Expected a single column for data_col, but got multiple columns: {data_col_names}"
-        )
+    # Validate and get data column
+    data_col_name, data_col_vals = _validate_and_get_single_column(
+        gt,
+        data_col,
+    )
 
-    data_col_name = data_col_names[0]
-    data_col_vals = data_table[data_col_name].to_list()
-    data_col_vals_filtered = [x for x in data_col_vals if not is_na(data_table, x)]
+    # Process numeric data column
+    scaled_data_vals = _process_numeric_column(
+        data_table, data_col_name, data_col_vals, domain
+    )
 
-    # Check that data_col has numeric data
-    if len(data_col_vals_filtered) and all(
-        isinstance(x, (int, float)) for x in data_col_vals_filtered
-    ):
-        # If `domain` is not provided, then set it to [0, max]
-        # Note this is different from the default behavior in data_color()
-        if domain is None:
-            domain = [0, max(data_col_vals_filtered)]
-
-        # Rescale based on the given domain
-        scaled_data_vals = _rescale_numeric(
-            df=data_table, vals=data_col_vals, domain=domain
-        )
-    else:
-        raise TypeError(
-            f"Invalid column type provided ({data_col_name}). Please ensure that the column is numeric."
-        )
-
-    # Map scaled values back to original positions, using 0 for NAs
-    scaled_data_vals_fixed = []
-    for orig_val, scaled_val in zip(data_col_vals, scaled_data_vals):
-        if is_na(data_table, orig_val):
-            scaled_data_vals_fixed.append(0)
-        elif is_na(data_table, scaled_val):
-            # If original value < domain[0], set to 0; if > domain[1], set to 1
-            if orig_val < min(domain):
-                scaled_data_vals_fixed.append(0)
-            else:
-                scaled_data_vals_fixed.append(1)
-        else:
-            scaled_data_vals_fixed.append(scaled_val)
-    scaled_data_vals = scaled_data_vals_fixed
-
-    # Get the category column, used for colors
-    category_col_names = resolve_cols_c(data=gt, expr=category_col)
-    if len(category_col_names) == 0:
-        raise KeyError(f"Column '{category_col}' not found in the table.")
-    if len(category_col_names) > 1:
-        raise ValueError(
-            f"Expected a single column for category_col, but got multiple columns: {category_col_names}"
-        )
-
-    category_col_name = category_col_names[0]
-    category_col_vals = data_table[category_col_name].to_list()
+    # Validate and get category column
+    category_col_name, category_col_vals = _validate_and_get_single_column(
+        gt,
+        category_col,
+    )
 
     # If palette is not provided, use a default palette
     if palette is None:
@@ -478,3 +366,111 @@ def gt_plt_dot(
         )
 
     return res
+
+
+## HELPERS
+
+
+def _validate_and_get_single_column(
+    gt: GT,
+    expr: SelectExpr,
+) -> tuple[str, list]:
+    """
+    Validate that expr resolves to a single column and return the column name and values.
+
+    Parameters
+    ----------
+    gt : GT
+        The GT object containing the data
+    expr : SelectExpr
+        The column expression to resolve
+
+    Returns
+    -------
+    tuple[str, list]
+        A tuple of (column_name, column_values)
+
+    Raises
+    ------
+    KeyError
+        If the column is not found
+    ValueError
+        If multiple columns are resolved
+    """
+    col_names = resolve_cols_c(data=gt, expr=expr)
+
+    if len(col_names) == 0:
+        raise KeyError(f"Column '{expr}' not found in the table.")
+    if len(col_names) > 1:
+        raise ValueError(
+            f"Expected a single column, but got multiple columns: {col_names}"
+        )
+
+    col_name = col_names[0]
+    col_vals = gt._tbl_data[col_name].to_list()
+
+    return col_name, col_vals
+
+
+def _process_numeric_column(
+    data_table,
+    col_name: str,
+    col_vals: list,
+    domain: list[int] | list[float] | None = None,
+) -> list[float]:
+    """
+    Process and scale a numeric column, handling NA values.
+
+    Parameters
+    ----------
+    data_table
+        The underlying data table
+    col_name : str
+        Name of the column (for error messages)
+    col_vals : list
+        The column values
+    domain : list[int] | list[float] | None
+        The domain for scaling. If None, uses [0, max(values)]
+
+    Returns
+    -------
+    list[float]
+        Scaled values with NAs mapped to 0
+
+    Raises
+    ------
+    TypeError
+        If the column is not numeric
+    """
+    col_vals_filtered = [x for x in col_vals if not is_na(data_table, x)]
+
+    # Check that column has numeric data
+    if len(col_vals_filtered) and all(
+        isinstance(x, (int, float)) for x in col_vals_filtered
+    ):
+        # If `domain` is not provided, then set it to [0, max]
+        if domain is None:
+            domain = [0, max(col_vals_filtered)]
+
+        # Rescale based on the given domain
+        scaled_vals = _rescale_numeric(df=data_table, vals=col_vals, domain=domain)
+    else:
+        raise TypeError(
+            f"Invalid column type provided ({col_name}). Please ensure that the column is numeric."
+        )
+
+    # Map scaled values back to original positions, using 0 for NAs
+    scaled_vals_fixed = []
+    for orig_val, scaled_val in zip(col_vals, scaled_vals):
+        if is_na(data_table, orig_val):
+            scaled_vals_fixed.append(0)
+        elif is_na(data_table, scaled_val):
+            # If original value < domain[0], set to 0; if > domain[1], set to 1
+            if orig_val < min(domain):
+                scaled_vals_fixed.append(0)
+            else:
+                scaled_vals_fixed.append(1)
+        else:
+            scaled_vals_fixed.append(scaled_val)
+
+    return scaled_vals_fixed
