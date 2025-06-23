@@ -281,8 +281,7 @@ def gt_plt_dot(
     gt: GT,
     category_col: SelectExpr,
     data_col: SelectExpr,
-    # TODO: Add domain to `gt_plt_bar()`
-    domain: list[int] | list[float] | None = None,  # TODO: pick default
+    domain: list[int] | list[float] | None = None,
     palette: list[str] | str | None = None,
 ) -> GT:
     """
@@ -349,7 +348,7 @@ def gt_plt_dot(
     def _make_dot_and_bar_html(
         bar_val: int,
         fill: str,
-        dot_category_label: str,  # TODO: type?
+        dot_category_label: str,
     ) -> str:
         label_div_style = "display:inline-block; float:left; margin-right:0px;"
 
@@ -384,9 +383,15 @@ def gt_plt_dot(
     data_table = gt._tbl_data
 
     # Get the data column
-    data_col_name = resolve_cols_c(data=gt, expr=data_col)[
-        0
-    ]  # TODO: maybe some column not found error?
+    data_col_names = resolve_cols_c(data=gt, expr=data_col)
+    if len(data_col_names) == 0:
+        raise KeyError(f"Column '{data_col}' not found in the table.")
+    if len(data_col_names) > 1:
+        raise ValueError(
+            f"Expected a single column for data_col, but got multiple columns: {data_col_names}"
+        )
+
+    data_col_name = data_col_names[0]
     data_col_vals = data_table[data_col_name].to_list()
     data_col_vals_filtered = [x for x in data_col_vals if not is_na(data_table, x)]
 
@@ -404,23 +409,26 @@ def gt_plt_dot(
             df=data_table, vals=data_col_vals_filtered, domain=domain
         )
     else:
-        raise ValueError(
+        raise TypeError(
             f"Invalid column type provided ({data_col_name}). Please ensure that the column is numeric."
         )
 
-    # Reconstruct full-length scaled_data_vals with NAs as 0
-    # TODO: is there a better way to do this?
-    scaled_data_vals = []
-    filtered_idx = 0
-    for original_val in data_col_vals:
-        if is_na(data_table, original_val):
-            scaled_data_vals.append(0)  # NA becomes 0
-        else:
-            scaled_data_vals.append(scaled_data_vals_filtered[filtered_idx])
-            filtered_idx += 1
+    # Map scaled values back to original positions, using 0 for NAs
+    scaled_iter = iter(scaled_data_vals_filtered)
+    scaled_data_vals = [
+        0 if is_na(data_table, val) else next(scaled_iter) for val in data_col_vals
+    ]
 
     # Get the category column, used for colors
-    category_col_name = resolve_cols_c(data=gt, expr=category_col)[0]
+    category_col_names = resolve_cols_c(data=gt, expr=category_col)
+    if len(category_col_names) == 0:
+        raise KeyError(f"Column '{category_col}' not found in the table.")
+    if len(category_col_names) > 1:
+        raise ValueError(
+            f"Expected a single column for category_col, but got multiple columns: {category_col_names}"
+        )
+
+    category_col_name = category_col_names[0]
     category_col_vals = data_table[category_col_name].to_list()
 
     # If palette is not provided, use a default palette
