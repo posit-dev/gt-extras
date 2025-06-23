@@ -7,7 +7,7 @@ from great_tables._locations import resolve_cols_c
 
 from svg import SVG, Line, Rect, Text
 
-__all__ = ["gt_plt_bar"]
+__all__ = ["gt_plt_bar", "gt_plt_dot"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -156,7 +156,7 @@ def gt_plt_bar(
                 ),
             ],
         )
-        return canvas.as_str()
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
     
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
