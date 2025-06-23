@@ -405,8 +405,8 @@ def gt_plt_dot(
             domain = [0, max(data_col_vals_filtered)]
 
         # Rescale based on the given domain
-        scaled_data_vals_filtered = _rescale_numeric(
-            df=data_table, vals=data_col_vals_filtered, domain=domain
+        scaled_data_vals = _rescale_numeric(
+            df=data_table, vals=data_col_vals, domain=domain
         )
     else:
         raise TypeError(
@@ -414,10 +414,19 @@ def gt_plt_dot(
         )
 
     # Map scaled values back to original positions, using 0 for NAs
-    scaled_iter = iter(scaled_data_vals_filtered)
-    scaled_data_vals = [
-        0 if is_na(data_table, val) else next(scaled_iter) for val in data_col_vals
-    ]
+    scaled_data_vals_fixed = []
+    for orig_val, scaled_val in zip(data_col_vals, scaled_data_vals):
+        if is_na(data_table, orig_val):
+            scaled_data_vals_fixed.append(0)
+        elif is_na(data_table, scaled_val):
+            # If original value < domain[0], set to 0; if > domain[1], set to 1
+            if orig_val < min(domain):
+                scaled_data_vals_fixed.append(0)
+            else:
+                scaled_data_vals_fixed.append(1)
+        else:
+            scaled_data_vals_fixed.append(scaled_val)
+    scaled_data_vals = scaled_data_vals_fixed
 
     # Get the category column, used for colors
     category_col_names = resolve_cols_c(data=gt, expr=category_col)
