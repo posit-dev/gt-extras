@@ -479,8 +479,16 @@ def _process_numeric_column(
         elif is_na(data_table, scaled_val):
             # If original value < domain[0], set to 0; if > domain[1], set to 1
             if orig_val < min(domain):
+                warnings.warn(
+                    f"Value {orig_val} in column '{col_name}' is less than the domain minimum {min(domain)}. Setting to {min(domain)}.",
+                    category=UserWarning,
+                )
                 scaled_vals_fixed.append(0)
             else:
+                warnings.warn(
+                    f"Value {orig_val} in column '{col_name}' is greater than the domain maximum {max(domain)}. Setting to {max(domain)}.",
+                    category=UserWarning,
+                )
                 scaled_vals_fixed.append(1)
         else:
             scaled_vals_fixed.append(scaled_val)
