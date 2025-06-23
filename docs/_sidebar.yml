@@ -4,6 +4,7 @@ website:
     - reference/index.qmd
     - contents:
       - reference/gt_plt_bar.qmd
+      - reference/gt_plt_dot.qmd
       section: Plotting
     - contents:
       - reference/gt_highlight_cols.qmd
@@ -24,6 +25,7 @@ website:
       section: Icons and Images
     - contents:
       - reference/gt_hyperlink.qmd
+      - reference/with_tooltip.qmd
       section: HTML Helpers
     id: reference
   - id: dummy-sidebar

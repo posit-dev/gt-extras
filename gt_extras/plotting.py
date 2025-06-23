@@ -11,7 +11,6 @@ from great_tables._data_color.base import (
     _html_color,
     _rescale_factor,
     _get_domain_factor,
-    _get_domain_numeric,
     _rescale_numeric,
 )
 
@@ -282,11 +281,61 @@ def gt_plt_dot(
     gt: GT,
     category_col: SelectExpr,
     data_col: SelectExpr,
-    domain: list[int]
-    | list[float]
-    | None = None,  # TODO: Add this to `gt_plt_bar()` # TODO: pick default
-    palette: list[str] | str | None = None,  # TODO: pick default
+    # TODO: Add domain to `gt_plt_bar()`
+    domain: list[int] | list[float] | None = None,  # TODO: pick default
+    palette: list[str] | str | None = None,
 ) -> GT:
+    """
+    Create dot plots with thin horizontal bars in `GT` cells.
+
+    The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
+    bar charts to a specified category column. Each cell displays a colored dot with the category
+    label and a horizontal bar representing the corresponding numeric value from the data column.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    category_col
+        The column containing category labels that will be displayed next to colored dots.
+
+    data_col
+        The column containing numeric values that will determine the length of the horizontal bars.
+
+    domain
+        The domain of values to use for the color scheme. This can be a list of floats or integers.
+        If `None`, the domain is automatically set to `[0, max(data_col)]`.
+
+    palette
+        The color palette to use. This should be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        If `None`, then a default palette will be used.
+
+    Returns
+    -------
+    GT
+        A `GT` object with dot plots and horizontal bars added to the specified category column.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT, style, loc
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label="Car")
+    )
+
+    gte.gt_plt_dot(gt, category_col="mfr", data_col="hp")
+    ```
+    """
+
     def _make_bottom_bar_html(
         val: int,
         fill: str,
@@ -335,11 +384,13 @@ def gt_plt_dot(
     data_table = gt._tbl_data
 
     # Get the data column
-    data_col_name = resolve_cols_c(data=gt, expr=data_col)[0]
+    data_col_name = resolve_cols_c(data=gt, expr=data_col)[
+        0
+    ]  # TODO: maybe some column not found error?
     data_col_vals = data_table[data_col_name].to_list()
     data_col_vals_filtered = [x for x in data_col_vals if not is_na(data_table, x)]
 
-    #
+    # Check that data_col has numeric data
     if len(data_col_vals_filtered) and all(
         isinstance(x, (int, float)) for x in data_col_vals_filtered
     ):
@@ -358,6 +409,7 @@ def gt_plt_dot(
         )
 
     # Reconstruct full-length scaled_data_vals with NAs as 0
+    # TODO: is there a better way to do this?
     scaled_data_vals = []
     filtered_idx = 0
     for original_val in data_col_vals:
@@ -374,10 +426,9 @@ def gt_plt_dot(
     # If palette is not provided, use a default palette
     if palette is None:
         palette = DEFAULT_PALETTE
+
+    # Otherwise get the palette from great_tables._data_color
     elif isinstance(palette, str):
-        # Check if the `palette` value refers to a ColorBrewer or viridis palette
-        # and, if it is, then convert it to a list of hexadecimal color values; otherwise,
-        # convert it to a list (this assumes that the value is a single color)
         palette = ALL_PALETTES.get(palette, [palette])
 
     # Standardize values in `palette` to hexadecimal color values
