@@ -336,7 +336,7 @@ def gt_plt_dot(
     """
 
     def _make_bottom_bar_html(
-        val: int,
+        val: float,
         fill: str,
     ) -> str:
         scaled_value = val * 100
@@ -346,7 +346,7 @@ def gt_plt_dot(
         return html
 
     def _make_dot_and_bar_html(
-        bar_val: int,
+        bar_val: float,
         fill: str,
         dot_category_label: str,
     ) -> str:
