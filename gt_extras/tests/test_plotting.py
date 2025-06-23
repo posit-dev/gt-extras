@@ -8,10 +8,8 @@ from gt_extras import gt_plt_bar, gt_plt_dot
 
 
 def test_gt_plt_bar_snap(snapshot, mini_gt):
-    res = gt_plt_bar(
-        gt=mini_gt,
-        columns="num"
-    )
+    res = gt_plt_bar(gt=mini_gt, columns="num")
+
     assert_rendered_body(snapshot, gt=res)
 
 
@@ -56,11 +54,15 @@ def test_gt_plt_bar_no_stroke_color(mini_gt):
     assert html.count("#FFFFFF00") == 3
 
 
-@pytest.mark.xfail(
-    reason="TypeError is expected for now, but should be fixed in the future"
-)
 def test_gt_plt_bar_type_error(mini_gt):
-    gt_plt_bar(gt=mini_gt, columns=["char"]).as_raw_html()
+    with pytest.raises(TypeError, match="Invalid column type provided"):
+        gt_plt_bar(gt=mini_gt, columns=["char"]).as_raw_html()
+
+
+def test_gt_plt_dot_snap(snapshot, mini_gt):
+    res = gt_plt_dot(gt=mini_gt, category_col="fctr", data_col="currency")
+
+    assert_rendered_body(snapshot, gt=res)
 
 
 def test_gt_plt_dot_basic(mini_gt):
