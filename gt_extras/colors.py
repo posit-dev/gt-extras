@@ -4,7 +4,7 @@ from typing import Literal
 from great_tables import GT, style, loc
 from great_tables._tbl_data import SelectExpr
 
-from great_tables._data_color.base import _html_color
+from great_tables._data_color.base import _html_color, _add_alpha
 
 __all__ = ["gt_highlight_cols", "gt_hulk_col_numeric", "gt_color_box"]
 
@@ -173,6 +173,46 @@ def gt_hulk_col_numeric(
     return res
 
 
-def gt_color_box(gt: GT) -> GT:
+def gt_color_box(
+    gt: GT,
+    column: SelectExpr,
+    domain: list[int] | list[float] | None = None,
+) -> GT:
+    def _make_color_box(value: float, fill: str, alpha: float = 0.2):
+        background_color = fill
+        fill_with_alpha = _add_alpha([fill], alpha)[0]
+        print(fill, fill_with_alpha, alpha)
+
+        # Main container style
+        main_box_style = (
+            # height:20px; width:{width}px;
+            f"height:20px; width:70px; background-color:{fill_with_alpha};border-radius:5px;"
+        )
+
+        # Small color square style
+        color_square_style = (
+            # height and width?
+            f"height:13px; width:13px; background-color:{background_color};"
+            "display:inline-block; border-radius:4px; float:left;"
+            "position:relative; top:17%; left:6%;"
+        )
+
+        # Value text style
+        # TODO: font_weight
+        value_text_style = (
+            "display:inline-block; float:right; line-height:20px;padding:0px 2.5px;"
+        )
+
+        html = f'''
+        <div>
+            <div style="{main_box_style}">
+                <div style="{color_square_style}"></div>
+                <div style="{value_text_style}">{str(value)}</div>
+            </div>
+        </div>
+            '''
+
+        return html.strip()
+
     res = gt
     return res
