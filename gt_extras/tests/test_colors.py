@@ -30,9 +30,9 @@ def test_gt_highlight_cols_font_weight_invalid_string(mini_gt):
         gt_highlight_cols(mini_gt, font_weight="invalid")
 
 
-@pytest.mark.parametrize("invalid_weight", [1.5, [], {}, None])
+@pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
 def test_gt_highlight_cols_font_weight_invalid_type(mini_gt, invalid_weight):
-    with pytest.raises(TypeError, match="Font_weight must either be an int or a str"):
+    with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
         gt_highlight_cols(mini_gt, font_weight=invalid_weight)
 
 
