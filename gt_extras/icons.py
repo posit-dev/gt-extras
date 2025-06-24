@@ -131,7 +131,7 @@ def fa_icon_repeat(
 
 def gt_fa_rating(
     gt: GT,
-    column: SelectExpr,
+    columns: SelectExpr,
     max_rating: int = 5,
     name: str = "star",
     primary_color: str = "gold",
@@ -172,7 +172,7 @@ def gt_fa_rating(
     Returns
     -------
     GT
-        A `GT` object with icon ratings added to the specified column.
+        A `GT` object with icon ratings added to the specified column(s).
 
     Example
     -------
@@ -190,7 +190,7 @@ def gt_fa_rating(
 
     (   GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
-        .pipe(gt_fa_rating, column="rating", name="r-project")
+        .pipe(gt_fa_rating, columns="rating", name="r-project")
     )
     ```
     """
@@ -244,10 +244,10 @@ def gt_fa_rating(
 
         return div_html
 
-    # Apply the formatting to the column
+    # Apply the formatting to the columns
     res = gt.fmt(
         lambda x: _make_rating_html(x),
-        columns=column,
+        columns=columns,
     )
 
     return res
