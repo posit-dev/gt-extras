@@ -6,7 +6,7 @@ from great_tables._tbl_data import SelectExpr
 
 from great_tables._data_color.base import _html_color
 
-__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric"]
+__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric", "gt_color_box"]
 
 
 def gt_highlight_cols(
@@ -170,4 +170,9 @@ def gt_hulk_col_numeric(
         autocolor_text=autocolor_text,
     )
 
+    return res
+
+
+def gt_color_box(gt: GT) -> GT:
+    res = gt
     return res

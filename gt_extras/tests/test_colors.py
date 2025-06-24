@@ -39,4 +39,5 @@ def test_gt_hulk_col_numeric_alpha(mini_gt):
     assert 'background-color: #fde72533;"' in html 
     
 
-
+def test_gt_color_box_basic(mini_gt):
+    assert False

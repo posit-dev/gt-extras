@@ -9,6 +9,7 @@ website:
     - contents:
       - reference/gt_highlight_cols.qmd
       - reference/gt_hulk_col_numeric.qmd
+      - reference/gt_color_box.qmd
       section: Colors
     - contents:
       - reference/gt_theme_538.qmd
