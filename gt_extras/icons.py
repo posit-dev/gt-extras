@@ -1,9 +1,14 @@
 from __future__ import annotations
 from typing import Literal
 
+from great_tables import GT
+from great_tables._tbl_data import SelectExpr, is_na
+
+from math import floor
+
 from faicons import icon_svg
 
-__all__ = ["fa_icon_repeat"]
+__all__ = ["fa_icon_repeat", "gt_fa_rating"]
 
 
 def fa_icon_repeat(
@@ -122,3 +127,90 @@ def fa_icon_repeat(
     repeated_icon = "".join(str(icon) for _ in range(repeats))
 
     return repeated_icon
+
+
+def gt_fa_rating(
+    gt: GT,
+    column: SelectExpr,
+    max_rating: int = 5,
+    name: str = "star",
+    color: str = "gold",
+    height: int = 20,
+) -> GT:
+    """
+    Create star ratings in `GT` cells using FontAwesome icons.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing numeric rating values.
+
+    max_rating
+        The maximum rating value (number of total stars).
+
+    name
+        The FontAwesome icon name to use.
+
+    color
+        The color for filled stars.
+
+    height
+        The height of the rating icons in pixels.
+
+    Returns
+    -------
+    GT
+        A `GT` object with star ratings added to the specified column.
+    """
+
+    def _make_rating_html(rating_value):
+        if rating_value is None or is_na(gt._tbl_data, float(rating_value)):
+            return ""
+
+        # Always round up
+        rounded_rating = floor(float(rating_value) + 0.5)
+
+        # Create stars
+        stars = []
+        for i in range(1, max_rating + 1):
+            if i <= rounded_rating:
+                # Filled star
+                star = icon_svg(
+                    name=name,
+                    fill=color,
+                    height=str(height) + "px",
+                    a11y="sem",
+                )
+            else:
+                # Empty star
+                star = icon_svg(
+                    name=name,
+                    fill="grey",
+                    height=str(height) + "px",
+                    a11y="sem",
+                    # TODO: or outline of a star
+                    # fill_opacity=0,
+                    # stroke="black",
+                    # stroke_width=str(height) + "px",
+                )
+            stars.append(str(star))
+
+        # Create label for accessibility
+        label = f"{rating_value} out of {max_rating}"
+
+        # Create div with stars
+        stars_html = "".join(stars)
+        div_html = f'<div title="{label}" aria-label="{label}" role="img" style="padding:0px">{stars_html}</div>'
+
+        return div_html
+
+    # Apply the formatting to the column
+    res = gt.fmt(
+        lambda x: _make_rating_html(x),
+        columns=column,
+    )
+
+    return res
