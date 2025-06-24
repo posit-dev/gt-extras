@@ -187,11 +187,13 @@ def gt_color_box(
     columns: SelectExpr,
     domain: list[int] | list[float] | None = None,
     palette: list[str] | str | None = None,
-    alpha: int = 0.2,
-    min_width: int = 70,
-    min_height: int = 20,
+    alpha: float = 0.2,
+    # TODO: decide between allowing the user to set this or width
+    min_width: int | float = 70,
+    min_height: int | float = 20,
     font_weight: str = "normal",
 ) -> GT:
+    # Get the underlying `GT` data
     data_table = gt._tbl_data
 
     def _make_color_box(value: float, fill: str, alpha: float = 0.2):
@@ -210,13 +212,11 @@ def gt_color_box(
 
         # Small color square style
         color_square_style = (
-            # height and width?
             f"height:{min_height * 0.65}px; width:{min_height * 0.65}px;"
             f"background-color:{background_color}; display:flex; border-radius:4px;"
         )
 
         # Value text style
-        # TODO: font_weight
         value_text_style = (
             f"line-height:20px; margin-left: {min_width / 10}px;"
             f"font-weight:{font_weight}; white-space:nowrap;"

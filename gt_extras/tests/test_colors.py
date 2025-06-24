@@ -1,3 +1,6 @@
+from great_tables import GT
+import numpy as np
+import pandas as pd
 from gt_extras import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
 from conftest import assert_rendered_body
 import pytest
@@ -68,7 +71,7 @@ def test_gt_color_box_custom_dimensions(mini_gt):
     html = res.as_raw_html()
 
     assert html.count("min-height:30px; min-width:100px;") == 3
-    assert "height:19.5px" in html  # 30 * 0.65
+    assert "height:19.5px;" in html  # 30 * 0.65
 
 
 def test_gt_color_box_custom_palette(mini_gt):
@@ -76,18 +79,36 @@ def test_gt_color_box_custom_palette(mini_gt):
     html = res.as_raw_html()
 
     assert "background-color:#0000ff;" in html
-    assert "background-color:#ff0000" in html
+    assert "background-color:#ff0000;" in html
+
+
+def test_gt_color_box_string_palette(mini_gt):
+    res = gt_color_box(mini_gt, columns="num", palette="PRGn")
+    html = res.as_raw_html()
+
+    assert "background-color:#00441b;" in html
+    assert "background-color:#621b6f33;" in html
 
 
 def test_gt_color_box_font_weight(mini_gt):
     res = gt_color_box(mini_gt, columns="num", font_weight="bold")
     html = res.as_raw_html()
 
-    assert "font-weight:bold" in html
+    assert "font-weight:bold;" in html
 
 
 def test_gt_color_box_alpha(mini_gt):
     res = gt_color_box(mini_gt, columns="num", alpha=0.5)
     html = res.as_raw_html()
 
-    assert "7F" in html  # 0.5 alpha = 128/255 ≈ 80 in hex
+    assert "7F" in html
+
+
+def test_gt_color_box_with_na():
+    df = pd.DataFrame({"name": ["A", "B", "C"], "values": [1.0, np.nan, None]})
+    gt = GT(df)
+
+    res = gt_color_box(gt, columns="values")
+    html = res.as_raw_html()
+
+    assert html.count("<div></div>") == 2
