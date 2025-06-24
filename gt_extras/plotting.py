@@ -6,7 +6,7 @@ from great_tables import GT
 from great_tables._tbl_data import SelectExpr
 from great_tables._locations import resolve_cols_c
 
-from gt_extras._utils_plotting import (
+from gt_extras._utils_column import (
     _validate_and_get_single_column,
     _scale_numeric_column,
 )

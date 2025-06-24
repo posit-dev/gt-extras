@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import warnings
 from great_tables import GT
-from gt_extras._utils_plotting import (
+from gt_extras._utils_column import (
     _validate_and_get_single_column,
     _scale_numeric_column,
 )
