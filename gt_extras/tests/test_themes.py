@@ -1,4 +1,3 @@
-# from great_tables import GT, exibble
 from gt_extras import (
     gt_theme_538,
     gt_theme_espn,

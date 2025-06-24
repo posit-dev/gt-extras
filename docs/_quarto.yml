@@ -38,12 +38,14 @@ quartodoc:
       desc: "" # TODO: add desc
       contents:
         - gt_plt_bar
+        - gt_plt_dot
 
     - title: Colors
       desc: "" # TODO: add desc
       contents:
         - gt_highlight_cols
         - gt_hulk_col_numeric
+        - gt_color_box
 
     - title: Themes
       desc: Functions to generate themes.
@@ -61,6 +63,7 @@ quartodoc:
       desc: "" # TODO: add desc
       contents:
         - fa_icon_repeat
+        - gt_fa_rating
         
     - title: HTML Helpers
       desc: "" # TODO: add desc
