@@ -366,7 +366,7 @@
     "href": "reference/gt_plt_bar.html",
     "title": "gt_plt_bar",
     "section": "",
-    "text": "gt_plt_bar(\n    gt,\n    columns=None,\n    fill='purple',\n    bar_height=20,\n    height=30,\n    width=60,\n    stroke_color='black',\n    scale_type=None,\n    scale_color='white',\n)\nCreate horizontal bar plots in GT cells.\nThe gt_plt_bar() function takes an existing GT object and adds horizontal bar charts to specified columns. Each cell value is represented as a horizontal bar with length proportional to the cell’s numeric value relative to the column’s maximum value.",
+    "text": "gt_plt_bar(\n    gt,\n    columns=None,\n    fill='purple',\n    bar_height=20,\n    height=30,\n    width=60,\n    stroke_color='black',\n    scale_type=None,\n    scale_color='white',\n    domain=None,\n)\nCreate horizontal bar plots in GT cells.\nThe gt_plt_bar() function takes an existing GT object and adds horizontal bar charts to specified columns. Each cell value is represented as a horizontal bar with length proportional to the cell’s numeric value relative to the column’s maximum value.",
     "crumbs": [
       "API Reference",
       "Plotting",
