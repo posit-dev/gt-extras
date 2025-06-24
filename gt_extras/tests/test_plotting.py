@@ -19,17 +19,27 @@ def test_gt_plt_bar(mini_gt):
 
 
 def test_gt_plt_bar_bar_height_too_high(mini_gt):
-    html = gt_plt_bar(
-        gt=mini_gt, columns=["num"], bar_height=1234, height=567
-    ).as_raw_html()
+    with pytest.warns(
+        UserWarning,
+        match="Bar_height must be less than or equal to the plot height. Adjusting bar_height to 567.",
+    ):
+        html = gt_plt_bar(
+            gt=mini_gt, columns=["num"], bar_height=1234, height=567
+        ).as_raw_html()
+
     assert html.count('height="567"') == 6
     assert 'height="1234"' not in html
 
 
 def test_gt_plt_bar_bar_height_too_low(mini_gt):
-    html = gt_plt_bar(
-        gt=mini_gt, columns=["num"], bar_height=-345, height=1234
-    ).as_raw_html()
+    with pytest.warns(
+        UserWarning,
+        match="Bar_height cannot be negative. Adjusting bar_height to 0.",
+    ):
+        html = gt_plt_bar(
+            gt=mini_gt, columns=["num"], bar_height=-345, height=1234
+        ).as_raw_html()
+
     assert html.count('height="1234"') == 3
     assert 'height="-345"' not in html
 
@@ -114,12 +124,16 @@ def test_gt_plt_dot_with_domain_expanded(mini_gt):
 
 
 def test_gt_plt_dot_with_domain_restricted(mini_gt):
-    html = gt_plt_dot(
-        gt=mini_gt, category_col="char", data_col="num", domain=[1, 10]
-    ).as_raw_html()
+    with pytest.warns(
+        UserWarning,
+        match="Value 33.33 in column 'num' is greater than the domain maximum 10. Setting to 10.",
+    ):
+        html = gt_plt_dot(
+            gt=mini_gt, category_col="char", data_col="num", domain=[0, 10]
+        ).as_raw_html()
 
-    assert "width:0%; height:4px; border-radius:2px;" in html
-    assert "width:13.577777777777778%; height:4px; border-radius:2px;" in html
+    assert "width:1.111%; height:4px; border-radius:2px;" in html
+    assert "width:22.220000000000002%; height:4px; border-radius:2px;" in html
     assert "width:100%; height:4px; border-radius:2px;" in html
 
 
