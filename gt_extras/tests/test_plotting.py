@@ -206,3 +206,7 @@ def test_gt_plt_dot_palette_string_valid(mini_gt):
     ).as_raw_html()
 
     assert "background:#440154;" in html
+
+
+def test_gt_plt_conf_int_basic(mini_gt):
+    assert True

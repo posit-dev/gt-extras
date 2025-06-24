@@ -39,6 +39,7 @@ quartodoc:
       contents:
         - gt_plt_bar
         - gt_plt_dot
+        - gt_plt_conf_int
 
     - title: Colors
       desc: "" # TODO: add desc

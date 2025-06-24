@@ -22,7 +22,7 @@ from great_tables._data_color.base import (
 from svg import SVG, Line, Rect, Text
 
 
-__all__ = ["gt_plt_bar", "gt_plt_dot"]
+__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -386,4 +386,9 @@ def gt_plt_dot(
             rows=[i],
         )
 
+    return res
+
+
+def gt_plt_conf_int(gt: GT) -> GT:
+    res = gt
     return res
