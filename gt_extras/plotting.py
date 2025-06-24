@@ -3,7 +3,7 @@ from typing import Literal
 import warnings
 
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr
+from great_tables._tbl_data import SelectExpr, is_na
 from great_tables._locations import resolve_cols_c
 
 from gt_extras._utils_column import (
@@ -282,6 +282,8 @@ def gt_plt_dot(
     gte.gt_plt_dot(gt, category_col="mfr", data_col="hp")
     ```
     """
+    # Get the underlying Dataframe
+    data_table = gt._tbl_data
 
     def _make_bottom_bar_html(
         val: float,
@@ -298,6 +300,9 @@ def gt_plt_dot(
         fill: str,
         dot_category_label: str,
     ) -> str:
+        if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
+            return "<div></div>"
+
         label_div_style = "display:inline-block; float:left; margin-right:0px;"
 
         dot_style = (
@@ -326,9 +331,6 @@ def gt_plt_dot(
         '''
 
         return html.strip()
-
-    # Get the underlying Dataframe
-    data_table = gt._tbl_data
 
     # Validate and get data column
     data_col_name, data_col_vals = _validate_and_get_single_column(
