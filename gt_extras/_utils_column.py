@@ -55,6 +55,8 @@ def _scale_numeric_column(
     col_name: str,
     col_vals: list,
     domain: list[int] | list[float] | None = None,
+    default_domain_min_zero: bool = True,
+
 ) -> list[float]:
     """
     Process and scale a numeric column, handling NA values.
@@ -68,8 +70,9 @@ def _scale_numeric_column(
     col_vals
         The column values
     domain
-        The domain for scaling. If None, uses [0, max(values)]
-
+        The domain for scaling. If None, uses a default domain, based on `default_domain_min_zero`
+    default_domain_min_zero
+        If true, the defsult domain will be [0, max(values)], otherwise [min(values), max(values)]
     Returns
     -------
     list[float]
@@ -87,9 +90,12 @@ def _scale_numeric_column(
     if len(col_vals_filtered) and all(
         isinstance(x, (int, float)) for x in col_vals_filtered
     ):
-        # If `domain` is not provided, then set it to [0, max]
+        # If `domain` is not provided, then set it to a default domain
         if domain is None:
-            domain = [0, max(col_vals_filtered)]
+            if default_domain_min_zero:
+                domain = [0, max(col_vals_filtered)]
+            else:
+                domain = [min(col_vals_filtered), max(col_vals_filtered)]
 
         # Rescale based on the given domain
         scaled_vals = _rescale_numeric(df=data_table, vals=col_vals, domain=domain)

@@ -10,7 +10,7 @@ from .themes import (
     gt_theme_pff,
 )
 
-from .colors import gt_highlight_cols, gt_hulk_col_numeric
+from .colors import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
 
 from .icons import fa_icon_repeat, gt_fa_rating
 
@@ -30,6 +30,7 @@ __all__ = [
 
     "gt_highlight_cols",
     "gt_hulk_col_numeric",
+    "gt_color_box",
 
     "fa_icon_repeat",
 

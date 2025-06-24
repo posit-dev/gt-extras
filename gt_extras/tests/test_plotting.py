@@ -183,6 +183,23 @@ def test_gt_plt_dot_with_na_values():
     assert html.count("width:0%; height:4px; border-radius:2px;") == 2
 
 
+def test_gt_plt_dot_with_na_in_category():
+    df = pd.DataFrame(
+        {
+            "category": [np.nan, "B", None, None],
+            "values": [5, 10, 10, 5],
+        }
+    )
+    gt = GT(df)
+
+    result = gt_plt_dot(gt=gt, category_col="category", data_col="values")
+    html = result.as_raw_html()
+
+    assert isinstance(result, GT)
+    assert html.count("width:100.0%; height:4px; border-radius:2px;") == 1
+    assert "width:50.0%; height:4px; border-radius:2px;" not in html
+
+
 def test_gt_plt_dot_palette_string_valid(mini_gt):
     html = gt_plt_dot(
         gt=mini_gt, category_col="char", data_col="num", palette="viridis"

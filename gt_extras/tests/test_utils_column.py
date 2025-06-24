@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import warnings
 from great_tables import GT
-from gt_extras._utils_plotting import (
+from gt_extras._utils_column import (
     _validate_and_get_single_column,
     _scale_numeric_column,
 )
@@ -172,3 +172,23 @@ def test_scaling_negative_values():
         result = _scale_numeric_column(df, "col", col_vals)
 
     assert result == [0, 0, 0.5, 1]
+
+
+def test_scaling_default_domain_min_zero_true():
+    col_vals = [2, 4, 6, 8]
+    df = pd.DataFrame({"col": col_vals})
+
+    result = _scale_numeric_column(df, "col", col_vals, default_domain_min_zero=True)
+
+    expected = [0.25, 0.5, 0.75, 1.0]
+    assert result == expected
+
+
+def test_scaling_default_domain_min_zero_false():
+    col_vals = [2, 4, 6, 8]
+    df = pd.DataFrame({"col": col_vals})
+
+    result = _scale_numeric_column(df, "col", col_vals, default_domain_min_zero=False)
+
+    expected = [0.0, 2 / 6, 4 / 6, 6 / 6]
+    assert result == expected
