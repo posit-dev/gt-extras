@@ -59,9 +59,6 @@ def test_gt_hulk_col_numeric_palette(mini_gt):
 @pytest.mark.xfail(
     reason="Will pass when great-tables updates the alpha bug in data_color()"
 )
-@pytest.mark.xfail(
-    reason="Will pass when great-tables updates the alpha bug in data_color()"
-)
 def test_gt_hulk_col_numeric_alpha(mini_gt):
     res = gt_hulk_col_numeric(mini_gt, columns=["num"], palette="viridis", alpha=0.2)
     html = res.as_raw_html()

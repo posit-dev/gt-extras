@@ -71,9 +71,6 @@ def test_gt_plt_bar_scale_type_invalid_string(mini_gt):
         gt_plt_bar(mini_gt, scale_type="invalid")
 
 
-@pytest.mark.xfail(
-    reason="TypeError is expected for now, but should be fixed in the future"
-)
 def test_gt_plt_bar_type_error(mini_gt):
     with pytest.raises(TypeError, match="Invalid column type provided"):
         gt_plt_bar(gt=mini_gt, columns=["char"]).as_raw_html()
