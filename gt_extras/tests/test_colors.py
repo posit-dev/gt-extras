@@ -6,17 +6,14 @@ from conftest import assert_rendered_body
 import pytest
 
 
-
 def test_gt_highlight_cols(snapshot, mini_gt):
     res = gt_highlight_cols(mini_gt)
     assert_rendered_body(snapshot, gt=res)
 
 
-
 def test_gt_highlight_cols_font(mini_gt):
     res = gt_highlight_cols(mini_gt, font_weight="bolder").as_raw_html()
     assert "bolder" in res
-
 
 
 def test_gt_highlight_cols_alpha(mini_gt):
@@ -44,13 +41,11 @@ def test_gt_hulk_col_numeric_snap(snapshot, mini_gt):
     assert_rendered_body(snapshot, gt=res)
 
 
-
 def test_gt_hulk_col_numeric_specific_cols(mini_gt):
     res = gt_hulk_col_numeric(mini_gt, columns=["num"])
     html = res.as_raw_html()
     assert 'style="color: #FFFFFF; background-color: #621b6f;"' in html
     assert 'style="color: #FFFFFF; background-color: #00441b;"' in html
-
 
 
 def test_gt_hulk_col_numeric_palette(mini_gt):
@@ -64,7 +59,6 @@ def test_gt_hulk_col_numeric_palette(mini_gt):
 @pytest.mark.xfail(
     reason="Will pass when great-tables updates the alpha bug in data_color()"
 )
-
 @pytest.mark.xfail(
     reason="Will pass when great-tables updates the alpha bug in data_color()"
 )

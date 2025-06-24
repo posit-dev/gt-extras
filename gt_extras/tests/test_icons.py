@@ -12,11 +12,9 @@ def test_fa_icon_repeat_basic():
     assert html.count("<svg") == 1
 
 
-
 def test_fa_icon_repeat_multiple():
     html = fa_icon_repeat(name="star", repeats=3)
     assert html.count("<svg") == 3
-
 
 
 def test_fa_icon_repeat_fill_and_stroke():
@@ -29,7 +27,6 @@ def test_fa_icon_repeat_fill_and_stroke():
     assert "fill:gold" in html
     assert "stroke:black" in html
     assert html.count("<svg") == 2
-
 
 
 def test_fa_icon_repeat_zero():
@@ -141,7 +138,6 @@ def test_gt_fa_rating_multiple_columns():
 
     assert html.count("<svg") == 20
     assert "out of 5" in html
-
 
 
 def test_fa_icon_repeat_a11y_invalid_string():

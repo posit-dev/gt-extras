@@ -18,7 +18,6 @@ def test_gt_plt_bar(mini_gt):
     assert html.count("<svg") == 3
 
 
-
 def test_gt_plt_bar_bar_height_too_high(mini_gt):
     with pytest.warns(
         UserWarning,
@@ -30,7 +29,6 @@ def test_gt_plt_bar_bar_height_too_high(mini_gt):
 
     assert html.count('height="567px"') == 6
     assert 'height="1234px"' not in html
-
 
 
 def test_gt_plt_bar_bar_height_too_low(mini_gt):
@@ -46,11 +44,9 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
     assert 'height="-345px"' not in html
 
 
-
 def test_gt_plt_bar_scale_percent(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type="percent").as_raw_html()
     assert html.count("%</text>") == 3
-
 
 
 def test_gt_plt_bar_scale_number(mini_gt):
@@ -58,11 +54,9 @@ def test_gt_plt_bar_scale_number(mini_gt):
     assert ">33.33</text>" in html
 
 
-
 def test_gt_plt_bar_scale_none(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type=None).as_raw_html()
     assert "</text>" not in html
-
 
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
