@@ -140,6 +140,8 @@ def gt_plt_bar(
         scale_type: Literal["percent", "number"] | None,
         scale_color: str,
     ) -> str:
+        UNITS = "px" # TODO: let use control this?
+
         text = ""
         if scale_type == "percent":
             text = str(round(original_val * 100)) + "%"
@@ -147,22 +149,22 @@ def gt_plt_bar(
             text = original_val
 
         canvas = SVG(
-            width=width,
-            height=height,
+            width=str(width) + UNITS,
+            height=str(height) + UNITS,
             elements=[
                 Rect(
                     x=0,
-                    y=(height - bar_height) / 2,
-                    width=width * scaled_val,
-                    height=bar_height,
+                    y=str((height - bar_height) / 2) + UNITS,
+                    width=str(width * scaled_val) + UNITS,
+                    height=str(bar_height) + UNITS,
                     fill=fill,
                     # onmouseover="this.style.fill= 'blue';",
                     # onmouseout=f"this.style.fill='{fill}';",
                 ),
                 Text(
                     text=text,
-                    x=(width * scaled_val) * 0.98,
-                    y=height / 2,
+                    x=str((width * scaled_val) * 0.98) + UNITS,
+                    y=str(height / 2) + UNITS,
                     fill=scale_color,
                     font_size=bar_height * 0.6,
                     text_anchor="end",
@@ -172,8 +174,8 @@ def gt_plt_bar(
                     x1=0,
                     x2=0,
                     y1=0,
-                    y2=height,
-                    stroke_width=height / 10,
+                    y2=str(height) + UNITS,
+                    stroke_width=str(height / 10) + UNITS,
                     stroke=stroke_color,
                 ),
             ],

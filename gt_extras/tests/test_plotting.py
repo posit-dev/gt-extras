@@ -27,8 +27,8 @@ def test_gt_plt_bar_bar_height_too_high(mini_gt):
             gt=mini_gt, columns=["num"], bar_height=1234, height=567
         ).as_raw_html()
 
-    assert html.count('height="567"') == 6
-    assert 'height="1234"' not in html
+    assert html.count('height="567px"') == 6
+    assert 'height="1234px"' not in html
 
 
 def test_gt_plt_bar_bar_height_too_low(mini_gt):
@@ -40,8 +40,8 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
             gt=mini_gt, columns=["num"], bar_height=-345, height=1234
         ).as_raw_html()
 
-    assert html.count('height="1234"') == 3
-    assert 'height="-345"' not in html
+    assert html.count('height="1234px"') == 3
+    assert 'height="-345px"' not in html
 
 
 def test_gt_plt_bar_scale_percent(mini_gt):

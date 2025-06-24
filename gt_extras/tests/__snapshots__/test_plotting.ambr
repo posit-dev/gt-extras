@@ -3,7 +3,7 @@
   '''
   <tbody class="gt_table_body">
     <tr>
-      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="0.2" height="20" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="0.196" y="15.0"/><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"/></svg></div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="0.2px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="0.196px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/></svg></div></td>
       <td class="gt_row gt_left">apricot</td>
       <td class="gt_row gt_left">one</td>
       <td class="gt_row gt_right">2015-01-15</td>
@@ -14,7 +14,7 @@
       <td class="gt_row gt_left">grp_a</td>
     </tr>
     <tr>
-      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="4.0" height="20" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="3.92" y="15.0"/><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"/></svg></div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="4.0px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="3.92px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/></svg></div></td>
       <td class="gt_row gt_left">banana</td>
       <td class="gt_row gt_left">two</td>
       <td class="gt_row gt_right">2015-02-15</td>
@@ -25,7 +25,7 @@
       <td class="gt_row gt_left">grp_a</td>
     </tr>
     <tr>
-      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0" width="60.0" height="20" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8" y="15.0"/><line stroke="black" stroke-width="3.0" x1="0" y1="0" x2="0" y2="30"/></svg></div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="60.0px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/></svg></div></td>
       <td class="gt_row gt_left">coconut</td>
       <td class="gt_row gt_left">three</td>
       <td class="gt_row gt_right">2015-03-15</td>
