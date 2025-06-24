@@ -105,6 +105,10 @@ def fa_icon_repeat(
     --------
     See `icon_svg()` in the `faicons` package for further implementation details.
     """
+    # Throw if `a11y` is not one of the allowed values
+    if a11y not in [None, "deco", "sem"]:
+        raise ValueError("A11y must be one of `None`, 'deco', or 'sem'")
+
     if repeats < 0:
         raise ValueError("repeats must be >= 0")
 

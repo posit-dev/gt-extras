@@ -22,6 +22,20 @@ def test_gt_highlight_cols_alpha(mini_gt):
     assert "#80bcd833" in html
 
 
+def test_gt_highlight_cols_font_weight_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError,
+        match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
+    ):
+        gt_highlight_cols(mini_gt, font_weight="invalid")
+
+
+@pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
+def test_gt_highlight_cols_font_weight_invalid_type(mini_gt, invalid_weight):
+    with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
+        gt_highlight_cols(mini_gt, font_weight=invalid_weight)
+
+
 def test_gt_hulk_col_numeric_snap(snapshot, mini_gt):
     res = gt_hulk_col_numeric(mini_gt)
     assert_rendered_body(snapshot, gt=res)

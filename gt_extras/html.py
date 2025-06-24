@@ -70,7 +70,7 @@ def with_tooltip(
         An HTML string containing the formatted tooltip element.
     """
 
-    # Throw if `text_decoration_style` is not one of the three allowed values
+    # Throw if `text_decoration_style` is not one of the allowed values
     if text_decoration_style not in [None, "solid", "dotted"]:
         raise ValueError("Text_decoration_style must be one of `None`, 'solid', or 'dotted'")
 

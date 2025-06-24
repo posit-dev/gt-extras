@@ -135,3 +135,10 @@ def test_gt_fa_rating_multiple_columns():
 
     assert html.count("<svg") == 20
     assert "out of 5" in html
+
+
+def test_fa_icon_repeat_a11y_invalid_string():
+    with pytest.raises(
+        ValueError, match="A11y must be one of `None`, 'deco', or 'sem'"
+    ):
+        fa_icon_repeat(a11y="invalid")

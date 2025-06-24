@@ -64,6 +64,13 @@ def test_gt_plt_bar_no_stroke_color(mini_gt):
     assert html.count("#FFFFFF00") == 3
 
 
+def test_gt_plt_bar_scale_type_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError, match="Scale_type must be one of `None`, 'percent', or 'number'"
+    ):
+        gt_plt_bar(mini_gt, scale_type="invalid")
+
+
 def test_gt_plt_bar_type_error(mini_gt):
     with pytest.raises(TypeError, match="Invalid column type provided"):
         gt_plt_bar(gt=mini_gt, columns=["char"]).as_raw_html()
