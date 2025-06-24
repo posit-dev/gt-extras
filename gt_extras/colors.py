@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Literal
 
 from great_tables import GT, style, loc
-from great_tables._tbl_data import SelectExpr
+from great_tables._tbl_data import SelectExpr, is_na
 from great_tables._locations import resolve_cols_c
 
 from great_tables._data_color.base import _html_color, _add_alpha
@@ -192,7 +192,12 @@ def gt_color_box(
     min_height: int = 20,
     font_weight: str = "normal",
 ) -> GT:
+    data_table = gt._tbl_data
+
     def _make_color_box(value: float, fill: str, alpha: float = 0.2):
+        if is_na(data_table, value):
+            return "<div></div>"
+
         background_color = fill
         fill_with_alpha = _add_alpha([fill], alpha)[0]
 
@@ -227,7 +232,6 @@ def gt_color_box(
 
         return html.strip()
 
-    data_table = gt._tbl_data
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
 
     res = gt
