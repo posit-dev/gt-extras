@@ -134,11 +134,17 @@ def gt_fa_rating(
     column: SelectExpr,
     max_rating: int = 5,
     name: str = "star",
-    color: str = "gold",
+    primary_color: str = "gold",
+    secondary_color: str = "gray",
     height: int = 20,
 ) -> GT:
     """
-    Create star ratings in `GT` cells using FontAwesome icons.
+    Create icon ratings in `GT` cells using FontAwesome icons.
+
+    This function represents numeric ratings in a table column by displaying a row of FontAwesome
+    icons (such as stars) in each cell. Filled icons indicate the rating value, while
+    unfilled icons represent the remainder up to the maximum rating. Hover the icons to see the
+    original numeric rating.
 
     Parameters
     ----------
@@ -149,13 +155,16 @@ def gt_fa_rating(
         The column containing numeric rating values.
 
     max_rating
-        The maximum rating value (number of total stars).
+        The maximum rating value (number of total icons).
 
     name
         The FontAwesome icon name to use.
 
-    color
-        The color for filled stars.
+    primary_color
+        The color for filled icons.
+
+    secondary_color
+        The color for unfilled icons.
 
     height
         The height of the rating icons in pixels.
@@ -163,47 +172,70 @@ def gt_fa_rating(
     Returns
     -------
     GT
-        A `GT` object with star ratings added to the specified column.
+        A `GT` object with icon ratings added to the specified column.
+
+    Example
+    -------
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import gtcars
+    from gt_extras import gt_fa_rating
+    from random import randint
+
+    gtcars_mini = (
+        gtcars
+        .loc[8:15, ["model", "mfr", "hp", "trq", "mpg_c"]]
+        .assign(rating=[randint(1, 6) for _ in range(8)])
+    )
+
+    (   GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label="Car")
+        .pipe(gt_fa_rating, column="rating", name="r-project")
+    )
+    ```
     """
 
     def _make_rating_html(rating_value):
         if rating_value is None or is_na(gt._tbl_data, float(rating_value)):
             return ""
 
-        # Always round up
+        # Round to nearest integer
         rounded_rating = floor(float(rating_value) + 0.5)
 
+        # Create label for accessibility
+        label = f"{rating_value} out of {max_rating}"
+
         # Create stars
-        stars = []
+        icons = []
         for i in range(1, max_rating + 1):
             if i <= rounded_rating:
                 # Filled star
-                star = icon_svg(
+                icon = icon_svg(
                     name=name,
-                    fill=color,
+                    fill=primary_color,
                     height=str(height) + "px",
                     a11y="sem",
+                    title=label
                 )
             else:
                 # Empty star
-                star = icon_svg(
+                icon = icon_svg(
                     name=name,
-                    fill="grey",
+                    fill=secondary_color,
                     height=str(height) + "px",
                     a11y="sem",
+                    title=label
+
                     # TODO: or outline of a star
                     # fill_opacity=0,
                     # stroke="black",
                     # stroke_width=str(height) + "px",
                 )
-            stars.append(str(star))
-
-        # Create label for accessibility
-        label = f"{rating_value} out of {max_rating}"
+            icons.append(str(icon))
 
         # Create div with stars
-        stars_html = "".join(stars)
-        div_html = f'<div title="{label}" aria-label="{label}" role="img" style="padding:0px">{stars_html}</div>'
+        icons_html = "".join(icons)
+        div_html = f'<div title="{label}" aria-label="{label}" role="img" style="padding:0px">{icons_html}</div>'
 
         return div_html
 
