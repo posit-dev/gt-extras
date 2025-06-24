@@ -3,8 +3,17 @@ from typing import Literal
 
 from great_tables import GT, style, loc
 from great_tables._tbl_data import SelectExpr
+from great_tables._locations import resolve_cols_c
 
 from great_tables._data_color.base import _html_color, _add_alpha
+from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from great_tables._data_color.palettes import GradientPalette
+
+
+from gt_extras._utils_column import (
+    _scale_numeric_column,
+    _validate_and_get_single_column,
+)
 
 __all__ = ["gt_highlight_cols", "gt_hulk_col_numeric", "gt_color_box"]
 
@@ -175,32 +184,36 @@ def gt_hulk_col_numeric(
 
 def gt_color_box(
     gt: GT,
-    column: SelectExpr,
+    columns: SelectExpr,
     domain: list[int] | list[float] | None = None,
+    palette: list[str] | str | None = None,
+    alpha: int = 0.2,
+    min_width: int = 70,
+    min_height: int = 20,
+    font_weight: str = "normal",
 ) -> GT:
     def _make_color_box(value: float, fill: str, alpha: float = 0.2):
         background_color = fill
         fill_with_alpha = _add_alpha([fill], alpha)[0]
-        print(fill, fill_with_alpha, alpha)
 
         # Main container style
         main_box_style = (
-            # height:20px; width:{width}px;
-            f"height:20px; width:70px; background-color:{fill_with_alpha};border-radius:5px;"
+            f"min-height:{min_height}px; min-width:{min_width}px; background-color:{fill_with_alpha};"
+            f"display:flex; border-radius:5px; align-items:center; padding:0px {min_width / 10}px"
         )
 
         # Small color square style
         color_square_style = (
             # height and width?
-            f"height:13px; width:13px; background-color:{background_color};"
-            "display:inline-block; border-radius:4px; float:left;"
-            "position:relative; top:17%; left:6%;"
+            f"height:{min_height * 0.65}px; width:{min_height * 0.65}px; background-color:{background_color};"
+            "display:flex; border-radius:4px;"
         )
 
         # Value text style
         # TODO: font_weight
         value_text_style = (
-            "display:inline-block; float:right; line-height:20px;padding:0px 2.5px;"
+            f"float:right; line-height:20px; position:relative; margin-left: {min_width / 10}px;"
+            f"font-weight:{font_weight}; white-space:nowrap;"
         )
 
         html = f'''
@@ -214,5 +227,48 @@ def gt_color_box(
 
         return html.strip()
 
+    data_table = gt._tbl_data
+    columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
     res = gt
+    for column in columns_resolved:
+        # Validate and get data column
+        col_name, col_vals = _validate_and_get_single_column(
+            gt,
+            column,
+        )
+
+        # Process numeric data column
+        scaled_vals = _scale_numeric_column(
+            data_table, col_name, col_vals, domain, default_domain_min_zero=False
+        )
+
+        # If palette is not provided, use a default palette
+        if palette is None:
+            palette = DEFAULT_PALETTE
+        # Otherwise get the palette from great_tables._data_color
+        elif isinstance(palette, str):
+            palette = ALL_PALETTES.get(palette, [palette])
+
+        # Standardize values in `palette` to hexadecimal color values
+        palette = _html_color(colors=palette)
+
+        # Create a color scale function from the palette
+        color_scale_fn = GradientPalette(colors=palette)
+
+        # Call the color scale function on the scaled values to get a list of colors
+        color_vals = color_scale_fn(scaled_vals)
+
+        # Apply gt.fmt() to each row individually, so we can access the color_value for that row
+        for i in range(len(data_table)):
+            color_val = color_vals[i]
+
+            res = res.fmt(
+                lambda x, fill=color_val: _make_color_box(
+                    value=x, fill=fill, alpha=alpha
+                ),
+                columns=column,
+                rows=[i],
+            )
+
     return res
