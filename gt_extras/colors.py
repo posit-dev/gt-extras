@@ -203,21 +203,22 @@ def gt_color_box(
 
         # Main container style
         main_box_style = (
-            f"min-height:{min_height}px; min-width:{min_width}px; background-color:{fill_with_alpha};"
-            f"display:flex; border-radius:5px; align-items:center; padding:0px {min_width / 10}px"
+            f"min-height:{min_height}px; min-width:{min_width}px;"
+            f"background-color:{fill_with_alpha}; display:flex; border-radius:5px;"
+            f"align-items:center; padding:0px {min_width / 10}px;"
         )
 
         # Small color square style
         color_square_style = (
             # height and width?
-            f"height:{min_height * 0.65}px; width:{min_height * 0.65}px; background-color:{background_color};"
-            "display:flex; border-radius:4px;"
+            f"height:{min_height * 0.65}px; width:{min_height * 0.65}px;"
+            f"background-color:{background_color}; display:flex; border-radius:4px;"
         )
 
         # Value text style
         # TODO: font_weight
         value_text_style = (
-            f"float:right; line-height:20px; position:relative; margin-left: {min_width / 10}px;"
+            f"line-height:20px; margin-left: {min_width / 10}px;"
             f"font-weight:{font_weight}; white-space:nowrap;"
         )
 
