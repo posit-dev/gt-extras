@@ -151,8 +151,8 @@ def gt_fa_rating(
     gt
         A `GT` object to modify.
 
-    column
-        The column containing numeric rating values.
+    columns
+        One or more columns containing numeric rating values. 
 
     max_rating
         The maximum rating value (number of total icons).
