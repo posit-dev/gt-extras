@@ -12,7 +12,7 @@ from .themes import (
 
 from .colors import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
 
-from .icons import fa_icon_repeat
+from .icons import fa_icon_repeat, gt_fa_rating
 
 from .plotting import gt_plt_bar, gt_plt_dot
 
