@@ -185,7 +185,7 @@ def gt_fa_rating(
     gtcars_mini = (
         gtcars
         .loc[8:15, ["model", "mfr", "hp", "trq", "mpg_c"]]
-        .assign(rating=[randint(1, 6) for _ in range(8)])
+        .assign(rating=[randint(1, 5) for _ in range(8)])
     )
 
     (   GT(gtcars_mini, rowname_col="model")
@@ -196,8 +196,14 @@ def gt_fa_rating(
     """
 
     def _make_rating_html(rating_value):
-        if rating_value is None or is_na(gt._tbl_data, float(rating_value)):
+        if rating_value is None or is_na(gt._tbl_data, rating_value):
             return ""
+        try:
+            rating_value = float(rating_value)
+        except ValueError as e:
+            raise ValueError(
+                f"Non-numeric rating value found in column. Could not convert rating value '{rating_value}' to float."
+            ) from e
 
         # Round to nearest integer
         rounded_rating = floor(float(rating_value) + 0.5)
@@ -215,7 +221,7 @@ def gt_fa_rating(
                     fill=primary_color,
                     height=str(height) + "px",
                     a11y="sem",
-                    title=label
+                    title=label,
                 )
             else:
                 # Empty star
@@ -224,8 +230,7 @@ def gt_fa_rating(
                     fill=secondary_color,
                     height=str(height) + "px",
                     a11y="sem",
-                    title=label
-
+                    title=label,
                     # TODO: or outline of a star
                     # fill_opacity=0,
                     # stroke="black",
