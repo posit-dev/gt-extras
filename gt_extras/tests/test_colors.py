@@ -53,7 +53,6 @@ def test_gt_hulk_col_numeric_palette(mini_gt):
     html = res.as_raw_html()
     assert 'style="color: #FFFFFF; background-color: #440154;"' in html
     assert 'style="color: #000000; background-color: #fde725;"' in html
-    assert 'style="color: #000000; background-color: #fde725;"' in html
 
 
 @pytest.mark.xfail(
