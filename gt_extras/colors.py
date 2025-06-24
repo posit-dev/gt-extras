@@ -193,6 +193,71 @@ def gt_color_box(
     min_height: int | float = 20,
     font_weight: str = "normal",
 ) -> GT:
+    """
+    Add `PFF`-style color boxes with values to numeric columns in a `GT` object.
+
+    The `gt_color_box()` function takes an existing `GT` object and adds colored boxes to
+    specified numeric columns. Each box contains a colored square and the numeric value,
+    with colors mapped to the data values using a gradient palette.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    columns
+        The columns to target. Can be a single column name or a list of column names.
+
+    domain
+        The range of values to map to the color palette. Should be a list of two values (min and
+        max). If `None`, the domain is inferred to be the min and max of the data range.
+
+    palette
+        The color palette to use. This should be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        If `None`, then a default palette will be used.
+
+    alpha
+        The alpha (transparency) value for the background colors, as a float between `0` (fully
+        transparent) and `1` (fully opaque).
+
+    min_width
+        The minimum width of each color box in pixels.
+
+    min_height
+        The minimum height of each color box in pixels.
+
+    font_weight
+        A string indicating the weight of the font for the numeric values. Can be `"normal"`,
+        `"bold"`, or other CSS font-weight values. Defaults to `"normal"`.
+
+    Returns
+    -------
+    GT
+        The modified `GT` object, allowing for method chaining.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import islands
+    from gt_extras import gt_color_box
+
+    islands_mini = (
+        islands
+        .sort_values(by="size", ascending=False)
+        .head(10)
+    )
+
+    gt = (
+        GT(islands_mini, rowname_col="name")
+        .tab_stubhead(label="Island")
+    )
+
+    gt.pipe(gt_color_box, columns="size", palette=["lightblue", "navy"])
+    ```
+    """
     # Get the underlying `GT` data
     data_table = gt._tbl_data
 
