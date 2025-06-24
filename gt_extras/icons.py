@@ -141,7 +141,7 @@ def gt_fa_rating(
     """
     Create icon ratings in `GT` cells using FontAwesome icons.
 
-    This function represents numeric ratings in a table column by displaying a row of FontAwesome
+    This function represents numeric ratings in table column(s) by displaying a row of FontAwesome
     icons (such as stars) in each cell. Filled icons indicate the rating value, while
     unfilled icons represent the remainder up to the maximum rating. Hover the icons to see the
     original numeric rating.
