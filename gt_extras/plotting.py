@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import Literal
 import warnings
 
-
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 from great_tables._locations import resolve_cols_c
@@ -24,6 +23,8 @@ __all__ = ["gt_plt_bar", "gt_plt_dot"]
 # to handle the underlying _tbl_data.
 
 # TODO: default font for labels?
+
+# TODO: how to handle negative values? Plots can't really have negative length
 
 
 def gt_plt_bar(
