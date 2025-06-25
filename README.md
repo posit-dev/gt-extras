@@ -39,10 +39,7 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
     .tab_stubhead(label="Vehicle")
     .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
     .cols_align("center")
-    .tab_header(
-        title="Car Performance Review",
-        subtitle="Using gt-extras functionality",
-    )
+    .tab_header(title="Car Performance Review", subtitle="Using gt-extras functionality")
 
     # Add gt-extras features using gt.pipe()
     .pipe(gte.gt_color_box, columns=["hp", "trq"], palette=["lightblue", "darkblue"])
