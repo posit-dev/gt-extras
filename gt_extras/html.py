@@ -122,7 +122,7 @@ def with_tooltip(
     )
 
     df["Package"] = [
-        with_tooltip(name, description, color = None)
+        with_tooltip(name, description, color = "none")
         for name, description in zip(df["name"], df["description"])
     ]
 
