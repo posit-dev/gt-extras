@@ -1,5 +1,7 @@
 project:
   type: website
+  resources:
+    - "assets/"
 
 metadata-files: 
   - _sidebar.yml
@@ -24,14 +26,12 @@ quartodoc:
   dir: reference
   title: API Reference
   css: reference/_styles-quartodoc.css
-
   renderer:
     style: markdown
     table_style: description-list
 
   # write sidebar data
   sidebar: _sidebar.yml
-  #css: reference/_styles-quartodoc.css
 
   sections:
     - title: Plotting
