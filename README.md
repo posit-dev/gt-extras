@@ -18,7 +18,7 @@
 
 ### What is [gt-extras](https://posit-dev.github.io/gt-extras)?
 
-A collection of additional helper functions for creating beautiful tables with [great-tables](https://posit-dev.github.io/great-tables/) in Python.
+A collection of additional helper functions for creating beautiful tables with the [great-tables](https://posit-dev.github.io/great-tables/) package in Python.
 
 The functions in **gt-extras** are designed to make it easier to add plots, icons, color gradients, and other enhancements to your tables. We wrap up common patterns and boilerplate so you can focus on your data and presentation. It is based on the R package [gtExtras](https://jthomasmock.github.io/gtExtras/index.html), which was designed with a similar goal in mind.
 
@@ -60,11 +60,11 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 
 ## Features
 
-- Color gradients and highlighting
-- Plots in cells for graphic data representation
-- Embedding FontAwesome icons
-- Pre-built themes for quick table styling
-- Helper utilities for common table tasks.
+- Apply color gradients and highlights
+- Add plots to table cells for visual data representation
+- Embed FontAwesome icons
+- Use pre-built themes for quick styling
+- Utilize helper utilities for common table tasks
     
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).

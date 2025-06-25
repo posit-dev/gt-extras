@@ -13,7 +13,8 @@ html-table-processing: none
 
 ### What is [gt-extras](https://posit-dev.github.io/gt-extras)?
 
-The package contains a collection of additional helper functions for creating beautiful tables with [great-tables](https://posit-dev.github.io/great-tables/) in Python.
+We provide a collection of helper functions to enhance tables created with the Python package [great-tables](https://posit-dev.github.io/great-tables/).
+
 
 The functions in **gt-extras** are designed to make it easier to add plots, icons, color gradients, and other enhancements to your tables. We wrap up common patterns and boilerplate so you can focus on your data and presentation. It is based on the R package [gtExtras](https://jthomasmock.github.io/gtExtras/index.html), which was designed with a similar goal in mind.
 
@@ -37,7 +38,7 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 (
     # Start with a standard GT 
     GT(gtcars_mini, rowname_col="model")
-    .tab_stubhead(label="Vehicle")
+    .tab_stubhead(label="Car")
     .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
     .cols_align("center")
     .tab_header(title="Car Performance Review", subtitle="Using gt-extras functionality")
@@ -60,21 +61,21 @@ And for a little comparison, here is the table before the gt-extras features wer
 #| code-summary: Show the Code
 (
   GT(gtcars_mini, rowname_col="model")
-    .tab_stubhead(label="Vehicle")
+    .tab_stubhead(label="Car")
     .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
     .tab_header(title="Car Performance Review", subtitle="Using gt-extras functionality")
 )
 ```
 
-For a more comprehensive guide, head over to the [Get Started](../get-started/) page, and for the most comprehensive guide, see the [docs](../reference/)!
+For a more comprehensive guide, head over to the [Get Started](../get-started/) page, and for the most comprehensive guide, see the [reference docs](../reference/)!
 
 ## Features
 
-- Color gradients and highlighting
-- Plots in cells for graphic data representation
-- Embedding FontAwesome icons
-- Pre-built themes for quick table styling
-- Helper utilities for common table tasks.
+- Apply color gradients and highlights
+- Add plots to table cells for visual data representation
+- Embed FontAwesome icons
+- Use pre-built themes for quick styling
+- Utilize helper utilities for common table tasks
 
 > ⚠️ gt-extras is currently in development, expect breaking changes.
 
