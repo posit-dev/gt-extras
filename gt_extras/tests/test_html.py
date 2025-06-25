@@ -67,15 +67,26 @@ def test_with_tooltip_underline_fail():
         with_tooltip("1", "Number One", text_decoration_style="underline")
 
 
-def test_with_tooltip_no_decoration():
-    result = with_tooltip("1", "Number One", text_decoration_style=None)
+def test_with_tooltip_None_color_fail():
+    with pytest.raises(ValueError):
+        with_tooltip("1", "Number One", color=None)
+
+
+def test_with_tooltip_underline_style_none():
+    result = with_tooltip("1", "Number One", text_decoration_style="none")
     expected = '<abbr style="cursor: help; text-decoration: none; color: blue; " title="Number One">1</abbr>'
     assert result == expected
 
 
-def test_with_tooltip_no_color():
-    result = with_tooltip("1", "Number One", color=None)
+def test_with_tooltip_color_none_pass():
+    result = with_tooltip("1", "Number One", color="none")
     expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: dotted; " title="Number One">1</abbr>'
+    assert result == expected
+
+
+def test_with_tooltip_custom_color():
+    result = with_tooltip("1", "Number One", color="red")
+    expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: dotted; color: red; " title="Number One">1</abbr>'
     assert result == expected
 
 

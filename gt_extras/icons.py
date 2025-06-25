@@ -14,18 +14,18 @@ __all__ = ["fa_icon_repeat", "gt_fa_rating"]
 def fa_icon_repeat(
     name: str = "star",
     repeats: int = 1,
-    fill: str | None = "black",
-    fill_opacity: int | str | None = 1,
+    fill: str = "black",
+    fill_opacity: int | str = 1,
     stroke: str | None = None,
     stroke_width: str | None = None,
     stroke_opacity: int | str | None = None,
     height: str | None = None,
     width: str | None = None,
-    margin_left: str | None = "auto",
-    margin_right: str | None = "0.2em",
-    position: str | None = "relative",
+    margin_left: str = "auto",
+    margin_right: str = "0.2em",
+    position: str = "relative",
     title: str | None = None,
-    a11y: Literal["deco", "sem"] | None = "deco",
+    a11y: Literal["deco", "sem", "none"] = "deco",
 ) -> str:
     """
     Create repeated FontAwesome SVG icons as HTML.
@@ -75,7 +75,8 @@ def fa_icon_repeat(
         The title (tooltip) for the icon.
 
     a11y
-        Accessibility mode: `"deco"` for decorative, `"sem"` for semantic.
+        Accessibility mode: `"deco"` for decorative, `"sem"` for semantic, `"none"` will result in
+        no accessibility features.
 
     Returns
     -------

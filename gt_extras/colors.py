@@ -109,8 +109,8 @@ def gt_highlight_cols(
 def gt_hulk_col_numeric(
     gt: GT,
     columns: SelectExpr = None,
-    palette: str | list[str] | None = "PRGn",
-    domain: list[str] | list[int] | list[float] | None = None,
+    palette: str | list[str] = "PRGn",
+    domain: list[int] | list[float] | None = None,
     na_color: str | None = None,
     alpha: int | float | None = None,  # TODO: see note
     reverse: bool = False,
