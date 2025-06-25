@@ -80,7 +80,6 @@ def test_with_tooltip_underline_style_none():
 
 def test_with_tooltip_color_none_pass():
     result = with_tooltip("1", "Number One", color="none")
-    print(result)
     expected = '<abbr style="cursor: help; text-decoration: underline; text-decoration-style: dotted; " title="Number One">1</abbr>'
     assert result == expected
 
