@@ -1,9 +1,11 @@
 ---
-title: Get Started
+title: Intro
 jupyter: python3
+aliases:
+  - ../index.html
 html-table-processing: none
 ---
 
-Nothing yet in *Get Started!* Come back later.
+Nothing yet in *Intro!* Come back later.
 
 To read the docs, go to [Package Reference](../reference/index.qmd).
