@@ -93,19 +93,25 @@ def gt_plt_bar(
     --------
 
     ```{python}
-    from great_tables import GT, style, loc
+    from great_tables import GT
     from great_tables.data import gtcars
-    import gt_extras as gte
+    from gt_extras import gt_plt_bar
 
-    gtcars_mini = gtcars.iloc[0:8, list(range(0, 3)) + list(range(5, 11))]
+    gtcars_mini = gtcars.loc[
+        9:17,
+        ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    ]
 
     gt = (
-        GT(gtcars_mini,rowname_col="model")
+        GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
-        .tab_style(style=style.css("text-align: center;"), locations=loc.column_labels())
+        .cols_align("center")
+        .cols_align("left", columns="mfr")
     )
 
-    gte.gt_plt_bar(gt, columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"])
+    gt.pipe(gt_plt_bar, columns=
+        ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    )
     ```
 
     Note
@@ -272,9 +278,9 @@ def gt_plt_dot(
     Examples
     --------
     ```{python}
-    from great_tables import GT, style, loc
+    from great_tables import GT
     from great_tables.data import gtcars
-    import gt_extras as gte
+    from gt_extras import gt_plt_dot
 
     gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
 
@@ -283,7 +289,7 @@ def gt_plt_dot(
         .tab_stubhead(label="Car")
     )
 
-    gte.gt_plt_dot(gt, category_col="mfr", data_col="hp")
+    gt.pipe(gt_plt_dot, category_col="mfr", data_col="hp")
     ```
     """
     # Get the underlying Dataframe

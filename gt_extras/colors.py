@@ -72,16 +72,16 @@ def gt_highlight_cols(
     ```{python}
     from great_tables import GT, md
     from great_tables.data import gtcars
-    import gt_extras as gte
+    from gt_extras import gt_highlight_cols
 
-    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(9)
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label=md("*Car*"))
     )
 
-    gte.gt_highlight_cols(gt, columns="hp")
+    gt.pipe(gt_highlight_cols, columns="hp")
     ```
     """
     # Throw if `font_weight` is not one of the allowed values
@@ -164,24 +164,22 @@ def gt_hulk_col_numeric(
     ```{python}
     from great_tables import GT
     from great_tables.data import gtcars
-    import gt_extras as gte
+    from gt_extras import gt_hulk_col_numeric
 
-    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(9)
+    gtcars_mini = gtcars.loc[0:8, ["model", "mfr", "year", "hp", "trq", "mpg_h"]]
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
     )
 
-    gte.gt_hulk_col_numeric(gt, columns=["hp", "trq"])
+    gt.pipe(gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
     ```
 
     A more involved setup.
 
     ```{python}
-    from great_tables import GT
     from great_tables.data import towny
-    from gt_extras import gt_hulk_col_numeric
 
     towny_mini = towny[
         [
@@ -238,7 +236,7 @@ def gt_color_box(
     font_weight: str = "normal",
 ) -> GT:
     """
-    Add `PFF`-style color boxes with values to numeric columns in a `GT` object.
+    Add PFF-style color boxes with values to numeric columns in a `GT` object.
 
     The `gt_color_box()` function takes an existing `GT` object and adds colored boxes to
     specified numeric columns. Each box contains a colored square and the numeric value,
