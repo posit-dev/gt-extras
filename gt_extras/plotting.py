@@ -151,7 +151,7 @@ def gt_plt_bar(
         scale_type: Literal["percent", "number"] | None,
         scale_color: str,
     ) -> str:
-        UNITS = "px" # TODO: let use control this?
+        UNITS = "px"  # TODO: let use control this?
 
         text = ""
         if scale_type == "percent":
@@ -401,5 +401,85 @@ def gt_plt_dot(
 
 
 def gt_plt_conf_int(gt: GT) -> GT:
+    def _make_conf_int(
+        mean: float | int,
+        c1: float | int,
+        c2: float | int,
+        line_color: str,
+        dot_color: str,
+        text_color: str,
+        text_size: Literal["small", "default", "large", "largest"],
+        min_val: float | int,
+        max_val: float | int,
+        width: float | int = 60,
+        height: float | int = 20,
+    ):
+        # Avoid division by zero
+        span = max_val - min_val if max_val != min_val else 1
+
+        # Normalize positions to [0, 1] based on global min/max, then scale to width
+        c1_pos = ((c1 - min_val) / span) * width
+        c2_pos = ((c2 - min_val) / span) * width
+        mean_pos = ((mean - min_val) / span) * width
+
+        # Clamp positions to valid range (in case values are outside min_val/max_val)
+        c1_pos = max(0, min(width, c1_pos))
+        c2_pos = max(0, min(width, c2_pos))
+        mean_pos = max(0, min(width, mean_pos))
+
+        bar_top = height / 2 - 2  # Center the bar vertically
+
+        if text_size == "small":
+            font_size = 8
+        if text_size == "default":
+            font_size = 12
+        if text_size == "large":
+            font_size = 16
+        if text_size == "largest":
+            font_size = 20
+
+        label_style = (
+            "position:absolute;"
+            "left:{pos}px;"
+            "bottom:14px;"
+            "transform:translateX(-50%);"
+            "color:{color};"
+            "font-size:{font_size}px;"
+        )
+
+        c1_label_html = f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">{c1}</div>'
+
+        c2_label_html = f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}">{c2}</div>'
+
+        html = f"""
+            <div style="position:relative; width:{width}px; height:{height + 14}px;">
+            {c1_label_html}
+            {c2_label_html}
+            <!-- Confidence interval bar -->
+            <div style="
+                position: absolute;
+                left: {c1_pos}px;
+                top: {bar_top + 14}px;
+                width: {c2_pos - c1_pos}px;
+                height: 4px;
+                background: {line_color};
+                border-radius: 2px;
+            "></div>
+            <!-- Mean dot -->
+            <div style="
+                position: absolute;
+                left: {mean_pos - 4}px;
+                top: {bar_top + 11}px;
+                width: 10px;
+                height: 10px;
+                background: {dot_color};
+                border-radius: 50%;
+                border: 2px solid {line_color};
+                box-sizing: border-box;
+            "></div>
+            </div>
+            """
+        return html.strip()
+
     res = gt
     return res
