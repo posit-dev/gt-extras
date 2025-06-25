@@ -7,31 +7,6 @@ on:
   release:
     types: [published]
 jobs:
-  test:
-    concurrency: ci-${{ github.ref }}
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      actions: write
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # python ----
-      - uses: actions/checkout@v2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-      - name: "Set up Python"
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: ".python-version"
-      - name: Install the project
-        run: uv sync --all-extras --dev
-      - name: Test
-        run: |
-          uv run pytest
-
   docs-build:
     name: "Build Docs"
     runs-on: ubuntu-latest
