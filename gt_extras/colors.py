@@ -74,14 +74,14 @@ def gt_highlight_cols(
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(9)
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label=md("*Car*"))
     )
 
-    gte.gt_highlight_cols(gt, columns="hp")
+    gt.pipe(gte.gt_highlight_cols, columns="hp")
     ```
     """
     # Throw if `font_weight` is not one of the allowed values
@@ -166,14 +166,49 @@ def gt_hulk_col_numeric(
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(9)
+    gtcars_mini = gtcars.loc[0:8, ["model", "mfr", "year", "hp", "trq", "mpg_h"]]
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
     )
 
-    gte.gt_hulk_col_numeric(gt, columns=["hp", "trq"])
+    gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
+    ```
+
+    A more involved setup.
+
+    ```{python}
+    from great_tables.data import towny
+
+    towny_mini = towny[
+        [
+            "name",
+            "pop_change_1996_2001_pct",
+            "pop_change_2001_2006_pct",
+            "pop_change_2006_2011_pct",
+            "pop_change_2011_2016_pct",
+            "pop_change_2016_2021_pct",
+        ]
+    ].head(10)
+
+    gt = (
+        GT(towny_mini, rowname_col="name")
+        .tab_stubhead(label="Town")
+        .tab_spanner(
+            label="Population Change",
+            columns=[1, 2, 3, 4, 5]
+        )
+        .cols_label(
+            pop_change_1996_2001_pct="1996-2001",
+            pop_change_2001_2006_pct="2001-2006",
+            pop_change_2006_2011_pct="2006-2011",
+            pop_change_2011_2016_pct="2011-2016",
+            pop_change_2016_2021_pct="2016-2021",
+        )
+    )
+
+    gt.pipe(gte.gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])
     ```
     """
     res = gt.data_color(
@@ -201,7 +236,7 @@ def gt_color_box(
     font_weight: str = "normal",
 ) -> GT:
     """
-    Add `PFF`-style color boxes with values to numeric columns in a `GT` object.
+    Add PFF-style color boxes with values to numeric columns in a `GT` object.
 
     The `gt_color_box()` function takes an existing `GT` object and adds colored boxes to
     specified numeric columns. Each box contains a colored square and the numeric value,
@@ -249,7 +284,7 @@ def gt_color_box(
     ```{python}
     from great_tables import GT
     from great_tables.data import islands
-    from gt_extras import gt_color_box
+    import gt_extras as gte
 
     islands_mini = (
         islands
@@ -262,7 +297,7 @@ def gt_color_box(
         .tab_stubhead(label="Island")
     )
 
-    gt.pipe(gt_color_box, columns="size", palette=["lightblue", "navy"])
+    gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
     ```
     """
     # Get the underlying `GT` data

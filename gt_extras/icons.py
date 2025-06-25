@@ -93,9 +93,9 @@ def fa_icon_repeat(
     df = pd.DataFrame({
         "Name": ["Alice", "Bob", "Carol"],
         "Stars": [
-            gte.fa_icon_repeat(name="star", repeats=3, fill="gold", fill_opacity=0.66),
-            gte.fa_icon_repeat(name="star", repeats=2, fill="gold", stroke="black", stroke_width="3em"),
-            gte.fa_icon_repeat(name="star", repeats=1, fill="orange"),
+            gte.fa_icon_repeat(repeats=3, fill="gold", fill_opacity=0.66),
+            gte.fa_icon_repeat(repeats=2, stroke="red", stroke_width="3em"),
+            gte.fa_icon_repeat(name="star-half", repeats=1, fill="orange"),
         ]
     })
 
@@ -182,10 +182,10 @@ def gt_fa_rating(
     Example
     -------
     ```{python}
+    from random import randint
     from great_tables import GT
     from great_tables.data import gtcars
-    from gt_extras import gt_fa_rating
-    from random import randint
+    import gt_extras as gte
 
     gtcars_mini = (
         gtcars
@@ -193,10 +193,12 @@ def gt_fa_rating(
         .assign(rating=[randint(1, 5) for _ in range(8)])
     )
 
-    (   GT(gtcars_mini, rowname_col="model")
+    gt = (   
+        GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
-        .pipe(gt_fa_rating, columns="rating", name="r-project")
     )
+    
+    gt.pipe(gte.gt_fa_rating, columns="rating", name="r-project")
     ```
     """
 
