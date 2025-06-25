@@ -34,7 +34,7 @@ __all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int"]
 
 def gt_plt_bar(
     gt: GT,
-    columns: SelectExpr | None = None,
+    columns: SelectExpr = None,
     fill: str = "purple",
     bar_height: int = 20,
     height: int = 30,
@@ -93,19 +93,26 @@ def gt_plt_bar(
     --------
 
     ```{python}
-    from great_tables import GT, style, loc
+    from great_tables import GT
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars.iloc[0:8, list(range(0, 3)) + list(range(5, 11))]
+    gtcars_mini = gtcars.loc[
+        9:17,
+        ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    ]
 
     gt = (
-        GT(gtcars_mini,rowname_col="model")
+        GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
-        .tab_style(style=style.css("text-align: center;"), locations=loc.column_labels())
+        .cols_align("center")
+        .cols_align("left", columns="mfr")
     )
 
-    gte.gt_plt_bar(gt, columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"])
+    gt.pipe(
+        gte.gt_plt_bar,
+        columns= ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    )
     ```
 
     Note
@@ -113,6 +120,10 @@ def gt_plt_bar(
     Each column's bars are scaled independently based on that column's min/max values.
     """
     # A version with svg.py
+
+    # Throw if `scale_type` is not one of the allowed values
+    if scale_type not in [None, "percent", "number"]:
+        raise ValueError("Scale_type must be one of `None`, 'percent', or 'number'")
 
     if bar_height > height:
         bar_height = height
@@ -186,7 +197,7 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "#FFFFFF00"
 
-    def make_bar(scaled_val: int, original_val: int) -> str:
+    def _make_bar(scaled_val: int, original_val: int) -> str:
         return _make_bar_html(
             scaled_val=scaled_val,
             original_val=original_val,
@@ -215,7 +226,7 @@ def gt_plt_bar(
         # Apply the scaled value for each row, so the bar is proportional
         for i, scaled_val in enumerate(scaled_vals):
             res = res.fmt(
-                lambda original_val, scaled_val=scaled_val: make_bar(
+                lambda original_val, scaled_val=scaled_val: _make_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
                 ),
@@ -268,7 +279,7 @@ def gt_plt_dot(
     Examples
     --------
     ```{python}
-    from great_tables import GT, style, loc
+    from great_tables import GT
     from great_tables.data import gtcars
     import gt_extras as gte
 
@@ -279,7 +290,7 @@ def gt_plt_dot(
         .tab_stubhead(label="Car")
     )
 
-    gte.gt_plt_dot(gt, category_col="mfr", data_col="hp")
+    gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
     """
     # Get the underlying Dataframe

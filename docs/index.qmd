@@ -1,7 +1,0 @@
----
-title: "gt-extras"
----
-
-Welcome to gt-extras!
-
-To read the docs, go to [Package Reference](reference/index.qmd).

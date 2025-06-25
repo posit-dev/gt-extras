@@ -3,8 +3,6 @@ from typing import Literal
 
 __all__ = ["gt_hyperlink", "with_tooltip"]
 
-# TODO: Add example to docstrings in this module?
-
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     """
     Create HTML hyperlinks for use in `GT` object cells.
@@ -27,6 +25,43 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     -------
     str
         An string containing the HTML formatted hyperlink element.
+
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame(
+        {
+            "name": ["Great Tables", "Plotnine", "Quarto"],
+            "url": [
+                "https://posit-dev.github.io/great-tables/",
+                "https://plotnine.org/",
+                "https://quarto.org/",
+            ],
+            "github_stars": [2334, 4256, 4628],
+            "repo_url": [
+                "https://github.com/posit-dev/great-tables",
+                "https://github.com/has2k1/plotnine",
+                "https://github.com/quarto-dev/quarto-cli",
+            ],
+        }
+    )
+
+    df["Package"] = [
+        gte.gt_hyperlink(name, url)
+        for name, url in zip(df["name"], df["url"])
+    ]
+
+    df["Github Stars"] = [
+        gte.gt_hyperlink(github_stars, repo_url, new_tab=False)
+        for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
+    ]
+
+    GT(df[["Package", "Github Stars"]])
+    ```
     """
     target = "_self"
     if new_tab:
@@ -38,8 +73,8 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
 def with_tooltip(
     label: str,
     tooltip: str,
-    text_decoration_style: Literal["solid", "dotted"] | None = "dotted",
-    color: str | None = "blue",
+    text_decoration_style: Literal["solid", "dotted", "none"] = "dotted",
+    color: str | Literal["none"] = "blue",
 ) -> str:
     """
     Create HTML text with tooltip functionality for use in GT table cells.
@@ -58,31 +93,59 @@ def with_tooltip(
 
     text_decoration_style
         A string indicating the style of underline decoration. Options are `"solid"`,
-        `"dotted"`, or `None`. If nothing is provided, then `"dotted"` will be used as a default.
+        `"dotted"`, or "none".
 
     color
-        A string indicating the text color. If `None`, no color styling is applied.
-        If nothing is provided, then `"blue"` will be used as a default.
+        A string indicating the text color. If "none", no color styling is applied.
 
     Returns
     -------
     str
         An HTML string containing the formatted tooltip element.
+
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame(
+        {
+            "name": ["Great Tables", "Plotnine", "Quarto"],
+            "description": [
+                "Absolutely Delightful Table-making in Python",
+                "A grammar of graphics for Python",
+                "An open-source scientific and technical publishing system",
+            ],
+        }
+    )
+
+    df["Package"] = [
+        gte.with_tooltip(name, description, color = "none")
+        for name, description in zip(df["name"], df["description"])
+    ]
+
+    GT(df[["Package"]])
+    ```
     """
 
-    # Throw if `text_decoration_style` is not one of the three allowed values
-    if text_decoration_style not in [None, "solid", "dotted"]:
-        raise ValueError("Text_decoration_style must be one of `None`, 'solid', or 'dotted'")
+    # Throw if `text_decoration_style` is not one of the allowed values
+    if text_decoration_style not in ["none", "solid", "dotted"]:
+        raise ValueError("Text_decoration_style must be one of 'none', 'solid', or 'dotted'")
+    
+    if color is None:
+        raise ValueError("color must be a string or 'none', not None.")
 
     style = "cursor: help; "
 
-    if text_decoration_style is not None:
+    if text_decoration_style != "none":
         style += "text-decoration: underline; "
         style += f"text-decoration-style: {text_decoration_style}; "
     else:
         style += "text-decoration: none; "
 
-    if color is not None:
+    if color != "none":
         style += f"color: {color}; "
 
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'

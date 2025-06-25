@@ -14,18 +14,18 @@ __all__ = ["fa_icon_repeat", "gt_fa_rating"]
 def fa_icon_repeat(
     name: str = "star",
     repeats: int = 1,
-    fill: str | None = "black",
-    fill_opacity: int | str | None = 1,
+    fill: str = "black",
+    fill_opacity: int | str = 1,
     stroke: str | None = None,
     stroke_width: str | None = None,
     stroke_opacity: int | str | None = None,
     height: str | None = None,
     width: str | None = None,
-    margin_left: str | None = "auto",
-    margin_right: str | None = "0.2em",
-    position: str | None = "relative",
+    margin_left: str = "auto",
+    margin_right: str = "0.2em",
+    position: str = "relative",
     title: str | None = None,
-    a11y: Literal["deco", "sem"] | None = "deco",
+    a11y: Literal["deco", "sem", "none"] = "deco",
 ) -> str:
     """
     Create repeated FontAwesome SVG icons as HTML.
@@ -75,7 +75,8 @@ def fa_icon_repeat(
         The title (tooltip) for the icon.
 
     a11y
-        Accessibility mode: `"deco"` for decorative, `"sem"` for semantic.
+        Accessibility mode: `"deco"` for decorative, `"sem"` for semantic, `"none"` will result in
+        no accessibility features.
 
     Returns
     -------
@@ -92,9 +93,9 @@ def fa_icon_repeat(
     df = pd.DataFrame({
         "Name": ["Alice", "Bob", "Carol"],
         "Stars": [
-            gte.fa_icon_repeat(name="star", repeats=3, fill="gold", fill_opacity=0.66),
-            gte.fa_icon_repeat(name="star", repeats=2, fill="gold", stroke="black", stroke_width="3em"),
-            gte.fa_icon_repeat(name="star", repeats=1, fill="orange"),
+            gte.fa_icon_repeat(repeats=3, fill="gold", fill_opacity=0.66),
+            gte.fa_icon_repeat(repeats=2, stroke="red", stroke_width="3em"),
+            gte.fa_icon_repeat(name="star-half", repeats=1, fill="orange"),
         ]
     })
 
@@ -105,6 +106,10 @@ def fa_icon_repeat(
     --------
     See `icon_svg()` in the `faicons` package for further implementation details.
     """
+    # Throw if `a11y` is not one of the allowed values
+    if a11y not in [None, "deco", "sem"]:
+        raise ValueError("A11y must be one of `None`, 'deco', or 'sem'")
+
     if repeats < 0:
         raise ValueError("repeats must be >= 0")
 
@@ -177,10 +182,10 @@ def gt_fa_rating(
     Example
     -------
     ```{python}
+    from random import randint
     from great_tables import GT
     from great_tables.data import gtcars
-    from gt_extras import gt_fa_rating
-    from random import randint
+    import gt_extras as gte
 
     gtcars_mini = (
         gtcars
@@ -188,10 +193,12 @@ def gt_fa_rating(
         .assign(rating=[randint(1, 5) for _ in range(8)])
     )
 
-    (   GT(gtcars_mini, rowname_col="model")
+    gt = (   
+        GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
-        .pipe(gt_fa_rating, columns="rating", name="r-project")
     )
+    
+    gt.pipe(gte.gt_fa_rating, columns="rating", name="r-project")
     ```
     """
 
