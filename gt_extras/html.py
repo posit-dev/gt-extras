@@ -25,6 +25,43 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     -------
     str
         An string containing the HTML formatted hyperlink element.
+
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    from gt_extras import gt_hyperlink
+
+    df = pd.DataFrame(
+        {
+            "name": ["Great Tables", "Plotnine", "Quarto"],
+            "url": [
+                "https://posit-dev.github.io/great-tables/",
+                "https://plotnine.org/",
+                "https://quarto.org/",
+            ],
+            "github_stars": [2334, 4256, 4628],
+            "repo_url": [
+                "https://github.com/posit-dev/great-tables",
+                "https://github.com/has2k1/plotnine",
+                "https://github.com/quarto-dev/quarto-cli",
+            ],
+        }
+    )
+
+    df["Package"] = [
+        gt_hyperlink(name, url)
+        for name, url in zip(df["name"], df["url"])
+    ]
+
+    df["Github Stars"] = [
+        gt_hyperlink(github_stars, repo_url, new_tab=False)
+        for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
+    ]
+
+    GT(df[["Package", "Github Stars"]])
+    ```
     """
     target = "_self"
     if new_tab:
@@ -59,13 +96,39 @@ def with_tooltip(
         `"dotted"`, or `None`. If nothing is provided, then `"dotted"` will be used as a default.
 
     color
-        A string indicating the text color. If `None`, no color styling is applied.
+        A string indicating the text color. If `None`, color styling is inherited.
         If nothing is provided, then `"blue"` will be used as a default.
 
     Returns
     -------
     str
         An HTML string containing the formatted tooltip element.
+
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    from gt_extras import with_tooltip
+
+    df = pd.DataFrame(
+        {
+            "name": ["Great Tables", "Plotnine", "Quarto"],
+            "description": [
+                "Absolutely Delightful Table-making in Python",
+                "A grammar of graphics for Python",
+                "An open-source scientific and technical publishing system",
+            ],
+        }
+    )
+
+    df["Package"] = [
+        with_tooltip(name, description, color = None)
+        for name, description in zip(df["name"], df["description"])
+    ]
+
+    GT(df[["Package"]])
+    ```
     """
 
     # Throw if `text_decoration_style` is not one of the allowed values
