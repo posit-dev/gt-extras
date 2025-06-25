@@ -73,8 +73,8 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
 def with_tooltip(
     label: str,
     tooltip: str,
-    text_decoration_style: Literal["solid", "dotted"] | None = "dotted",
-    color: str | None = "blue",
+    text_decoration_style: Literal["solid", "dotted", "none"] = "dotted",
+    color: str | Literal["none"] = "blue",
 ) -> str:
     """
     Create HTML text with tooltip functionality for use in GT table cells.
@@ -93,11 +93,10 @@ def with_tooltip(
 
     text_decoration_style
         A string indicating the style of underline decoration. Options are `"solid"`,
-        `"dotted"`, or `None`. If nothing is provided, then `"dotted"` will be used as a default.
+        `"dotted"`, or "none".
 
     color
-        A string indicating the text color. If `None`, color styling is inherited.
-        If nothing is provided, then `"blue"` will be used as a default.
+        A string indicating the text color. If "none", no color styling is applied.
 
     Returns
     -------
@@ -132,18 +131,21 @@ def with_tooltip(
     """
 
     # Throw if `text_decoration_style` is not one of the allowed values
-    if text_decoration_style not in [None, "solid", "dotted"]:
-        raise ValueError("Text_decoration_style must be one of `None`, 'solid', or 'dotted'")
+    if text_decoration_style not in ["none", "solid", "dotted"]:
+        raise ValueError("Text_decoration_style must be one of 'none', 'solid', or 'dotted'")
+    
+    if color is None:
+        raise ValueError("color must be a string or 'none', not None.")
 
     style = "cursor: help; "
 
-    if text_decoration_style is not None:
+    if text_decoration_style != "none":
         style += "text-decoration: underline; "
         style += f"text-decoration-style: {text_decoration_style}; "
     else:
         style += "text-decoration: none; "
 
-    if color is not None:
+    if color != "none":
         style += f"color: {color}; "
 
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'

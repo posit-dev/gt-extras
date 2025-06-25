@@ -73,7 +73,6 @@ def test_theme_pff_fonts_snap(snapshot, mini_gt):
 def test_theme_pff_dividers(mini_gt):
     themed_gt = gt_theme_pff(gt=mini_gt, divider="num")
     html = themed_gt.as_raw_html()
-    print(html)
     assert "border-left: 2px solid lightgrey" in html
 
 
