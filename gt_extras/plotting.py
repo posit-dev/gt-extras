@@ -400,7 +400,15 @@ def gt_plt_dot(
     return res
 
 
-def gt_plt_conf_int(gt: GT) -> GT:
+def gt_plt_conf_int(
+    gt: GT,
+    column: SelectExpr,
+    palette: list[str] | str | None = None,
+    text_size: Literal["small", "default", "large", "largest"] = "default",
+    # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
+    width: float | int = 80,  # TODO: choose default
+    height: float | int = 30,
+) -> GT:
     def _make_conf_int(
         mean: float | int,
         c1: float | int,
@@ -411,6 +419,7 @@ def gt_plt_conf_int(gt: GT) -> GT:
         text_size: Literal["small", "default", "large", "largest"],
         min_val: float | int,
         max_val: float | int,
+        # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float | int = 60,
         height: float | int = 20,
     ):
@@ -480,6 +489,13 @@ def gt_plt_conf_int(gt: GT) -> GT:
             </div>
             """
         return html.strip()
+    
+    # steps:
+    # check if single column passed
+        # if so then compute cis and mean
+        # else move on
+    # have cis and mean now, so run fmt on col with lambda (need to write that?)
+    # the end!
 
     res = gt
     return res
