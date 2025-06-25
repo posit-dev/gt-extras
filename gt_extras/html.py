@@ -31,7 +31,7 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     ```{python}
     import pandas as pd
     from great_tables import GT
-    from gt_extras import gt_hyperlink
+    import gt_extras as gte
 
     df = pd.DataFrame(
         {
@@ -51,12 +51,12 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     )
 
     df["Package"] = [
-        gt_hyperlink(name, url)
+        gte.gt_hyperlink(name, url)
         for name, url in zip(df["name"], df["url"])
     ]
 
     df["Github Stars"] = [
-        gt_hyperlink(github_stars, repo_url, new_tab=False)
+        gte.gt_hyperlink(github_stars, repo_url, new_tab=False)
         for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
     ]
 
@@ -108,7 +108,7 @@ def with_tooltip(
     ```{python}
     import pandas as pd
     from great_tables import GT
-    from gt_extras import with_tooltip
+    import gt_extras as gte
 
     df = pd.DataFrame(
         {
@@ -122,7 +122,7 @@ def with_tooltip(
     )
 
     df["Package"] = [
-        with_tooltip(name, description, color = "none")
+        gte.with_tooltip(name, description, color = "none")
         for name, description in zip(df["name"], df["description"])
     ]
 

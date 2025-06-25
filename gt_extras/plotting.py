@@ -95,7 +95,7 @@ def gt_plt_bar(
     ```{python}
     from great_tables import GT
     from great_tables.data import gtcars
-    from gt_extras import gt_plt_bar
+    import gt_extras as gte
 
     gtcars_mini = gtcars.loc[
         9:17,
@@ -109,8 +109,9 @@ def gt_plt_bar(
         .cols_align("left", columns="mfr")
     )
 
-    gt.pipe(gt_plt_bar, columns=
-        ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    gt.pipe(
+        gte.gt_plt_bar,
+        columns= ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
     )
     ```
 
@@ -280,7 +281,7 @@ def gt_plt_dot(
     ```{python}
     from great_tables import GT
     from great_tables.data import gtcars
-    from gt_extras import gt_plt_dot
+    import gt_extras as gte
 
     gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
 
@@ -289,7 +290,7 @@ def gt_plt_dot(
         .tab_stubhead(label="Car")
     )
 
-    gt.pipe(gt_plt_dot, category_col="mfr", data_col="hp")
+    gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
     """
     # Get the underlying Dataframe

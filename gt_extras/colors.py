@@ -72,7 +72,7 @@ def gt_highlight_cols(
     ```{python}
     from great_tables import GT, md
     from great_tables.data import gtcars
-    from gt_extras import gt_highlight_cols
+    import gt_extras as gte
 
     gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
 
@@ -81,7 +81,7 @@ def gt_highlight_cols(
         .tab_stubhead(label=md("*Car*"))
     )
 
-    gt.pipe(gt_highlight_cols, columns="hp")
+    gt.pipe(gte.gt_highlight_cols, columns="hp")
     ```
     """
     # Throw if `font_weight` is not one of the allowed values
@@ -164,7 +164,7 @@ def gt_hulk_col_numeric(
     ```{python}
     from great_tables import GT
     from great_tables.data import gtcars
-    from gt_extras import gt_hulk_col_numeric
+    import gt_extras as gte
 
     gtcars_mini = gtcars.loc[0:8, ["model", "mfr", "year", "hp", "trq", "mpg_h"]]
 
@@ -173,7 +173,7 @@ def gt_hulk_col_numeric(
         .tab_stubhead(label="Car")
     )
 
-    gt.pipe(gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
+    gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
     ```
 
     A more involved setup.
@@ -208,7 +208,7 @@ def gt_hulk_col_numeric(
         )
     )
 
-    gt.pipe(gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])
+    gt.pipe(gte.gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])
     ```
     """
     res = gt.data_color(
@@ -284,7 +284,7 @@ def gt_color_box(
     ```{python}
     from great_tables import GT
     from great_tables.data import islands
-    from gt_extras import gt_color_box
+    import gt_extras as gte
 
     islands_mini = (
         islands
@@ -297,7 +297,7 @@ def gt_color_box(
         .tab_stubhead(label="Island")
     )
 
-    gt.pipe(gt_color_box, columns="size", palette=["lightblue", "navy"])
+    gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
     ```
     """
     # Get the underlying `GT` data
