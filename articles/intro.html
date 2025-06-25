@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>intro – gt-extras</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4d737b4f434ecdb4a7a7d2fd23c80286.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../reference/_styles-quartodoc.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">gt-extras</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../get-started/index.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reference/index.html"> 
+<span class="menu-text">API Reference</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gt-extras" id="toc-gt-extras" class="nav-link active" data-scroll-target="#gt-extras">gt-extras</a></li>
+  <li><a href="#what-is-gt-extras" id="toc-what-is-gt-extras" class="nav-link" data-scroll-target="#what-is-gt-extras">What is gt-extras?</a></li>
+  <li><a href="#how-can-i-use-it" id="toc-how-can-i-use-it" class="nav-link" data-scroll-target="#how-can-i-use-it">How can I use it?</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">Features</a></li>
+  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing">Contributing</a></li>
+  <li><a href="#code-of-conduct" id="toc-code-of-conduct" class="nav-link" data-scroll-target="#code-of-conduct">Code of Conduct</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="gt-extras" class="level1" style="text-align: center;">
+<h1>gt-extras</h1>
+</section>
+<section id="what-is-gt-extras" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-gt-extras">What is <a href="https://posit-dev.github.io/gt-extras">gt-extras</a>?</h3>
+<p>We provide a collection of helper functions to enhance tables created with the Python package <a href="https://posit-dev.github.io/great-tables/">great-tables</a>.</p>
+<p>The functions in <strong>gt-extras</strong> are designed to make it easier to add plots, icons, color gradients, and other enhancements to your tables. We wrap up common patterns and boilerplate so you can focus on your data and presentation. It is based on the R package <a href="https://jthomasmock.github.io/gtExtras/index.html">gtExtras</a>, which was designed with a similar goal in mind.</p>
+</section>
+<section id="how-can-i-use-it" class="level3">
+<h3 class="anchored" data-anchor-id="how-can-i-use-it">How can I use it?</h3>
+<p>Install the latest release from <strong>PyPI</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install gt_extras</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can modify a <em>great table</em> with a collection of gt-extras features. From plotting, to icons, to color palettes, we’ve got quite the range of ready-to-use add-ons!</p>
+<div id="3e1d9eaa" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars.iloc[<span class="dv">5</span>:<span class="dv">15</span>].copy().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>gtcars_mini[<span class="st">"efficiency"</span>] <span class="op">=</span> gtcars_mini[<span class="st">"mpg_c"</span>] <span class="op">/</span> gtcars_mini[<span class="st">"hp"</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Start with a standard GT </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Car"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    .cols_hide([<span class="st">"drivetrain"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"trim"</span>, <span class="st">"bdy_style"</span>, <span class="st">"msrp"</span>, <span class="st">"trsmn"</span>, <span class="st">"ctry_origin"</span>])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    .cols_align(<span class="st">"center"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Car Performance Review"</span>, subtitle<span class="op">=</span><span class="st">"Using gt-extras functionality"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add gt-extras features using gt.pipe()</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_color_box, columns<span class="op">=</span>[<span class="st">"hp"</span>, <span class="st">"trq"</span>], palette<span class="op">=</span>[<span class="st">"lightblue"</span>, <span class="st">"darkblue"</span>])</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_plt_dot, category_col<span class="op">=</span><span class="st">"mfr"</span>, data_col<span class="op">=</span><span class="st">"efficiency"</span>, domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_plt_bar, columns<span class="op">=</span>[<span class="st">"mpg_c"</span>, <span class="st">"mpg_h"</span>])</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_fa_rating, columns<span class="op">=</span><span class="st">"efficiency"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_hulk_col_numeric, columns<span class="op">=</span><span class="st">"year"</span>, palette<span class="op">=</span><span class="st">"viridis"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_theme_538)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div id="zhhfnozady" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chivo&display=swap');
+#zhhfnozady table {
+          font-family: Cairo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#zhhfnozady thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#zhhfnozady p { margin: 0; padding: 0; }
+ #zhhfnozady .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: 400; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: none; border-top-width: 3px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #zhhfnozady .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #zhhfnozady .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #zhhfnozady .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #zhhfnozady .gt_heading { background-color: #FFFFFF; text-align: left; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #zhhfnozady .gt_bottom_border { border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #zhhfnozady .gt_col_headings { border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: black; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #zhhfnozady .gt_col_heading { color: #333333; background-color: white; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #zhhfnozady .gt_column_spanner_outer { color: #333333; background-color: white; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #zhhfnozady .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #zhhfnozady .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #zhhfnozady .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: black; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #zhhfnozady .gt_spanner_row { border-bottom-style: hidden; }
+ #zhhfnozady .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: none; border-top-width: 2px; border-top-color: black; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: black; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #zhhfnozady .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: none; border-top-width: 2px; border-top-color: black; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: black; vertical-align: middle; }
+ #zhhfnozady .gt_from_md> :first-child { margin-top: 0; }
+ #zhhfnozady .gt_from_md> :last-child { margin-bottom: 0; }
+ #zhhfnozady .gt_row { padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #zhhfnozady .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 0px; border-right-color: white; padding-left: 5px; padding-right: 5px; }
+ #zhhfnozady .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #zhhfnozady .gt_row_group_first td { border-top-width: 2px; }
+ #zhhfnozady .gt_row_group_first th { border-top-width: 2px; }
+ #zhhfnozady .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #zhhfnozady .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #zhhfnozady .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #zhhfnozady .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #zhhfnozady .gt_left { text-align: left; }
+ #zhhfnozady .gt_center { text-align: center; }
+ #zhhfnozady .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #zhhfnozady .gt_font_normal { font-weight: normal; }
+ #zhhfnozady .gt_font_bold { font-weight: bold; }
+ #zhhfnozady .gt_font_italic { font-style: italic; }
+ #zhhfnozady .gt_super { font-size: 65%; }
+ #zhhfnozady .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #zhhfnozady .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="8" class="gt_heading gt_title gt_font_normal" style="font-family: Chivo;font-weight: 700;">Car Performance Review</td>
+  </tr>
+  <tr class="gt_heading">
+    <td colspan="8" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="font-family: Chivo;font-weight: 300;">Using gt-extras functionality</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="Car">Car</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="mfr">mfr</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="mpg_c">mpg_c</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="mpg_h">mpg_h</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="border-top: 0px solid black; font-family: Chivo;font-size: 14px;vertical-align: bottom;font-weight: 200;text-transform: uppercase;" scope="col" id="efficiency">efficiency</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <th class="gt_row gt_left gt_stub">California</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Ferrari
+                <div style="height:0.7em; width:0.7em; background-color:#000000;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#000000; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#aad4e433; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#aad4e4; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">553.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#4657b033; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#4657b0; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">557.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="45.71428571428571px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="44.79999999999999px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="60.0px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="2.8933092224231465 out of 5" aria-label="2.8933092224231465 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.8933092224231465 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.8933092224231465 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.8933092224231465 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.8933092224231465 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.8933092224231465 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.8933092224231465 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.8933092224231465 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.8933092224231465 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.8933092224231465 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.8933092224231465 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GTC4Lusso</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Ferrari
+                <div style="height:0.7em; width:0.7em; background-color:#000000;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#000000; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #000000; background-color: #fde725;" class="gt_row gt_center">2017</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#7390c833; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#7390c8; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">680.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#627abe33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#627abe; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">514.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="34.285714285714285px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="33.6px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="44.347826086956516px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="43.460869565217386px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="1.7647058823529411 out of 5" aria-label="1.7647058823529411 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.7647058823529411 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.7647058823529411 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.7647058823529411 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.7647058823529411 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.7647058823529411 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.7647058823529411 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.7647058823529411 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.7647058823529411 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.7647058823529411 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.7647058823529411 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">FF</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Ferrari
+                <div style="height:0.7em; width:0.7em; background-color:#000000;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#000000; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#7f9fce33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#7f9fce; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">652.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#6882c233; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#6882c2; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">504.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="31.42857142857143px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="30.8px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="41.73913043478261px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.904347826086955px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="1.687116564417178 out of 5" aria-label="1.687116564417178 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.687116564417178 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.687116564417178 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.687116564417178 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.687116564417178 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.687116564417178 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.687116564417178 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.687116564417178 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.687116564417178 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.687116564417178 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.687116564417178 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">F12Berlinetta</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Ferrari
+                <div style="height:0.7em; width:0.7em; background-color:#000000;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#000000; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#5d75bc33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#5d75bc; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">731.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#657ec033; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#657ec0; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">509.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="31.42857142857143px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="30.8px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="41.73913043478261px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.904347826086955px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="1.5047879616963065 out of 5" aria-label="1.5047879616963065 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5047879616963065 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5047879616963065 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5047879616963065 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5047879616963065 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5047879616963065 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5047879616963065 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5047879616963065 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5047879616963065 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5047879616963065 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5047879616963065 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">LaFerrari</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Ferrari
+                <div style="height:0.7em; width:0.7em; background-color:#000000;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#000000; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#00008b33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#00008b; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">949.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#00008b33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#00008b; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">664.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="34.285714285714285px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="33.6px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="41.73913043478261px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="40.904347826086955px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="1.2644889357218125 out of 5" aria-label="1.2644889357218125 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.2644889357218125 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.2644889357218125 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.2644889357218125 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.2644889357218125 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.2644889357218125 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.2644889357218125 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.2644889357218125 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.2644889357218125 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.2644889357218125 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.2644889357218125 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">NSX</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Acura
+                <div style="height:0.7em; width:0.7em; background-color:#80b156;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#80b156; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #000000; background-color: #fde725;" class="gt_row gt_center">2017</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#a1c9e033; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#a1c9e0; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">573.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#7a99cb33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#7a99cb; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">476.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="60.0px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="58.8px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="57.391304347826086px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="56.243478260869566px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="3.664921465968586 out of 5" aria-label="3.664921465968586 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="3.664921465968586 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>3.664921465968586 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="3.664921465968586 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>3.664921465968586 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="3.664921465968586 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>3.664921465968586 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="3.664921465968586 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>3.664921465968586 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="3.664921465968586 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>3.664921465968586 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GT-R</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Nissan
+                <div style="height:0.7em; width:0.7em; background-color:#25bce6;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#25bce6; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #000000; background-color: #35b779;" class="gt_row gt_center">2016</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#add8e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#add8e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">545.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#94b9d933; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#94b9d9; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">436.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="45.71428571428571px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="44.79999999999999px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="57.391304347826086px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="56.243478260869566px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="2.9357798165137616 out of 5" aria-label="2.9357798165137616 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.9357798165137616 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.9357798165137616 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.9357798165137616 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.9357798165137616 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.9357798165137616 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.9357798165137616 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.9357798165137616 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.9357798165137616 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.9357798165137616 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.9357798165137616 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Aventador</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Lamborghini
+                <div style="height:0.7em; width:0.7em; background-color:#d73a91;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#d73a91; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#6b85c333; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#6b85c3; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">700.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#667fc133; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#667fc1; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">507.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="31.42857142857143px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="30.8px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="46.95652173913044px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="46.017391304347825px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="1.5714285714285716 out of 5" aria-label="1.5714285714285716 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5714285714285716 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5714285714285716 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5714285714285716 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5714285714285716 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5714285714285716 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5714285714285716 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5714285714285716 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5714285714285716 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="1.5714285714285716 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>1.5714285714285716 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Huracan</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Lamborghini
+                <div style="height:0.7em; width:0.7em; background-color:#d73a91;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#d73a91; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #31688e;" class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#91b5d733; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#91b5d7; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">610.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#a3cce133; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#a3cce1; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">413.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="45.71428571428571px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="44.79999999999999px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="52.17391304347826px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="51.130434782608695px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="2.622950819672131 out of 5" aria-label="2.622950819672131 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.622950819672131 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.622950819672131 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.622950819672131 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.622950819672131 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.622950819672131 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.622950819672131 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.622950819672131 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.622950819672131 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.622950819672131 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.622950819672131 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Gallardo</th>
+    <td class="gt_row gt_center"><div>
+            <div style="display:inline-block; float:left; margin-right:0px;">
+                Lamborghini
+                <div style="height:0.7em; width:0.7em; background-color:#d73a91;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
+            </div>
+            <div style="position:relative; top:1.2em;">
+                <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#d73a91; width:0.0%; height:4px; border-radius:2px;"></div> </div></div>
+            </div>
+        </div></td>
+    <td style="color: #FFFFFF; background-color: #440154;" class="gt_row gt_center">2014</td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#abd5e533; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#abd5e5; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">550.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#add8e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#add8e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">398.0</div>
+            </div>
+        </div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="34.285714285714285px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="33.6px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60px" height="30px"><rect x="0" y="5.0px" width="52.17391304347826px" height="20px" fill="purple"></rect><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="white" x="51.130434782608695px" y="15.0px"></text><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"></line></svg></div></td>
+    <td class="gt_row gt_center"><div title="2.181818181818182 out of 5" aria-label="2.181818181818182 out of 5" role="img" style="padding:0px"><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.181818181818182 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.181818181818182 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.181818181818182 out of 5" role="img" class="fa" style="fill:gold;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.181818181818182 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.181818181818182 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.181818181818182 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.181818181818182 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.181818181818182 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg><svg viewbox="0 0 576 512" preserveaspectratio="none" aria-label="2.181818181818182 out of 5" role="img" class="fa" style="fill:gray;height:20px;width:22.5px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>2.181818181818182 out of 5</title>
+  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></div></td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+</div>
+</div>
+<p><br> And for a little comparison, here is the table before the gt-extras features were applied.</p>
+<div id="fab3d3b2" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Car"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .cols_hide([<span class="st">"drivetrain"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"trim"</span>, <span class="st">"bdy_style"</span>, <span class="st">"msrp"</span>, <span class="st">"trsmn"</span>, <span class="st">"ctry_origin"</span>])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Car Performance Review"</span>, subtitle<span class="op">=</span><span class="st">"Using gt-extras functionality"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div id="vyfvozfbrm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#vyfvozfbrm table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#vyfvozfbrm thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#vyfvozfbrm p { margin: 0; padding: 0; }
+ #vyfvozfbrm .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #vyfvozfbrm .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #vyfvozfbrm .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #vyfvozfbrm .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #vyfvozfbrm .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #vyfvozfbrm .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #vyfvozfbrm .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #vyfvozfbrm .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #vyfvozfbrm .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #vyfvozfbrm .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #vyfvozfbrm .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #vyfvozfbrm .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #vyfvozfbrm .gt_spanner_row { border-bottom-style: hidden; }
+ #vyfvozfbrm .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #vyfvozfbrm .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #vyfvozfbrm .gt_from_md> :first-child { margin-top: 0; }
+ #vyfvozfbrm .gt_from_md> :last-child { margin-bottom: 0; }
+ #vyfvozfbrm .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #vyfvozfbrm .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #vyfvozfbrm .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #vyfvozfbrm .gt_row_group_first td { border-top-width: 2px; }
+ #vyfvozfbrm .gt_row_group_first th { border-top-width: 2px; }
+ #vyfvozfbrm .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #vyfvozfbrm .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #vyfvozfbrm .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #vyfvozfbrm .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #vyfvozfbrm .gt_left { text-align: left; }
+ #vyfvozfbrm .gt_center { text-align: center; }
+ #vyfvozfbrm .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #vyfvozfbrm .gt_font_normal { font-weight: normal; }
+ #vyfvozfbrm .gt_font_bold { font-weight: bold; }
+ #vyfvozfbrm .gt_font_italic { font-style: italic; }
+ #vyfvozfbrm .gt_super { font-size: 65%; }
+ #vyfvozfbrm .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #vyfvozfbrm .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="8" class="gt_heading gt_title gt_font_normal">Car Performance Review</td>
+  </tr>
+  <tr class="gt_heading">
+    <td colspan="8" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Using gt-extras functionality</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Car">Car</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="mfr">mfr</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="efficiency">efficiency</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <th class="gt_row gt_left gt_stub">California</th>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">553.0</td>
+    <td class="gt_row gt_right">557.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">23.0</td>
+    <td class="gt_row gt_right">2.8933092224231465</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GTC4Lusso</th>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_right">2017</td>
+    <td class="gt_row gt_right">680.0</td>
+    <td class="gt_row gt_right">514.0</td>
+    <td class="gt_row gt_right">12.0</td>
+    <td class="gt_row gt_right">17.0</td>
+    <td class="gt_row gt_right">1.7647058823529411</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">FF</th>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">652.0</td>
+    <td class="gt_row gt_right">504.0</td>
+    <td class="gt_row gt_right">11.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">1.687116564417178</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">F12Berlinetta</th>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">731.0</td>
+    <td class="gt_row gt_right">509.0</td>
+    <td class="gt_row gt_right">11.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">1.5047879616963065</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">LaFerrari</th>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">949.0</td>
+    <td class="gt_row gt_right">664.0</td>
+    <td class="gt_row gt_right">12.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">1.2644889357218125</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">NSX</th>
+    <td class="gt_row gt_left">Acura</td>
+    <td class="gt_row gt_right">2017</td>
+    <td class="gt_row gt_right">573.0</td>
+    <td class="gt_row gt_right">476.0</td>
+    <td class="gt_row gt_right">21.0</td>
+    <td class="gt_row gt_right">22.0</td>
+    <td class="gt_row gt_right">3.664921465968586</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GT-R</th>
+    <td class="gt_row gt_left">Nissan</td>
+    <td class="gt_row gt_right">2016</td>
+    <td class="gt_row gt_right">545.0</td>
+    <td class="gt_row gt_right">436.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">22.0</td>
+    <td class="gt_row gt_right">2.9357798165137616</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Aventador</th>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">700.0</td>
+    <td class="gt_row gt_right">507.0</td>
+    <td class="gt_row gt_right">11.0</td>
+    <td class="gt_row gt_right">18.0</td>
+    <td class="gt_row gt_right">1.5714285714285716</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Huracan</th>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">610.0</td>
+    <td class="gt_row gt_right">413.0</td>
+    <td class="gt_row gt_right">16.0</td>
+    <td class="gt_row gt_right">20.0</td>
+    <td class="gt_row gt_right">2.622950819672131</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Gallardo</th>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_right">2014</td>
+    <td class="gt_row gt_right">550.0</td>
+    <td class="gt_row gt_right">398.0</td>
+    <td class="gt_row gt_right">12.0</td>
+    <td class="gt_row gt_right">20.0</td>
+    <td class="gt_row gt_right">2.181818181818182</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+</div>
+</div>
+<p>For a more comprehensive guide, head over to the <a href="../get-started/">Get Started</a> page, and for the most comprehensive guide, see the <a href="../reference/">reference docs</a>!</p>
+</section>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<ul>
+<li>Apply color gradients and highlights</li>
+<li>Add plots to table cells for visual data representation</li>
+<li>Embed FontAwesome icons</li>
+<li>Use pre-built themes for quick styling</li>
+<li>Utilize helper utilities for common table tasks</li>
+</ul>
+<blockquote class="blockquote">
+<p>⚠️ gt-extras is currently in development, expect breaking changes.</p>
+</blockquote>
+</section>
+<section id="contributing" class="level2">
+<h2 class="anchored" data-anchor-id="contributing">Contributing</h2>
+<p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/posit-dev/gt-extras/issues">issue</a>.</p>
+</section>
+<section id="code-of-conduct" class="level2">
+<h2 class="anchored" data-anchor-id="code-of-conduct">Code of Conduct</h2>
+<p>Please note that the <strong>gt-extras</strong> project is released with a <a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct/">contributor code of conduct</a>.<br>By participating in this project you agree to abide by its terms.</p>
+</section>
+<section id="license" class="level2">
+<h2 class="anchored" data-anchor-id="license">License</h2>
+<p><strong>Great Tables</strong> is licensed under the MIT license.</p>
+<p>© Posit Software, PBC.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/posit-dev\.github\.io\/gt-extras\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
