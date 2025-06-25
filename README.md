@@ -5,11 +5,13 @@
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/gt-extras)](https://pypistats.org/packages/gt-extras)
 [![License](https://img.shields.io/github/license/posit-dev/gt-extras)](https://github.com/posit-dev/gt-extras/blob/main/LICENSE)
 
-<!-- [![CI Build](https://github.com/posit-dev/gt-extras/actions/workflows/ci-tests.yaml/badge.svg)](https://github.com/posit-dev/gt-extras/actions/workflows/ci-tests.yaml) -->
+[![Tests](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml)
 [![Documentation](https://img.shields.io/badge/docs-project_website-blue.svg)](https://posit-dev.github.io/gt-extras)
-[![Codecov](https://codecov.io/gh/posit-dev/gt-extras/branch/main/graph/badge.svg)](https://codecov.io/gh/posit-dev/gt-extras)
 [![Repo Status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Contributors](https://img.shields.io/github/contributors/posit-dev/gt-extras)](https://github.com/posit-dev/gt-extras/graphs/contributors)
+
+<!-- [![Codecov](https://codecov.io/gh/posit-dev/gt-extras/branch/main/graph/badge.svg)](https://codecov.io/gh/posit-dev/gt-extras) -->
+
 
 > ⚠️ **gt-extras is currently in development, expect breaking changes.**
 
