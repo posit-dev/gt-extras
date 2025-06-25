@@ -175,6 +175,43 @@ def gt_hulk_col_numeric(
 
     gte.gt_hulk_col_numeric(gt, columns=["hp", "trq"])
     ```
+
+    A more involved setup.
+
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import towny
+    from gt_extras import gt_hulk_col_numeric
+
+    towny_mini = towny[
+        [
+            "name",
+            "pop_change_1996_2001_pct",
+            "pop_change_2001_2006_pct",
+            "pop_change_2006_2011_pct",
+            "pop_change_2011_2016_pct",
+            "pop_change_2016_2021_pct",
+        ]
+    ].head(10)
+
+    gt = (
+        GT(towny_mini, rowname_col="name")
+        .tab_stubhead(label="Town")
+        .tab_spanner(
+            label="Population Change",
+            columns=[1, 2, 3, 4, 5]
+        )
+        .cols_label(
+            pop_change_1996_2001_pct="1996-2001",
+            pop_change_2001_2006_pct="2001-2006",
+            pop_change_2006_2011_pct="2006-2011",
+            pop_change_2011_2016_pct="2011-2016",
+            pop_change_2016_2021_pct="2016-2021",
+        )
+    )
+
+    gt.pipe(gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])
+    ```
     """
     res = gt.data_color(
         columns=columns,
