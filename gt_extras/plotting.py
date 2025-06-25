@@ -34,7 +34,7 @@ __all__ = ["gt_plt_bar", "gt_plt_dot"]
 
 def gt_plt_bar(
     gt: GT,
-    columns: SelectExpr | None = None,
+    columns: SelectExpr = None,
     fill: str = "purple",
     bar_height: int = 20,
     height: int = 30,
