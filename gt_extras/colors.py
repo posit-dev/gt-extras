@@ -2,11 +2,20 @@ from __future__ import annotations
 from typing import Literal
 
 from great_tables import GT, style, loc
-from great_tables._tbl_data import SelectExpr
+from great_tables._tbl_data import SelectExpr, is_na
+from great_tables._locations import resolve_cols_c
 
-from great_tables._data_color.base import _html_color
+from great_tables._data_color.base import _html_color, _add_alpha
+from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from great_tables._data_color.palettes import GradientPalette
 
-__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric"]
+
+from gt_extras._utils_column import (
+    _scale_numeric_column,
+    _validate_and_get_single_column,
+)
+
+__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric", "gt_color_box"]
 
 
 def gt_highlight_cols(
@@ -34,7 +43,7 @@ def gt_highlight_cols(
         provided in a list. If `None`, the alignment is applied to all columns.
 
     fill
-        A character string indicating the fill color. If nothing is provided, then `"#80bcd8"`
+        A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
         (light blue) will be used as a default.
 
     alpha
@@ -49,7 +58,7 @@ def gt_highlight_cols(
         inclusive. Note that only variable fonts may support the numeric mapping of weight.
 
     font_color
-        A character string indicating the text color. If nothing is provided, then `"#000000"`
+        A string indicating the text color. If nothing is provided, then `"#000000"`
         (black) will be used as a default.
 
     Returns
@@ -75,6 +84,13 @@ def gt_highlight_cols(
     gte.gt_highlight_cols(gt, columns="hp")
     ```
     """
+    # Throw if `font_weight` is not one of the allowed values
+    if isinstance(font_weight, str):
+        if font_weight not in ["normal", "bold", "bolder", "lighter"]:
+            raise ValueError("Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer")
+    elif not isinstance(font_weight, (int, float)):
+        raise TypeError("Font_weight must be an int, float, or str")
+
     if alpha:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
@@ -102,7 +118,7 @@ def gt_hulk_col_numeric(
 ) -> GT:
     # TODO: alpha is incomplete
     """
-    Apply a color gradient to numeric columns in a `GT` table.
+    Apply a color gradient to numeric columns in a `GT` object.
 
     The `gt_hulk_col_numeric()` function takes an existing `GT` object and applies a color gradient
     to the background of specified numeric columns, based on their values. This is useful for
@@ -169,5 +185,167 @@ def gt_hulk_col_numeric(
         reverse=reverse,
         autocolor_text=autocolor_text,
     )
+
+    return res
+
+
+def gt_color_box(
+    gt: GT,
+    columns: SelectExpr,
+    domain: list[int] | list[float] | None = None,
+    palette: list[str] | str | None = None,
+    alpha: float = 0.2,
+    # TODO: decide between allowing the user to set this or width
+    min_width: int | float = 70,
+    min_height: int | float = 20,
+    font_weight: str = "normal",
+) -> GT:
+    """
+    Add `PFF`-style color boxes with values to numeric columns in a `GT` object.
+
+    The `gt_color_box()` function takes an existing `GT` object and adds colored boxes to
+    specified numeric columns. Each box contains a colored square and the numeric value,
+    with colors mapped to the data values using a gradient palette.
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    columns
+        The columns to target. Can be a single column name or a list of column names.
+
+    domain
+        The range of values to map to the color palette. Should be a list of two values (min and
+        max). If `None`, the domain is inferred to be the min and max of the data range.
+
+    palette
+        The color palette to use. This should be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        If `None`, then a default palette will be used.
+
+    alpha
+        The alpha (transparency) value for the background colors, as a float between `0` (fully
+        transparent) and `1` (fully opaque).
+
+    min_width
+        The minimum width of each color box in pixels.
+
+    min_height
+        The minimum height of each color box in pixels.
+
+    font_weight
+        A string indicating the weight of the font for the numeric values. Can be `"normal"`,
+        `"bold"`, or other CSS font-weight values. Defaults to `"normal"`.
+
+    Returns
+    -------
+    GT
+        The modified `GT` object, allowing for method chaining.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import islands
+    from gt_extras import gt_color_box
+
+    islands_mini = (
+        islands
+        .sort_values(by="size", ascending=False)
+        .head(10)
+    )
+
+    gt = (
+        GT(islands_mini, rowname_col="name")
+        .tab_stubhead(label="Island")
+    )
+
+    gt.pipe(gt_color_box, columns="size", palette=["lightblue", "navy"])
+    ```
+    """
+    # Get the underlying `GT` data
+    data_table = gt._tbl_data
+
+    def _make_color_box(value: float, fill: str, alpha: float = 0.2):
+        if is_na(data_table, value):
+            return "<div></div>"
+
+        background_color = fill
+        fill_with_alpha = _add_alpha([fill], alpha)[0]
+
+        # Main container style
+        main_box_style = (
+            f"min-height:{min_height}px; min-width:{min_width}px;"
+            f"background-color:{fill_with_alpha}; display:flex; border-radius:5px;"
+            f"align-items:center; padding:0px {min_width / 10}px;"
+        )
+
+        # Small color square style
+        color_square_style = (
+            f"height:{min_height * 0.65}px; width:{min_height * 0.65}px;"
+            f"background-color:{background_color}; display:flex; border-radius:4px;"
+        )
+
+        # Value text style
+        value_text_style = (
+            f"line-height:20px; margin-left: {min_width / 10}px;"
+            f"font-weight:{font_weight}; white-space:nowrap;"
+        )
+
+        html = f'''
+        <div>
+            <div style="{main_box_style}">
+                <div style="{color_square_style}"></div>
+                <div style="{value_text_style}">{str(value)}</div>
+            </div>
+        </div>
+            '''
+
+        return html.strip()
+
+    columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
+    res = gt
+    for column in columns_resolved:
+        # Validate and get data column
+        col_name, col_vals = _validate_and_get_single_column(
+            gt,
+            column,
+        )
+
+        # Process numeric data column
+        scaled_vals = _scale_numeric_column(
+            data_table, col_name, col_vals, domain, default_domain_min_zero=False
+        )
+
+        # If palette is not provided, use a default palette
+        if palette is None:
+            palette = DEFAULT_PALETTE
+        # Otherwise get the palette from great_tables._data_color
+        elif isinstance(palette, str):
+            palette = ALL_PALETTES.get(palette, [palette])
+
+        # Standardize values in `palette` to hexadecimal color values
+        palette = _html_color(colors=palette)
+
+        # Create a color scale function from the palette
+        color_scale_fn = GradientPalette(colors=palette)
+
+        # Call the color scale function on the scaled values to get a list of colors
+        color_vals = color_scale_fn(scaled_vals)
+
+        # Apply gt.fmt() to each row individually, so we can access the color_value for that row
+        for i in range(len(data_table)):
+            color_val = color_vals[i]
+
+            res = res.fmt(
+                lambda x, fill=color_val: _make_color_box(
+                    value=x, fill=fill, alpha=alpha
+                ),
+                columns=column,
+                rows=[i],
+            )
 
     return res

@@ -2,6 +2,6 @@
 title: "gt-extras"
 ---
 
-This is a Quarto website.
+Welcome to gt-extras!
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+To read the docs, go to [Package Reference](reference/index.qmd).

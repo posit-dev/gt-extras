@@ -9,24 +9,44 @@ html-table-processing: none
 website: 
   title: gt-extras
   description: "A Collection of Helper Functions for the Great-Tables Package."
+  site-url: https://posit-dev.github.io/gt-extras/
+  page-navigation: true
   navbar:
     left:
       - text: Get Started
-      # file: page here
+        file: get-started/index.qmd
       - reference/index.qmd
+  
 
 
 quartodoc:
   package: gt_extras
   dir: reference
-  # style: pkgdown
   title: API Reference
+  css: reference/_styles-quartodoc.css
+
+  renderer:
+    style: markdown
+    table_style: description-list
 
   # write sidebar data
   sidebar: _sidebar.yml
   #css: reference/_styles-quartodoc.css
 
   sections:
+    - title: Plotting
+      desc: "" # TODO: add desc
+      contents:
+        - gt_plt_bar
+        - gt_plt_dot
+
+    - title: Colors
+      desc: "" # TODO: add desc
+      contents:
+        - gt_highlight_cols
+        - gt_hulk_col_numeric
+        - gt_color_box
+
     - title: Themes
       desc: Functions to generate themes.
       contents:
@@ -38,14 +58,28 @@ quartodoc:
         - gt_theme_dot_matrix
         - gt_theme_dark
         - gt_theme_pff
-
-    - title: Colors
-      desc: "" # TODO: add desc
-      contents:
-        - gt_highlight_cols
-        - gt_hulk_col_numeric
     
     - title: Icons and Images
       desc: "" # TODO: add desc
       contents:
         - fa_icon_repeat
+        - gt_fa_rating
+        
+    - title: HTML Helpers
+      desc: "" # TODO: add desc
+      contents:
+        - gt_hyperlink
+        - with_tooltip
+        
+
+format:
+  html:
+    theme:
+      light: simplex
+      # dark: superhero
+    respect-user-color-scheme: true
+    css:
+      - styles.css
+      - reference/_styles-quartodoc.css
+    toc: true
+    page-layout: full
