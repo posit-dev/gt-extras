@@ -749,10 +749,90 @@ def gt_plt_dumbbell(
     col1: SelectExpr,  # exactly 1 col
     col2: SelectExpr,  # exactly 1 col
     label: str,
-    width: float | int,
+    width: float | int = 70,
     col1_color: str = "purple",
     col2_color: str = "green",
     bar_color: str = "grey",
+    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
 ) -> GT:
+    def _make_dumbbell_html(
+        value_1: float | int,
+        value_2: float | int,
+        value_1_color: str,
+        value_2_color: str,
+        bar_color: str,
+        width: float | int,
+        height: float | int,
+        max_val: float | int,
+        min_val: float | int,
+        font_size: float | int,
+    ) -> str:
+        if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
+            return "<div></div>"
+
+        # Normalize positions based on global min/max, then scale to width
+        span = max_val - min_val
+        pos_1 = ((value_1 - min_val) / span) * width
+        pos_2 = ((value_2 - min_val) / span) * width
+
+        # Calculate bar position and width
+        bar_left = pos_1
+        bar_width = pos_2 - pos_1
+
+        # TODO: compute based on text size
+        bar_top = "60%"  # 50% if no text
+
+        label_style = (
+            "position:absolute; left:{pos}px; bottom:0px;"
+            f"transform:translate3d(-50%, {-height / 2}px, 0);"
+            "color:{color}; font-size:{font_size}px; font-weight:bold;"
+        )
+
+        value_1_label = (
+            f'<div style="{label_style.format(pos=pos_1, color=value_1_color, font_size=font_size)}">'
+            f"{value_1:.1f}"
+            "</div>"
+        )
+
+        value_2_label = (
+            f'<div style="{label_style.format(pos=pos_2, color=value_2_color, font_size=font_size)}">'
+            f"{value_2:.1f}"
+            "</div>"
+        )
+
+        dot_style = (
+            "position:absolute; left:{pos}px;"
+            f"top:{bar_top}; width:{height / 3}px; height:{height / 3}px;"
+            "transform: translate3d(-50%, -35%, 0px);"
+            "background:{color}; border-radius:50%;"
+            "border:2px solid white; box-sizing:border-box;"
+        )
+
+        value_1_dot = (
+            f'<div style="{dot_style.format(pos=pos_1, color=value_1_color)}"></div>'
+        )
+        value_2_dot = (
+            f'<div style="{dot_style.format(pos=pos_2, color=value_2_color)}"></div>'
+        )
+
+        html = f"""
+        <div style="position: relative; width:{width}px; height:{height}px;">
+            {value_1_label}
+            {value_2_label}
+            <div style="
+                position: absolute;
+                left: {bar_left}px;
+                top: {bar_top};
+                width: {bar_width}px;
+                height: {height / 10}px;
+                background: {bar_color};
+                border-radius: 2px;
+            "></div>
+            {value_1_dot}
+            {value_2_dot}
+        </div>
+        """
+        return html.strip()
+
     res = gt
     return res
