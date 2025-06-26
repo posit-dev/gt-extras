@@ -468,3 +468,9 @@ def test_gt_plt_conf_int_precomputed_invalid_data():
         ValueError, match="Expected all entries in mean to be numeric or None"
     ):
         gt_plt_conf_int(gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"])
+
+def test_gt_plt_dumbbell_snap(snapshot):
+    pass
+
+def test_gt_plt_dumbbell_basic(mini_gt):
+    pass

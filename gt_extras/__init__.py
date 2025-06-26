@@ -14,7 +14,7 @@ from .colors import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
 
 from .icons import fa_icon_repeat, gt_fa_rating
 
-from .plotting import gt_plt_bar, gt_plt_dot, gt_plt_conf_int
+from .plotting import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
 
 from .html import gt_hyperlink, with_tooltip
 
@@ -38,6 +38,7 @@ __all__ = [
     "gt_plt_bar",
     "gt_plt_dot",
     "gt_plt_conf_int",
+    "gt_plt_dumbbell",
     
     "gt_hyperlink",
     "with_tooltip",

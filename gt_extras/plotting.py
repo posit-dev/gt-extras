@@ -24,7 +24,7 @@ from svg import SVG, Line, Rect, Text
 from scipy.stats import t, sem, tmean
 
 
-__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int"]
+__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int", "gt_plt_dumbbell"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -404,6 +404,7 @@ def gt_plt_dot(
 
 # Changed wrt R version, palette removed
 
+
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
@@ -417,7 +418,7 @@ def gt_plt_conf_int(
     line_color: str = "royalblue",
     text_color: str = "black",
     text_size: Literal["small", "default", "large", "largest", "none"] = "default",
-    # TODO: "none" vs None in text_size 
+    # TODO: "none" vs None in text_size
 ) -> GT:
     """
     Create confidence interval plots in `GT` cells.
@@ -740,4 +741,18 @@ def gt_plt_conf_int(
             rows=[i],
         )
 
+    return res
+
+
+def gt_plt_dumbbell(
+    gt: GT,
+    col1: SelectExpr,  # exactly 1 col
+    col2: SelectExpr,  # exactly 1 col
+    label: str,
+    width: float | int,
+    col1_color: str = "purple",
+    col2_color: str = "green",
+    bar_color: str = "grey",
+) -> GT:
+    res = gt
     return res
