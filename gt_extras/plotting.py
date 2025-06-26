@@ -407,12 +407,18 @@ def gt_plt_conf_int(
     column: SelectExpr,
     ci_columns: SelectExpr | None = None,
     ci: float = 0.9,
-    palette: list[str] | str | None = None,
-    text_size: Literal["small", "default", "large", "largest"] = "default",
+    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
-    width: float | int = 80,  # TODO: choose default
+    width: float | int = 80,  # TODO: choose good default
     height: float | int = 30,
+    border_color: str = "red",
+    line_color: str = "#1f77b4",
+    dot_color: str = "red",
+    text_color: str = "black",
 ) -> GT:
+    """
+    Assumes a t distribution
+    """
     # TODO: handle "palette"
     # TODO: handle negatives
     # TODO: comments
@@ -438,7 +444,7 @@ def gt_plt_conf_int(
 
         print(total_digits)
 
-        int_digits = len(str(abs(int(num))))
+        int_digits = len(str(int(num)))
         decimals = max(0, total_digits - int_digits)
         formatted = f"{num:.{decimals}f}".rstrip("0").rstrip(".")
         return formatted
@@ -447,48 +453,48 @@ def gt_plt_conf_int(
         mean: float | int,
         c1: float | int,
         c2: float | int,
-        line_color: str,
-        dot_color: str,
-        text_color: str,
-        border_color: str,
         text_size: Literal["small", "default", "large", "largest"],
         min_val: float | int,
         max_val: float | int,
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float | int,
         height: float | int,
+        border_color: str,
+        line_color: str,
+        dot_color: str,
+        text_color: str,
     ):
-        # Avoid division by zero
-        span = max_val - min_val if max_val != min_val else 1
+        span = max_val - min_val
+        if span <= 0:
+            raise ValueError("Confidence interval zero or negative.")
 
         # Normalize positions to [0, 1] based on global min/max, then scale to width
         c1_pos = ((c1 - min_val) / span) * width
         c2_pos = ((c2 - min_val) / span) * width
         mean_pos = ((mean - min_val) / span) * width
 
-        # Clamp positions to valid range (in case values are outside min_val/max_val)
-        c1_pos = max(0, min(width, c1_pos))
-        c2_pos = max(0, min(width, c2_pos))
-        mean_pos = max(0, min(width, mean_pos))
-
-        bar_top = height / 2 - 2  # Center the bar vertically
+        bar_top = height / 2  # - 2  # Center the bar vertically
 
         if text_size == "small":
-            font_size = 8
-        if text_size == "default":
-            font_size = 12
-        if text_size == "large":
-            font_size = 16
-        if text_size == "largest":
-            font_size = 20
-
-        print(c1_pos-c2_pos)
+            font_size = 6
+        elif text_size == "default":
+            font_size = 10
+        elif text_size == "large":
+            font_size = 14
+        elif text_size == "largest":
+            font_size = 18
+        elif text_size == "none":
+            font_size = 0
+        else:
+            raise ValueError(
+                "Text_size expected to be one of the following:"
+                f"'small', 'default', 'large', 'largest', or 'none'. Received '{text_size}'."
+            )
 
         label_style = (
             "position:absolute;"
             "left:{pos}px;"
             "bottom:15px;"
-            "transform:translateX(-50%);"
             "color:{color};"
             "font-size:{font_size}px;"
         )
@@ -500,7 +506,8 @@ def gt_plt_conf_int(
         )
 
         c2_label_html = (
-            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}">'
+            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
+            'transform:translateX(-100%);">'  # Move c2 to the left
             f"{_format_number_by_width(c2, c2_pos - c1_pos)}"
             "</div>"
         )
@@ -509,27 +516,16 @@ def gt_plt_conf_int(
             <div style="position:relative; width:{width}px; height:{height + 14}px;">
             {c1_label_html}
             {c2_label_html}
-            <!-- Confidence interval bar -->
             <div style="
-                position: absolute;
-                left: {c1_pos}px;
-                top: {bar_top + 14}px;
-                width: {c2_pos - c1_pos}px;
-                height: 4px;
-                background: {line_color};
-                border-radius: 2px;
+                position: absolute; left: {c1_pos}px;
+                top: {bar_top + 14}px; width: {c2_pos - c1_pos}px;
+                height: 4px; background: {line_color}; border-radius: 2px;
             "></div>
-            <!-- Mean dot -->
             <div style="
-                position: absolute;
-                left: {mean_pos - 4}px;
-                top: {bar_top + 11}px;
-                width: 10px;
-                height: 10px;
-                background: {dot_color};
-                border-radius: 50%;
-                border: 2px solid {border_color};
-                box-sizing: border-box;
+                position: absolute; left: {mean_pos - 4}px;
+                top: {bar_top + 11}px; width: 10px; height: 10px;
+                background: {dot_color}; border-radius: 50%;
+                border: 2px solid {border_color}; box-sizing: border-box;
             "></div>
             </div>
             """
@@ -544,7 +540,7 @@ def gt_plt_conf_int(
 
     # must compute the ci ourselves
     if ci_columns is None:
-        data_name, data_vals = _validate_and_get_single_column(
+        _, data_vals = _validate_and_get_single_column(
             gt,
             data_column_name,
         )
@@ -552,7 +548,8 @@ def gt_plt_conf_int(
         # Check that all entries are lists or None
         if any(val is not None and not isinstance(val, list) for val in data_vals):
             raise ValueError(
-                f"Expected entries in {data_column_name} to be lists or None, since ci_columns were not given."
+                f"Expected entries in {data_column_name} to be lists or None,"
+                "since ci_columns were not given."
             )
 
         def _compute_mean_and_conf_int(val):
@@ -578,24 +575,27 @@ def gt_plt_conf_int(
                 f"Expected 2 ci_columns, instead received {len(ci_columns_resolved)}."
             )
 
-        c1_name, c1_vals = _validate_and_get_single_column(
+        _, c1_vals = _validate_and_get_single_column(
             gt,
             ci_columns_resolved[0],
         )
-        c2_name, c2_vals = _validate_and_get_single_column(
+        _, c2_vals = _validate_and_get_single_column(
             gt,
             ci_columns_resolved[1],
         )
 
-        mean_name, means = _validate_and_get_single_column(
+        _, means = _validate_and_get_single_column(
             gt,
             data_column_name,
         )
-    if any(val is not None and not isinstance(val, (int, float)) for val in means):
-        raise ValueError(
-            f"Expected all entries in {data_column_name} to be numeric or None, since ci_columns were given."
-        )
 
+        if any(val is not None and not isinstance(val, (int, float)) for val in means):
+            raise ValueError(
+                f"Expected all entries in {data_column_name} to be numeric or None,"
+                "since ci_columns were given."
+            )
+
+    # Compute a global range to ensure conf int bars align
     all_values = [val for val in [*means, *c1_vals, *c2_vals] if val is not None]
     data_min = min(all_values)
     data_max = max(all_values)
@@ -617,10 +617,10 @@ def gt_plt_conf_int(
                 mean=mean,
                 c1=c1,
                 c2=c2,
-                line_color="#1f77b4",
-                dot_color="red",
-                text_color="#000000",
-                border_color="red",
+                line_color=line_color,
+                dot_color=dot_color,
+                text_color=text_color,
+                border_color=border_color,
                 text_size=text_size,
                 min_val=global_min,
                 max_val=global_max,
@@ -632,10 +632,3 @@ def gt_plt_conf_int(
         )
 
     return res
-
-    # steps:
-    # check if single column passed
-    # if so then compute cis and mean
-    # else move on
-    # have cis and mean now, so run fmt on col with lambda (need to write that?)
-    # the end!
