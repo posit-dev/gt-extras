@@ -411,8 +411,8 @@ def gt_plt_conf_int(
     ci_columns: SelectExpr | None = None,
     ci: float = 0.95,
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
-    width: float | int = 80,  # TODO: choose good default
-    height: float | int = 30,
+    width: float | int = 100,
+    # height: float | int = 30,
     dot_color: str = "red",
     border_color: str = "red",
     line_color: str = "royalblue",
@@ -449,9 +449,6 @@ def gt_plt_conf_int(
 
     width
         The width of the confidence interval plot in pixels.
-
-    height
-        The height of the confidence interval plot in pixels.
 
     dot_color
         The color of the mean dot.
@@ -498,7 +495,7 @@ def gt_plt_conf_int(
     )
     ```
 
-    Alternatively we can pass in lists, and the function will compute the CI's for us.
+    Alternatively we can pass in a column of lists, and the function will compute the CI's for us.
 
     ```{python}
     import numpy as np
@@ -537,6 +534,7 @@ def gt_plt_conf_int(
     """
     # TODO: comments
     # TODO: refactor? It's quite a long function
+    # TODO: consider including height
 
     # Set total number of digits (including before and after decimal)
     def _format_number_by_width(num: float | int, width: float | int) -> str:
@@ -566,7 +564,6 @@ def gt_plt_conf_int(
         max_val: float | int,
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float | int,
-        height: float | int,
         border_color: str,
         line_color: str,
         dot_color: str,
@@ -586,12 +583,12 @@ def gt_plt_conf_int(
         c2_pos = ((c2 - min_val) / span) * width
         mean_pos = ((mean - min_val) / span) * width
 
-        bar_top = height / 2  # - 2  # Center the bar vertically
+        bar_top = 12.0  # Center the bar vertically
 
         label_style = (
             "position:absolute;"
             "left:{pos}px;"
-            "bottom:15px;"
+            "bottom:18px;"
             "color:{color};"
             "font-size:{font_size}px;"
         )
@@ -610,7 +607,7 @@ def gt_plt_conf_int(
         )
 
         html = f"""
-            <div style="position:relative; width:{width}px; height:{height + 14}px;">
+            <div style="position:relative; width:{width}px; height:{44}px;">
             {c1_label_html}
             {c2_label_html}
             <div style="
@@ -738,7 +735,6 @@ def gt_plt_conf_int(
                 min_val=global_min,
                 max_val=global_max,
                 width=width,
-                height=height,
             ),
             columns=data_column_name,
             rows=[i],
