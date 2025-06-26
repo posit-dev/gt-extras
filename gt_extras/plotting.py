@@ -402,51 +402,132 @@ def gt_plt_dot(
     return res
 
 
+# Changed wrt R version, palette removed
+
+
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
     ci_columns: SelectExpr | None = None,
     ci: float = 0.9,
-    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
+    
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float | int = 80,  # TODO: choose good default
     height: float | int = 30,
+    dot_color: str = "red",
     border_color: str = "red",
     line_color: str = "#1f77b4",
-    dot_color: str = "red",
     text_color: str = "black",
+    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
 ) -> GT:
     """
-    Assumes a t distribution
+    Create confidence interval plots in `GT` cells.
+
+    The `gt_plt_conf_int()` function takes an existing `GT` object and adds horizontal confidence
+    interval plots to a specified column. Each cell displays a horizontal bar representing the
+    confidence interval, with a dot indicating the mean value. Optionally, the lower and upper
+    confidence interval bounds can be provided directly, or the function can compute them.
+
+    If `ci_columns` is not provided, the function assumes each cell in `column` contains a list of
+    values and computes the confidence interval using a t-distribution.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column that contains the mean of the sample. This can either be a single number per row,
+        if you have calculated the values ahead of time, or a list of values if you want to
+        calculate the confidence intervals.
+
+    ci_columns
+        Optional columns representing the left/right confidence intervals of your sample. If `None`,
+        the confidence interval will be computed from the data in `column` using a t-distribution.
+
+    ci
+        The confidence level to use when computing the interval (if `ci_columns` is `None`).
+
+    width
+        The width of the confidence interval plot in pixels.
+
+    height
+        The height of the confidence interval plot in pixels.
+
+    dot_color
+        The color of the mean dot.
+
+    border_color
+        The color of the border around the mean dot.
+
+    line_color
+        The color of the confidence interval bar.
+
+    text_color
+        The color of the confidence interval labels.
+
+    text_size
+        The size of the text for the confidence interval labels.
+        Options are `"small"`, `"default"`, `"large"`, `"largest"`, or `"none"`.
+
+    Returns
+    -------
+    GT
+        A `GT` object with confidence interval plots added to the specified column.
+
+    Examples
+    --------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame({
+        'group': ['A', 'B', 'C'],
+        'mean': [5.2, 7.8, 3.4],
+        'ci_lower': [3.1, 6.1, 1.8],
+        'ci_upper': [7.3, 9.7, 5.0],
+        'ci': [5.2, 7.8, 3.4],
+    })
+
+    (
+        GT(df)
+        .pipe(
+            gte.gt_plt_conf_int,
+            column='ci',
+            ci_columns=['ci_lower', 'ci_upper'],
+            width=120,
+            height=30,
+        )
+    )
+    ```
+
+    Note
+    ----
+    All confidence intervals are scaled to a common range for visual alignment.
     """
-    # TODO: handle "palette"
     # TODO: handle negatives
     # TODO: comments
-    # TODO: docstring
     # TODO: tests
     # TODO: refactor? It's quite a long function
-    # TODO: option to hide text?
 
+    # Set total number of digits (including before and after decimal)
     def _format_number_by_width(num: float | int, width: float | int) -> str:
-        if num is None:
-            return ""
-        # Set total number of digits (including before and after decimal)
-        if width < 25:
+        if width < 30:
+            total_digits = 1
+        elif width < 45:
             total_digits = 2
-        elif width < 40:
+        elif width < 60:
             total_digits = 3
-        elif width < 55:
+        elif width < 75:
             total_digits = 4
-        elif width < 70:
-            total_digits = 5
         else:
-            total_digits = 6
-
-        print(total_digits)
+            total_digits = 5
 
         int_digits = len(str(int(num)))
         decimals = max(0, total_digits - int_digits)
         formatted = f"{num:.{decimals}f}".rstrip("0").rstrip(".")
+
         return formatted
 
     def _make_conf_int_html(
