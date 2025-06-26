@@ -248,7 +248,7 @@ def test_gt_plt_conf_int_basic():
 
     assert "position:absolute;left:6.666666666666669px;bottom:15px;color:black;" in html
     assert "top:29.0px; width:55.55555555555556px;" in html
-    assert "height:4px; background:#1f77b4; border-radius:2px;" in html
+    assert "height:4px; background:royalblue; border-radius:2px;" in html
     assert html.count("position:absolute;") == 12
 
 

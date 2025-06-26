@@ -415,7 +415,7 @@ def gt_plt_conf_int(
     height: float | int = 30,
     dot_color: str = "red",
     border_color: str = "red",
-    line_color: str = "#1f77b4",
+    line_color: str = "royalblue",
     text_color: str = "black",
     text_size: Literal["small", "default", "large", "largest", "none"] = "default",
 ) -> GT:
@@ -489,15 +489,45 @@ def gt_plt_conf_int(
         'ci': [5.2, 7.8, 3.4],
     })
 
-    (
-        GT(df)
-        .pipe(
-            gte.gt_plt_conf_int,
-            column='ci',
-            ci_columns=['ci_lower', 'ci_upper'],
-            width=120,
-            height=30,
-        )
+    gt = GT(df)
+    gt.pipe(
+        gte.gt_plt_conf_int,
+        column='ci',
+        ci_columns=['ci_lower', 'ci_upper'],
+        width=120,
+    )
+    ```
+
+    Alternatively we can pass in lists, and the function will compute the CI's for us.
+
+    ```{python}
+    import numpy as np
+    np.random.seed(37)
+
+    n_per_group = 50
+    groups = ["A", "B", "C"]
+    means = [20, 22, 25]
+    sds = [10, 16, 10]
+
+    # Create the data
+    data = []
+    for i, (grp, mean, sd) in enumerate(zip(groups, means, sds)):
+        values = np.random.normal(mean, sd, n_per_group)
+        data.extend([{"grp": grp, "values": val} for val in values])
+
+    df_raw = pd.DataFrame(data)
+    df_summary = (
+        df_raw
+        .groupby("grp")
+        .agg({"values": ["count", "mean", "std", list]})
+        .round(3)
+    )
+    df_summary.columns = ["n", "avg", "sd", "ci"]
+
+    gt = GT(df_summary)
+    gt.pipe(
+        gte.gt_plt_conf_int,
+        column="ci",
     )
     ```
 
@@ -505,7 +535,6 @@ def gt_plt_conf_int(
     ----
     All confidence intervals are scaled to a common range for visual alignment.
     """
-    # TODO: handle negatives
     # TODO: comments
     # TODO: refactor? It's quite a long function
 
