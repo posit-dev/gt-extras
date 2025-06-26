@@ -409,8 +409,7 @@ def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
     ci_columns: SelectExpr | None = None,
-    ci: float = 0.9,
-    
+    ci: float = 0.95,
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float | int = 80,  # TODO: choose good default
     height: float | int = 30,
@@ -508,7 +507,6 @@ def gt_plt_conf_int(
     """
     # TODO: handle negatives
     # TODO: comments
-    # TODO: tests
     # TODO: refactor? It's quite a long function
 
     # Set total number of digits (including before and after decimal)
@@ -534,7 +532,7 @@ def gt_plt_conf_int(
         mean: float | int,
         c1: float | int,
         c2: float | int,
-        text_size: Literal["small", "default", "large", "largest"],
+        font_size: float | int,
         min_val: float | int,
         max_val: float | int,
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
@@ -545,9 +543,14 @@ def gt_plt_conf_int(
         dot_color: str,
         text_color: str,
     ):
+        if (
+            is_na(gt._tbl_data, mean)
+            or is_na(gt._tbl_data, c1)
+            or is_na(gt._tbl_data, c2)
+        ):
+            return "<div></div>"
+
         span = max_val - min_val
-        if span <= 0:
-            raise ValueError("Confidence interval zero or negative.")
 
         # Normalize positions to [0, 1] based on global min/max, then scale to width
         c1_pos = ((c1 - min_val) / span) * width
@@ -555,22 +558,6 @@ def gt_plt_conf_int(
         mean_pos = ((mean - min_val) / span) * width
 
         bar_top = height / 2  # - 2  # Center the bar vertically
-
-        if text_size == "small":
-            font_size = 6
-        elif text_size == "default":
-            font_size = 10
-        elif text_size == "large":
-            font_size = 14
-        elif text_size == "largest":
-            font_size = 18
-        elif text_size == "none":
-            font_size = 0
-        else:
-            raise ValueError(
-                "Text_size expected to be one of the following:"
-                f"'small', 'default', 'large', 'largest', or 'none'. Received '{text_size}'."
-            )
 
         label_style = (
             "position:absolute;"
@@ -598,15 +585,15 @@ def gt_plt_conf_int(
             {c1_label_html}
             {c2_label_html}
             <div style="
-                position: absolute; left: {c1_pos}px;
-                top: {bar_top + 14}px; width: {c2_pos - c1_pos}px;
-                height: 4px; background: {line_color}; border-radius: 2px;
+                position:absolute; left:{c1_pos}px;
+                top:{bar_top + 14}px; width:{c2_pos - c1_pos}px;
+                height:4px; background:{line_color}; border-radius:2px;
             "></div>
             <div style="
-                position: absolute; left: {mean_pos - 4}px;
-                top: {bar_top + 11}px; width: 10px; height: 10px;
-                background: {dot_color}; border-radius: 50%;
-                border: 2px solid {border_color}; box-sizing: border-box;
+                position:absolute; left:{mean_pos - 4}px;
+                top:{bar_top + 11}px; width:10px; height:10px;
+                background:{dot_color}; border-radius:50%;
+                border:2px solid {border_color}; box-sizing:border-box;
             "></div>
             </div>
             """
@@ -687,6 +674,22 @@ def gt_plt_conf_int(
     global_min = data_min - padding
     global_max = data_max + padding
 
+    if text_size == "small":
+        font_size = 6
+    elif text_size == "default":
+        font_size = 10
+    elif text_size == "large":
+        font_size = 14
+    elif text_size == "largest":
+        font_size = 18
+    elif text_size == "none":
+        font_size = 0
+    else:
+        raise ValueError(
+            "Text_size expected to be one of the following:"
+            f"'small', 'default', 'large', 'largest', or 'none'. Received '{text_size}'."
+        )
+
     res = gt
     for i in range(len(gt._tbl_data)):
         c1 = c1_vals[i]
@@ -702,7 +705,7 @@ def gt_plt_conf_int(
                 dot_color=dot_color,
                 text_color=text_color,
                 border_color=border_color,
-                text_size=text_size,
+                font_size=font_size,
                 min_val=global_min,
                 max_val=global_max,
                 width=width,
