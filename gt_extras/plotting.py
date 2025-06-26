@@ -464,7 +464,7 @@ def gt_plt_conf_int(
 
     text_size
         The size of the text for the confidence interval labels.
-        Options are include `"none"` for no text.
+        Options include `"none"` for no text.
 
     Returns
     -------
