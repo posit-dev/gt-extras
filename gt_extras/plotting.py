@@ -21,6 +21,8 @@ from great_tables._data_color.base import (
 
 from svg import SVG, Line, Rect, Text
 
+from scipy.stats import t, sem, tmean
+
 
 __all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int"]
 
@@ -403,25 +405,58 @@ def gt_plt_dot(
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
+    ci_columns: SelectExpr | None = None,
+    ci: float = 0.9,
     palette: list[str] | str | None = None,
     text_size: Literal["small", "default", "large", "largest"] = "default",
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float | int = 80,  # TODO: choose default
     height: float | int = 30,
 ) -> GT:
-    def _make_conf_int(
+    # TODO: handle "palette"
+    # TODO: handle negatives
+    # TODO: comments
+    # TODO: docstring
+    # TODO: tests
+    # TODO: refactor? It's quite a long function
+    # TODO: option to hide text?
+
+    def _format_number_by_width(num: float | int, width: float | int) -> str:
+        if num is None:
+            return ""
+        # Set total number of digits (including before and after decimal)
+        if width < 25:
+            total_digits = 2
+        elif width < 40:
+            total_digits = 3
+        elif width < 55:
+            total_digits = 4
+        elif width < 70:
+            total_digits = 5
+        else:
+            total_digits = 6
+
+        print(total_digits)
+
+        int_digits = len(str(abs(int(num))))
+        decimals = max(0, total_digits - int_digits)
+        formatted = f"{num:.{decimals}f}".rstrip("0").rstrip(".")
+        return formatted
+
+    def _make_conf_int_html(
         mean: float | int,
         c1: float | int,
         c2: float | int,
         line_color: str,
         dot_color: str,
         text_color: str,
+        border_color: str,
         text_size: Literal["small", "default", "large", "largest"],
         min_val: float | int,
         max_val: float | int,
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
-        width: float | int = 60,
-        height: float | int = 20,
+        width: float | int,
+        height: float | int,
     ):
         # Avoid division by zero
         span = max_val - min_val if max_val != min_val else 1
@@ -447,18 +482,28 @@ def gt_plt_conf_int(
         if text_size == "largest":
             font_size = 20
 
+        print(c1_pos-c2_pos)
+
         label_style = (
             "position:absolute;"
             "left:{pos}px;"
-            "bottom:14px;"
+            "bottom:15px;"
             "transform:translateX(-50%);"
             "color:{color};"
             "font-size:{font_size}px;"
         )
 
-        c1_label_html = f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">{c1}</div>'
+        c1_label_html = (
+            f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
+            f"{_format_number_by_width(c1, c2_pos - c1_pos)}"
+            "</div>"
+        )
 
-        c2_label_html = f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}">{c2}</div>'
+        c2_label_html = (
+            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}">'
+            f"{_format_number_by_width(c2, c2_pos - c1_pos)}"
+            "</div>"
+        )
 
         html = f"""
             <div style="position:relative; width:{width}px; height:{height + 14}px;">
@@ -483,19 +528,114 @@ def gt_plt_conf_int(
                 height: 10px;
                 background: {dot_color};
                 border-radius: 50%;
-                border: 2px solid {line_color};
+                border: 2px solid {border_color};
                 box-sizing: border-box;
             "></div>
             </div>
             """
         return html.strip()
-    
-    # steps:
-    # check if single column passed
-        # if so then compute cis and mean
-        # else move on
-    # have cis and mean now, so run fmt on col with lambda (need to write that?)
-    # the end!
+
+    data_column_resolved = resolve_cols_c(data=gt, expr=column)
+    if len(data_column_resolved) != 1:
+        raise ValueError(
+            f"Expected 1 col in the column parameter, but got {len(data_column_resolved)}"
+        )
+    data_column_name = data_column_resolved[0]
+
+    # must compute the ci ourselves
+    if ci_columns is None:
+        data_name, data_vals = _validate_and_get_single_column(
+            gt,
+            data_column_name,
+        )
+
+        # Check that all entries are lists or None
+        if any(val is not None and not isinstance(val, list) for val in data_vals):
+            raise ValueError(
+                f"Expected entries in {data_column_name} to be lists or None, since ci_columns were not given."
+            )
+
+        def _compute_mean_and_conf_int(val):
+            if val is None or not isinstance(val, list) or len(val) == 0:
+                return (None, None, None)
+            mean = tmean(val)
+            conf_int = t.interval(
+                ci,
+                len(val) - 1,
+                loc=mean,
+                scale=sem(val),
+            )
+            return (mean, conf_int[0], conf_int[1])
+
+        stats = list(map(_compute_mean_and_conf_int, data_vals))
+        means, c1_vals, c2_vals = zip(*stats) if stats else ([], [], [])
+
+    # we were given the ci already computed
+    else:
+        ci_columns_resolved = resolve_cols_c(data=gt, expr=ci_columns)
+        if len(ci_columns_resolved) != 2:
+            raise ValueError(
+                f"Expected 2 ci_columns, instead received {len(ci_columns_resolved)}."
+            )
+
+        c1_name, c1_vals = _validate_and_get_single_column(
+            gt,
+            ci_columns_resolved[0],
+        )
+        c2_name, c2_vals = _validate_and_get_single_column(
+            gt,
+            ci_columns_resolved[1],
+        )
+
+        mean_name, means = _validate_and_get_single_column(
+            gt,
+            data_column_name,
+        )
+    if any(val is not None and not isinstance(val, (int, float)) for val in means):
+        raise ValueError(
+            f"Expected all entries in {data_column_name} to be numeric or None, since ci_columns were given."
+        )
+
+    all_values = [val for val in [*means, *c1_vals, *c2_vals] if val is not None]
+    data_min = min(all_values)
+    data_max = max(all_values)
+    data_range = data_max - data_min
+
+    # Add 10% padding on each side
+    padding = data_range * 0.1
+    global_min = data_min - padding
+    global_max = data_max + padding
 
     res = gt
+    for i in range(len(gt._tbl_data)):
+        c1 = c1_vals[i]
+        c2 = c2_vals[i]
+        mean = means[i]
+
+        res = res.fmt(
+            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_html(
+                mean=mean,
+                c1=c1,
+                c2=c2,
+                line_color="#1f77b4",
+                dot_color="red",
+                text_color="#000000",
+                border_color="red",
+                text_size=text_size,
+                min_val=global_min,
+                max_val=global_max,
+                width=width,
+                height=height,
+            ),
+            columns=data_column_name,
+            rows=[i],
+        )
+
     return res
+
+    # steps:
+    # check if single column passed
+    # if so then compute cis and mean
+    # else move on
+    # have cis and mean now, so run fmt on col with lambda (need to write that?)
+    # the end!
