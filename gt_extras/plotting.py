@@ -21,8 +21,10 @@ from great_tables._data_color.base import (
 
 from svg import SVG, Line, Rect, Text
 
+from scipy.stats import t, sem, tmean
 
-__all__ = ["gt_plt_bar", "gt_plt_dot"]
+
+__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int"]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -151,7 +153,7 @@ def gt_plt_bar(
         scale_type: Literal["percent", "number"] | None,
         scale_color: str,
     ) -> str:
-        UNITS = "px" # TODO: let use control this?
+        UNITS = "px"  # TODO: let use control this?
 
         text = ""
         if scale_type == "percent":
@@ -394,6 +396,347 @@ def gt_plt_dot(
                 dot_category_label=x, fill=fill, bar_val=data
             ),
             columns=category_col,
+            rows=[i],
+        )
+
+    return res
+
+
+# Changed wrt R version, palette removed
+
+def gt_plt_conf_int(
+    gt: GT,
+    column: SelectExpr,
+    ci_columns: SelectExpr | None = None,
+    ci: float = 0.95,
+    # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
+    width: float | int = 100,
+    # height: float | int = 30,
+    dot_color: str = "red",
+    border_color: str = "red",
+    line_color: str = "royalblue",
+    text_color: str = "black",
+    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
+    # TODO: "none" vs None in text_size 
+) -> GT:
+    """
+    Create confidence interval plots in `GT` cells.
+
+    The `gt_plt_conf_int()` function takes an existing `GT` object and adds horizontal confidence
+    interval plots to a specified column. Each cell displays a horizontal bar representing the
+    confidence interval, with a dot indicating the mean value. Optionally, the lower and upper
+    confidence interval bounds can be provided directly, or the function can compute them.
+
+    If `ci_columns` is not provided, the function assumes each cell in `column` contains a list of
+    values and computes the confidence interval using a t-distribution.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column that contains the mean of the sample. This can either be a single number per row,
+        if you have calculated the values ahead of time, or a list of values if you want to
+        calculate the confidence intervals.
+
+    ci_columns
+        Optional columns representing the left/right confidence intervals of your sample. If `None`,
+        the confidence interval will be computed from the data in `column` using a t-distribution.
+
+    ci
+        The confidence level to use when computing the interval (if `ci_columns` is `None`).
+
+    width
+        The width of the confidence interval plot in pixels.
+
+    dot_color
+        The color of the mean dot.
+
+    border_color
+        The color of the border around the mean dot.
+
+    line_color
+        The color of the confidence interval bar.
+
+    text_color
+        The color of the confidence interval labels.
+
+    text_size
+        The size of the text for the confidence interval labels.
+        Options are include `"none"` for no text.
+
+    Returns
+    -------
+    GT
+        A `GT` object with confidence interval plots added to the specified column.
+
+    Examples
+    --------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame({
+        'group': ['A', 'B', 'C'],
+        'mean': [5.2, 7.8, 3.4],
+        'ci_lower': [3.1, 6.1, 1.8],
+        'ci_upper': [7.3, 9.7, 5.0],
+        'ci': [5.2, 7.8, 3.4],
+    })
+
+    gt = GT(df)
+    gt.pipe(
+        gte.gt_plt_conf_int,
+        column='ci',
+        ci_columns=['ci_lower', 'ci_upper'],
+        width=120,
+    )
+    ```
+
+    Alternatively we can pass in a column of lists, and the function will compute the CI's for us.
+
+    ```{python}
+    import numpy as np
+    np.random.seed(37)
+
+    n_per_group = 50
+    groups = ["A", "B", "C"]
+    means = [20, 22, 25]
+    sds = [10, 16, 10]
+
+    # Create the data
+    data = []
+    for i, (grp, mean, sd) in enumerate(zip(groups, means, sds)):
+        values = np.random.normal(mean, sd, n_per_group)
+        data.extend([{"grp": grp, "values": val} for val in values])
+
+    df_raw = pd.DataFrame(data)
+    df_summary = (
+        df_raw
+        .groupby("grp")
+        .agg({"values": ["count", "mean", "std", list]})
+        .round(3)
+    )
+    df_summary.columns = ["n", "avg", "sd", "ci"]
+
+    gt = GT(df_summary)
+    gt.pipe(
+        gte.gt_plt_conf_int,
+        column="ci",
+    )
+    ```
+
+    Note
+    ----
+    All confidence intervals are scaled to a common range for visual alignment.
+    """
+    # TODO: comments
+    # TODO: refactor? It's quite a long function
+    # TODO: consider including height
+
+    # Set total number of digits (including before and after decimal)
+    def _format_number_by_width(num: float | int, width: float | int) -> str:
+        if width < 30:
+            total_digits = 1
+        elif width < 45:
+            total_digits = 2
+        elif width < 60:
+            total_digits = 3
+        elif width < 75:
+            total_digits = 4
+        else:
+            total_digits = 5
+
+        int_digits = len(str(int(num)))
+        decimals = max(0, total_digits - int_digits)
+        formatted = f"{num:.{decimals}f}".rstrip("0").rstrip(".")
+
+        return formatted
+
+    def _make_conf_int_html(
+        mean: float | int,
+        c1: float | int,
+        c2: float | int,
+        font_size: float | int,
+        min_val: float | int,
+        max_val: float | int,
+        # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
+        width: float | int,
+        border_color: str,
+        line_color: str,
+        dot_color: str,
+        text_color: str,
+    ):
+        if (
+            is_na(gt._tbl_data, mean)
+            or is_na(gt._tbl_data, c1)
+            or is_na(gt._tbl_data, c2)
+        ):
+            return "<div></div>"
+
+        span = max_val - min_val
+
+        # Normalize positions to [0, 1] based on global min/max, then scale to width
+        c1_pos = ((c1 - min_val) / span) * width
+        c2_pos = ((c2 - min_val) / span) * width
+        mean_pos = ((mean - min_val) / span) * width
+
+        bar_top = 12.0  # Center the bar vertically
+
+        label_style = (
+            "position:absolute;"
+            "left:{pos}px;"
+            "bottom:18px;"
+            "color:{color};"
+            "font-size:{font_size}px;"
+        )
+
+        c1_label_html = (
+            f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
+            f"{_format_number_by_width(c1, c2_pos - c1_pos)}"
+            "</div>"
+        )
+
+        c2_label_html = (
+            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
+            'transform:translateX(-100%);">'  # Move c2 to the left
+            f"{_format_number_by_width(c2, c2_pos - c1_pos)}"
+            "</div>"
+        )
+
+        html = f"""
+            <div style="position:relative; width:{width}px; height:{44}px;">
+            {c1_label_html}
+            {c2_label_html}
+            <div style="
+                position:absolute; left:{c1_pos}px;
+                top:{bar_top + 14}px; width:{c2_pos - c1_pos}px;
+                height:4px; background:{line_color}; border-radius:2px;
+            "></div>
+            <div style="
+                position:absolute; left:{mean_pos - 4}px;
+                top:{bar_top + 11}px; width:10px; height:10px;
+                background:{dot_color}; border-radius:50%;
+                border:2px solid {border_color}; box-sizing:border-box;
+            "></div>
+            </div>
+            """
+        return html.strip()
+
+    data_column_resolved = resolve_cols_c(data=gt, expr=column)
+    if len(data_column_resolved) != 1:
+        raise ValueError(
+            f"Expected 1 col in the column parameter, but got {len(data_column_resolved)}"
+        )
+    data_column_name = data_column_resolved[0]
+
+    # must compute the ci ourselves
+    if ci_columns is None:
+        _, data_vals = _validate_and_get_single_column(
+            gt,
+            data_column_name,
+        )
+
+        # Check that all entries are lists or None
+        if any(val is not None and not isinstance(val, list) for val in data_vals):
+            raise ValueError(
+                f"Expected entries in {data_column_name} to be lists or None,"
+                "since ci_columns were not given."
+            )
+
+        def _compute_mean_and_conf_int(val):
+            if val is None or not isinstance(val, list) or len(val) == 0:
+                return (None, None, None)
+            mean = tmean(val)
+            conf_int = t.interval(
+                ci,
+                len(val) - 1,
+                loc=mean,
+                scale=sem(val),
+            )
+            return (mean, conf_int[0], conf_int[1])
+
+        stats = list(map(_compute_mean_and_conf_int, data_vals))
+        means, c1_vals, c2_vals = zip(*stats) if stats else ([], [], [])
+
+    # we were given the ci already computed
+    else:
+        ci_columns_resolved = resolve_cols_c(data=gt, expr=ci_columns)
+        if len(ci_columns_resolved) != 2:
+            raise ValueError(
+                f"Expected 2 ci_columns, instead received {len(ci_columns_resolved)}."
+            )
+
+        _, c1_vals = _validate_and_get_single_column(
+            gt,
+            ci_columns_resolved[0],
+        )
+        _, c2_vals = _validate_and_get_single_column(
+            gt,
+            ci_columns_resolved[1],
+        )
+
+        _, means = _validate_and_get_single_column(
+            gt,
+            data_column_name,
+        )
+
+        if any(val is not None and not isinstance(val, (int, float)) for val in means):
+            raise ValueError(
+                f"Expected all entries in {data_column_name} to be numeric or None,"
+                "since ci_columns were given."
+            )
+
+    # Compute a global range to ensure conf int bars align
+    all_values = [val for val in [*means, *c1_vals, *c2_vals] if val is not None]
+    data_min = min(all_values)
+    data_max = max(all_values)
+    data_range = data_max - data_min
+
+    # Add 10% padding on each side
+    padding = data_range * 0.1
+    global_min = data_min - padding
+    global_max = data_max + padding
+
+    if text_size == "small":
+        font_size = 6
+    elif text_size == "default":
+        font_size = 10
+    elif text_size == "large":
+        font_size = 14
+    elif text_size == "largest":
+        font_size = 18
+    elif text_size == "none":
+        font_size = 0
+    else:
+        raise ValueError(
+            "Text_size expected to be one of the following:"
+            f"'small', 'default', 'large', 'largest', or 'none'. Received '{text_size}'."
+        )
+
+    res = gt
+    for i in range(len(gt._tbl_data)):
+        c1 = c1_vals[i]
+        c2 = c2_vals[i]
+        mean = means[i]
+
+        res = res.fmt(
+            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_html(
+                mean=mean,
+                c1=c1,
+                c2=c2,
+                line_color=line_color,
+                dot_color=dot_color,
+                text_color=text_color,
+                border_color=border_color,
+                font_size=font_size,
+                min_val=global_min,
+                max_val=global_max,
+                width=width,
+            ),
+            columns=data_column_name,
             rows=[i],
         )
 

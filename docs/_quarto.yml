@@ -18,6 +18,9 @@ website:
       - text: Get Started
         file: get-started/index.qmd
       - reference/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/posit-dev/gt-extras
   
 
 
@@ -39,6 +42,7 @@ quartodoc:
       contents:
         - gt_plt_bar
         - gt_plt_dot
+        - gt_plt_conf_int
 
     - title: Colors
       desc: "" # TODO: add desc
