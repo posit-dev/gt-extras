@@ -404,7 +404,6 @@ def gt_plt_dot(
 
 # Changed wrt R version, palette removed
 
-
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
@@ -418,6 +417,7 @@ def gt_plt_conf_int(
     line_color: str = "royalblue",
     text_color: str = "black",
     text_size: Literal["small", "default", "large", "largest", "none"] = "default",
+    # TODO: "none" vs None in text_size 
 ) -> GT:
     """
     Create confidence interval plots in `GT` cells.
@@ -464,7 +464,7 @@ def gt_plt_conf_int(
 
     text_size
         The size of the text for the confidence interval labels.
-        Options are `"small"`, `"default"`, `"large"`, `"largest"`, or `"none"`.
+        Options are include `"none"` for no text.
 
     Returns
     -------
