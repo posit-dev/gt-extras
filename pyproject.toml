@@ -19,6 +19,7 @@ license.file = "LICENSE"
 dependencies = [
     "faicons>=0.2.2",
     "great-tables>=0.17.0",
+    "scipy>=1.13.1",
     "svg-py>=1.6.0",
 ]
 
@@ -47,11 +48,9 @@ dev = [
     "pytest-cov",
     "syrupy",
     "ipykernel>=6.29.5",
-    "selenium>=4.33.0",
-    "pillow>=11.2.1",
     "quartodoc>=0.11.1",
     "quarto>=0.1.0",
-    ]
+]
 
 
 [tool.coverage.report]
