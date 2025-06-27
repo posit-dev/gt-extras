@@ -4,7 +4,7 @@ from gt_extras.tests.conftest import assert_rendered_body
 import pandas as pd
 import numpy as np
 from great_tables import GT
-from gt_extras import gt_plt_bar, gt_plt_dot, gt_plt_conf_int
+from gt_extras import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
 
 
 def test_gt_plt_bar_snap(snapshot, mini_gt):
@@ -303,7 +303,9 @@ def test_gt_plt_conf_int_invalid_column():
     )
     gt_test = GT(df)
 
-    with pytest.raises(ValueError, match="Expected 1 col in the column parameter"):
+    with pytest.raises(
+        ValueError, match="Expected a single column, but got multiple columns"
+    ):
         gt_plt_conf_int(gt=gt_test, column=["mean", "group"])
 
 
@@ -386,9 +388,168 @@ def test_gt_plt_conf_int_precomputed_invalid_data():
         gt_plt_conf_int(gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"])
 
 
+## NEW TESTS
+
+
 def test_gt_plt_dumbbell_snap(snapshot):
-    pass
+    df = pd.DataFrame({"value_1": [10, 15, 25], "value_2": [15, 20, 30]})
+    gt_test = GT(df)
+    res = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+
+    assert_rendered_body(snapshot, gt=res)
 
 
-def test_gt_plt_dumbbell_basic(mini_gt):
-    pass
+def test_gt_plt_dumbbell_basic():
+    df = pd.DataFrame({"value_1": [10, 15, 25], "value_2": [15, 20, 30]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert html.count("left:24.666666666666668px; top:15.5px; width:6.0px;") == 2
+    assert html.count("height:3.0px; background:grey;") == 3
+    assert html.count("transform:translateX(-50%); color:purple;") == 3
+    assert html.count("position:absolute;") == 15
+
+
+def test_gt_plt_dumbbell_custom_colors():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    html = gt_plt_dumbbell(
+        gt=gt_test,
+        col1="value_1",
+        col2="value_2",
+        col1_color="blue",
+        col2_color="red",
+        bar_color="green",
+    ).as_raw_html()
+
+    assert "background:blue;" in html
+    assert "background:red;" in html
+    assert "background:green;" in html
+
+
+def test_gt_plt_dumbbell_custom_dimensions():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    html = gt_plt_dumbbell(
+        gt=gt_test, col1="value_1", col2="value_2", width=200, height=50
+    ).as_raw_html()
+
+    assert "width:200px; height:50px;" in html
+
+
+def test_gt_plt_dumbbell_font_size():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    html = gt_plt_dumbbell(
+        gt=gt_test, col1="value_1", col2="value_2", font_size=14
+    ).as_raw_html()
+
+    assert "font-size:14px;" in html
+
+
+def test_gt_plt_dumbbell_decimals():
+    df = pd.DataFrame(
+        {"group": ["A", "B"], "value_1": [10.123, 20.456], "value_2": [15.789, 25.012]}
+    )
+    gt_test = GT(df)
+
+    html = gt_plt_dumbbell(
+        gt=gt_test, col1="value_1", col2="value_2", num_decimals=2
+    ).as_raw_html()
+
+    assert "10.12" in html
+    assert "15.79" in html
+
+
+def test_gt_plt_dumbbell_with_label():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    result = gt_plt_dumbbell(
+        gt=gt_test, col1="value_1", col2="value_2", label="Custom Label"
+    )
+
+    html = result.as_raw_html()
+    assert "Custom Label" in html
+
+
+def test_gt_plt_dumbbell_hides_col2():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert "value_2" not in html
+    assert "value_1" in html
+    assert "group" in html
+
+
+def test_gt_plt_dumbbell_with_none_values():
+    df = pd.DataFrame({"value_1": [10, None, 30], "value_2": [15, 25, None]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert html.count("<div></div>") == 2
+
+
+def test_gt_plt_dumbbell_with_na_values():
+    df = pd.DataFrame({"value_1": [10, np.nan], "value_2": [np.nan, 25]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert html.count("<div></div>") == 2
+
+
+def test_gt_plt_dumbbell_invalid_col1():
+    df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError):
+        gt_plt_dumbbell(gt=gt_test, col1="invalid_col", col2="value_2")
+
+
+def test_gt_plt_dumbbell_invalid_col2():
+    df = pd.DataFrame({"value_1": [10, 20], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError):
+        gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="invalid_col")
+
+
+def test_gt_plt_dumbbell_non_numeric_col1():
+    df = pd.DataFrame({"value_1": ["text", "more_text"], "value_2": [15, 25]})
+    gt_test = GT(df)
+
+    with pytest.raises(ValueError, match="Expected all entries to be numeric or None."):
+        gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+
+
+def test_gt_plt_dumbbell_non_numeric_col2():
+    df = pd.DataFrame({"value_1": [10, 20], "value_2": ["123", 30]})
+    gt_test = GT(df)
+
+    with pytest.raises(ValueError, match="Expected all entries to be numeric or None."):
+        gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+
+
+def test_gt_plt_dumbbell_same_values():
+    df = pd.DataFrame({"value_1": [20, 20, 30], "value_2": [20, 30, 30]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert html.count("position:absolute;") == 15
+    assert html.count("20.0") == 3
+    assert html.count("30.0") == 3
+
+
+def test_gt_plt_dumbbell_reversed_values():
+    df = pd.DataFrame({"value_1": [200, 300, 0], "value_2": [15, 20, 400]})
+    gt_test = GT(df)
+    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+
+    assert 'color:purple; font-size:10px; font-weight:bold;">0.0' in html
+    assert 'color:green; font-size:10px; font-weight:bold;">400.0' in html
+    assert 'color:purple; font-size:10px; font-weight:bold;">200.0' in html
+    assert 'color:green; font-size:10px; font-weight:bold;">15.0' in html

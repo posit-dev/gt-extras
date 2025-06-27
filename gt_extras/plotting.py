@@ -624,24 +624,14 @@ def gt_plt_conf_int(
             """
         return html.strip()
 
-    data_column_resolved = resolve_cols_c(data=gt, expr=column)
-    if len(data_column_resolved) != 1:
-        raise ValueError(
-            f"Expected 1 col in the column parameter, but got {len(data_column_resolved)}"
-        )
-    data_column_name = data_column_resolved[0]
+    data_col_name, data_vals = _validate_and_get_single_column(gt, column)
 
     # must compute the ci ourselves
     if ci_columns is None:
-        _, data_vals = _validate_and_get_single_column(
-            gt,
-            data_column_name,
-        )
-
         # Check that all entries are lists or None
         if any(val is not None and not isinstance(val, list) for val in data_vals):
             raise ValueError(
-                f"Expected entries in {data_column_name} to be lists or None,"
+                f"Expected entries in {data_col_name} to be lists or None,"
                 "since ci_columns were not given."
             )
 
@@ -676,15 +666,11 @@ def gt_plt_conf_int(
             gt,
             ci_columns_resolved[1],
         )
-
-        _, means = _validate_and_get_single_column(
-            gt,
-            data_column_name,
-        )
+        means = data_vals
 
         if any(val is not None and not isinstance(val, (int, float)) for val in means):
             raise ValueError(
-                f"Expected all entries in {data_column_name} to be numeric or None,"
+                f"Expected all entries in {data_col_name} to be numeric or None,"
                 "since ci_columns were given."
             )
 
@@ -721,7 +707,7 @@ def gt_plt_conf_int(
                 text_color=text_color,
                 num_decimals=num_decimals,
             ),
-            columns=data_column_name,
+            columns=data_col_name,
             rows=[i],
         )
 
@@ -745,8 +731,8 @@ def gt_plt_dumbbell(
     Create dumbbell plots in `GT` cells.
 
     The `gt_plt_dumbbell()` function takes an existing `GT` object and adds dumbbell plots to
-    visualize the difference between two numeric values. Each dumbbell consists of two dots 
-    (representing values from `col1` and `col2`) connected by a horizontal bar, allowing for 
+    visualize the difference between two numeric values. Each dumbbell consists of two dots
+    (representing values from `col1` and `col2`) connected by a horizontal bar, allowing for
     easy visual comparison between paired values.
 
     Parameters
@@ -761,7 +747,7 @@ def gt_plt_dumbbell(
         The column containing the second set of values to plot.
 
     label
-        Optional label to replace the column name of `col1` in the output table. If `None`, the 
+        Optional label to replace the column name of `col1` in the output table. If `None`, the
         original column name is retained.
 
     width
@@ -790,7 +776,7 @@ def gt_plt_dumbbell(
     GT
         A `GT` object with dumbbell plots added to the specified columns. The `col2` column is
         hidden from the final table display.
-    
+
     Examples
     -------
     ```{python}
@@ -799,14 +785,15 @@ def gt_plt_dumbbell(
     from great_tables.data import sp500
     import gt_extras as gte
 
+    # Trim the data to December 2008
     df = sp500[["date", "open", "close"]].copy()
     df["date"] = pd.to_datetime(df["date"], errors='coerce')
     dec_2008 = df[
-        (df["date"].dt.month == 12) & 
+        (df["date"].dt.month == 12) &
         (df["date"].dt.year == 2008)
-    ]
-    dec_2008 = dec_2008.iloc[::-1].iloc[2:11]
+    ].iloc[::-1].iloc[2:11]
 
+    # Make the Great Table
     gt = (
         GT(dec_2008)
         .tab_source_note(html("Purple: Open<br>Green: Close"))
@@ -820,13 +807,13 @@ def gt_plt_dumbbell(
         gte.gt_plt_dumbbell,
         col1='open',
         col2='close',
-        label = "Open to Close",
+        label = "Open to Close ($)",
         num_decimals=0,
         width = 250,
     )
 
     ```
-        
+
     Note
     -------
     All dumbbells are scaled to a common range for visual alignment across rows.
@@ -851,14 +838,17 @@ def gt_plt_dumbbell(
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
+        span = span if span != 0 else 1  # span == 0 is forbidden, causes divide by 0
         pos_1 = ((value_1 - min_val) / span) * width
         pos_2 = ((value_2 - min_val) / span) * width
 
+        # Compute the location of the bar
         bar_left = min(pos_1, pos_2)
         bar_width = abs(pos_2 - pos_1)
         bar_height = height / 10
         bar_top = height / 2 - bar_height / 2 + font_size / 2
 
+        # Compute the locations of the two dos
         dot_size = height / 5
         dot_border = height / 20
         dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
@@ -868,9 +858,9 @@ def gt_plt_dumbbell(
         label_bottom = height - dot_top
 
         label_style = (
-            "position:absolute; left:{pos}px;"
-            f"bottom:{label_bottom}px;"
-            "transform:translateX(-50%); color:{color};"
+            "position:absolute; left:{pos}px; "
+            f"bottom:{label_bottom}px; "
+            "transform:translateX(-50%); color:{color}; "
             f"font-size:{font_size}px; font-weight:bold;"  # Do we want bold?
         )
 
@@ -887,9 +877,9 @@ def gt_plt_dumbbell(
         )
 
         dot_style = (
-            "position:absolute; left:{pos}px;"
-            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;"
-            "background:{color}; border-radius:50%;"
+            "position:absolute; left:{pos}px; "
+            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px; "
+            "background:{color}; border-radius:50%; "
             f"border:{dot_border}px solid white; box-sizing: content-box;"
         )
 
@@ -912,25 +902,26 @@ def gt_plt_dumbbell(
         """
         return html.strip()
 
-    col1_resolved = resolve_cols_c(data=gt, expr=col1)[0]
-    col2_resolved = resolve_cols_c(data=gt, expr=col2)[0]
-
-    _, col1_vals = _validate_and_get_single_column(
+    col1_name, col1_vals = _validate_and_get_single_column(
         gt,
-        col1_resolved,
+        col1,
     )
-    _, col2_vals = _validate_and_get_single_column(
+    col2_name, col2_vals = _validate_and_get_single_column(
         gt,
-        col2_resolved,
+        col2,
     )
 
+    # Check for bad input
     all_values = [val for val in [*col1_vals, *col2_vals] if val is not None]
+    if any(val is not None and not isinstance(val, (int, float)) for val in all_values):
+        raise ValueError("Expected all entries to be numeric or None.")
+
+    # Compute the global bounds for the column.
     data_min = min(all_values)
     data_max = max(all_values)
     data_range = data_max - data_min
 
-    # Add 10% padding on each side
-    padding = data_range * 0.1
+    padding = data_range * 0.1  # Add 10% padding on each side
     global_min = data_min - padding
     global_max = data_max + padding
 
@@ -954,12 +945,12 @@ def gt_plt_dumbbell(
                 font_size=font_size,
                 num_decimals=num_decimals,
             ),
-            columns=col1_resolved,
+            columns=col1_name,
             rows=[i],
         )
 
-    res = res.cols_hide(col2)
+    res = res.cols_hide(col2_name)
     if label is not None:
-        res = res.cols_label({col1_resolved: label})
+        res = res.cols_label({col1_name: label})
 
     return res
