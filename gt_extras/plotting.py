@@ -734,12 +734,14 @@ def gt_plt_dumbbell(
     gt: GT,
     col1: SelectExpr,  # exactly 1 col
     col2: SelectExpr,  # exactly 1 col
-    label: str,
-    width: float | int = 70,
+    label: str = None,
+    width: float | int = 100,
+    height: float = 30,
     col1_color: str = "purple",
     col2_color: str = "green",
     bar_color: str = "grey",
-    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
+    font_size: int = 10,
+    num_decimals: int = 1,
 ) -> GT:
     def _make_dumbbell_html(
         value_1: float,
@@ -751,7 +753,8 @@ def gt_plt_dumbbell(
         bar_color: str,
         max_val: float,
         min_val: float,
-        text_size: int,
+        font_size: int,
+        num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
             return "<div></div>"
@@ -764,11 +767,11 @@ def gt_plt_dumbbell(
         bar_left = pos_1
         bar_width = pos_2 - pos_1
         bar_height = height / 10
-        bar_top = height / 2 + bar_height / 2
+        bar_top = height / 2 - bar_height / 2 + font_size / 2
 
         dot_size = height / 5
         dot_border = height / 20
-        dot_top = bar_top - dot_size / 2 - dot_border / 2
+        dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
         dot_1_left = pos_1 - dot_size / 2 - dot_border
         dot_2_left = pos_2 - dot_size / 2 - dot_border
 
@@ -777,25 +780,25 @@ def gt_plt_dumbbell(
         label_style = (
             "position:absolute; left:{pos}px;"
             f"bottom:{label_bottom}px;"
-            f"transform:translateX(-50%);"
-            "color:{color}; font-size:{text_size}px; font-weight:bold;"
+            "transform:translateX(-50%); color:{color};"
+            f"font-size:{font_size}px; font-weight:bold;" # Do we want bold?
         )
 
         value_1_label = (
-            f'<div style="{label_style.format(pos=pos_1, color=value_1_color, text_size=text_size)}">'
-            f"{value_1:.1f}"
+            f'<div style="{label_style.format(pos=pos_1, color=value_1_color)}">'
+            f"{value_1:.{num_decimals}f}"
             "</div>"
         )
 
         value_2_label = (
-            f'<div style="{label_style.format(pos=pos_2, color=value_2_color, text_size=text_size)}">'
-            f"{value_2:.1f}"
+            f'<div style="{label_style.format(pos=pos_2, color=value_2_color)}">'
+            f"{value_2:.{num_decimals}f}"
             "</div>"
         )
 
         dot_style = (
             "position:absolute; left:{pos}px;"
-            f"top:{dot_top}; width:{dot_size}px; height:{dot_size}px;"
+            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;"
             "background:{color}; border-radius:50%;"
             f"border:{dot_border}px solid white;"
         )
@@ -804,12 +807,12 @@ def gt_plt_dumbbell(
         value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
 
         html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px; background-color:tan;">
+        <div style="position:relative; width:{width}px; height:{height}px;">
             {value_1_label}
             {value_2_label}
             <div style="
                 position:absolute; left:{bar_left}px;
-                top:{bar_top}; width:{bar_width}px;
+                top:{bar_top}px; width:{bar_width}px;
                 height:{bar_height}px; background:{bar_color};
                 border-radius:2px;
             "></div>
@@ -818,6 +821,55 @@ def gt_plt_dumbbell(
         </div>
         """
         return html.strip()
+    
+    col1_resolved = resolve_cols_c(data=gt, expr=col1)[0]
+    col2_resolved = resolve_cols_c(data=gt, expr=col2)[0]
+
+    _, col1_vals = _validate_and_get_single_column(
+        gt,
+        col1_resolved,
+    )
+    _, col2_vals = _validate_and_get_single_column(
+        gt,
+        col2_resolved,
+    )
+
+    all_values = [val for val in [*col1_vals, *col2_vals] if val is not None]
+    data_min = min(all_values)
+    data_max = max(all_values)
+    data_range = data_max - data_min
+
+    # Add 10% padding on each side
+    padding = data_range * 0.1
+    global_min = data_min - padding
+    global_max = data_max + padding
 
     res = gt
+
+    for i in range(len(gt._tbl_data)):
+        col1_value = col1_vals[i]
+        col2_value = col2_vals[i]
+
+        res = res.fmt(
+            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_html(
+                value_1=value_1,
+                value_2=value_2,
+                width=width,
+                height=height,
+                value_1_color=col1_color,
+                value_2_color=col2_color,
+                bar_color=bar_color,
+                max_val=global_max,
+                min_val=global_min,
+                font_size=font_size,
+                num_decimals=num_decimals
+            ),
+            columns=col1_resolved,
+            rows=[i],
+        )
+
+    res = res.cols_hide(col2)
+    if label is not None:
+        res = res.cols_label({col1_resolved: label})
+
     return res
