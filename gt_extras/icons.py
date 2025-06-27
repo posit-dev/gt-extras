@@ -157,7 +157,7 @@ def gt_fa_rating(
         A `GT` object to modify.
 
     columns
-        One or more columns containing numeric rating values. 
+        One or more columns containing numeric rating values.
 
     max_rating
         The maximum rating value (number of total icons).
@@ -193,11 +193,11 @@ def gt_fa_rating(
         .assign(rating=[randint(1, 5) for _ in range(8)])
     )
 
-    gt = (   
+    gt = (
         GT(gtcars_mini, rowname_col="model")
         .tab_stubhead(label="Car")
     )
-    
+
     gt.pipe(gte.gt_fa_rating, columns="rating", name="r-project")
     ```
     """

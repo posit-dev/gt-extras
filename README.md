@@ -1,4 +1,4 @@
-# gt-extras 
+# gt-extras
 
 [![Python Versions](https://img.shields.io/pypi/pyversions/gt_extras.svg)](https://pypi.python.org/pypi/gt-extras)
 [![PyPI](https://img.shields.io/pypi/v/gt-extras?logo=python&logoColor=white&color=orange)](https://pypi.org/project/gt-extras/)
@@ -36,7 +36,7 @@ gtcars_mini = gtcars.iloc[5:15].copy().reset_index(drop=True)
 gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 
 (
-    # Start with a standard GT 
+    # Start with a standard GT
     GT(gtcars_mini, rowname_col="model")
     .tab_stubhead(label="Vehicle")
     .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
@@ -65,7 +65,7 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 - Embed FontAwesome icons
 - Use pre-built themes for quick styling
 - Utilize helper utilities for common table tasks
-    
+
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).
 
@@ -89,6 +89,6 @@ license = {MIT},
 title = {{gt-extras: Extra helpers for great-tables in Python.}},
 url = {https://github.com/posit-dev/gt-extras}, version = {0.0.1}
 }
-``` 
+```
 
 For more information, see the [docs](https://posit-dev.github.io/gt-extras/reference) or [open an issue](https://github.com/posit-dev/gt-extras/issues) with questions or suggestions!

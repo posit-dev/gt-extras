@@ -9,6 +9,7 @@ from great_tables._data_color.base import _rescale_numeric
 
 __all__ = ["_validate_and_get_single_column", "_scale_numeric_column"]
 
+
 def _validate_and_get_single_column(
     gt: GT,
     expr: SelectExpr,
@@ -56,7 +57,6 @@ def _scale_numeric_column(
     col_vals: list,
     domain: list[int] | list[float] | None = None,
     default_domain_min_zero: bool = True,
-
 ) -> list[float]:
     """
     Process and scale a numeric column, handling NA values.

@@ -10,10 +10,6 @@ from gt_extras import (
 )
 
 from conftest import (
-    assert_rendered_body,
-    # assert_rendered_columns,
-    # assert_rendered_heading,
-    # assert_rendered_source_notes,
     assert_rendered_global_imports,
 )
 

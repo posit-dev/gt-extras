@@ -50,6 +50,7 @@ dev = [
     "ipykernel>=6.29.5",
     "quartodoc>=0.11.1",
     "quarto>=0.1.0",
+    "pre-commit>=4.2.0",
 ]
 
 

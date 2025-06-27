@@ -725,7 +725,7 @@ def gt_plt_dumbbell(
     col1_color: str = "purple",
     col2_color: str = "green",
     bar_color: str = "grey",
-    dot_border_color = "white",
+    dot_border_color="white",
     font_size: int = 10,
     num_decimals: int = 1,
 ) -> GT:
@@ -769,7 +769,7 @@ def gt_plt_dumbbell(
 
     dot_border_color
         The color of the borders around the two dots.
-        
+
     font_size
         The font size for the value labels displayed above each dot.
 
