@@ -788,10 +788,12 @@ def gt_plt_dumbbell(
     # Trim the data to December 2008
     df = sp500[["date", "open", "close"]].copy()
     df["date"] = pd.to_datetime(df["date"], errors='coerce')
+
     dec_2008 = df[
         (df["date"].dt.month == 12) &
         (df["date"].dt.year == 2008)
-    ].iloc[::-1].iloc[2:11]
+    ]
+    dec_2008 = dec_2008.iloc[::-1].iloc[2:11]
 
     # Make the Great Table
     gt = (
