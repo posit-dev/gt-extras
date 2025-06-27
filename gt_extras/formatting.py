@@ -19,7 +19,7 @@ def fmt_pct_extra(
 
     The `fmt_pct_extra()` function takes an existing `GT` object and formats a column of numeric
     values as percentages. Values below the specified threshold are displayed as `"<threshold%"`
-    instead of their actual percentage value, and in a unique color .
+    instead of their actual percentage value, and in a unique color.
 
     Parameters
     ----------
