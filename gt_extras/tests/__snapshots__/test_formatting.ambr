@@ -1,0 +1,40 @@
+# serializer version: 1
+# name: test_fmt_pct_extra_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right"><span style='color:grey;'><1%</span></td>
+      <td class="gt_row gt_left">apricot</td>
+      <td class="gt_row gt_left">one</td>
+      <td class="gt_row gt_right">2015-01-15</td>
+      <td class="gt_row gt_right">13:35</td>
+      <td class="gt_row gt_right">2018-01-01 02:22</td>
+      <td class="gt_row gt_right">49.95</td>
+      <td class="gt_row gt_left">row_1</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2%</td>
+      <td class="gt_row gt_left">banana</td>
+      <td class="gt_row gt_left">two</td>
+      <td class="gt_row gt_right">2015-02-15</td>
+      <td class="gt_row gt_right">14:40</td>
+      <td class="gt_row gt_right">2018-02-02 14:33</td>
+      <td class="gt_row gt_right">17.95</td>
+      <td class="gt_row gt_left">row_2</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">33%</td>
+      <td class="gt_row gt_left">coconut</td>
+      <td class="gt_row gt_left">three</td>
+      <td class="gt_row gt_right">2015-03-15</td>
+      <td class="gt_row gt_right">15:45</td>
+      <td class="gt_row gt_right">2018-03-03 03:44</td>
+      <td class="gt_row gt_right">1.39</td>
+      <td class="gt_row gt_left">row_3</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+  </tbody>
+  '''
+# ---
