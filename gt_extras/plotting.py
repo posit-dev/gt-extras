@@ -575,10 +575,8 @@ def gt_plt_conf_int(
         c2_pos = ((c2 - min_val) / span) * width
         mean_pos = ((mean - min_val) / span) * width
 
-        div_midpoint = height / 2
-
         bar_height = height / 10
-        bar_top = div_midpoint + bar_height / 2
+        bar_top = height / 2 - bar_height / 2 + font_size / 2
 
         label_bottom = height - bar_top
 
@@ -781,7 +779,7 @@ def gt_plt_dumbbell(
             "position:absolute; left:{pos}px;"
             f"bottom:{label_bottom}px;"
             "transform:translateX(-50%); color:{color};"
-            f"font-size:{font_size}px; font-weight:bold;" # Do we want bold?
+            f"font-size:{font_size}px; font-weight:bold;"  # Do we want bold?
         )
 
         value_1_label = (
@@ -821,7 +819,7 @@ def gt_plt_dumbbell(
         </div>
         """
         return html.strip()
-    
+
     col1_resolved = resolve_cols_c(data=gt, expr=col1)[0]
     col2_resolved = resolve_cols_c(data=gt, expr=col2)[0]
 
@@ -862,7 +860,7 @@ def gt_plt_dumbbell(
                 max_val=global_max,
                 min_val=global_min,
                 font_size=font_size,
-                num_decimals=num_decimals
+                num_decimals=num_decimals,
             ),
             columns=col1_resolved,
             rows=[i],

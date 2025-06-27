@@ -246,10 +246,8 @@ def test_gt_plt_conf_int_basic():
         gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"]
     ).as_raw_html()
 
-    assert (
-        "position:absolute;left:8.333333333333336px;bottom:13.5px;color:black;" in html
-    )
-    assert "top:16.5px; width:55.55555555555556px;" in html
+    assert "position:absolute;left:8.333333333333336px;bottom:11.5px" in html
+    assert "top:18.5px; width:55.55555555555556px;" in html
     assert "height:3.0px; background:royalblue; border-radius:2px;" in html
     assert html.count("position:absolute;") == 12
 
