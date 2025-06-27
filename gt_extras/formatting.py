@@ -15,12 +15,11 @@ def fmt_pct_extra(
     decimals: int = 1,
 ) -> GT:
     """
-    Convert to percent and show less than 1% as <1% in grey.
+    Convert to percent and show less than `1%` as `<1%` in grey.
 
-    The `fmt_pct_extra()` function takes an existing `GT` object and formats
-    a column of numeric values as percentages. Values below the specified
-    threshold are displayed as "<threshold%" in a muted color instead of
-    their actual percentage value.
+    The `fmt_pct_extra()` function takes an existing `GT` object and formats a column of numeric
+    values as percentages. Values below the specified threshold are displayed as `"<threshold%"`
+    instead of their actual percentage value, and in a unique color .
 
     Parameters
     ----------
@@ -32,8 +31,8 @@ def fmt_pct_extra(
 
     scale
         Multiplication factor to convert values to percentages.
-        Use `100` if values are decimals (`0.05` -> `5%`),
-        use `1` if values are already percentages (`5` -> `5%`).
+        Use `100` if values are decimals `(0.05 -> 5%)` (default),
+        use `1` if values are already percentages `(5 -> 5%)`.
 
     threshold
         The percentage threshold below which values are displayed as `"<threshold%"` instead of
