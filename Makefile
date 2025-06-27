@@ -6,3 +6,7 @@ test:
 test-update:
 	pytest --snapshot-update
 
+docs-build:
+	cd docs \
+	  && quartodoc build --verbose \
+	  && quarto render

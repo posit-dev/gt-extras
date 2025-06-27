@@ -3,12 +3,12 @@ project:
   resources:
     - "assets/"
 
-metadata-files: 
+metadata-files:
   - _sidebar.yml
 
 html-table-processing: none
 
-website: 
+website:
   title: gt-extras
   description: "A Collection of Helper Functions for the Great-Tables Package."
   site-url: https://posit-dev.github.io/gt-extras/
@@ -21,7 +21,7 @@ website:
     right:
       - icon: github
         href: https://github.com/posit-dev/gt-extras
-  
+
 
 
 quartodoc:
@@ -63,20 +63,20 @@ quartodoc:
         - gt_theme_guardian
         - gt_theme_nytimes
         - gt_theme_pff
-    
+
     - title: Icons and Images
       desc: "" # TODO: add desc
       contents:
         - fa_icon_repeat
         - gt_fa_rating
-        
+
     - title: HTML and Formatting
       desc: "" # TODO: add desc
       contents:
         - fmt_pct_extra
         - gt_hyperlink
         - with_tooltip
-        
+
 
 format:
   html:
