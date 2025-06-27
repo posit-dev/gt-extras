@@ -16,7 +16,7 @@ from .icons import fa_icon_repeat, gt_fa_rating
 
 from .plotting import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
 
-from .html import gt_hyperlink, with_tooltip
+from .html import gt_hyperlink, with_tooltip, fmt_pct_extra # TODO: changle location
 
 __all__ = [
     "gt_theme_538",
@@ -42,4 +42,6 @@ __all__ = [
     
     "gt_hyperlink",
     "with_tooltip",
+
+    "fmt_pct_extra",
 ]

@@ -1,11 +1,14 @@
 from __future__ import annotations
 from typing import Literal
 
-__all__ = ["gt_hyperlink", "with_tooltip"]
+from great_tables import GT
+from great_tables._tbl_data import SelectExpr
+
+__all__ = ["gt_hyperlink", "with_tooltip", "fmt_pct_extra"]
 
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     """
-    Create HTML hyperlinks for use in `GT` object cells.
+    Create HTML hyperlinks for use in `GT` cells.
 
     The `gt_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
     used within table cells.
@@ -77,7 +80,7 @@ def with_tooltip(
     color: str | Literal["none"] = "blue",
 ) -> str:
     """
-    Create HTML text with tooltip functionality for use in GT table cells.
+    Create HTML text with tooltip functionality for use in `GT` cells.
 
     The `with_tooltip()` function creates an HTML `<abbr>` element with a tooltip that appears
     when users hover over the text. The text can be styled with customizable underline styles
@@ -149,3 +152,13 @@ def with_tooltip(
         style += f"color: {color}; "
 
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'
+
+
+def fmt_pct_extra(
+    gt: GT,
+    column: SelectExpr,
+) -> GT:
+    """
+    Docstring goes here
+    """
+    pass

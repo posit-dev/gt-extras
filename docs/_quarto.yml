@@ -75,6 +75,11 @@ quartodoc:
       contents:
         - gt_hyperlink
         - with_tooltip
+
+    - title: Utilities # TODO: better name
+      desc: "" 
+      contents:
+        - fmt_pct_extra
         
 
 format:
