@@ -3,9 +3,10 @@ from typing import Literal
 
 __all__ = ["gt_hyperlink", "with_tooltip"]
 
+
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     """
-    Create HTML hyperlinks for use in `GT` object cells.
+    Create HTML hyperlinks for use in `GT` cells.
 
     The `gt_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
     used within table cells.
@@ -77,7 +78,7 @@ def with_tooltip(
     color: str | Literal["none"] = "blue",
 ) -> str:
     """
-    Create HTML text with tooltip functionality for use in GT table cells.
+    Create HTML text with tooltip functionality for use in `GT` cells.
 
     The `with_tooltip()` function creates an HTML `<abbr>` element with a tooltip that appears
     when users hover over the text. The text can be styled with customizable underline styles
@@ -132,8 +133,10 @@ def with_tooltip(
 
     # Throw if `text_decoration_style` is not one of the allowed values
     if text_decoration_style not in ["none", "solid", "dotted"]:
-        raise ValueError("Text_decoration_style must be one of 'none', 'solid', or 'dotted'")
-    
+        raise ValueError(
+            "Text_decoration_style must be one of 'none', 'solid', or 'dotted'"
+        )
+
     if color is None:
         raise ValueError("color must be a string or 'none', not None.")
 

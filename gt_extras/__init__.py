@@ -18,6 +18,9 @@ from .plotting import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
 
 from .html import gt_hyperlink, with_tooltip
 
+from .formatting import fmt_pct_extra
+
+
 __all__ = [
     "gt_theme_538",
     "gt_theme_espn",
@@ -42,4 +45,6 @@ __all__ = [
     
     "gt_hyperlink",
     "with_tooltip",
+
+    "fmt_pct_extra",
 ]
