@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_highlight_cols.html" rel="next">
-<link href="../reference/gt_plt_dot.html" rel="prev">
+<link href="../reference/gt_plt_dot.html" rel="next">
+<link href="../reference/gt_plt_bar.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -191,14 +191,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/gt_plt_conf_int.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">gt_plt_conf_int</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/gt_plt_dot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_plt_dot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_conf_int.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">gt_plt_conf_int</span></a>
+  <a href="../reference/gt_plt_dumbbell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_plt_dumbbell</span></a>
   </div>
 </li>
       </ul>
@@ -214,6 +220,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/gt_color_box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_color_box</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/gt_highlight_cols.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_highlight_cols</span></a>
   </div>
@@ -222,12 +234,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_hulk_col_numeric.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_hulk_col_numeric</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../reference/gt_color_box.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">gt_color_box</span></a>
   </div>
 </li>
       </ul>
@@ -249,8 +255,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/gt_theme_dark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_theme_dark</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/gt_theme_dot_matrix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_theme_dot_matrix</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/gt_theme_espn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_theme_espn</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/gt_theme_excel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_theme_excel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -263,24 +287,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_theme_nytimes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_theme_nytimes</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_excel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">gt_theme_excel</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_dot_matrix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">gt_theme_dot_matrix</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_dark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">gt_theme_dark</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -382,12 +388,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ci_columns<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="fl">0.95</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    dot_color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    border_color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    line_color<span class="op">=</span><span class="st">'royalblue'</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    text_color<span class="op">=</span><span class="st">'black'</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    text_size<span class="op">=</span><span class="st">'default'</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dot_color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    border_color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    line_color<span class="op">=</span><span class="st">'royalblue'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    text_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    num_decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Create confidence interval plots in <code>GT</code> cells.</p>
 <p>The <code>gt_plt_conf_int()</code> function takes an existing <code>GT</code> object and adds horizontal confidence interval plots to a specified column. Each cell displays a horizontal bar representing the confidence interval, with a dot indicating the mean value. Optionally, the lower and upper confidence interval bounds can be provided directly, or the function can compute them.</p>
 <p>If <code>ci_columns</code> is not provided, the function assumes each cell in <code>column</code> contains a list of values and computes the confidence interval using a t-distribution.</p>
@@ -410,7 +418,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>The confidence level to use when computing the interval (if <code>ci_columns</code> is <code>None</code>).</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float | int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dd>
+<p>The width of the confidence interval plot in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
 <dd>
 <p>The width of the confidence interval plot in pixels.</p>
 </dd>
@@ -430,9 +442,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>The color of the confidence interval labels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>text_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['small', 'default', 'large', 'largest', 'none']</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'default'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>font_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">10</span></code></dt>
 <dd>
-<p>The size of the text for the confidence interval labels. Options include <code>"none"</code> for no text.</p>
+<p>The size of the text for the confidence interval labels. A value of 0 will result in hiding the text.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>num_decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dd>
+<p>The number of decimals to display when rounding the value of the confidence interval labels.</p>
 </dd>
 </dl>
 </section>
@@ -447,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="e4f9b6d9" class="cell" data-execution_count="1">
+<div id="385bfce5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
@@ -468,52 +484,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">120</span>,</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="qrnxzvtjco" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="limjhnstqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#qrnxzvtjco table {
+#limjhnstqg table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#qrnxzvtjco thead, tbody, tfoot, tr, td, th { border-style: none; }
+#limjhnstqg thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#qrnxzvtjco p { margin: 0; padding: 0; }
- #qrnxzvtjco .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #qrnxzvtjco .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #qrnxzvtjco .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #qrnxzvtjco .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #qrnxzvtjco .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qrnxzvtjco .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #qrnxzvtjco .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #qrnxzvtjco .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #qrnxzvtjco .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #qrnxzvtjco .gt_column_spanner_outer:first-child { padding-left: 0; }
- #qrnxzvtjco .gt_column_spanner_outer:last-child { padding-right: 0; }
- #qrnxzvtjco .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #qrnxzvtjco .gt_spanner_row { border-bottom-style: hidden; }
- #qrnxzvtjco .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #qrnxzvtjco .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #qrnxzvtjco .gt_from_md> :first-child { margin-top: 0; }
- #qrnxzvtjco .gt_from_md> :last-child { margin-bottom: 0; }
- #qrnxzvtjco .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #qrnxzvtjco .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #qrnxzvtjco .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #qrnxzvtjco .gt_row_group_first td { border-top-width: 2px; }
- #qrnxzvtjco .gt_row_group_first th { border-top-width: 2px; }
- #qrnxzvtjco .gt_striped { background-color: rgba(128,128,128,0.05); }
- #qrnxzvtjco .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #qrnxzvtjco .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #qrnxzvtjco .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #qrnxzvtjco .gt_left { text-align: left; }
- #qrnxzvtjco .gt_center { text-align: center; }
- #qrnxzvtjco .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #qrnxzvtjco .gt_font_normal { font-weight: normal; }
- #qrnxzvtjco .gt_font_bold { font-weight: bold; }
- #qrnxzvtjco .gt_font_italic { font-style: italic; }
- #qrnxzvtjco .gt_super { font-size: 65%; }
- #qrnxzvtjco .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #qrnxzvtjco .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#limjhnstqg p { margin: 0; padding: 0; }
+ #limjhnstqg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #limjhnstqg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #limjhnstqg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #limjhnstqg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #limjhnstqg .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #limjhnstqg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #limjhnstqg .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #limjhnstqg .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #limjhnstqg .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #limjhnstqg .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #limjhnstqg .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #limjhnstqg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #limjhnstqg .gt_spanner_row { border-bottom-style: hidden; }
+ #limjhnstqg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #limjhnstqg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #limjhnstqg .gt_from_md> :first-child { margin-top: 0; }
+ #limjhnstqg .gt_from_md> :last-child { margin-bottom: 0; }
+ #limjhnstqg .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #limjhnstqg .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #limjhnstqg .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #limjhnstqg .gt_row_group_first td { border-top-width: 2px; }
+ #limjhnstqg .gt_row_group_first th { border-top-width: 2px; }
+ #limjhnstqg .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #limjhnstqg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #limjhnstqg .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #limjhnstqg .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #limjhnstqg .gt_left { text-align: left; }
+ #limjhnstqg .gt_center { text-align: center; }
+ #limjhnstqg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #limjhnstqg .gt_font_normal { font-weight: normal; }
+ #limjhnstqg .gt_font_bold { font-weight: bold; }
+ #limjhnstqg .gt_font_italic { font-style: italic; }
+ #limjhnstqg .gt_super { font-size: 65%; }
+ #limjhnstqg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #limjhnstqg .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
@@ -533,17 +549,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">5.2</td>
     <td class="gt_row gt_right">3.1</td>
     <td class="gt_row gt_right">7.3</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:44px;">
-            <div style="position:absolute;left:26.455696202531648px;bottom:18px;color:black;font-size:10px;">3.1</div>
-            <div style="position:absolute;left:79.62025316455697px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">7.3</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
+            <div style="position:absolute;left:26.455696202531648px;bottom:11.5px;color:black;font-size:10px;">3.1</div>
+            <div style="position:absolute;left:79.62025316455697px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">7.3</div>
             <div style="
                 position:absolute; left:26.455696202531648px;
-                top:26.0px; width:53.16455696202532px;
-                height:4px; background:royalblue; border-radius:2px;
+                top:18.5px; width:53.16455696202532px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:49.03797468354431px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:50.03797468354431px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -554,17 +570,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">7.8</td>
     <td class="gt_row gt_right">6.1</td>
     <td class="gt_row gt_right">9.7</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:44px;">
-            <div style="position:absolute;left:64.43037974683546px;bottom:18px;color:black;font-size:10px;">6.1</div>
-            <div style="position:absolute;left:110.00000000000001px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">9.7</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
+            <div style="position:absolute;left:64.43037974683546px;bottom:11.5px;color:black;font-size:10px;">6.1</div>
+            <div style="position:absolute;left:110.00000000000001px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">9.7</div>
             <div style="
                 position:absolute; left:64.43037974683546px;
-                top:26.0px; width:45.56962025316456px;
-                height:4px; background:royalblue; border-radius:2px;
+                top:18.5px; width:45.56962025316456px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:81.9493670886076px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:82.9493670886076px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -575,17 +591,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">3.4</td>
     <td class="gt_row gt_right">1.8</td>
     <td class="gt_row gt_right">5.0</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:44px;">
-            <div style="position:absolute;left:10.000000000000002px;bottom:18px;color:black;font-size:10px;">1.8</div>
-            <div style="position:absolute;left:50.50632911392406px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">5</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
+            <div style="position:absolute;left:10.000000000000002px;bottom:11.5px;color:black;font-size:10px;">1.8</div>
+            <div style="position:absolute;left:50.50632911392406px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">5</div>
             <div style="
                 position:absolute; left:10.000000000000002px;
-                top:26.0px; width:40.50632911392406px;
-                height:4px; background:royalblue; border-radius:2px;
+                top:18.5px; width:40.50632911392406px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:26.25316455696203px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:27.25316455696203px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -601,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Alternatively we can pass in a column of lists, and the function will compute the CI’s for us.</p>
-<div id="c4345ca4" class="cell" data-execution_count="2">
+<div id="9996685c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">37</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -629,54 +645,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    gte.gt_plt_conf_int,</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"ci"</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="dv">160</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<div id="szvohodhjq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="dsfabbsgmy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#szvohodhjq table {
+#dsfabbsgmy table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#szvohodhjq thead, tbody, tfoot, tr, td, th { border-style: none; }
+#dsfabbsgmy thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#szvohodhjq p { margin: 0; padding: 0; }
- #szvohodhjq .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #szvohodhjq .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #szvohodhjq .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #szvohodhjq .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #szvohodhjq .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #szvohodhjq .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #szvohodhjq .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #szvohodhjq .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #szvohodhjq .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #szvohodhjq .gt_column_spanner_outer:first-child { padding-left: 0; }
- #szvohodhjq .gt_column_spanner_outer:last-child { padding-right: 0; }
- #szvohodhjq .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #szvohodhjq .gt_spanner_row { border-bottom-style: hidden; }
- #szvohodhjq .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #szvohodhjq .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #szvohodhjq .gt_from_md> :first-child { margin-top: 0; }
- #szvohodhjq .gt_from_md> :last-child { margin-bottom: 0; }
- #szvohodhjq .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #szvohodhjq .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #szvohodhjq .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #szvohodhjq .gt_row_group_first td { border-top-width: 2px; }
- #szvohodhjq .gt_row_group_first th { border-top-width: 2px; }
- #szvohodhjq .gt_striped { background-color: rgba(128,128,128,0.05); }
- #szvohodhjq .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #szvohodhjq .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #szvohodhjq .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #szvohodhjq .gt_left { text-align: left; }
- #szvohodhjq .gt_center { text-align: center; }
- #szvohodhjq .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #szvohodhjq .gt_font_normal { font-weight: normal; }
- #szvohodhjq .gt_font_bold { font-weight: bold; }
- #szvohodhjq .gt_font_italic { font-style: italic; }
- #szvohodhjq .gt_super { font-size: 65%; }
- #szvohodhjq .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #szvohodhjq .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#dsfabbsgmy p { margin: 0; padding: 0; }
+ #dsfabbsgmy .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #dsfabbsgmy .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #dsfabbsgmy .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #dsfabbsgmy .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #dsfabbsgmy .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #dsfabbsgmy .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #dsfabbsgmy .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #dsfabbsgmy .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #dsfabbsgmy .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #dsfabbsgmy .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #dsfabbsgmy .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #dsfabbsgmy .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #dsfabbsgmy .gt_spanner_row { border-bottom-style: hidden; }
+ #dsfabbsgmy .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #dsfabbsgmy .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #dsfabbsgmy .gt_from_md> :first-child { margin-top: 0; }
+ #dsfabbsgmy .gt_from_md> :last-child { margin-bottom: 0; }
+ #dsfabbsgmy .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #dsfabbsgmy .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #dsfabbsgmy .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #dsfabbsgmy .gt_row_group_first td { border-top-width: 2px; }
+ #dsfabbsgmy .gt_row_group_first th { border-top-width: 2px; }
+ #dsfabbsgmy .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #dsfabbsgmy .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #dsfabbsgmy .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #dsfabbsgmy .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #dsfabbsgmy .gt_left { text-align: left; }
+ #dsfabbsgmy .gt_center { text-align: center; }
+ #dsfabbsgmy .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #dsfabbsgmy .gt_font_normal { font-weight: normal; }
+ #dsfabbsgmy .gt_font_bold { font-weight: bold; }
+ #dsfabbsgmy .gt_font_italic { font-style: italic; }
+ #dsfabbsgmy .gt_super { font-size: 65%; }
+ #dsfabbsgmy .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #dsfabbsgmy .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
@@ -694,17 +711,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">50</td>
     <td class="gt_row gt_right">21.391</td>
     <td class="gt_row gt_right">9.99</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-            <div style="position:absolute;left:20.125818491192053px;bottom:18px;color:black;font-size:10px;">19</div>
-            <div style="position:absolute;left:60.883741560827px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">24</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
+            <div style="position:absolute;left:32.20130958590729px;bottom:11.5px;color:black;font-size:10px;">18.6</div>
+            <div style="position:absolute;left:97.4139864973232px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">24.2</div>
             <div style="
-                position:absolute; left:20.125818491192053px;
-                top:26.0px; width:40.75792306963494px;
-                height:4px; background:royalblue; border-radius:2px;
+                position:absolute; left:32.20130958590729px;
+                top:18.5px; width:65.21267691141591px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:36.50478002600953px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:61.80764804161524px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -714,17 +731,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">50</td>
     <td class="gt_row gt_right">21.719</td>
     <td class="gt_row gt_right">16.927</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-            <div style="position:absolute;left:8.333333333333332px;bottom:18px;color:black;font-size:10px;">16.91</div>
-            <div style="position:absolute;left:77.39394382119455px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">26.53</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
+            <div style="position:absolute;left:13.333333333333332px;bottom:11.5px;color:black;font-size:10px;">16.9</div>
+            <div style="position:absolute;left:123.83031011391128px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">26.5</div>
             <div style="
-                position:absolute; left:8.333333333333332px;
-                top:26.0px; width:69.06061048786123px;
-                height:4px; background:royalblue; border-radius:2px;
+                position:absolute; left:13.333333333333332px;
+                top:18.5px; width:110.49697678057795px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:38.86363857726394px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:65.58182172362231px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -734,17 +751,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <td class="gt_row gt_right">50</td>
     <td class="gt_row gt_right">25.528</td>
     <td class="gt_row gt_right">10.522</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-            <div style="position:absolute;left:48.737676717635416px;bottom:18px;color:black;font-size:10px;">23</div>
-            <div style="position:absolute;left:91.66666666666666px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">29</div>
+    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
+            <div style="position:absolute;left:77.98028274821667px;bottom:11.5px;color:black;font-size:10px;">22.5</div>
+            <div style="position:absolute;left:146.66666666666666px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">28.5</div>
             <div style="
-                position:absolute; left:48.737676717635416px;
-                top:26.0px; width:42.92898994903124px;
-                height:4px; background:royalblue; border-radius:2px;
+                position:absolute; left:77.98028274821667px;
+                top:18.5px; width:68.68638391844999px;
+                height:3.0px; background:royalblue; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:66.20217169215104px;
-                top:23.0px; width:10px; height:10px;
+                position:absolute; left:109.32347470744166px;
+                top:17.0px; width:6.0px; height:6.0px;
                 background:red; border-radius:50%;
                 border:2px solid red; box-sizing:border-box;
             "></div>
@@ -1169,13 +1186,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_plt_dot.html" class="pagination-link" aria-label="gt_plt_dot">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_dot</span>
+      <a href="../reference/gt_plt_bar.html" class="pagination-link" aria-label="gt_plt_bar">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_bar</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_highlight_cols.html" class="pagination-link" aria-label="gt_highlight_cols">
-        <span class="nav-page-text">gt_highlight_cols</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_plt_dot.html" class="pagination-link" aria-label="gt_plt_dot">
+        <span class="nav-page-text">gt_plt_dot</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

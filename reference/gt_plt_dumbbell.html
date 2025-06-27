@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_hyperlink – gt-extras</title>
+<title>gt_plt_dumbbell – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/with_tooltip.html" rel="next">
-<link href="../reference/gt_fa_rating.html" rel="prev">
+<link href="../reference/gt_color_box.html" rel="next">
+<link href="../reference/gt_plt_dot.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_hyperlink.html">HTML Helpers</a></li><li class="breadcrumb-item"><a href="../reference/gt_hyperlink.html">gt_hyperlink</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_dumbbell.html">gt_plt_dumbbell</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_dumbbell.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_plt_dumbbell.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_plt_dumbbell</span></a>
   </div>
 </li>
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_hyperlink.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_hyperlink.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_hyperlink</span></a>
   </div>
 </li>
@@ -356,15 +356,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_hyperlink.html">HTML Helpers</a></li><li class="breadcrumb-item"><a href="../reference/gt_hyperlink.html">gt_hyperlink</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_dumbbell.html">gt_plt_dumbbell</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_hyperlink</h1>
+<h1 class="title">gt_plt_dumbbell</h1>
 </div>
 
 
@@ -381,142 +382,316 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_hyperlink(text, url, new_tab<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Create HTML hyperlinks for use in <code>GT</code> object cells.</p>
-<p>The <code>gt_hyperlink()</code> function creates properly formatted HTML hyperlink elements that can be used within table cells.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_dumbbell(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    col1,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    col2,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    col1_color<span class="op">=</span><span class="st">'purple'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    col2_color<span class="op">=</span><span class="st">'green'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    bar_color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    num_decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create dumbbell plots in <code>GT</code> cells.</p>
+<p>The <code>gt_plt_dumbbell()</code> function takes an existing <code>GT</code> object and adds dumbbell plots to visualize the difference between two numeric values. Each dumbbell consists of two dots (representing values from <code>col1</code> and <code>col2</code>) connected by a horizontal bar, allowing for easy visual comparison between paired values.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
-<dt><code><span class="parameter-name"><strong>text</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"><strong>gt</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>A string that will be displayed as the clickable link text.</p>
+<p>A <code>GT</code> object to modify.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>url</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"><strong>col1</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
 <dd>
-<p>A string indicating the destination URL for the hyperlink.</p>
+<p>The column containing the first set of values to plot.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>new_tab</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dt><code><span class="parameter-name"><strong>col2</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
 <dd>
-<p>A boolean indicating whether the link should open in a new browser tab or the current tab.</p>
+<p>The column containing the second set of values to plot.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>label</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>Optional label to replace the column name of <code>col1</code> in the output table. If <code>None</code>, the original column name is retained.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dd>
+<p>The width of the dumbbell plot in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
+<dd>
+<p>The height of the dumbbell plot in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>col1_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'purple'</span></code></dt>
+<dd>
+<p>The color of the dots representing values from <code>col1</code>.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>col2_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'green'</span></code></dt>
+<dd>
+<p>The color of the dots representing values from <code>col2</code>.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>bar_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'grey'</span></code></dt>
+<dd>
+<p>The color of the horizontal bar connecting the two dots.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>font_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">10</span></code></dt>
+<dd>
+<p>The font size for the value labels displayed above each dot.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>num_decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dd>
+<p>The number of decimal places to display in the value labels.</p>
 </dd>
 </dl>
 </section>
 <section id="returns" class="level2 doc-section doc-section-returns">
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
 <dl>
-<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>An string containing the HTML formatted hyperlink element.</p>
+<p>A <code>GT</code> object with dumbbell plots added to the specified columns. The <code>col2</code> column is hidden from the final table display.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="b8c4bc0b" class="cell" data-execution_count="1">
+<div id="9a76ca18" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: [<span class="st">"Great Tables"</span>, <span class="st">"Plotnine"</span>, <span class="st">"Quarto"</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"url"</span>: [</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://posit-dev.github.io/great-tables/"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://plotnine.org/"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://quarto.org/"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"github_stars"</span>: [<span class="dv">2334</span>, <span class="dv">4256</span>, <span class="dv">4628</span>],</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"repo_url"</span>: [</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/posit-dev/great-tables"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/has2k1/plotnine"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/quarto-dev/quarto-cli"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Package"</span>] <span class="op">=</span> [</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    gte.gt_hyperlink(name, url)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, url <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"name"</span>], df[<span class="st">"url"</span>])</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Github Stars"</span>] <span class="op">=</span> [</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    gte.gt_hyperlink(github_stars, repo_url, new_tab<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> github_stars, repo_url <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"github_stars"</span>], df[<span class="st">"repo_url"</span>])</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>GT(df[[<span class="st">"Package"</span>, <span class="st">"Github Stars"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, html, style, loc</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim the data to December 2008</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sp500[[<span class="st">"date"</span>, <span class="st">"open"</span>, <span class="st">"close"</span>]].copy()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"date"</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>dec_2008 <span class="op">=</span> df[</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"date"</span>].dt.month <span class="op">==</span> <span class="dv">12</span>) <span class="op">&amp;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"date"</span>].dt.year <span class="op">==</span> <span class="dv">2008</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>dec_2008 <span class="op">=</span> dec_2008.iloc[::<span class="op">-</span><span class="dv">1</span>].iloc[<span class="dv">2</span>:<span class="dv">11</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the Great Table</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    GT(dec_2008)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    .tab_source_note(html(<span class="st">"Purple: Open&lt;br&gt;Green: Close"</span>))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    .tab_style(</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span>style.text(align<span class="op">=</span><span class="st">"right"</span>),</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        locations<span class="op">=</span>[loc.source_notes()]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    gte.gt_plt_dumbbell,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    col1<span class="op">=</span><span class="st">'open'</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    col2<span class="op">=</span><span class="st">'close'</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="st">"Open to Close ($)"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    num_decimals<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="dv">250</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="lhzbghaqov" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jftghjisqv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#lhzbghaqov table {
+#jftghjisqv table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#lhzbghaqov thead, tbody, tfoot, tr, td, th { border-style: none; }
+#jftghjisqv thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#lhzbghaqov p { margin: 0; padding: 0; }
- #lhzbghaqov .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #lhzbghaqov .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #lhzbghaqov .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #lhzbghaqov .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #lhzbghaqov .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #lhzbghaqov .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #lhzbghaqov .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #lhzbghaqov .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #lhzbghaqov .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #lhzbghaqov .gt_column_spanner_outer:first-child { padding-left: 0; }
- #lhzbghaqov .gt_column_spanner_outer:last-child { padding-right: 0; }
- #lhzbghaqov .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #lhzbghaqov .gt_spanner_row { border-bottom-style: hidden; }
- #lhzbghaqov .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #lhzbghaqov .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #lhzbghaqov .gt_from_md> :first-child { margin-top: 0; }
- #lhzbghaqov .gt_from_md> :last-child { margin-bottom: 0; }
- #lhzbghaqov .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #lhzbghaqov .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #lhzbghaqov .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #lhzbghaqov .gt_row_group_first td { border-top-width: 2px; }
- #lhzbghaqov .gt_row_group_first th { border-top-width: 2px; }
- #lhzbghaqov .gt_striped { background-color: rgba(128,128,128,0.05); }
- #lhzbghaqov .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #lhzbghaqov .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #lhzbghaqov .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #lhzbghaqov .gt_left { text-align: left; }
- #lhzbghaqov .gt_center { text-align: center; }
- #lhzbghaqov .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #lhzbghaqov .gt_font_normal { font-weight: normal; }
- #lhzbghaqov .gt_font_bold { font-weight: bold; }
- #lhzbghaqov .gt_font_italic { font-style: italic; }
- #lhzbghaqov .gt_super { font-size: 65%; }
- #lhzbghaqov .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #lhzbghaqov .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#jftghjisqv p { margin: 0; padding: 0; }
+ #jftghjisqv .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #jftghjisqv .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #jftghjisqv .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #jftghjisqv .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #jftghjisqv .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #jftghjisqv .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #jftghjisqv .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #jftghjisqv .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #jftghjisqv .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #jftghjisqv .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #jftghjisqv .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #jftghjisqv .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #jftghjisqv .gt_spanner_row { border-bottom-style: hidden; }
+ #jftghjisqv .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #jftghjisqv .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #jftghjisqv .gt_from_md> :first-child { margin-top: 0; }
+ #jftghjisqv .gt_from_md> :last-child { margin-bottom: 0; }
+ #jftghjisqv .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #jftghjisqv .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #jftghjisqv .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #jftghjisqv .gt_row_group_first td { border-top-width: 2px; }
+ #jftghjisqv .gt_row_group_first th { border-top-width: 2px; }
+ #jftghjisqv .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #jftghjisqv .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #jftghjisqv .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #jftghjisqv .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #jftghjisqv .gt_left { text-align: left; }
+ #jftghjisqv .gt_center { text-align: center; }
+ #jftghjisqv .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #jftghjisqv .gt_font_normal { font-weight: normal; }
+ #jftghjisqv .gt_font_bold { font-weight: bold; }
+ #jftghjisqv .gt_font_italic { font-style: italic; }
+ #jftghjisqv .gt_super { font-size: 65%; }
+ #jftghjisqv .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #jftghjisqv .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Package">Package</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Github-Stars">Github Stars</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="open">Open to Close ($)</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <td class="gt_row gt_left"><a href="https://posit-dev.github.io/great-tables/" target="_blank">Great Tables</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/posit-dev/great-tables" target="_self">2334</a></td>
+    <td class="gt_row gt_right">2008-12-03</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:20.833333333333364px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">844</div>
+            <div style="position:absolute; left:106.37291981845681px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">871</div>
+            <div style="
+                position:absolute; left:20.833333333333364px;
+                top:18.5px; width:85.53958648512344px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:16.333333333333364px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:101.87291981845681px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
   </tr>
   <tr>
-    <td class="gt_row gt_left"><a href="https://plotnine.org/" target="_blank">Plotnine</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/has2k1/plotnine" target="_self">4256</a></td>
+    <td class="gt_row gt_right">2008-12-04</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:103.25264750378206px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">870</div>
+            <div style="position:absolute; left:25.939233484619304px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">845</div>
+            <div style="
+                position:absolute; left:25.939233484619304px;
+                top:18.5px; width:77.31341401916275px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:98.75264750378206px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:21.439233484619304px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
   </tr>
   <tr>
-    <td class="gt_row gt_left"><a href="https://quarto.org/" target="_blank">Quarto</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/quarto-dev/quarto-cli" target="_self">4628</a></td>
+    <td class="gt_row gt_right">2008-12-05</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:23.44931921331296px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">844</div>
+            <div style="position:absolute; left:123.17196167423101px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">876</div>
+            <div style="
+                position:absolute; left:23.44931921331296px;
+                top:18.5px; width:99.72264246091805px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:18.94931921331296px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:118.67196167423101px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-08</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:144.0998487140696px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">883</div>
+            <div style="position:absolute; left:229.16666666666663px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">910</div>
+            <div style="
+                position:absolute; left:144.0998487140696px;
+                top:18.5px; width:85.06681795259703px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:139.5998487140696px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:224.66666666666663px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-09</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:219.01790216843156px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">906</div>
+            <div style="position:absolute; left:162.8845184064546px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">889</div>
+            <div style="
+                position:absolute; left:162.8845184064546px;
+                top:18.5px; width:56.13338376197697px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:214.51790216843156px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:158.3845184064546px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-10</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:173.91578416540568px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">892</div>
+            <div style="position:absolute; left:196.198940998487px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">899</div>
+            <div style="
+                position:absolute; left:173.91578416540568px;
+                top:18.5px; width:22.283156833081307px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:169.41578416540568px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:191.698940998487px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-11</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:193.39384770549665px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">898</div>
+            <div style="position:absolute; left:115.35552193645991px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">874</div>
+            <div style="
+                position:absolute; left:115.35552193645991px;
+                top:18.5px; width:78.03832576903675px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:188.89384770549665px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:110.85552193645991px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-12</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:109.68229954614199px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">872</div>
+            <div style="position:absolute; left:134.7075138678769px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">880</div>
+            <div style="
+                position:absolute; left:109.68229954614199px;
+                top:18.5px; width:25.02521432173492px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:105.18229954614199px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:130.2075138678769px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2008-12-15</td>
+    <td class="gt_row gt_right"><div style="position:relative; width:250px; height:30px; box-sizing:content-box;">
+            <div style="position:absolute; left:138.93091275844685px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">881</div>
+            <div style="position:absolute; left:99.53353504790728px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">869</div>
+            <div style="
+                position:absolute; left:99.53353504790728px;
+                top:18.5px; width:39.39737771053957px;
+                height:3.0px; background:grey;
+                border-radius:2px;
+            "></div>
+            <div style="position:absolute; left:134.43091275844685px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+            <div style="position:absolute; left:95.03353504790728px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+        </div></td>
   </tr>
 </tbody>
+  <tfoot class="gt_sourcenotes">
+  
+  <tr>
+    <td class="gt_sourcenote" colspan="2" style="text-align: right;">Purple: Open<br>Green: Close</td>
+  </tr>
 
+</tfoot>
 
 </table>
 
@@ -524,6 +699,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         
 </div>
 </div>
+</section>
+<section id="note" class="level2 doc-section doc-section-note">
+<h2 class="doc-section doc-section-note anchored" data-anchor-id="note">Note</h2>
+<p>All dumbbells are scaled to a common range for visual alignment across rows. The <code>col2</code> column is automatically hidden from the final table display.</p>
 
 
 </section>
@@ -930,13 +1109,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_fa_rating.html" class="pagination-link" aria-label="gt_fa_rating">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_fa_rating</span>
+      <a href="../reference/gt_plt_dot.html" class="pagination-link" aria-label="gt_plt_dot">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_dot</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/with_tooltip.html" class="pagination-link" aria-label="with_tooltip">
-        <span class="nav-page-text">with_tooltip</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_color_box.html" class="pagination-link" aria-label="gt_color_box">
+        <span class="nav-page-text">gt_color_box</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
