@@ -719,7 +719,7 @@ def gt_plt_dumbbell(
     col1: SelectExpr,  # exactly 1 col
     col2: SelectExpr,  # exactly 1 col
     label: str = None,
-    width: float | int = 100,
+    width: float = 100,
     height: float = 30,
     col1_color: str = "purple",
     col2_color: str = "green",
@@ -850,7 +850,7 @@ def gt_plt_dumbbell(
         bar_height = height / 10
         bar_top = height / 2 - bar_height / 2 + font_size / 2
 
-        # Compute the locations of the two dos
+        # Compute the locations of the two dots
         dot_size = height / 5
         dot_border = height / 20
         dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
