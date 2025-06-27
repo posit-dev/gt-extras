@@ -70,16 +70,12 @@ quartodoc:
         - fa_icon_repeat
         - gt_fa_rating
         
-    - title: HTML Helpers
+    - title: HTML and Formatting
       desc: "" # TODO: add desc
       contents:
+        - fmt_pct_extra
         - gt_hyperlink
         - with_tooltip
-
-    - title: Utilities # TODO: better name
-      desc: "" 
-      contents:
-        - fmt_pct_extra
         
 
 format:
