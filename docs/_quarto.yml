@@ -41,26 +41,27 @@ quartodoc:
       desc: "" # TODO: add desc
       contents:
         - gt_plt_bar
-        - gt_plt_dot
         - gt_plt_conf_int
+        - gt_plt_dot
+        - gt_plt_dumbbell
 
     - title: Colors
       desc: "" # TODO: add desc
       contents:
+        - gt_color_box
         - gt_highlight_cols
         - gt_hulk_col_numeric
-        - gt_color_box
 
     - title: Themes
       desc: Functions to generate themes.
       contents:
         - gt_theme_538
+        - gt_theme_dark
+        - gt_theme_dot_matrix
         - gt_theme_espn
+        - gt_theme_excel
         - gt_theme_guardian
         - gt_theme_nytimes
-        - gt_theme_excel
-        - gt_theme_dot_matrix
-        - gt_theme_dark
         - gt_theme_pff
     
     - title: Icons and Images

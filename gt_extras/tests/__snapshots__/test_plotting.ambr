@@ -43,17 +43,17 @@
   <tbody class="gt_table_body">
     <tr>
       <td class="gt_row gt_left">A</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-              <div style="position:absolute;left:26.69491525423729px;bottom:18px;color:black;font-size:10px;">4.1</div>
-              <div style="position:absolute;left:57.768361581920914px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">6.3</div>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
+              <div style="position:absolute;left:26.69491525423729px;bottom:11.5px;color:black;font-size:10px;">4.1</div>
+              <div style="position:absolute;left:57.768361581920914px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">6.3</div>
               <div style="
                   position:absolute; left:26.69491525423729px;
-                  top:26.0px; width:31.073446327683623px;
-                  height:4px; background:royalblue; border-radius:2px;
+                  top:18.5px; width:31.073446327683623px;
+                  height:3.0px; background:royalblue; border-radius:2px;
               "></div>
               <div style="
-                  position:absolute; left:38.2316384180791px;
-                  top:23.0px; width:10px; height:10px;
+                  position:absolute; left:39.2316384180791px;
+                  top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
                   border:2px solid red; box-sizing:border-box;
               "></div>
@@ -63,17 +63,17 @@
     </tr>
     <tr>
       <td class="gt_row gt_left">B</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-              <div style="position:absolute;left:66.24293785310735px;bottom:18px;color:black;font-size:10px;">7</div>
-              <div style="position:absolute;left:91.66666666666666px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">9</div>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
+              <div style="position:absolute;left:66.24293785310735px;bottom:11.5px;color:black;font-size:10px;">6.9</div>
+              <div style="position:absolute;left:91.66666666666666px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">8.7</div>
               <div style="
                   position:absolute; left:66.24293785310735px;
-                  top:26.0px; width:25.423728813559308px;
-                  height:4px; background:royalblue; border-radius:2px;
+                  top:18.5px; width:25.423728813559308px;
+                  height:3.0px; background:royalblue; border-radius:2px;
               "></div>
               <div style="
-                  position:absolute; left:74.95480225988702px;
-                  top:23.0px; width:10px; height:10px;
+                  position:absolute; left:75.95480225988702px;
+                  top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
                   border:2px solid red; box-sizing:border-box;
               "></div>
@@ -83,17 +83,17 @@
     </tr>
     <tr>
       <td class="gt_row gt_left">C</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:44px;">
-              <div style="position:absolute;left:8.333333333333332px;bottom:18px;color:black;font-size:10px;">3</div>
-              <div style="position:absolute;left:25.282485875706218px;bottom:18px;color:black;font-size:10px;transform:translateX(-100%);">4</div>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
+              <div style="position:absolute;left:8.333333333333332px;bottom:11.5px;color:black;font-size:10px;">2.8</div>
+              <div style="position:absolute;left:25.282485875706218px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">4</div>
               <div style="
                   position:absolute; left:8.333333333333332px;
-                  top:26.0px; width:16.949152542372886px;
-                  height:4px; background:royalblue; border-radius:2px;
+                  top:18.5px; width:16.949152542372886px;
+                  height:3.0px; background:royalblue; border-radius:2px;
               "></div>
               <div style="
-                  position:absolute; left:12.807909604519775px;
-                  top:23.0px; width:10px; height:10px;
+                  position:absolute; left:13.807909604519775px;
+                  top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
                   border:2px solid red; box-sizing:border-box;
               "></div>
@@ -166,6 +166,54 @@
       <td class="gt_row gt_right">1.39</td>
       <td class="gt_row gt_left">row_3</td>
       <td class="gt_row gt_left">grp_a</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_plt_dumbbell_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px; box-sizing:content-box;">
+              <div style="position:absolute; left:8.333333333333332px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">10.0</div>
+              <div style="position:absolute; left:29.166666666666668px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">15.0</div>
+              <div style="
+                  position:absolute; left:8.333333333333332px;
+                  top:18.5px; width:20.833333333333336px;
+                  height:3.0px; background:grey;
+                  border-radius:2px;
+              "></div>
+              <div style="position:absolute; left:3.833333333333332px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+              <div style="position:absolute; left:24.666666666666668px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px; box-sizing:content-box;">
+              <div style="position:absolute; left:29.166666666666668px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">15.0</div>
+              <div style="position:absolute; left:50.0px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">20.0</div>
+              <div style="
+                  position:absolute; left:29.166666666666668px;
+                  top:18.5px; width:20.833333333333332px;
+                  height:3.0px; background:grey;
+                  border-radius:2px;
+              "></div>
+              <div style="position:absolute; left:24.666666666666668px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+              <div style="position:absolute; left:45.5px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px; box-sizing:content-box;">
+              <div style="position:absolute; left:70.83333333333334px; bottom:14.5px; transform:translateX(-50%); color:purple; font-size:10px; font-weight:bold;">25.0</div>
+              <div style="position:absolute; left:91.66666666666666px; bottom:14.5px; transform:translateX(-50%); color:green; font-size:10px; font-weight:bold;">30.0</div>
+              <div style="
+                  position:absolute; left:70.83333333333334px;
+                  top:18.5px; width:20.833333333333314px;
+                  height:3.0px; background:grey;
+                  border-radius:2px;
+              "></div>
+              <div style="position:absolute; left:66.33333333333334px; top:15.5px; width:6.0px; height:6.0px; background:purple; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+              <div style="position:absolute; left:87.16666666666666px; top:15.5px; width:6.0px; height:6.0px; background:green; border-radius:50%; border:1.5px solid white; box-sizing: content-box;"></div>
+          </div></td>
     </tr>
   </tbody>
   '''
