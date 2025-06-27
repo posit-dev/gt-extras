@@ -741,6 +741,98 @@ def gt_plt_dumbbell(
     font_size: int = 10,
     num_decimals: int = 1,
 ) -> GT:
+    """
+    Create dumbbell plots in `GT` cells.
+
+    The `gt_plt_dumbbell()` function takes an existing `GT` object and adds dumbbell plots to
+    visualize the difference between two numeric values. Each dumbbell consists of two dots 
+    (representing values from `col1` and `col2`) connected by a horizontal bar, allowing for 
+    easy visual comparison between paired values.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    col1
+        The column containing the first set of values to plot.
+
+    col2
+        The column containing the second set of values to plot.
+
+    label
+        Optional label to replace the column name of `col1` in the output table. If `None`, the 
+        original column name is retained.
+
+    width
+        The width of the dumbbell plot in pixels.
+
+    height
+        The height of the dumbbell plot in pixels.
+
+    col1_color
+        The color of the dots representing values from `col1`.
+
+    col2_color
+        The color of the dots representing values from `col2`.
+
+    bar_color
+        The color of the horizontal bar connecting the two dots.
+
+    font_size
+        The font size for the value labels displayed above each dot.
+
+    num_decimals
+        The number of decimal places to display in the value labels.
+
+    Returns
+    -------
+    GT
+        A `GT` object with dumbbell plots added to the specified columns. The `col2` column is
+        hidden from the final table display.
+    
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT, html, style, loc
+    from great_tables.data import sp500
+    import gt_extras as gte
+
+    df = sp500[["date", "open", "close"]].copy()
+    df["date"] = pd.to_datetime(df["date"], errors='coerce')
+    dec_2008 = df[
+        (df["date"].dt.month == 12) & 
+        (df["date"].dt.year == 2008)
+    ]
+    dec_2008 = dec_2008.iloc[::-1].iloc[2:11]
+
+    gt = (
+        GT(dec_2008)
+        .tab_source_note(html("Purple: Open<br>Green: Close"))
+        .tab_style(
+            style=style.text(align="right"),
+            locations=[loc.source_notes()]
+        )
+    )
+
+    gt.pipe(
+        gte.gt_plt_dumbbell,
+        col1='open',
+        col2='close',
+        label = "Open to Close",
+        num_decimals=0,
+        width = 250,
+    )
+
+    ```
+        
+    Note
+    -------
+    All dumbbells are scaled to a common range for visual alignment across rows.
+    The `col2` column is automatically hidden from the final table display.
+    """
+
     def _make_dumbbell_html(
         value_1: float,
         value_2: float,
@@ -762,8 +854,8 @@ def gt_plt_dumbbell(
         pos_1 = ((value_1 - min_val) / span) * width
         pos_2 = ((value_2 - min_val) / span) * width
 
-        bar_left = pos_1
-        bar_width = pos_2 - pos_1
+        bar_left = min(pos_1, pos_2)
+        bar_width = abs(pos_2 - pos_1)
         bar_height = height / 10
         bar_top = height / 2 - bar_height / 2 + font_size / 2
 
@@ -798,14 +890,14 @@ def gt_plt_dumbbell(
             "position:absolute; left:{pos}px;"
             f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;"
             "background:{color}; border-radius:50%;"
-            f"border:{dot_border}px solid white;"
+            f"border:{dot_border}px solid white; box-sizing: content-box;"
         )
 
         value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
         value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
 
         html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
+        <div style="position:relative; width:{width}px; height:{height}px; box-sizing:content-box;">
             {value_1_label}
             {value_2_label}
             <div style="

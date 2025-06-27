@@ -87,7 +87,9 @@ def gt_highlight_cols(
     # Throw if `font_weight` is not one of the allowed values
     if isinstance(font_weight, str):
         if font_weight not in ["normal", "bold", "bolder", "lighter"]:
-            raise ValueError("Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer")
+            raise ValueError(
+                "Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer"
+            )
     elif not isinstance(font_weight, (int, float)):
         raise TypeError("Font_weight must be an int, float, or str")
 
@@ -236,7 +238,7 @@ def gt_color_box(
     font_weight: str = "normal",
 ) -> GT:
     """
-    Add PFF-style color boxes with values to numeric columns in a `GT` object.
+    Add PFF-style color boxes to numeric columns in a `GT` object.
 
     The `gt_color_box()` function takes an existing `GT` object and adds colored boxes to
     specified numeric columns. Each box contains a colored square and the numeric value,
