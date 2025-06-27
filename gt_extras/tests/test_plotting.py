@@ -237,7 +237,7 @@ def test_gt_plt_conf_int_basic():
         {
             "group": ["A", "B", "C"],
             "mean": [1, 2, 3],
-            "ci_lower": [0, 1, 2],
+            "ci_lower": [0, 2, 2],
             "ci_upper": [4, 6, 5],
         }
     )
@@ -246,9 +246,11 @@ def test_gt_plt_conf_int_basic():
         gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"]
     ).as_raw_html()
 
-    assert "position:absolute;left:8.333333333333336px;bottom:18px;color:black;" in html
-    assert "top:26.0px; width:55.55555555555556px;" in html
-    assert "height:4px; background:royalblue; border-radius:2px;" in html
+    assert (
+        "position:absolute;left:8.333333333333336px;bottom:13.5px;color:black;" in html
+    )
+    assert "top:16.5px; width:55.55555555555556px;" in html
+    assert "height:3.0px; background:royalblue; border-radius:2px;" in html
     assert html.count("position:absolute;") == 12
 
 
@@ -266,70 +268,6 @@ def test_gt_plt_conf_int_computed_ci():
     assert ">4</div>" in html
     assert ">4.1</div>" in html
     assert ">5.9</div>" in html
-
-
-@pytest.mark.parametrize(
-    "text_size, expected_font_size",
-    [
-        ("none", "font-size:0px;"),
-        ("small", "font-size:6px;"),
-        ("default", "font-size:10px;"),
-        ("large", "font-size:14px;"),
-        ("largest", "font-size:18px;"),
-    ],
-)
-def test_gt_plt_conf_int_text_size(text_size, expected_font_size):
-    df = pd.DataFrame(
-        {
-            "group": ["A", "B"],
-            "mean": [5.2, 7.8],
-            "ci_lower": [4.1, 6.9],
-            "ci_upper": [6.3, 8.7],
-        }
-    )
-    gt_test = GT(df)
-    html = gt_plt_conf_int(
-        gt=gt_test,
-        column="mean",
-        ci_columns=["ci_lower", "ci_upper"],
-        text_size=text_size,
-    ).as_raw_html()
-
-    assert html.count(expected_font_size) == 4
-
-
-@pytest.mark.parametrize(
-    "width, expected_width_style, expected_label_c1, expected_label_c2",
-    [
-        (50, "width:50px;", 1, 7),
-        (70, "width:70px;", 1.2, 7),
-        (90, "width:90px;", 1.23, 6.99),
-        (110, "width:110px;", 1.235, 6.988),
-        (150, "width:150px;", 1.2346, 6.9877),
-    ],
-)
-def test_gt_plt_conf_int_width_parametrized(
-    width, expected_width_style, expected_label_c1, expected_label_c2
-):
-    df = pd.DataFrame(
-        {
-            "group": ["A", "B"],
-            "mean": [5, 7],
-            "ci_lower": [1.23456, 5.12345],
-            "ci_upper": [6.98765, 9.87654],
-        }
-    )
-    gt_test = GT(df)
-    html = gt_plt_conf_int(
-        gt=gt_test,
-        column="mean",
-        ci_columns=["ci_lower", "ci_upper"],
-        width=width,
-    ).as_raw_html()
-
-    assert html.count(expected_width_style) == 2
-    assert f">{expected_label_c1}</div>" in html
-    assert f">{expected_label_c2}</div>" in html
 
 
 def test_gt_plt_conf_int_custom_colors():
@@ -384,26 +322,6 @@ def test_gt_plt_conf_int_invalid_ci_columns():
 
     with pytest.raises(ValueError, match="Expected 2 ci_columns"):
         gt_plt_conf_int(gt=gt_test, column="mean", ci_columns=["ci_lower"])
-
-
-def test_gt_plt_conf_int_invalid_text_size():
-    df = pd.DataFrame(
-        {
-            "group": ["A", "B"],
-            "mean": [5.2, 7.8],
-            "ci_lower": [4.1, 6.9],
-            "ci_upper": [6.3, 8.7],
-        }
-    )
-    gt_test = GT(df)
-
-    with pytest.raises(ValueError, match="Text_size expected to be one of"):
-        gt_plt_conf_int(
-            gt=gt_test,
-            column="mean",
-            ci_columns=["ci_lower", "ci_upper"],
-            text_size="invalid",
-        )
 
 
 def test_gt_plt_conf_int_with_none_values():
@@ -469,8 +387,10 @@ def test_gt_plt_conf_int_precomputed_invalid_data():
     ):
         gt_plt_conf_int(gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"])
 
+
 def test_gt_plt_dumbbell_snap(snapshot):
     pass
+
 
 def test_gt_plt_dumbbell_basic(mini_gt):
     pass

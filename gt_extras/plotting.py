@@ -411,13 +411,14 @@ def gt_plt_conf_int(
     ci_columns: SelectExpr | None = None,
     ci: float = 0.95,
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
-    width: float | int = 100,
-    # height: float | int = 30,
+    width: float = 100,
+    height: float = 30,
     dot_color: str = "red",
     border_color: str = "red",
     line_color: str = "royalblue",
     text_color: str = "black",
-    text_size: Literal["small", "default", "large", "largest", "none"] = "default",
+    font_size: int = 10,
+    num_decimals: int = 1,
     # TODO: "none" vs None in text_size
 ) -> GT:
     """
@@ -451,6 +452,9 @@ def gt_plt_conf_int(
     width
         The width of the confidence interval plot in pixels.
 
+    height
+        The width of the confidence interval plot in pixels.
+
     dot_color
         The color of the mean dot.
 
@@ -463,9 +467,13 @@ def gt_plt_conf_int(
     text_color
         The color of the confidence interval labels.
 
-    text_size
+    font_size
         The size of the text for the confidence interval labels.
-        Options are include `"none"` for no text.
+        A value of 0 will result in hiding the text.
+    
+    num_decimals
+        The number of decimals to display when rounding the value of the
+        confidence interval labels.
 
     Returns
     -------
@@ -526,6 +534,7 @@ def gt_plt_conf_int(
     gt.pipe(
         gte.gt_plt_conf_int,
         column="ci",
+        width = 160,
     )
     ```
 
@@ -537,38 +546,21 @@ def gt_plt_conf_int(
     # TODO: refactor? It's quite a long function
     # TODO: consider including height
 
-    # Set total number of digits (including before and after decimal)
-    def _format_number_by_width(num: float | int, width: float | int) -> str:
-        if width < 30:
-            total_digits = 1
-        elif width < 45:
-            total_digits = 2
-        elif width < 60:
-            total_digits = 3
-        elif width < 75:
-            total_digits = 4
-        else:
-            total_digits = 5
-
-        int_digits = len(str(int(num)))
-        decimals = max(0, total_digits - int_digits)
-        formatted = f"{num:.{decimals}f}".rstrip("0").rstrip(".")
-
-        return formatted
-
     def _make_conf_int_html(
-        mean: float | int,
-        c1: float | int,
-        c2: float | int,
-        font_size: float | int,
-        min_val: float | int,
-        max_val: float | int,
+        mean: float,
+        c1: float,
+        c2: float,
+        font_size: float,
+        min_val: float,
+        max_val: float,
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
-        width: float | int,
+        width: float,
+        height: float,
         border_color: str,
         line_color: str,
         dot_color: str,
         text_color: str,
+        num_decimals: int,
     ):
         if (
             is_na(gt._tbl_data, mean)
@@ -584,41 +576,50 @@ def gt_plt_conf_int(
         c2_pos = ((c2 - min_val) / span) * width
         mean_pos = ((mean - min_val) / span) * width
 
-        bar_top = 12.0  # Center the bar vertically
+        div_midpoint = height / 2
+
+        bar_height = height / 10
+        bar_top = div_midpoint + bar_height / 2
+
+        label_bottom = height - bar_top
+
+        dot_size = height / 5
+        dot_top = bar_top - dot_size / 4
+        dot_left = mean_pos - dot_size / 2
 
         label_style = (
             "position:absolute;"
             "left:{pos}px;"
-            "bottom:18px;"
+            f"bottom:{label_bottom}px;"
             "color:{color};"
             "font-size:{font_size}px;"
         )
 
         c1_label_html = (
             f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
-            f"{_format_number_by_width(c1, c2_pos - c1_pos)}"
-            "</div>"
+            f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
+            + "</div>"
         )
 
         c2_label_html = (
             f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
-            'transform:translateX(-100%);">'  # Move c2 to the left
-            f"{_format_number_by_width(c2, c2_pos - c1_pos)}"
-            "</div>"
+            f'transform:translateX(-100%);">'  # Move c2 to the left
+            f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
+            + "</div>"
         )
 
         html = f"""
-            <div style="position:relative; width:{width}px; height:{44}px;">
+            <div style="position:relative; width:{width}px; height:{height}px;">
             {c1_label_html}
             {c2_label_html}
             <div style="
                 position:absolute; left:{c1_pos}px;
-                top:{bar_top + 14}px; width:{c2_pos - c1_pos}px;
-                height:4px; background:{line_color}; border-radius:2px;
+                top:{bar_top}px; width:{c2_pos - c1_pos}px;
+                height:{bar_height}px; background:{line_color}; border-radius:2px;
             "></div>
             <div style="
-                position:absolute; left:{mean_pos - 4}px;
-                top:{bar_top + 11}px; width:10px; height:10px;
+                position:absolute; left:{dot_left}px;
+                top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;
                 background:{dot_color}; border-radius:50%;
                 border:2px solid {border_color}; box-sizing:border-box;
             "></div>
@@ -701,22 +702,6 @@ def gt_plt_conf_int(
     global_min = data_min - padding
     global_max = data_max + padding
 
-    if text_size == "small":
-        font_size = 6
-    elif text_size == "default":
-        font_size = 10
-    elif text_size == "large":
-        font_size = 14
-    elif text_size == "largest":
-        font_size = 18
-    elif text_size == "none":
-        font_size = 0
-    else:
-        raise ValueError(
-            "Text_size expected to be one of the following:"
-            f"'small', 'default', 'large', 'largest', or 'none'. Received '{text_size}'."
-        )
-
     res = gt
     for i in range(len(gt._tbl_data)):
         c1 = c1_vals[i]
@@ -728,14 +713,16 @@ def gt_plt_conf_int(
                 mean=mean,
                 c1=c1,
                 c2=c2,
-                line_color=line_color,
-                dot_color=dot_color,
-                text_color=text_color,
-                border_color=border_color,
                 font_size=font_size,
                 min_val=global_min,
                 max_val=global_max,
                 width=width,
+                height=height,
+                border_color=border_color,
+                line_color=line_color,
+                dot_color=dot_color,
+                text_color=text_color,
+                num_decimals=num_decimals,
             ),
             columns=data_column_name,
             rows=[i],
