@@ -55,7 +55,7 @@
                   position:absolute; left:39.2316384180791px;
                   top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
-                  border:2px solid red; box-sizing:border-box;
+                  border:1.5px solid red; box-sizing:border-box;
               "></div>
               </div></td>
       <td class="gt_row gt_right">4.1</td>
@@ -75,7 +75,7 @@
                   position:absolute; left:75.95480225988702px;
                   top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
-                  border:2px solid red; box-sizing:border-box;
+                  border:1.5px solid red; box-sizing:border-box;
               "></div>
               </div></td>
       <td class="gt_row gt_right">6.9</td>
@@ -95,7 +95,7 @@
                   position:absolute; left:13.807909604519775px;
                   top:17.0px; width:6.0px; height:6.0px;
                   background:red; border-radius:50%;
-                  border:2px solid red; box-sizing:border-box;
+                  border:1.5px solid red; box-sizing:border-box;
               "></div>
               </div></td>
       <td class="gt_row gt_right">2.8</td>
