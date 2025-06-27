@@ -414,7 +414,7 @@ def gt_plt_conf_int(
     width: float = 100,
     height: float = 30,
     dot_color: str = "red",
-    border_color: str = "red",
+    dot_border_color: str = "red",
     line_color: str = "royalblue",
     text_color: str = "black",
     font_size: int = 10,
@@ -458,7 +458,7 @@ def gt_plt_conf_int(
     dot_color
         The color of the mean dot.
 
-    border_color
+    dot_border_color
         The color of the border around the mean dot.
 
     line_color
@@ -555,7 +555,7 @@ def gt_plt_conf_int(
         # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float,
         height: float,
-        border_color: str,
+        dot_border_color: str,
         line_color: str,
         dot_color: str,
         text_color: str,
@@ -583,6 +583,7 @@ def gt_plt_conf_int(
         dot_size = height / 5
         dot_top = bar_top - dot_size / 4
         dot_left = mean_pos - dot_size / 2
+        dot_border = height / 20
 
         label_style = (
             "position:absolute;"
@@ -618,7 +619,7 @@ def gt_plt_conf_int(
                 position:absolute; left:{dot_left}px;
                 top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;
                 background:{dot_color}; border-radius:50%;
-                border:2px solid {border_color}; box-sizing:border-box;
+                border:{dot_border}px solid {dot_border_color}; box-sizing:border-box;
             "></div>
             </div>
             """
@@ -701,7 +702,7 @@ def gt_plt_conf_int(
                 max_val=global_max,
                 width=width,
                 height=height,
-                border_color=border_color,
+                dot_border_color=dot_border_color,
                 line_color=line_color,
                 dot_color=dot_color,
                 text_color=text_color,
@@ -724,6 +725,7 @@ def gt_plt_dumbbell(
     col1_color: str = "purple",
     col2_color: str = "green",
     bar_color: str = "grey",
+    dot_border_color = "white",
     font_size: int = 10,
     num_decimals: int = 1,
 ) -> GT:
@@ -765,6 +767,9 @@ def gt_plt_dumbbell(
     bar_color
         The color of the horizontal bar connecting the two dots.
 
+    dot_border_color
+        The color of the borders around the two dots.
+        
     font_size
         The font size for the value labels displayed above each dot.
 
@@ -830,6 +835,7 @@ def gt_plt_dumbbell(
         value_1_color: str,
         value_2_color: str,
         bar_color: str,
+        dot_border_color: str,
         max_val: float,
         min_val: float,
         font_size: int,
@@ -882,7 +888,7 @@ def gt_plt_dumbbell(
             "position:absolute; left:{pos}px; "
             f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px; "
             "background:{color}; border-radius:50%; "
-            f"border:{dot_border}px solid white; box-sizing: content-box;"
+            f"border:{dot_border}px solid {dot_border_color}; box-sizing: content-box;"
         )
 
         value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
@@ -942,6 +948,7 @@ def gt_plt_dumbbell(
                 value_1_color=col1_color,
                 value_2_color=col2_color,
                 bar_color=bar_color,
+                dot_border_color=dot_border_color,
                 max_val=global_max,
                 min_val=global_min,
                 font_size=font_size,
