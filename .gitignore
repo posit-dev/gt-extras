@@ -119,5 +119,7 @@ latex_examples.pdf
 # misc files for debugging
 sandbox.*
 possible_feats.*
+compare_themes.py
 compare_tables.html
+
 .vscode
