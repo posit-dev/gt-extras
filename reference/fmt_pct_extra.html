@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_theme_guardian – gt-extras</title>
+<title>fmt_pct_extra – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_theme_nytimes.html" rel="next">
-<link href="../reference/gt_theme_excel.html" rel="prev">
+<link href="../reference/gt_hyperlink.html" rel="next">
+<link href="../reference/gt_fa_rating.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">HTML and Formatting</a></li><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">fmt_pct_extra</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -279,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_theme_guardian</span></a>
   </div>
 </li>
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">fmt_pct_extra</span></a>
   </div>
 </li>
@@ -368,9 +368,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">HTML and Formatting</a></li><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">fmt_pct_extra</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_theme_guardian</h1>
+<h1 class="title">fmt_pct_extra</h1>
 </div>
 
 
@@ -387,15 +387,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_theme_guardian(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Applies a Guardian-inspired theme to a <code>GT</code> object.</p>
-<p>This function styles a <code>GT</code> object with a look inspired by The Guardian’s data tables.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fmt_pct_extra(gt, columns, scale<span class="op">=</span><span class="dv">100</span>, threshold<span class="op">=</span><span class="fl">1.0</span>, color<span class="op">=</span><span class="st">'grey'</span>, decimals<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Convert to percent and show less than <code>1%</code> as <code>&lt;1%</code> in grey.</p>
+<p>The <code>fmt_pct_extra()</code> function takes an existing <code>GT</code> object and formats a column of numeric values as percentages. Values below the specified threshold are displayed as <code>"&lt;threshold%"</code> instead of their actual percentage value, and in a unique color.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
 <dt><code><span class="parameter-name"><strong>gt</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>An existing <code>GT</code> object.</p>
+<p>A <code>GT</code> object to modify.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
+<dd>
+<p>The columns containing numeric values to format as percentages.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>scale</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dd>
+<p>Multiplication factor to convert values to percentages. Use <code>100</code> if values are decimals <code>(0.05 -&gt; 5%)</code> (default), use <code>1</code> if values are already percentages <code>(5 -&gt; 5%)</code>.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>threshold</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1.0</span></code></dt>
+<dd>
+<p>The percentage threshold below which values are displayed as <code>"&lt;threshold%"</code> instead of their actual value. Note this refers to the scaled value, not the original.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'grey'</span></code></dt>
+<dd>
+<p>The color to use for values below the threshold.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dd>
+<p>Number of decimal places to display for percentages.</p>
 </dd>
 </dl>
 </section>
@@ -404,119 +424,166 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl>
 <dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>The themed <code>GT</code> object, allowing for method chaining.</p>
+<p>A <code>GT</code> object with formatted percentage column.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="461308b9" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
+<div id="ff1a7214" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> towny</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars[[<span class="st">"model"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"trq"</span>]].head(<span class="dv">5</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span>md(<span class="st">"*Car*"</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Car Collection"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_theme_guardian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>towny_mini <span class="op">=</span> towny[</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_1996_2001_pct"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_2001_2006_pct"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_2006_2011_pct"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>].tail(<span class="dv">10</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    GT(towny_mini)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Population Change"</span>, columns<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        pop_change_1996_2001_pct<span class="op">=</span><span class="st">"'96-'01"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        pop_change_2001_2006_pct<span class="op">=</span><span class="st">"'01-'06"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        pop_change_2006_2011_pct<span class="op">=</span><span class="st">"'06-'11"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    gte.fmt_pct_extra,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    threshold<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"green"</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="caapyjxbsk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lpfoyamvfg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-#caapyjxbsk table {
-          font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+#lpfoyamvfg table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#caapyjxbsk thead, tbody, tfoot, tr, td, th { border-style: none; }
+#lpfoyamvfg thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#caapyjxbsk p { margin: 0; padding: 0; }
- #caapyjxbsk .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #f6f6f6; width: auto; border-top-style: solid; border-top-width: 1px; border-top-color: #40c5ff; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #caapyjxbsk .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #caapyjxbsk .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #f6f6f6; border-bottom-width: 0; }
- #caapyjxbsk .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #f6f6f6; border-top-width: 0; }
- #caapyjxbsk .gt_heading { background-color: #f6f6f6; text-align: left; border-bottom-color: #f6f6f6; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #caapyjxbsk .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 0px; border-bottom-color: #D3D3D3; }
- #caapyjxbsk .gt_col_headings { border-top-style: solid; border-top-width: 1px; border-top-color: #ececec; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #caapyjxbsk .gt_col_heading { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #caapyjxbsk .gt_column_spanner_outer { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #caapyjxbsk .gt_column_spanner_outer:first-child { padding-left: 0; }
- #caapyjxbsk .gt_column_spanner_outer:last-child { padding-right: 0; }
- #caapyjxbsk .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #caapyjxbsk .gt_spanner_row { border-bottom-style: hidden; }
- #caapyjxbsk .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #caapyjxbsk .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; vertical-align: middle; }
- #caapyjxbsk .gt_from_md> :first-child { margin-top: 0; }
- #caapyjxbsk .gt_from_md> :last-child { margin-bottom: 0; }
- #caapyjxbsk .gt_row { padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 0px; border-top-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #caapyjxbsk .gt_stub { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #caapyjxbsk .gt_stub_row_group { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #caapyjxbsk .gt_row_group_first td { border-top-width: 1px; }
- #caapyjxbsk .gt_row_group_first th { border-top-width: 1px; }
- #caapyjxbsk .gt_striped { background-color: #ececec; }
- #caapyjxbsk .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; }
- #caapyjxbsk .gt_sourcenotes { color: #333333; background-color: #f6f6f6; border-bottom-style: none; border-bottom-width: 0px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #caapyjxbsk .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #caapyjxbsk .gt_left { text-align: left; }
- #caapyjxbsk .gt_center { text-align: center; }
- #caapyjxbsk .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #caapyjxbsk .gt_font_normal { font-weight: normal; }
- #caapyjxbsk .gt_font_bold { font-weight: bold; }
- #caapyjxbsk .gt_font_italic { font-style: italic; }
- #caapyjxbsk .gt_super { font-size: 65%; }
- #caapyjxbsk .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #caapyjxbsk .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#lpfoyamvfg p { margin: 0; padding: 0; }
+ #lpfoyamvfg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #lpfoyamvfg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #lpfoyamvfg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #lpfoyamvfg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #lpfoyamvfg .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #lpfoyamvfg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #lpfoyamvfg .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #lpfoyamvfg .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #lpfoyamvfg .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #lpfoyamvfg .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #lpfoyamvfg .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #lpfoyamvfg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #lpfoyamvfg .gt_spanner_row { border-bottom-style: hidden; }
+ #lpfoyamvfg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #lpfoyamvfg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #lpfoyamvfg .gt_from_md> :first-child { margin-top: 0; }
+ #lpfoyamvfg .gt_from_md> :last-child { margin-bottom: 0; }
+ #lpfoyamvfg .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #lpfoyamvfg .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #lpfoyamvfg .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #lpfoyamvfg .gt_row_group_first td { border-top-width: 2px; }
+ #lpfoyamvfg .gt_row_group_first th { border-top-width: 2px; }
+ #lpfoyamvfg .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #lpfoyamvfg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #lpfoyamvfg .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #lpfoyamvfg .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #lpfoyamvfg .gt_left { text-align: left; }
+ #lpfoyamvfg .gt_center { text-align: center; }
+ #lpfoyamvfg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #lpfoyamvfg .gt_font_normal { font-weight: normal; }
+ #lpfoyamvfg .gt_font_bold { font-weight: bold; }
+ #lpfoyamvfg .gt_font_italic { font-style: italic; }
+ #lpfoyamvfg .gt_super { font-size: 65%; }
+ #lpfoyamvfg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #lpfoyamvfg .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
-  <tr class="gt_heading">
-    <td colspan="4" class="gt_heading gt_title gt_font_normal" style="color: #005689;font-size: 22px;font-weight: 700;">Car Collection</td>
-  </tr>
+<tr class="gt_col_headings gt_spanner_row">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="name">name</th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Population-Change">
+    <span class="gt_column_spanner">Population Change</span>
+  </th>
+</tr>
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<em>Car</em>"><em>Car</em></th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_1996_2001_pct">'96-'01</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_2001_2006_pct">'01-'06</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_2006_2011_pct">'06-'11</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <th class="gt_row gt_left gt_stub">GT</th>
-    <td class="gt_row gt_right">2017</td>
-    <td class="gt_row gt_right">647.0</td>
-    <td class="gt_row gt_right">550.0</td>
+    <td class="gt_row gt_left">Whitchurch-Stouffville</td>
+    <td class="gt_row gt_right">11.6%</td>
+    <td class="gt_row gt_right">6.7%</td>
+    <td class="gt_row gt_right">54.3%</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Speciale</th>
-    <td class="gt_row gt_right gt_striped">2015</td>
-    <td class="gt_row gt_right gt_striped">597.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
+    <td class="gt_row gt_left">White River</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right">-15.3%</td>
+    <td class="gt_row gt_right">-27.8%</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Spider</th>
-    <td class="gt_row gt_right">2015</td>
-    <td class="gt_row gt_right">562.0</td>
-    <td class="gt_row gt_right">398.0</td>
+    <td class="gt_row gt_left">Whitestone</td>
+    <td class="gt_row gt_right">6.4%</td>
+    <td class="gt_row gt_right">20.8%</td>
+    <td class="gt_row gt_right">-10.9%</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Italia</th>
-    <td class="gt_row gt_right gt_striped">2014</td>
-    <td class="gt_row gt_right gt_striped">562.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
+    <td class="gt_row gt_left">Whitewater</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">488 GTB</th>
-    <td class="gt_row gt_right">2016</td>
-    <td class="gt_row gt_right">661.0</td>
-    <td class="gt_row gt_right">561.0</td>
+    <td class="gt_row gt_left">Wilmot</td>
+    <td class="gt_row gt_right">7.5%</td>
+    <td class="gt_row gt_right">15.0%</td>
+    <td class="gt_row gt_right">12.4%</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_left">Windsor</td>
+    <td class="gt_row gt_right">5.4%</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_left">Wollaston</td>
+    <td class="gt_row gt_right">-5.6%</td>
+    <td class="gt_row gt_right">7.5%</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_left">Woodstock</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right">8.3%</td>
+    <td class="gt_row gt_right">5.4%</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_left">Woolwich</td>
+    <td class="gt_row gt_right">5.1%</td>
+    <td class="gt_row gt_right">8.0%</td>
+    <td class="gt_row gt_right">17.7%</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_left">Zorra</td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
   </tr>
 </tbody>
 
@@ -933,13 +1000,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_theme_excel.html" class="pagination-link" aria-label="gt_theme_excel">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_theme_excel</span>
+      <a href="../reference/gt_fa_rating.html" class="pagination-link" aria-label="gt_fa_rating">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_fa_rating</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_theme_nytimes.html" class="pagination-link" aria-label="gt_theme_nytimes">
-        <span class="nav-page-text">gt_theme_nytimes</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_hyperlink.html" class="pagination-link" aria-label="gt_hyperlink">
+        <span class="nav-page-text">gt_hyperlink</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
