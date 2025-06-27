@@ -470,7 +470,7 @@ def gt_plt_conf_int(
     font_size
         The size of the text for the confidence interval labels.
         A value of 0 will result in hiding the text.
-    
+
     num_decimals
         The number of decimals to display when rounding the value of the
         confidence interval labels.
@@ -544,7 +544,6 @@ def gt_plt_conf_int(
     """
     # TODO: comments
     # TODO: refactor? It's quite a long function
-    # TODO: consider including height
 
     def _make_conf_int_html(
         mean: float,
@@ -743,16 +742,16 @@ def gt_plt_dumbbell(
     text_size: Literal["small", "default", "large", "largest", "none"] = "default",
 ) -> GT:
     def _make_dumbbell_html(
-        value_1: float | int,
-        value_2: float | int,
+        value_1: float,
+        value_2: float,
+        width: float,
+        height: float,
         value_1_color: str,
         value_2_color: str,
         bar_color: str,
-        width: float | int,
-        height: float | int,
-        max_val: float | int,
-        min_val: float | int,
-        font_size: float | int,
+        max_val: float,
+        min_val: float,
+        text_size: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
             return "<div></div>"
@@ -762,58 +761,57 @@ def gt_plt_dumbbell(
         pos_1 = ((value_1 - min_val) / span) * width
         pos_2 = ((value_2 - min_val) / span) * width
 
-        # Calculate bar position and width
         bar_left = pos_1
         bar_width = pos_2 - pos_1
+        bar_height = height / 10
+        bar_top = height / 2 + bar_height / 2
 
-        # TODO: compute based on text size
-        bar_top = "60%"  # 50% if no text
+        dot_size = height / 5
+        dot_border = height / 20
+        dot_top = bar_top - dot_size / 2 - dot_border / 2
+        dot_1_left = pos_1 - dot_size / 2 - dot_border
+        dot_2_left = pos_2 - dot_size / 2 - dot_border
+
+        label_bottom = height - dot_top
 
         label_style = (
-            "position:absolute; left:{pos}px; bottom:0px;"
-            f"transform:translate3d(-50%, {-height / 2}px, 0);"
-            "color:{color}; font-size:{font_size}px; font-weight:bold;"
+            "position:absolute; left:{pos}px;"
+            f"bottom:{label_bottom}px;"
+            f"transform:translateX(-50%);"
+            "color:{color}; font-size:{text_size}px; font-weight:bold;"
         )
 
         value_1_label = (
-            f'<div style="{label_style.format(pos=pos_1, color=value_1_color, font_size=font_size)}">'
+            f'<div style="{label_style.format(pos=pos_1, color=value_1_color, text_size=text_size)}">'
             f"{value_1:.1f}"
             "</div>"
         )
 
         value_2_label = (
-            f'<div style="{label_style.format(pos=pos_2, color=value_2_color, font_size=font_size)}">'
+            f'<div style="{label_style.format(pos=pos_2, color=value_2_color, text_size=text_size)}">'
             f"{value_2:.1f}"
             "</div>"
         )
 
         dot_style = (
             "position:absolute; left:{pos}px;"
-            f"top:{bar_top}; width:{height / 3}px; height:{height / 3}px;"
-            "transform: translate3d(-50%, -35%, 0px);"
+            f"top:{dot_top}; width:{dot_size}px; height:{dot_size}px;"
             "background:{color}; border-radius:50%;"
-            "border:2px solid white; box-sizing:border-box;"
+            f"border:{dot_border}px solid white;"
         )
 
-        value_1_dot = (
-            f'<div style="{dot_style.format(pos=pos_1, color=value_1_color)}"></div>'
-        )
-        value_2_dot = (
-            f'<div style="{dot_style.format(pos=pos_2, color=value_2_color)}"></div>'
-        )
+        value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
+        value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
 
         html = f"""
-        <div style="position: relative; width:{width}px; height:{height}px;">
+        <div style="position:relative; width:{width}px; height:{height}px; background-color:tan;">
             {value_1_label}
             {value_2_label}
             <div style="
-                position: absolute;
-                left: {bar_left}px;
-                top: {bar_top};
-                width: {bar_width}px;
-                height: {height / 10}px;
-                background: {bar_color};
-                border-radius: 2px;
+                position:absolute; left:{bar_left}px;
+                top:{bar_top}; width:{bar_width}px;
+                height:{bar_height}px; background:{bar_color};
+                border-radius:2px;
             "></div>
             {value_1_dot}
             {value_2_dot}
