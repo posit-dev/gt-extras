@@ -1221,20 +1221,15 @@ def gt_plt_bar_stack(
     font_size: int = 10,
     spacing: float = 2,
     num_decimals: int = 0,
-    as_discrete: bool = False,
+    scale_type: Literal["relative", "absolute"] = "relative",
 ) -> GT:
     """
     Create stacked horizontal bar plots in `GT` cells.
 
     The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
     charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
-    proportional to the values in the list, relative to the other values in the column. Each bar
-    is assigned a color from the provided palette, cycling through the palette if there are more
-    values than colors.
-
-    If `as_discrete` is set to `True`, the bars are scaled relative to the sum of the values in each
-    cell. If `as_discrete` is set to `False`, the bars are scaled relative to the maximum value
-    across all rows.
+    proportional to the values in the list. The scaling of the bars can be controlled using the
+    `scale_type` parameter.
 
     Parameters
     ----------
@@ -1270,9 +1265,10 @@ def gt_plt_bar_stack(
     num_decimals
         The number of decimal places to display in the text labels on the bars.
 
-    as_discrete
-        Whether to scale the bars relative to the sum of the values in each cell (`False`)
-        or relative to the maximum value across all rows (`True`).
+    scale_type
+        Determines how the bars are scaled. Options are `"relative"` (bars are scaled relative to
+        the sum of the values in each cell) and `"absolute"` (bars are scaled relative to the
+        maximum value across all rows).
 
     Returns
     -------
@@ -1325,11 +1321,11 @@ def gt_plt_bar_stack(
         column="col",
         labels=["Group 1", "Group 2", "Group 3"],
         width=200,
-        as_discrete = False
+        scale_type="relative",
     )
     ```
 
-    Or we can treat them as discrete values.
+    Or we can treat them as absolute values.
 
     ```{python}
     df = pd.DataFrame({
@@ -1348,7 +1344,7 @@ def gt_plt_bar_stack(
         column="col",
         labels=["Group 1", "Group 2", "Group 3"],
         width=200,
-        as_discrete = True,
+        scale_type="absolute",
     )
     ```
     """
@@ -1362,7 +1358,7 @@ def gt_plt_bar_stack(
         spacing: float,
         num_decimals: int,
         font_size: int,
-        as_discrete: bool,
+        scale_type: Literal["relative", "absolute"],
     ) -> str:
         if not values:
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
@@ -1371,9 +1367,7 @@ def gt_plt_bar_stack(
             1 for val in values if val != 0 and not is_na(gt._tbl_data, val)
         )
 
-        print(len_non_zero_values)
-
-        if as_discrete:
+        if scale_type == "absolute":
             total = max_length
         else:
             total = sum(values)
@@ -1426,6 +1420,10 @@ def gt_plt_bar_stack(
         """
         return html.strip()
 
+    # Throw if `scale_type` is not one of the allowed values
+    if scale_type not in ["relative", "absolute"]:
+        raise ValueError("Scale_type must be either 'relative' or 'absolute'")
+
     col_name, col_vals = _validate_and_get_single_column(gt, expr=column)
     max_len = max(sum(col) for col in col_vals)
     max_num_values = max(len(col) for col in col_vals)
@@ -1451,7 +1449,7 @@ def gt_plt_bar_stack(
             spacing=spacing,
             font_size=font_size,
             num_decimals=num_decimals,
-            as_discrete=as_discrete,
+            scale_type=scale_type,
         ),
         columns=column,
     )
