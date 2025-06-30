@@ -4,7 +4,13 @@ from gt_extras.tests.conftest import assert_rendered_body
 import pandas as pd
 import numpy as np
 from great_tables import GT
-from gt_extras import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
+from gt_extras import (
+    gt_plt_bar,
+    gt_plt_dot,
+    gt_plt_conf_int,
+    gt_plt_dumbbell,
+    gt_plt_winloss,
+)
 
 
 def test_gt_plt_bar_snap(snapshot, mini_gt):
@@ -553,3 +559,167 @@ def test_gt_plt_dumbbell_reversed_values():
     assert 'color:green; font-size:10px; font-weight:bold;">400.0' in html
     assert 'color:purple; font-size:10px; font-weight:bold;">200.0' in html
     assert 'color:green; font-size:10px; font-weight:bold;">15.0' in html
+
+
+def test_gt_plt_winloss_snap(snapshot):
+    df = pd.DataFrame(
+        {
+            "team": ["A", "B"],
+            "games": [
+                [1, 0.5, 0],
+                [0, 0, 1],
+            ],
+        }
+    )
+    gt_test = GT(df)
+    res = gt_plt_winloss(gt=gt_test, column="games")
+
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_winloss_basic():
+    df = pd.DataFrame({"team": ["A", "B"], "games": [[1, 0, 0.5], [0, 1, 1]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games").as_raw_html()
+
+    assert (
+        html.count("""width:24.666666666666668px;
+                height:12.0px;
+                background:blue;""")
+        == 3
+    )
+    assert html.count("width:24.666666666666668px;") == 6
+    assert html.count("border-radius:2px;") == 6
+    assert html.count("background:grey;") == 1
+
+
+def test_gt_plt_winloss_custom_colors():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 1, 1, 0, 0, 0.5]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(
+        gt=gt_test,
+        column="games",
+        win_color="green",
+        loss_color="black",
+        tie_color="#FFA500",
+    ).as_raw_html()
+
+    assert html.count("background:green;") == 3
+    assert html.count("background:black;") == 2
+    assert html.count("background:#FFA500;") == 1
+
+
+def test_gt_plt_winloss_custom_dimensions():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(
+        gt=gt_test, column="games", width=200, height=50
+    ).as_raw_html()
+
+    assert "width:200px; height:50px;" in html
+
+
+def test_gt_plt_winloss_shape_square():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games", shape="square").as_raw_html()
+
+    assert html.count("border-radius:0.5px;") == 2
+
+
+def test_gt_plt_winloss_shape_pill():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games", shape="pill").as_raw_html()
+
+    assert html.count("border-radius:2px;") == 2
+
+
+def test_gt_plt_winloss_spacing():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0, 1]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games", width=90, spacing=6).as_raw_html()
+
+    assert "left:30.0px;" in html
+    assert "left:60.0px;" in html
+    assert html.count("width:24.0px") == 3
+
+
+def test_gt_plt_winloss_with_empty_list():
+    df = pd.DataFrame({"team": ["A", "B"], "games": [[], [1, 0]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games").as_raw_html()
+
+    assert '<div style="position:relative; width:80px; height:30px;"></div>' in html
+
+
+def test_gt_plt_winloss_with_none_values():
+    df = pd.DataFrame({"team": ["A", "B"], "games": [[np.nan, 1, None, 0], [0.5, 1]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games").as_raw_html()
+
+    assert html.count("background:blue;") == 2
+    assert html.count("background:red;") == 1
+    assert html.count("background:grey;") == 1
+    assert html.count("left:20.0px") == 2
+    assert html.count("left:60.0px") == 1
+
+
+def test_gt_plt_winloss_with_invalid_values():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0.2, 0.5, 2, 0, "invalid"]]})
+    gt_test = GT(df)
+
+    with pytest.warns(
+        UserWarning, match="Invalid value '.*' encountered in win/loss data. Skipping."
+    ):
+        html = gt_plt_winloss(gt=gt_test, column="games").as_raw_html()
+
+    assert html.count("background:blue;") == 1
+    assert html.count("background:grey;") == 1
+    assert html.count("background:red;") == 1
+
+
+def test_gt_plt_winloss_different_length_lists():
+    df = pd.DataFrame({"team": ["A", "B"], "games": [[1, 0], [1, 0, 0.5, 1, 0]]})
+    gt_test = GT(df)
+
+    html = gt_plt_winloss(gt=gt_test, column="games").as_raw_html()
+
+    assert html.count("left:16.0px;") == 2
+    assert html.count("left:32.0px;") == 1
+
+    assert html.count("background:blue;") == 3
+    assert html.count("background:red;") == 3
+    assert html.count("background:grey;") == 1
+
+
+def test_gt_plt_winloss_invalid_column():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0]]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError):
+        gt_plt_winloss(gt=gt_test, column="invalid_column")
+
+
+def test_gt_plt_winloss_spacing_warning():
+    df = pd.DataFrame({"team": ["A"], "games": [[1, 0, 1, 0, 1]]})
+    gt_test = GT(df)
+
+    with pytest.warns(
+        UserWarning,
+        match="Spacing is too large relative to the width. No bars will be displayed.",
+    ):
+        gt_plt_winloss(
+            gt=gt_test,
+            column="games",
+            width=10,
+            spacing=5,
+        )

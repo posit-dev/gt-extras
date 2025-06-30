@@ -24,7 +24,13 @@ from svg import SVG, Line, Rect, Text
 from scipy.stats import t, sem, tmean
 
 
-__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int", "gt_plt_dumbbell"]
+__all__ = [
+    "gt_plt_bar",
+    "gt_plt_dot",
+    "gt_plt_conf_int",
+    "gt_plt_dumbbell",
+    "gt_plt_winloss",
+]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -961,5 +967,264 @@ def gt_plt_dumbbell(
     res = res.cols_hide(col2_name)
     if label is not None:
         res = res.cols_label({col1_name: label})
+
+    return res
+
+
+def gt_plt_winloss(
+    gt: GT,
+    column: SelectExpr,
+    width: float = 80,
+    height: float = 30,
+    win_color: str = "blue",
+    loss_color: str = "red",
+    tie_color: str = "grey",
+    shape: Literal["pill", "square"] = "pill",
+    spacing: float = 2,
+) -> GT:
+    """
+    Create win/loss charts in `GT` cells.
+
+    The `gt_plt_winloss()` function takes an existing `GT` object and adds win/loss sparkline
+    charts to a specified column. Each cell displays a series of small vertical bars representing
+    individual game outcomes, This visualization is useful for showing performance streaks and
+    patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
+    column, ensuring consistent bar spacing across all rows.
+
+    Wins must be represented as 1, ties as 0.5, and losses as 0.
+    Invalid values (not 0, 0.5, or 1) are skipped.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing lists of win/loss/tie values. Each cell should contain a list where:
+        `1` represents a win, `0` represents a loss, and `0.5` represents a tie.
+        Values that are not listed above are skipped.
+
+    width
+        The width of the win/loss chart in pixels.
+
+    height
+        The height of the win/loss chart in pixels.
+
+    win_color
+        The color for bars representing wins.
+
+    loss_color
+        The color for bars representing losses.
+
+    tie_color
+        The color for bars representing ties.
+
+    shape
+        The shape style of the bars. Options are `"pill"` for taller bars or `"square"` for
+        stockier, nearly square bars.
+
+    spacing
+        The horizontal gap, in pixels, between each bar. Note that if the spacing is too large, it
+        may obstruct the bars from view.
+
+    Returns
+    -------
+    GT
+        A `GT` object with win/loss charts added to the specified column.
+
+    Examples
+    --------
+    First, let's make a table with randomly generated data:
+    ``` {python}
+    from great_tables import GT, md
+    import gt_extras as gte
+    import pandas as pd
+
+    df = pd.DataFrame(
+        {
+            "Team": ["Liverpool", "Chelsea", "Man City"],
+            "10 Games": [
+                [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],
+                [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+                [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0],
+            ],
+        }
+    )
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_winloss,
+        column="10 Games",
+        win_color="green",
+    )
+    ```
+
+
+    Let's do a more involved example using NFL season data from 2016.
+    ```{python}
+    #| code-fold: true
+    #| code-summary: Show the setup Code
+
+    # Load the NFL data
+    df = pd.read_csv("../assets/games.csv")
+    season_2016 = df[(df["season"] == 2016) & (df["game_type"] == "REG")].copy()
+
+    def get_team_results(games_df):
+        results = {}
+
+        for _, game in games_df.iterrows():
+            away_team = game["away_team"]
+            home_team = game["home_team"]
+            away_score = game["away_score"]
+            home_score = game["home_score"]
+
+            if away_team not in results:
+                results[away_team] = []
+            if home_team not in results:
+                results[home_team] = []
+
+            if away_score > home_score:
+                results[away_team].append(1)
+                results[home_team].append(0)
+            elif home_score > away_score:
+                results[home_team].append(1)
+                results[away_team].append(0)
+            else:
+                results[away_team].append(0.5)
+                results[home_team].append(0.5)
+
+        return results
+
+    team_results = get_team_results(season_2016)
+    winloss_df = pd.DataFrame(
+        [{"Team": team, "Games": results} for team, results in team_results.items()]
+    )
+
+    winloss_df = (
+        winloss_df
+        .sort_values("Team")
+        .reset_index(drop=True)
+        .head(10)
+    )
+    ```
+
+    Now that we've loaded the real-world data, let's see how we can use `gt_plt_winloss()`.
+
+    ```{python}
+    gt = (
+        GT(winloss_df)
+        .tab_header(
+            title="2016 NFL Season",
+        )
+        .tab_source_note(
+            md(
+                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+            )
+        )
+        .cols_align("left", columns="Games")
+    )
+
+    gt.pipe(
+        gte.gt_plt_winloss,
+        column="Games",
+    )
+
+    ```
+    """
+
+    def _make_winloss_html(
+        values: list[float],
+        max_wins: int,
+        width: float,
+        height: float,
+        win_color: str,
+        loss_color: str,
+        tie_color: str,
+        shape: Literal["pill", "square"],
+        spacing: float,
+    ) -> str:
+        if values is None or values == []:
+            # TODO: do this in other functions, standardize the size of the empty div``
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+
+        available_width = width - (max_wins) * spacing
+        bar_width = available_width / max_wins
+        win_bar_height = height * 0.2 if shape == "square" else height * 0.4
+
+        # Generate bars HTML
+        bars_html = []
+        for i, value in enumerate(values):
+            if is_na(gt._tbl_data, value):
+                continue
+
+            if value == 1:  # Win
+                color = win_color
+                top_pos = height * 0.2
+                bar_height = win_bar_height
+            elif value == 0.5:  # Tie
+                color = tie_color
+                top_pos = height * 0.4
+                bar_height = height * 0.2
+            elif value == 0:  # Loss
+                color = loss_color
+                top_pos = height * 0.8 - win_bar_height
+                bar_height = win_bar_height
+            else:
+                warnings.warn(
+                    f"Invalid value '{value}' encountered in win/loss data. Skipping.",
+                    category=UserWarning,
+                )
+                continue
+
+            left_pos = i * (bar_width + spacing)
+            border_radius = 0.5 if shape == "square" else 2
+
+            bar_html = f"""
+            <div style="
+                position:absolute;
+                left:{left_pos}px;
+                top:{top_pos}px;
+                width:{bar_width}px;
+                height:{bar_height}px;
+                background:{color};
+                border-radius:{border_radius}px;
+            "></div>
+            """
+            bars_html.append(bar_html.strip())
+
+        html = f"""
+        <div style="position:relative; width:{width}px; height:{height}px;">
+            {"".join(bars_html)}
+        </div>
+        """
+
+        return html.strip()
+
+    res = gt
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+    max_wins = max(len(entry) for entry in col_vals)
+
+    if spacing * max_wins >= width:
+        warnings.warn(
+            "Spacing is too large relative to the width. No bars will be displayed.",
+            category=UserWarning,
+        )
+
+    # I don't have to loop like with the others since I dont need to access other columns
+    res = res.fmt(
+        lambda x: _make_winloss_html(
+            x,
+            max_wins=max_wins,
+            width=width,
+            height=height,
+            win_color=win_color,
+            loss_color=loss_color,
+            tie_color=tie_color,
+            shape=shape,
+            spacing=spacing,
+        ),
+        columns=column,
+    )
 
     return res
