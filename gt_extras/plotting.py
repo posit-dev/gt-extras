@@ -974,7 +974,7 @@ def gt_plt_dumbbell(
 def gt_plt_winloss(
     gt: GT,
     column: SelectExpr,
-    width: float = 100,
+    width: float = 80,
     height: float = 30,
     win_color: str = "blue",
     loss_color: str = "red",
@@ -1001,9 +1001,7 @@ def gt_plt_winloss(
 
     column
         The column containing lists of win/loss/tie values. Each cell should contain a list where:
-        - `1` or `1.0` represents a win
-        - `0` or `0.0` represents a loss
-        - `0.5` represents a tie
+        `1` represents a win, `0` represents a loss, and `0.5` represents a tie.
         Values that are not listed above are skipped.
 
     width
@@ -1036,34 +1034,102 @@ def gt_plt_winloss(
 
     Examples
     --------
-    ```{python}
-    import pandas as pd
-    from great_tables import GT
+    First, let's make a table with randomly generated data:
+    ``` {python}
+    from great_tables import GT, md
     import gt_extras as gte
+    import pandas as pd
 
-    # Create sample win/loss data
-    df = pd.DataFrame({
-        'team': ['Team A', 'Team B', 'Team C'],
-        'last_10_games': [
-            [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],  # 6 wins, 3 losses, 1 tie
-            [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],    # 6 wins, 4 losses, 0 ties
-            [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0] # 4 wins, 3 losses, 3 ties
-        ]
-    })
-
-    gt = (
-        GT(df)
-        .pipe(
-            gte.gt_plt_winloss,
-            column='last_10_games',
-            width=120,
-            height=25,
-            win_color='green',
-            loss_color='red',
-            tie_color='orange'
-        )
+    df = pd.DataFrame(
+        {
+            "Team": ["Liverpool", "Chelsea", "Man City"],
+            "10 Games": [
+                [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],
+                [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+                [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0],
+            ],
+        }
     )
-    gt
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_winloss,
+        column="10 Games",
+        win_color="green",
+    )
+    ```
+
+
+    Let's do a more involved example using NFL season data from 2016.
+    ```{python}
+    #| code-fold: true
+    #| code-summary: Show the setup Code
+
+    # Load the NFL data
+    df = pd.read_csv("../assets/games.csv")
+    season_2016 = df[(df["season"] == 2016) & (df["game_type"] == "REG")].copy()
+
+    def get_team_results(games_df):
+        results = {}
+
+        for _, game in games_df.iterrows():
+            away_team = game["away_team"]
+            home_team = game["home_team"]
+            away_score = game["away_score"]
+            home_score = game["home_score"]
+
+            if away_team not in results:
+                results[away_team] = []
+            if home_team not in results:
+                results[home_team] = []
+
+            if away_score > home_score:
+                results[away_team].append(1)
+                results[home_team].append(0)
+            elif home_score > away_score:
+                results[home_team].append(1)
+                results[away_team].append(0)
+            else:
+                results[away_team].append(0.5)
+                results[home_team].append(0.5)
+
+        return results
+
+    team_results = get_team_results(season_2016)
+    winloss_df = pd.DataFrame(
+        [{"Team": team, "Games": results} for team, results in team_results.items()]
+    )
+
+    winloss_df = (
+        winloss_df
+        .sort_values("Team")
+        .reset_index(drop=True)
+        .head(10)
+    )
+    ```
+
+    Now that we've loaded the real-world data, let's see how we can use `gt_plt_winloss()`.
+
+    ```{python}
+    gt = (
+        GT(winloss_df)
+        .tab_header(
+            title="2016 NFL Season",
+        )
+        .tab_source_note(
+            md(
+                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+            )
+        )
+        .cols_align("left", columns="Games")
+    )
+
+    gt.pipe(
+        gte.gt_plt_winloss,
+        column="Games",
+    )
+
     ```
     """
 
@@ -1079,6 +1145,7 @@ def gt_plt_winloss(
         spacing: float,
     ) -> str:
         if values is None or values == []:
+            # TODO: do this in other functions, standardize the size of the empty div``
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         available_width = width - (max_wins) * spacing
