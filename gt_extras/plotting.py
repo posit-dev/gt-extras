@@ -1150,7 +1150,7 @@ def gt_plt_winloss(
 
         available_width = width - (max_wins) * spacing
         bar_width = available_width / max_wins
-        win_bar_height = height * 0.4 if shape == "pill" else height * 0.2
+        win_bar_height = height * 0.2 if shape == "square" else height * 0.4
 
         # Generate bars HTML
         bars_html = []
@@ -1178,7 +1178,7 @@ def gt_plt_winloss(
                 continue
 
             left_pos = i * (bar_width + spacing)
-            border_radius = 2 if shape == "pill" else 0.5
+            border_radius = 0.5 if shape == "square" else 2
 
             bar_html = f"""
             <div style="
