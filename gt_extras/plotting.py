@@ -1221,8 +1221,137 @@ def gt_plt_bar_stack(
     font_size: int = 10,
     spacing: float = 2,
     num_decimals: int = 0,
+    as_discrete: bool = False,
 ) -> GT:
-    """ """
+    """
+    Create stacked horizontal bar plots in `GT` cells.
+
+    The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
+    charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
+    proportional to the values in the list, relative to the other values in the column. Each bar
+    is assigned a color from the provided palette, cycling through the palette if there are more
+    values than colors.
+
+    If `as_discrete` is set to `True`, the bars are scaled relative to the sum of the values in each
+    cell. If `as_discrete` is set to `False`, the bars are scaled relative to the maximum value
+    across all rows.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing lists of numeric values to represent as stacked horizontal bars. Each
+        cell should contain a list of numeric values.
+
+    labels
+        Optional labels for the bars. If provided, these labels will be displayed in the column
+        header, with each label corresponding to a color in the palette.
+
+    width
+        The total width of the stacked bar plot in pixels.
+
+    height
+        The height of the stacked bar plot in pixels.
+
+    palette
+        The color palette to use for the bars. This can be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`) or a named palette (e.g., `"viridis"`).
+        If `None`, a default palette will be used.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    spacing
+        The horizontal gap, in pixels, between each bar. If the spacing is too large relative to
+        the width, a warning will be issued, and no bars will be displayed.
+
+    num_decimals
+        The number of decimal places to display in the text labels on the bars.
+
+    as_discrete
+        Whether to scale the bars relative to the sum of the values in each cell (`False`)
+        or relative to the maximum value across all rows (`True`).
+
+    Returns
+    -------
+    GT
+        A `GT` object with stacked horizontal bar plots added to the specified column.
+
+    Examples
+    --------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 40, 50],
+            [30, 30, 40],
+            [50, 20, 30],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        palette=["red", "grey", "black"],
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+    )
+    ```
+
+    If the absolute sum of each row varies, we can treat the rows as portions of a whole.
+
+    ```{python}
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 20, 50],
+            [30, 30],
+            [50, 10, 10],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+        as_discrete = False
+    )
+    ```
+
+    Or we can treat them as discrete values.
+
+    ```{python}
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 20, 50],
+            [30, 30],
+            [50, 10, 10],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+        as_discrete = True,
+    )
+    ```
+    """
 
     def _make_bar_stack_html(
         values: list[float],
@@ -1233,12 +1362,24 @@ def gt_plt_bar_stack(
         spacing: float,
         num_decimals: int,
         font_size: int,
+        as_discrete: bool,
     ) -> str:
         if not values:
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
-        normalized_values = [val / max_length for val in values]
-        available_width = width - (len(values) - 1) * spacing
+        len_non_zero_values = sum(
+            1 for val in values if val != 0 and not is_na(gt._tbl_data, val)
+        )
+
+        print(len_non_zero_values)
+
+        if as_discrete:
+            total = max_length
+        else:
+            total = sum(values)
+
+        normalized_values = [val / total for val in values]
+        available_width = width - (len_non_zero_values - 1) * spacing
 
         if available_width <= 0:
             warnings.warn(
@@ -1274,9 +1415,9 @@ def gt_plt_bar_stack(
                 background:{color};
             ">{label_html}</div>
             """
-            bars_html.append(bar_html.strip())
-
-            current_left += bar_width + spacing
+            if value != 0 and not is_na(gt._tbl_data, value):
+                bars_html.append(bar_html.strip())
+                current_left += bar_width + spacing
 
         html = f"""
         <div style="position:relative; width:{width}px; height:{height}px;">
@@ -1310,6 +1451,7 @@ def gt_plt_bar_stack(
             spacing=spacing,
             font_size=font_size,
             num_decimals=num_decimals,
+            as_discrete=as_discrete,
         ),
         columns=column,
     )
