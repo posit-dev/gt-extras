@@ -346,7 +346,7 @@ def test_gt_plt_conf_int_with_none_values():
 
     assert isinstance(result, GT)
     html = result.as_raw_html()
-    assert "<div></div>" in html
+    assert '<div style="position:relative; width:100px; height:30px;"></div>' in html
 
 
 def test_gt_plt_conf_int_computed_invalid_data():
@@ -497,7 +497,10 @@ def test_gt_plt_dumbbell_with_none_values():
     gt_test = GT(df)
     html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert html.count("<div></div>") == 2
+    assert (
+        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
+        == 2
+    )
 
 
 def test_gt_plt_dumbbell_with_na_values():
@@ -505,7 +508,10 @@ def test_gt_plt_dumbbell_with_na_values():
     gt_test = GT(df)
     html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert html.count("<div></div>") == 2
+    assert (
+        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
+        == 2
+    )
 
 
 def test_gt_plt_dumbbell_invalid_col1():

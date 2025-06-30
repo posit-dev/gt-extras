@@ -363,7 +363,7 @@ def gt_plt_dot(
     )
 
     # Validate and get category column
-    category_col_name, category_col_vals = _validate_and_get_single_column(
+    _, category_col_vals = _validate_and_get_single_column(
         gt,
         category_col,
     )
@@ -553,7 +553,7 @@ def gt_plt_conf_int(
             or is_na(gt._tbl_data, c1)
             or is_na(gt._tbl_data, c2)
         ):
-            return "<div></div>"
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         span = max_val - min_val
 
@@ -829,7 +829,7 @@ def gt_plt_dumbbell(
         num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
-            return "<div></div>"
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
