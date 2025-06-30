@@ -972,29 +972,93 @@ def gt_plt_dumbbell(
 
 
 def gt_plt_winloss(
-    gt: GT, column: SelectExpr, width: float = 100, height: float = 30
+    gt: GT,
+    column: SelectExpr,
+    width: float = 100,
+    height: float = 30,
+    win_color: str = "blue",
+    loss_color: str = "red",
+    tie_color: str = "grey",
+    shape: Literal["pill", "square"] = "pill",
 ) -> GT:
     def _make_winloss_html(
         values: list[float],
         max_wins: int,
         width: float,
         height: float,
+        win_color: str,
+        loss_color: str,
+        tie_color: str,
+        shape: Literal["pill", "square"],
     ) -> str:
-        return "<div>Test</div>"
+        if values is None or values == []:
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+
+        SPACING = 2
+        available_width = width - (max_wins) * SPACING
+        bar_width = available_width / max_wins
+        win_bar_height = height * 0.4 if shape == "pill" else height * 0.2
+
+        # Generate bars HTML
+        bars_html = []
+        for i, value in enumerate(values):
+            if is_na(gt._tbl_data, value):
+                continue
+
+            if value == 1:  # Win
+                color = win_color
+                top_pos = height * 0.2
+                bar_height = win_bar_height
+            elif value == 0.5:  # Tie
+                color = tie_color
+                top_pos = height * 0.4
+                bar_height = height * 0.2
+            elif value == 0:  # Loss
+                color = loss_color
+                top_pos = height * 0.8 - win_bar_height
+                bar_height = win_bar_height
+            else:
+                continue  # Skip invalid values
+
+            left_pos = i * (bar_width + SPACING)
+
+            bar_html = f"""
+            <div style="
+                position:absolute;
+                left:{left_pos}px;
+                top:{top_pos}px;
+                width:{bar_width}px;
+                height:{bar_height}px;
+                background:{color};
+                border-radius:2px;
+            "></div>
+            """
+            bars_html.append(bar_html.strip())
+
+        html = f"""
+        <div style="position:relative; width:{width}px; height:{height}px;">
+            {"".join(bars_html)}
+        </div>
+        """
+
+        return html.strip()
 
     res = gt
-
-    col_name, col_vals = _validate_and_get_single_column(gt, expr=column)
-
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
     max_wins = max(len(entry) for entry in col_vals)
 
-    # dont think I have to loop like with the others, since I dont need to access other columns
+    # I don't think I have to loop like with the others
+    # since I dont need to access other columns
     res = res.fmt(
         lambda x: _make_winloss_html(
             x,
             max_wins=max_wins,
             width=width,
             height=height,
+            win_color=win_color,
+            loss_color=loss_color,
+            tie_color=tie_color,
+            shape=shape,
         ),
         columns=column,
     )
