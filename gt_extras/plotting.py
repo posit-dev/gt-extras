@@ -1171,7 +1171,11 @@ def gt_plt_winloss(
                 top_pos = height * 0.8 - win_bar_height
                 bar_height = win_bar_height
             else:
-                continue  # Skip invalid values
+                warnings.warn(
+                    f"Invalid value '{value}' encountered in win/loss data. Skipping.",
+                    category=UserWarning,
+                )
+                continue
 
             left_pos = i * (bar_width + spacing)
             border_radius = 2 if shape == "pill" else 0.5
