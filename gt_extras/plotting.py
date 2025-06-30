@@ -980,7 +980,93 @@ def gt_plt_winloss(
     loss_color: str = "red",
     tie_color: str = "grey",
     shape: Literal["pill", "square"] = "pill",
+    spacing: float = 2,
 ) -> GT:
+    """
+    Create win/loss charts in `GT` cells.
+
+    The `gt_plt_winloss()` function takes an existing `GT` object and adds win/loss sparkline
+    charts to a specified column. Each cell displays a series of small vertical bars representing
+    individual game outcomes, This visualization is useful for showing performance streaks and
+    patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
+    column, ensuring consistent bar spacing across all rows.
+
+    Wins must be represented as 1, ties as 0.5, and losses as 0.
+    Invalid values (not 0, 0.5, or 1) are skipped.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing lists of win/loss/tie values. Each cell should contain a list where:
+        - `1` or `1.0` represents a win
+        - `0` or `0.0` represents a loss
+        - `0.5` represents a tie
+        Values that are not listed above are skipped.
+
+    width
+        The width of the win/loss chart in pixels.
+
+    height
+        The height of the win/loss chart in pixels.
+
+    win_color
+        The color for bars representing wins.
+
+    loss_color
+        The color for bars representing losses.
+
+    tie_color
+        The color for bars representing ties.
+
+    shape
+        The shape style of the bars. Options are `"pill"` for taller bars or `"square"` for
+        stockier, nearly square bars.
+
+    spacing
+        The horizontal gap, in pixels, between each bar. Note that if the spacing is too large, it
+        may obstruct the bars from view.
+
+    Returns
+    -------
+    GT
+        A `GT` object with win/loss charts added to the specified column.
+
+    Examples
+    --------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    # Create sample win/loss data
+    df = pd.DataFrame({
+        'team': ['Team A', 'Team B', 'Team C'],
+        'last_10_games': [
+            [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],  # 6 wins, 3 losses, 1 tie
+            [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],    # 6 wins, 4 losses, 0 ties
+            [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0] # 4 wins, 3 losses, 3 ties
+        ]
+    })
+
+    gt = (
+        GT(df)
+        .pipe(
+            gte.gt_plt_winloss,
+            column='last_10_games',
+            width=120,
+            height=25,
+            win_color='green',
+            loss_color='red',
+            tie_color='orange'
+        )
+    )
+    gt
+    ```
+    """
+
     def _make_winloss_html(
         values: list[float],
         max_wins: int,
@@ -990,12 +1076,12 @@ def gt_plt_winloss(
         loss_color: str,
         tie_color: str,
         shape: Literal["pill", "square"],
+        spacing: float,
     ) -> str:
         if values is None or values == []:
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
-        SPACING = 2
-        available_width = width - (max_wins) * SPACING
+        available_width = width - (max_wins) * spacing
         bar_width = available_width / max_wins
         win_bar_height = height * 0.4 if shape == "pill" else height * 0.2
 
@@ -1020,7 +1106,8 @@ def gt_plt_winloss(
             else:
                 continue  # Skip invalid values
 
-            left_pos = i * (bar_width + SPACING)
+            left_pos = i * (bar_width + spacing)
+            border_radius = 2 if shape == "pill" else 0.5
 
             bar_html = f"""
             <div style="
@@ -1030,7 +1117,7 @@ def gt_plt_winloss(
                 width:{bar_width}px;
                 height:{bar_height}px;
                 background:{color};
-                border-radius:2px;
+                border-radius:{border_radius}px;
             "></div>
             """
             bars_html.append(bar_html.strip())
@@ -1047,8 +1134,13 @@ def gt_plt_winloss(
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
     max_wins = max(len(entry) for entry in col_vals)
 
-    # I don't think I have to loop like with the others
-    # since I dont need to access other columns
+    if spacing * max_wins >= width:
+        warnings.warn(
+            "Spacing is too large relative to the width. No bars will be displayed.",
+            category=UserWarning,
+        )
+
+    # I don't have to loop like with the others since I dont need to access other columns
     res = res.fmt(
         lambda x: _make_winloss_html(
             x,
@@ -1059,6 +1151,7 @@ def gt_plt_winloss(
             loss_color=loss_color,
             tie_color=tie_color,
             shape=shape,
+            spacing=spacing,
         ),
         columns=column,
     )
