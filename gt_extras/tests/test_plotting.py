@@ -4,7 +4,13 @@ from gt_extras.tests.conftest import assert_rendered_body
 import pandas as pd
 import numpy as np
 from great_tables import GT
-from gt_extras import gt_plt_bar, gt_plt_dot, gt_plt_conf_int, gt_plt_dumbbell
+from gt_extras import (
+    gt_plt_bar,
+    gt_plt_dot,
+    gt_plt_conf_int,
+    gt_plt_dumbbell,
+    gt_plt_winloss,
+)
 
 
 def test_gt_plt_bar_snap(snapshot, mini_gt):
@@ -553,3 +559,8 @@ def test_gt_plt_dumbbell_reversed_values():
     assert 'color:green; font-size:10px; font-weight:bold;">400.0' in html
     assert 'color:purple; font-size:10px; font-weight:bold;">200.0' in html
     assert 'color:green; font-size:10px; font-weight:bold;">15.0' in html
+
+
+def test_gt_plt_winloss_basic(mini_gt):
+    gt_plt_winloss(mini_gt)
+    pass

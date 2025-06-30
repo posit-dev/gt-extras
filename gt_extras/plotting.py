@@ -24,7 +24,13 @@ from svg import SVG, Line, Rect, Text
 from scipy.stats import t, sem, tmean
 
 
-__all__ = ["gt_plt_bar", "gt_plt_dot", "gt_plt_conf_int", "gt_plt_dumbbell"]
+__all__ = [
+    "gt_plt_bar",
+    "gt_plt_dot",
+    "gt_plt_conf_int",
+    "gt_plt_dumbbell",
+    "gt_plt_winloss",
+]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
 # to handle the underlying _tbl_data.
@@ -961,5 +967,36 @@ def gt_plt_dumbbell(
     res = res.cols_hide(col2_name)
     if label is not None:
         res = res.cols_label({col1_name: label})
+
+    return res
+
+
+def gt_plt_winloss(
+    gt: GT, column: SelectExpr, width: float = 100, height: float = 30
+) -> GT:
+    def _make_winloss_html(
+        values: list[float],
+        max_wins: int,
+        width: float,
+        height: float,
+    ) -> str:
+        return "<div>Test</div>"
+
+    res = gt
+
+    col_name, col_vals = _validate_and_get_single_column(gt, expr=column)
+
+    max_wins = max(len(entry) for entry in col_vals)
+
+    # dont think I have to loop like with the others, since I dont need to access other columns
+    res = res.fmt(
+        lambda x: _make_winloss_html(
+            x,
+            max_wins=max_wins,
+            width=width,
+            height=height,
+        ),
+        columns=column,
+    )
 
     return res
