@@ -20,6 +20,7 @@ from .plotting import (
     gt_plt_conf_int,
     gt_plt_dumbbell,
     gt_plt_winloss,
+    gt_plt_bar_stack,
 )
 
 from .html import gt_hyperlink, with_tooltip
@@ -46,6 +47,7 @@ __all__ = [
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
+    "gt_plt_bar_stack",
     "gt_hyperlink",
     "with_tooltip",
     "fmt_pct_extra",
