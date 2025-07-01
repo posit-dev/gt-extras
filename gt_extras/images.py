@@ -14,7 +14,7 @@ def img_header(
     text_color: str = "black",
 ) -> html:
     """
-    Create an HTML header with an image and a label.
+    Create an HTML header with an image and a label, apt for a column label.
 
     Parameters
     ----------
@@ -22,7 +22,7 @@ def img_header(
         The text label to display below the image.
 
     img_url
-        The URL of the image to display. This can be a local filepath or an image on the web.
+        The URL of the image to display. This can be a filepath or an image on the web.
 
     height
         The height of the image in pixels.
@@ -44,7 +44,45 @@ def img_header(
     Examples
     -------
     ```{python}
+    import pandas as pd
+    from great_tables import GT, md
+    import gt_extras as gte
 
+    df = pd.DataFrame(
+        {
+            "Category": ["Points", "Rebounds", "Assists", "Blocks", "Steals"],
+            "Hart": [1051, 737, 453, 27, 119],
+            "Brunson": [1690, 187, 475, 8, 60],
+            "Bridges": [1444, 259, 306, 43, 75],
+        }
+    )
+
+    hart_header = gte.img_header(
+        label="Josh Hart",
+        img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png",
+    )
+
+    brunson_header = gte.img_header(
+        label="Jalen Brunson",
+        img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
+    )
+
+    bridges_header = gte.img_header(
+        label="Mikal Bridges",
+        img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3147657.png",
+    )
+
+    (
+        GT(df, rowname_col="Category")
+        .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+        .cols_label(
+            {
+                "Hart": hart_header,
+                "Brunson": brunson_header,
+                "Bridges": bridges_header,
+            }
+        )
+    )
     ```
     """
 
