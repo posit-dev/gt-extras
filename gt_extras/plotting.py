@@ -1363,19 +1363,21 @@ def gt_plt_bar_stack(
         if not values:
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
+        non_na_vals = [val if not is_na(gt._tbl_data, val) else 0 for val in values]
         # Count how many values will be displayed in the chart
-        len_non_zero_values = sum(
-            1 for val in values if val != 0 and not is_na(gt._tbl_data, val)
-        )
+        len_non_zero_values = sum(1 for val in non_na_vals if val != 0)
 
         if scale_type == "absolute":
             total = max_length
         else:
-            total = sum(values)
+            total = sum(non_na_vals)
 
-        normalized_values = [val / total for val in values]
+        # Avoid div by 0
+        if total == 0:
+            total = 1
+
+        normalized_values = [val / total for val in non_na_vals]
         available_width = width - (len_non_zero_values - 1) * spacing
-
         if available_width <= 0:
             warnings.warn(
                 "Spacing is too large relative to the width. No bars will be displayed.",
@@ -1388,7 +1390,7 @@ def gt_plt_bar_stack(
             bar_width = available_width * value
             color = colors[i % len(colors)]
 
-            label = f"{values[i]:.{num_decimals}f}"
+            label = f"{non_na_vals[i]:.{num_decimals}f}"
             label_html = f"""
             <div style="
                 position:absolute;
@@ -1426,8 +1428,14 @@ def gt_plt_bar_stack(
         raise ValueError("Scale_type must be either 'relative' or 'absolute'")
 
     col_name, col_vals = _validate_and_get_single_column(gt, expr=column)
-    max_len = max(sum(col) for col in col_vals)
-    max_num_values = max(len(col) for col in col_vals)
+    cleaned_col_vals = [
+        [val for val in col if val is not None and not is_na(gt._tbl_data, val)]
+        for col in col_vals
+        if col is not None
+    ]
+
+    max_len = max(sum(col) for col in cleaned_col_vals if col is not None)
+    max_num_values = max(len(col) for col in cleaned_col_vals)
 
     # If user passes a list, accept those colors, otherwise use palette functionality.
     if isinstance(palette, list) and len(palette) >= max_num_values:
