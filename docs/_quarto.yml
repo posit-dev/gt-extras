@@ -38,7 +38,9 @@ quartodoc:
 
   sections:
     - title: Plotting
-      desc: "" # TODO: add desc
+      desc: >
+        Functions to create various types of visualizations, such as bars, dots,
+        and win/loss charts, directly within columns of your existing `GT` objects.
       contents:
         - gt_plt_bar
         - gt_plt_bar_stack
@@ -48,14 +50,19 @@ quartodoc:
         - gt_plt_winloss
 
     - title: Colors
-      desc: "" # TODO: add desc
+      # TODO: revisit desc
+      desc: >
+        Functions to apply color-based formatting, highlight specific columns, or create colorful
+        styles with palettes that are easy on the eye.
       contents:
         - gt_color_box
         - gt_highlight_cols
         - gt_hulk_col_numeric
 
     - title: Themes
-      desc: Functions to generate themes.
+      desc: >
+        Predefined themes to style `GT` objects, inspired by popular design styles such as ESPN,
+        The Guardian, and Excel.
       contents:
         - gt_theme_538
         - gt_theme_dark
@@ -67,14 +74,20 @@ quartodoc:
         - gt_theme_pff
 
     - title: Icons and Images
-      desc: "" # TODO: add desc
+      # TODO: revisit desc
+      desc: >
+        Functions to enhance `GT` objects by adding icons, ratings, or images to cells
+        or headers alike.
       contents:
         - fa_icon_repeat
         - gt_fa_rating
         - img_header
 
     - title: Utilities
-      desc: "" # TODO: add desc
+      # TODO: revisit desc
+      desc: >
+        Helper functions to extend `GT` functionality, including HTML features
+        and formatting tools.
       contents:
         - fmt_pct_extra
         - gt_add_divider
