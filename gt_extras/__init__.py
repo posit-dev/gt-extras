@@ -27,6 +27,8 @@ from .html import gt_hyperlink, with_tooltip
 
 from .formatting import fmt_pct_extra
 
+from .images import img_header
+
 
 __all__ = [
     "gt_theme_538",
@@ -51,4 +53,5 @@ __all__ = [
     "gt_hyperlink",
     "with_tooltip",
     "fmt_pct_extra",
+    "img_header",
 ]

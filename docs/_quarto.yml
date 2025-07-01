@@ -71,6 +71,7 @@ quartodoc:
       contents:
         - fa_icon_repeat
         - gt_fa_rating
+        - img_header
 
     - title: HTML and Formatting
       desc: "" # TODO: add desc
