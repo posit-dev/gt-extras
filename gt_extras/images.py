@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from great_tables import html
+from great_tables._text import Html
 
 __all__ = ["img_header"]
 
@@ -12,7 +13,7 @@ def img_header(
     font_size: int = 12,
     border_color: str = "black",
     text_color: str = "black",
-) -> html:
+) -> Html:
     """
     Create an HTML header with an image and a label, apt for a column label.
 
@@ -91,7 +92,7 @@ def img_header(
         height:{height}px;
         border-bottom:2px solid {border_color};"
     />
-    """
+    """.strip()
 
     label_html = f"""
     <div style="
@@ -102,13 +103,13 @@ def img_header(
     ">
         {label}
     </div>
-    """
+    """.strip()
 
     full_element = f"""
     <div style="text-align:center;">
         {img_html}
         {label_html}
     </div>
-    """
+    """.strip()
 
     return html(full_element)
