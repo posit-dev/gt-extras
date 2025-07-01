@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_theme_guardian – gt-extras</title>
+<title>img_header – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_theme_nytimes.html" rel="next">
-<link href="../reference/gt_theme_excel.html" rel="prev">
+<link href="../reference/fmt_pct_extra.html" rel="next">
+<link href="../reference/gt_fa_rating.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fa_icon_repeat.html">Icons and Images</a></li><li class="breadcrumb-item"><a href="../reference/img_header.html">img_header</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_theme_guardian</span></a>
   </div>
 </li>
@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/img_header.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/img_header.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">img_header</span></a>
   </div>
 </li>
@@ -386,9 +386,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fa_icon_repeat.html">Icons and Images</a></li><li class="breadcrumb-item"><a href="../reference/img_header.html">img_header</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_theme_guardian</h1>
+<h1 class="title">img_header</h1>
 </div>
 
 
@@ -405,139 +405,229 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_theme_guardian(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Applies a Guardian-inspired theme to a <code>GT</code> object.</p>
-<p>This function styles a <code>GT</code> object with a look inspired by The Guardian’s data tables.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>img_header(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    label,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    img_url,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">60</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    border_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    text_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create an HTML header with an image and a label, apt for a column label.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
-<dt><code><span class="parameter-name"><strong>gt</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
+<dt><code><span class="parameter-name"><strong>label</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
 <dd>
-<p>An existing <code>GT</code> object.</p>
+<p>The text label to display below the image.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>img_url</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dd>
+<p>The URL of the image to display. This can be a filepath or an image on the web.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">60</span></code></dt>
+<dd>
+<p>The height of the image in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>font_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">12</span></code></dt>
+<dd>
+<p>The font size of the label text.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>border_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'black'</span></code></dt>
+<dd>
+<p>The color of the border below the image.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>text_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'black'</span></code></dt>
+<dd>
+<p>The color of the label text.</p>
 </dd>
 </dl>
 </section>
 <section id="returns" class="level2 doc-section doc-section-returns">
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
 <dl>
-<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
+<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">html</span></code></dt>
 <dd>
-<p>The themed <code>GT</code> object, allowing for method chaining.</p>
+<p>A Great Tables <code>html</code> element for the header.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="3870c8fd" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
+<div id="9fc5ed04" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars[[<span class="st">"model"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"trq"</span>]].head(<span class="dv">5</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span>md(<span class="st">"*Car*"</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Car Collection"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_theme_guardian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Category"</span>: [<span class="st">"Points"</span>, <span class="st">"Rebounds"</span>, <span class="st">"Assists"</span>, <span class="st">"Blocks"</span>, <span class="st">"Steals"</span>],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hart"</span>: [<span class="dv">1051</span>, <span class="dv">737</span>, <span class="dv">453</span>, <span class="dv">27</span>, <span class="dv">119</span>],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Brunson"</span>: [<span class="dv">1690</span>, <span class="dv">187</span>, <span class="dv">475</span>, <span class="dv">8</span>, <span class="dv">60</span>],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Bridges"</span>: [<span class="dv">1444</span>, <span class="dv">259</span>, <span class="dv">306</span>, <span class="dv">43</span>, <span class="dv">75</span>],</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>hart_header <span class="op">=</span> gte.img_header(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Josh Hart"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    img_url<span class="op">=</span><span class="st">"https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>brunson_header <span class="op">=</span> gte.img_header(</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Jalen Brunson"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    img_url<span class="op">=</span><span class="st">"https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png"</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>bridges_header <span class="op">=</span> gte.img_header(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Mikal Bridges"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    img_url<span class="op">=</span><span class="st">"https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3147657.png"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    GT(df, rowname_col<span class="op">=</span><span class="st">"Category"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    .tab_source_note(md(<span class="st">"Images and data courtesy of [ESPN](https://www.espn.com)"</span>))</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Hart"</span>: hart_header,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Brunson"</span>: brunson_header,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Bridges"</span>: bridges_header,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="mwgwsbiesp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="klvbjsxmvx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-#mwgwsbiesp table {
-          font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+#klvbjsxmvx table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#mwgwsbiesp thead, tbody, tfoot, tr, td, th { border-style: none; }
+#klvbjsxmvx thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#mwgwsbiesp p { margin: 0; padding: 0; }
- #mwgwsbiesp .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #f6f6f6; width: auto; border-top-style: solid; border-top-width: 1px; border-top-color: #40c5ff; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #mwgwsbiesp .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #mwgwsbiesp .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #f6f6f6; border-bottom-width: 0; }
- #mwgwsbiesp .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #f6f6f6; border-top-width: 0; }
- #mwgwsbiesp .gt_heading { background-color: #f6f6f6; text-align: left; border-bottom-color: #f6f6f6; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #mwgwsbiesp .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 0px; border-bottom-color: #D3D3D3; }
- #mwgwsbiesp .gt_col_headings { border-top-style: solid; border-top-width: 1px; border-top-color: #ececec; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #mwgwsbiesp .gt_col_heading { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #mwgwsbiesp .gt_column_spanner_outer { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #mwgwsbiesp .gt_column_spanner_outer:first-child { padding-left: 0; }
- #mwgwsbiesp .gt_column_spanner_outer:last-child { padding-right: 0; }
- #mwgwsbiesp .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #mwgwsbiesp .gt_spanner_row { border-bottom-style: hidden; }
- #mwgwsbiesp .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #mwgwsbiesp .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; vertical-align: middle; }
- #mwgwsbiesp .gt_from_md> :first-child { margin-top: 0; }
- #mwgwsbiesp .gt_from_md> :last-child { margin-bottom: 0; }
- #mwgwsbiesp .gt_row { padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 0px; border-top-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #mwgwsbiesp .gt_stub { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #mwgwsbiesp .gt_stub_row_group { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #mwgwsbiesp .gt_row_group_first td { border-top-width: 1px; }
- #mwgwsbiesp .gt_row_group_first th { border-top-width: 1px; }
- #mwgwsbiesp .gt_striped { background-color: #ececec; }
- #mwgwsbiesp .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; }
- #mwgwsbiesp .gt_sourcenotes { color: #333333; background-color: #f6f6f6; border-bottom-style: none; border-bottom-width: 0px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #mwgwsbiesp .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #mwgwsbiesp .gt_left { text-align: left; }
- #mwgwsbiesp .gt_center { text-align: center; }
- #mwgwsbiesp .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #mwgwsbiesp .gt_font_normal { font-weight: normal; }
- #mwgwsbiesp .gt_font_bold { font-weight: bold; }
- #mwgwsbiesp .gt_font_italic { font-style: italic; }
- #mwgwsbiesp .gt_super { font-size: 65%; }
- #mwgwsbiesp .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #mwgwsbiesp .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#klvbjsxmvx p { margin: 0; padding: 0; }
+ #klvbjsxmvx .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #klvbjsxmvx .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #klvbjsxmvx .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #klvbjsxmvx .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #klvbjsxmvx .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #klvbjsxmvx .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #klvbjsxmvx .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #klvbjsxmvx .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #klvbjsxmvx .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #klvbjsxmvx .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #klvbjsxmvx .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #klvbjsxmvx .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #klvbjsxmvx .gt_spanner_row { border-bottom-style: hidden; }
+ #klvbjsxmvx .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #klvbjsxmvx .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #klvbjsxmvx .gt_from_md> :first-child { margin-top: 0; }
+ #klvbjsxmvx .gt_from_md> :last-child { margin-bottom: 0; }
+ #klvbjsxmvx .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #klvbjsxmvx .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #klvbjsxmvx .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #klvbjsxmvx .gt_row_group_first td { border-top-width: 2px; }
+ #klvbjsxmvx .gt_row_group_first th { border-top-width: 2px; }
+ #klvbjsxmvx .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #klvbjsxmvx .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #klvbjsxmvx .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #klvbjsxmvx .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #klvbjsxmvx .gt_left { text-align: left; }
+ #klvbjsxmvx .gt_center { text-align: center; }
+ #klvbjsxmvx .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #klvbjsxmvx .gt_font_normal { font-weight: normal; }
+ #klvbjsxmvx .gt_font_bold { font-weight: bold; }
+ #klvbjsxmvx .gt_font_italic { font-style: italic; }
+ #klvbjsxmvx .gt_super { font-size: 65%; }
+ #klvbjsxmvx .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #klvbjsxmvx .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
-  <tr class="gt_heading">
-    <td colspan="4" class="gt_heading gt_title gt_font_normal" style="color: #005689;font-size: 22px;font-weight: 700;">Car Collection</td>
-  </tr>
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<em>Car</em>"><em>Car</em></th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=""></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Hart"><div style="text-align:center;">
+        <img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png" style="
+        height:60px;
+        border-bottom:2px solid black;">
+        <div style="
+        font-size:12px;
+        color:black;
+        text-align:center;
+        width:100%;
+    ">
+        Josh Hart
+    </div>
+    </div></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Brunson"><div style="text-align:center;">
+        <img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png" style="
+        height:60px;
+        border-bottom:2px solid black;">
+        <div style="
+        font-size:12px;
+        color:black;
+        text-align:center;
+        width:100%;
+    ">
+        Jalen Brunson
+    </div>
+    </div></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Bridges"><div style="text-align:center;">
+        <img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3147657.png" style="
+        height:60px;
+        border-bottom:2px solid black;">
+        <div style="
+        font-size:12px;
+        color:black;
+        text-align:center;
+        width:100%;
+    ">
+        Mikal Bridges
+    </div>
+    </div></th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <th class="gt_row gt_left gt_stub">GT</th>
-    <td class="gt_row gt_right">2017</td>
-    <td class="gt_row gt_right">647.0</td>
-    <td class="gt_row gt_right">550.0</td>
+    <th class="gt_row gt_left gt_stub">Points</th>
+    <td class="gt_row gt_right">1051</td>
+    <td class="gt_row gt_right">1690</td>
+    <td class="gt_row gt_right">1444</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Speciale</th>
-    <td class="gt_row gt_right gt_striped">2015</td>
-    <td class="gt_row gt_right gt_striped">597.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
+    <th class="gt_row gt_left gt_stub">Rebounds</th>
+    <td class="gt_row gt_right">737</td>
+    <td class="gt_row gt_right">187</td>
+    <td class="gt_row gt_right">259</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Spider</th>
-    <td class="gt_row gt_right">2015</td>
-    <td class="gt_row gt_right">562.0</td>
-    <td class="gt_row gt_right">398.0</td>
+    <th class="gt_row gt_left gt_stub">Assists</th>
+    <td class="gt_row gt_right">453</td>
+    <td class="gt_row gt_right">475</td>
+    <td class="gt_row gt_right">306</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">458 Italia</th>
-    <td class="gt_row gt_right gt_striped">2014</td>
-    <td class="gt_row gt_right gt_striped">562.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
+    <th class="gt_row gt_left gt_stub">Blocks</th>
+    <td class="gt_row gt_right">27</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">43</td>
   </tr>
   <tr>
-    <th class="gt_row gt_left gt_stub">488 GTB</th>
-    <td class="gt_row gt_right">2016</td>
-    <td class="gt_row gt_right">661.0</td>
-    <td class="gt_row gt_right">561.0</td>
+    <th class="gt_row gt_left gt_stub">Steals</th>
+    <td class="gt_row gt_right">119</td>
+    <td class="gt_row gt_right">60</td>
+    <td class="gt_row gt_right">75</td>
   </tr>
 </tbody>
+  <tfoot class="gt_sourcenotes">
+  
+  <tr>
+    <td class="gt_sourcenote" colspan="4">Images and data courtesy of <a href="https://www.espn.com">ESPN</a></td>
+  </tr>
 
+</tfoot>
 
 </table>
 
@@ -951,13 +1041,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_theme_excel.html" class="pagination-link" aria-label="gt_theme_excel">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_theme_excel</span>
+      <a href="../reference/gt_fa_rating.html" class="pagination-link" aria-label="gt_fa_rating">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_fa_rating</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_theme_nytimes.html" class="pagination-link" aria-label="gt_theme_nytimes">
-        <span class="nav-page-text">gt_theme_nytimes</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/fmt_pct_extra.html" class="pagination-link" aria-label="fmt_pct_extra">
+        <span class="nav-page-text">fmt_pct_extra</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
