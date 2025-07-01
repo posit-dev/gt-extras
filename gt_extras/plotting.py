@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Literal
 import warnings
 
-from great_tables import GT
+from great_tables import GT, html
 from great_tables._tbl_data import SelectExpr, is_na
 from great_tables._locations import resolve_cols_c
 
@@ -11,12 +11,11 @@ from gt_extras._utils_column import (
     _scale_numeric_column,
 )
 
-from great_tables._data_color.palettes import GradientPalette
-from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from gt_extras._utils_color import _get_discrete_colors_from_palette
+
 from great_tables._data_color.base import (
     _html_color,
-    _rescale_factor,
-    _get_domain_factor,
+    _ideal_fgnd_color,
 )
 
 from svg import SVG, Line, Rect, Text
@@ -30,6 +29,7 @@ __all__ = [
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
+    "gt_plt_bar_stack",
 ]
 
 # TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
@@ -363,33 +363,14 @@ def gt_plt_dot(
     )
 
     # Validate and get category column
-    category_col_name, category_col_vals = _validate_and_get_single_column(
+    _, category_col_vals = _validate_and_get_single_column(
         gt,
         category_col,
     )
 
-    # If palette is not provided, use a default palette
-    if palette is None:
-        palette = DEFAULT_PALETTE
-
-    # Otherwise get the palette from great_tables._data_color
-    elif isinstance(palette, str):
-        palette = ALL_PALETTES.get(palette, [palette])
-
-    # Standardize values in `palette` to hexadecimal color values
-    palette = _html_color(colors=palette)
-
-    # Rescale the category column for the purpose of assigning colors to each dot
-    category_domain = _get_domain_factor(df=data_table, vals=category_col_vals)
-    scaled_category_vals = _rescale_factor(
-        df=data_table, vals=category_col_vals, domain=category_domain, palette=palette
+    color_vals = _get_discrete_colors_from_palette(
+        palette=palette, data=category_col_vals, data_table=data_table
     )
-
-    # Create a color scale function from the palette
-    color_scale_fn = GradientPalette(colors=palette)
-
-    # Call the color scale function on the scaled categoy values to get a list of colors
-    color_vals = color_scale_fn(scaled_category_vals)
 
     # Apply gt.fmt() to each row individually, so we can access the data_value for that row
     res = gt
@@ -572,7 +553,7 @@ def gt_plt_conf_int(
             or is_na(gt._tbl_data, c1)
             or is_na(gt._tbl_data, c2)
         ):
-            return "<div></div>"
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         span = max_val - min_val
 
@@ -848,7 +829,7 @@ def gt_plt_dumbbell(
         num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
-            return "<div></div>"
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
@@ -1135,7 +1116,7 @@ def gt_plt_winloss(
 
     def _make_winloss_html(
         values: list[float],
-        max_wins: int,
+        max_length: int,
         width: float,
         height: float,
         win_color: str,
@@ -1144,12 +1125,12 @@ def gt_plt_winloss(
         shape: Literal["pill", "square"],
         spacing: float,
     ) -> str:
-        if values is None or values == []:
+        if not values:
             # TODO: do this in other functions, standardize the size of the empty div``
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
-        available_width = width - (max_wins) * spacing
-        bar_width = available_width / max_wins
+        available_width = width - (max_length) * spacing
+        bar_width = available_width / max_length
         win_bar_height = height * 0.2 if shape == "square" else height * 0.4
 
         # Generate bars HTML
@@ -1203,9 +1184,9 @@ def gt_plt_winloss(
 
     res = gt
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
-    max_wins = max(len(entry) for entry in col_vals)
+    max_length = max(len(entry) for entry in col_vals)
 
-    if spacing * max_wins >= width:
+    if spacing * max_length >= width:
         warnings.warn(
             "Spacing is too large relative to the width. No bars will be displayed.",
             category=UserWarning,
@@ -1215,7 +1196,7 @@ def gt_plt_winloss(
     res = res.fmt(
         lambda x: _make_winloss_html(
             x,
-            max_wins=max_wins,
+            max_length=max_length,
             width=width,
             height=height,
             win_color=win_color,
@@ -1226,5 +1207,270 @@ def gt_plt_winloss(
         ),
         columns=column,
     )
+
+    return res
+
+
+def gt_plt_bar_stack(
+    gt: GT,
+    column: SelectExpr,
+    labels: list[str] | None = None,
+    width: float = 100,
+    height: float = 30,
+    palette: list[str] | str | None = None,
+    font_size: int = 10,
+    spacing: float = 2,
+    num_decimals: int = 0,
+    scale_type: Literal["relative", "absolute"] = "relative",
+) -> GT:
+    """
+    Create stacked horizontal bar plots in `GT` cells.
+
+    The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
+    charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
+    proportional to the values in the list. The scaling of the bars can be controlled using the
+    `scale_type` parameter.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing lists of numeric values to represent as stacked horizontal bars. Each
+        cell should contain a list of numeric values.
+
+    labels
+        Optional labels for the bars. If provided, these labels will be displayed in the column
+        header, with each label corresponding to a color in the palette.
+
+    width
+        The total width of the stacked bar plot in pixels.
+
+    height
+        The height of the stacked bar plot in pixels.
+
+    palette
+        The color palette to use for the bars. This can be a list of colors
+        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`) or a named palette (e.g., `"viridis"`).
+        If `None`, a default palette will be used.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    spacing
+        The horizontal gap, in pixels, between each bar. If the spacing is too large relative to
+        the width, a warning will be issued, and no bars will be displayed.
+
+    num_decimals
+        The number of decimal places to display in the text labels on the bars.
+
+    scale_type
+        Determines how the bars are scaled. Options are `"relative"` (bars are scaled relative to
+        the sum of the values in each cell) and `"absolute"` (bars are scaled relative to the
+        maximum value across all rows).
+
+    Returns
+    -------
+    GT
+        A `GT` object with stacked horizontal bar plots added to the specified column.
+
+    Examples
+    --------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 40, 50],
+            [30, 30, 40],
+            [50, 20, 30],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        palette=["red", "grey", "black"],
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+    )
+    ```
+
+    If the absolute sum of each row varies, we can treat the rows as portions of a whole.
+
+    ```{python}
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 20, 50],
+            [30, 30],
+            [50, 10, 10],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+        scale_type="relative",
+    )
+    ```
+
+    Or we can treat them as absolute values.
+
+    ```{python}
+    df = pd.DataFrame({
+        "x": ["Example A", "Example B", "Example C"],
+        "col": [
+            [10, 20, 50],
+            [30, 30],
+            [50, 10, 10],
+        ],
+    })
+
+    gt = GT(df)
+
+    gt.pipe(
+        gte.gt_plt_bar_stack,
+        column="col",
+        labels=["Group 1", "Group 2", "Group 3"],
+        width=200,
+        scale_type="absolute",
+    )
+    ```
+    """
+
+    def _make_bar_stack_html(
+        values: list[float],
+        max_sum: float,
+        width: float,
+        height: float,
+        colors: list[str],
+        spacing: float,
+        num_decimals: int,
+        font_size: int,
+        scale_type: Literal["relative", "absolute"],
+    ) -> str:
+        if not values:
+            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+
+        non_na_vals = [val if not is_na(gt._tbl_data, val) else 0 for val in values]
+        # Count how many values will be displayed in the chart
+        len_non_zero_values = sum(1 for val in non_na_vals if val != 0)
+
+        if scale_type == "absolute":
+            total = max_sum
+        else:
+            total = sum(non_na_vals)
+
+        # Avoid div by 0
+        if total == 0:
+            total = 1
+
+        normalized_values = [val / total for val in non_na_vals]
+        available_width = width - (len_non_zero_values - 1) * spacing
+        if available_width <= 0:
+            warnings.warn(
+                "Spacing is too large relative to the width. No bars will be displayed.",
+                category=UserWarning,
+            )
+
+        bars_html = []
+        current_left = 0
+        for i, value in enumerate(normalized_values):
+            bar_width = available_width * value
+            color = colors[i % len(colors)]
+
+            label = f"{non_na_vals[i]:.{num_decimals}f}"
+            label_html = f"""
+            <div style="
+                position:absolute;
+                left:50%;
+                top:50%;
+                transform:translateX(-50%) translateY(-50%);
+                font-size:{font_size}px;
+                color:{_ideal_fgnd_color(_html_color([color])[0])};
+            ">{label}</div>
+            """
+
+            bar_html = f"""
+            <div style="
+                position:absolute;
+                left:{current_left}px;
+                top:0px;
+                width:{bar_width}px;
+                height:{height}px;
+                background:{color};
+            ">{label_html}</div>
+            """
+            if value != 0 and not is_na(gt._tbl_data, value):
+                bars_html.append(bar_html.strip())
+                current_left += bar_width + spacing
+
+        html = f"""
+        <div style="position:relative; width:{width}px; height:{height}px;">
+            {"".join(bars_html)}
+        </div>
+        """
+        return html.strip()
+
+    # Throw if `scale_type` is not one of the allowed values
+    if scale_type not in ["relative", "absolute"]:
+        raise ValueError("Scale_type must be either 'relative' or 'absolute'")
+
+    col_name, col_vals = _validate_and_get_single_column(gt, expr=column)
+    cleaned_col_vals = [
+        [val for val in col if val is not None and not is_na(gt._tbl_data, val)]
+        for col in col_vals
+        if col is not None
+    ]
+
+    max_sum = max(sum(col) for col in cleaned_col_vals if col is not None)
+    max_num_values = max(len(col) for col in cleaned_col_vals)
+
+    # If user passes a list, accept those colors, otherwise use palette functionality.
+    if isinstance(palette, list) and len(palette) >= max_num_values:
+        color_list = palette
+    else:
+        color_list = _get_discrete_colors_from_palette(
+            palette=palette,
+            data=[i for i in range(max_num_values)],
+            data_table=gt._tbl_data,
+        )
+
+    res = gt
+    res = res.fmt(
+        lambda x: _make_bar_stack_html(
+            x,
+            max_sum=max_sum,
+            width=width,
+            height=height,
+            colors=color_list,
+            spacing=spacing,
+            font_size=font_size,
+            num_decimals=num_decimals,
+            scale_type=scale_type,
+        ),
+        columns=column,
+    )
+
+    if labels is not None:
+        label_html = [
+            f'<span style="color:{color}">{name}</span>'
+            for name, color in zip(labels, color_list)
+        ]
+        label_html = " | ".join(label_html)
+        res = res.cols_align(columns=col_name, align="center").cols_label(
+            {col_name: html(label_html)}
+        )
 
     return res

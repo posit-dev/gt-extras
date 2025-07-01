@@ -38,6 +38,88 @@
   </tbody>
   '''
 # ---
+# name: test_gt_plt_bar_stack_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">A</td>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
+              <div style="
+                  position:absolute;
+                  left:0px;
+                  top:0px;
+                  width:32.666666666666664px;
+                  height:30px;
+                  background:red;
+              ">
+              <div style="
+                  position:absolute;
+                  left:50%;
+                  top:50%;
+                  transform:translateX(-50%) translateY(-50%);
+                  font-size:10px;
+                  color:#000000;
+              ">10</div>
+              </div><div style="
+                  position:absolute;
+                  left:34.666666666666664px;
+                  top:0px;
+                  width:65.33333333333333px;
+                  height:30px;
+                  background:blue;
+              ">
+              <div style="
+                  position:absolute;
+                  left:50%;
+                  top:50%;
+                  transform:translateX(-50%) translateY(-50%);
+                  font-size:10px;
+                  color:#FFFFFF;
+              ">20</div>
+              </div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">B</td>
+      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
+              <div style="
+                  position:absolute;
+                  left:0px;
+                  top:0px;
+                  width:56.0px;
+                  height:30px;
+                  background:red;
+              ">
+              <div style="
+                  position:absolute;
+                  left:50%;
+                  top:50%;
+                  transform:translateX(-50%) translateY(-50%);
+                  font-size:10px;
+                  color:#000000;
+              ">40</div>
+              </div><div style="
+                  position:absolute;
+                  left:58.0px;
+                  top:0px;
+                  width:42.0px;
+                  height:30px;
+                  background:blue;
+              ">
+              <div style="
+                  position:absolute;
+                  left:50%;
+                  top:50%;
+                  transform:translateX(-50%) translateY(-50%);
+                  font-size:10px;
+                  color:#FFFFFF;
+              ">30</div>
+              </div>
+          </div></td>
+    </tr>
+  </tbody>
+  '''
+# ---
 # name: test_gt_plt_conf_int_snap
   '''
   <tbody class="gt_table_body">

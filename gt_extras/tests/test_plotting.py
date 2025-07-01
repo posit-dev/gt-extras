@@ -10,6 +10,7 @@ from gt_extras import (
     gt_plt_conf_int,
     gt_plt_dumbbell,
     gt_plt_winloss,
+    gt_plt_bar_stack,
 )
 
 
@@ -91,11 +92,9 @@ def test_gt_plt_dot_snap(snapshot, mini_gt):
 def test_gt_plt_dot_basic(mini_gt):
     html = gt_plt_dot(gt=mini_gt, category_col="char", data_col="num").as_raw_html()
 
-    # Should contain dot styling
     assert "border-radius:50%; margin-top:4px; display:inline-block;" in html
     assert "height:0.7em; width:0.7em;" in html
 
-    # Should contain bar styling
     assert "flex-grow:1; margin-left:0px;" in html
     assert "width:100.0%; height:4px; border-radius:2px;" in html
 
@@ -346,7 +345,7 @@ def test_gt_plt_conf_int_with_none_values():
 
     assert isinstance(result, GT)
     html = result.as_raw_html()
-    assert "<div></div>" in html
+    assert '<div style="position:relative; width:100px; height:30px;"></div>' in html
 
 
 def test_gt_plt_conf_int_computed_invalid_data():
@@ -392,9 +391,6 @@ def test_gt_plt_conf_int_precomputed_invalid_data():
         ValueError, match="Expected all entries in mean to be numeric or None"
     ):
         gt_plt_conf_int(gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"])
-
-
-## NEW TESTS
 
 
 def test_gt_plt_dumbbell_snap(snapshot):
@@ -497,7 +493,10 @@ def test_gt_plt_dumbbell_with_none_values():
     gt_test = GT(df)
     html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert html.count("<div></div>") == 2
+    assert (
+        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
+        == 2
+    )
 
 
 def test_gt_plt_dumbbell_with_na_values():
@@ -505,7 +504,10 @@ def test_gt_plt_dumbbell_with_na_values():
     gt_test = GT(df)
     html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert html.count("<div></div>") == 2
+    assert (
+        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
+        == 2
+    )
 
 
 def test_gt_plt_dumbbell_invalid_col1():
@@ -723,3 +725,166 @@ def test_gt_plt_winloss_spacing_warning():
             width=10,
             spacing=5,
         )
+
+
+def test_gt_plt_bar_stack_snap(snapshot):
+    df = pd.DataFrame({"team": ["A", "B"], "values": [[10, 20], [40, 30]]})
+    gt_test = GT(df)
+    res = gt_plt_bar_stack(
+        gt=gt_test, column="values", palette=["red", "blue", "green"]
+    )
+
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_bar_stack_basic():
+    df = pd.DataFrame({"team": ["A", "B"], "values": [[10, 20, 30], [40, 30, 20]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+
+    assert html.count("width:32.0px;") == 2
+    assert html.count("height:30px;") == 8
+    assert html.count("transform:translateX(-50%) translateY(-50%);") == 6
+
+
+def test_gt_plt_bar_stack_custom_palette():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(
+        gt=gt_test,
+        column="values",
+        palette=["red", "blue", "green"],
+    ).as_raw_html()
+
+    assert "background:red;" in html
+    assert "background:blue;" in html
+    assert "background:green;" in html
+
+
+def test_gt_plt_bar_stack_custom_dimensions():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(
+        gt=gt_test,
+        column="values",
+        width=200,
+        height=50,
+    ).as_raw_html()
+
+    assert "width:200px;" in html
+    assert "height:50px;" in html
+
+
+def test_gt_plt_bar_stack_with_labels():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(
+        gt=gt_test,
+        column="values",
+        labels=["Group 1", "Group 2", "Group 3"],
+    ).as_raw_html()
+
+    assert "Group 1" in html
+    assert "Group 2" in html
+    assert "Group 3" in html
+
+
+def test_gt_plt_bar_stack_relative_scaling():
+    df = pd.DataFrame({"team": ["A", "B"], "values": [[1, 1], [2, 2]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(
+        gt=gt_test,
+        column="values",
+        scale_type="relative",
+    ).as_raw_html()
+
+    assert html.count("width:49.0px;")
+
+
+def test_gt_plt_bar_stack_absolute_scaling():
+    df = pd.DataFrame({"team": ["A", "B"], "values": [[1, 1], [2, 2]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(
+        gt=gt_test,
+        column="values",
+        scale_type="absolute",
+    ).as_raw_html()
+
+    assert html.count("width:49.0px") == 2
+    assert html.count("width:24.5px") == 2
+
+
+def test_gt_plt_bar_stack_with_empty_list():
+    df = pd.DataFrame({"team": ["A", "B"], "values": [[], [10, 20, 30]]})
+    gt_test = GT(df)
+
+    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+
+    assert '<div style="position:relative; width:100px; height:30px;"></div>' in html
+
+
+def test_gt_plt_bar_stack_with_none_values():
+    df = pd.DataFrame(
+        {
+            "team": ["A", "B", "C"],
+            "values": [[None, 10, 20], [30, None, 40], [None, None, None]],
+        }
+    )
+    gt_test = GT(df)
+    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+
+    assert html.count("background:") == 4
+
+
+def test_gt_plt_bar_stack_with_na_values():
+    df = pd.DataFrame(
+        {
+            "team": ["A", "B", "C"],
+            "values": [[np.nan, 10, 20], [30, np.nan, 40], [None, np.nan, None]],
+        }
+    )
+    gt_test = GT(df)
+    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+
+    assert html.count("background:") == 4
+
+
+# TODO : not working
+def test_gt_plt_bar_stack_spacing_warning():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    with pytest.warns(
+        UserWarning,
+        match="Spacing is too large relative to the width. No bars will be displayed.",
+    ):
+        html = gt_plt_bar_stack(
+            gt=gt_test,
+            column="values",
+            width=10,
+            spacing=5,
+        ).as_raw_html()
+
+    assert html.count("width:0.0px;") == 3
+
+
+def test_gt_plt_bar_stack_invalid_column():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError):
+        gt_plt_bar_stack(gt=gt_test, column="invalid_column")
+
+
+def test_gt_plt_bar_stack_invalid_scale():
+    df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
+    gt_test = GT(df)
+
+    with pytest.raises(ValueError):
+        gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
