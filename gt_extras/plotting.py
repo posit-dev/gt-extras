@@ -1351,7 +1351,7 @@ def gt_plt_bar_stack(
 
     def _make_bar_stack_html(
         values: list[float],
-        max_length: float,
+        max_sum: float,
         width: float,
         height: float,
         colors: list[str],
@@ -1368,7 +1368,7 @@ def gt_plt_bar_stack(
         len_non_zero_values = sum(1 for val in non_na_vals if val != 0)
 
         if scale_type == "absolute":
-            total = max_length
+            total = max_sum
         else:
             total = sum(non_na_vals)
 
@@ -1434,7 +1434,7 @@ def gt_plt_bar_stack(
         if col is not None
     ]
 
-    max_len = max(sum(col) for col in cleaned_col_vals if col is not None)
+    max_sum = max(sum(col) for col in cleaned_col_vals if col is not None)
     max_num_values = max(len(col) for col in cleaned_col_vals)
 
     # If user passes a list, accept those colors, otherwise use palette functionality.
@@ -1451,7 +1451,7 @@ def gt_plt_bar_stack(
     res = res.fmt(
         lambda x: _make_bar_stack_html(
             x,
-            max_length=max_len,
+            max_sum=max_sum,
             width=width,
             height=height,
             colors=color_list,
