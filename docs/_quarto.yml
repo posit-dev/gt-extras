@@ -73,10 +73,11 @@ quartodoc:
         - gt_fa_rating
         - img_header
 
-    - title: HTML and Formatting
+    - title: Utilities
       desc: "" # TODO: add desc
       contents:
         - fmt_pct_extra
+        - gt_add_divider
         - gt_hyperlink
         - with_tooltip
 
