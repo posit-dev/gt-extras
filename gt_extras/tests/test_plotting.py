@@ -860,20 +860,18 @@ def test_gt_plt_bar_stack_spacing_warning():
     df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
     gt_test = GT(df)
 
-    # with pytest.warns(
-    #     UserWarning,
-    #     match="Spacing is too large relative to the width. No bars will be displayed.",
-    # ):
-    res = gt_plt_bar_stack(
-        gt=gt_test,
-        column="values",
-        width=10,
-        spacing=15,
-    )
+    with pytest.warns(
+        UserWarning,
+        match="Spacing is too large relative to the width. No bars will be displayed.",
+    ):
+        html = gt_plt_bar_stack(
+            gt=gt_test,
+            column="values",
+            width=10,
+            spacing=5,
+        ).as_raw_html()
 
-    # res.show("browser")
-
-    assert isinstance(res, GT)
+    assert html.count("width:0.0px;") == 3
 
 
 def test_gt_plt_bar_stack_invalid_column():
