@@ -1,0 +1,4 @@
+# serializer version: 1
+# name: test_img_header_snapshot
+  Html(text='<div style="text-align:center;">\n        <img src="https://example.com/image.png" style="\n        height:60px;\n        border-bottom:2px solid black;"\n    />\n        <div style="\n        font-size:12px;\n        color:black;\n        text-align:center;\n        width:100%;\n    ">\n        Test Label\n    </div>\n    </div>')
+# ---

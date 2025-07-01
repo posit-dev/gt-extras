@@ -336,7 +336,7 @@ def gt_plt_dot(
 
         bar_container_style = "position:relative; top:1.2em;"
 
-        html = f'''
+        html = f"""
         <div>
             <div style="{label_div_style}">
                 {dot_category_label}
@@ -347,9 +347,9 @@ def gt_plt_dot(
                 <div>{_make_bottom_bar_html(bar_val, fill=fill)}</div>
             </div>
         </div>
-        '''
+        """.strip()
 
-        return html.strip()
+        return html
 
     # Validate and get data column
     data_col_name, data_col_vals = _validate_and_get_single_column(
@@ -1400,7 +1400,7 @@ def gt_plt_bar_stack(
                 font-size:{font_size}px;
                 color:{_ideal_fgnd_color(_html_color([color])[0])};
             ">{label}</div>
-            """
+            """.strip()
 
             bar_html = f"""
             <div style="
@@ -1411,7 +1411,7 @@ def gt_plt_bar_stack(
                 height:{height}px;
                 background:{color};
             ">{label_html}</div>
-            """
+            """.strip()
             if value != 0 and not is_na(gt._tbl_data, value):
                 bars_html.append(bar_html.strip())
                 current_left += bar_width + spacing
@@ -1420,8 +1420,9 @@ def gt_plt_bar_stack(
         <div style="position:relative; width:{width}px; height:{height}px;">
             {"".join(bars_html)}
         </div>
-        """
-        return html.strip()
+        """.strip()
+
+        return html
 
     # Throw if `scale_type` is not one of the allowed values
     if scale_type not in ["relative", "absolute"]:
