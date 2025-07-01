@@ -1363,6 +1363,7 @@ def gt_plt_bar_stack(
         if not values:
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
+        # Count how many values will be displayed in the chart
         len_non_zero_values = sum(
             1 for val in values if val != 0 and not is_na(gt._tbl_data, val)
         )
@@ -1388,11 +1389,11 @@ def gt_plt_bar_stack(
             color = colors[i % len(colors)]
 
             label = f"{values[i]:.{num_decimals}f}"
-            # TODO : remove html color call
             label_html = f"""
             <div style="
                 position:absolute;
-                left:50%; top:50%;
+                left:50%;
+                top:50%;
                 transform:translateX(-50%) translateY(-50%);
                 font-size:{font_size}px;
                 color:{_ideal_fgnd_color(_html_color([color])[0])};
