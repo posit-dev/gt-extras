@@ -33,11 +33,9 @@ To set up your development environment, you can follow these steps:
 - Install the package in editable mode with `pip install -e .` from the root of the project folder
 - Install the development dependencies with `pip install .[dev]` (have a look at the `pyproject.toml` file for the list of development dependencies)
 
-Our documentation use `quartodoc` which in turn requires a local install of the Quarto CLI. To install Quarto, go to <https://quarto.org/docs/get-started/> to get the latest build for your platform.
+Our documentation uses `quartodoc` which in turn requires a local install of the Quarto CLI. To install Quarto, go to <https://quarto.org/docs/get-started/> to get the latest build for your platform.
 
 We also use `ruff` for linting and formatting (this is part of our development dependencies). If using VS Code as your editor, it may be useful to install the `Ruff` extension. This will make it so any commits will pass the `pre-commit` checks. You can verify that any changes pass all pre-commit checks by running `pre-commit run --all-files`.
-
-If you are planning to investigate or submit a PR concerning the generation of table images, you need to install additional dependencies (`selenium`and`Pillow`) and this can be done by using `pip install .[all]`.
 
 ### Building the Documentation Locally
 
