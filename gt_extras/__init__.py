@@ -29,6 +29,8 @@ from .formatting import fmt_pct_extra
 
 from .images import img_header
 
+from .styling import gt_add_divider
+
 
 __all__ = [
     "gt_theme_538",
@@ -54,4 +56,5 @@ __all__ = [
     "with_tooltip",
     "fmt_pct_extra",
     "img_header",
+    "gt_add_divider",
 ]
