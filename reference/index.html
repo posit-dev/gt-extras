@@ -302,7 +302,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">HTML and Formatting</span></a>
+ <span class="menu-text">Utilities</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -312,6 +312,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">fmt_pct_extra</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/gt_add_divider.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_add_divider</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -344,7 +350,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#colors" id="toc-colors" class="nav-link" data-scroll-target="#colors">Colors</a></li>
   <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes">Themes</a></li>
   <li><a href="#icons-and-images" id="toc-icons-and-images" class="nav-link" data-scroll-target="#icons-and-images">Icons and Images</a></li>
-  <li><a href="#html-and-formatting" id="toc-html-and-formatting" class="nav-link" data-scroll-target="#html-and-formatting">HTML and Formatting</a></li>
+  <li><a href="#utilities" id="toc-utilities" class="nav-link" data-scroll-target="#utilities">Utilities</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -359,6 +365,7 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="doc doc-index">API Reference</h1>
 <section id="plotting" class="level2">
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
+<p>Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing <code>GT</code> objects.</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -390,6 +397,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="colors" class="level2">
 <h2 class="anchored" data-anchor-id="colors">Colors</h2>
+<p>Functions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -409,7 +417,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="themes" class="level2">
 <h2 class="anchored" data-anchor-id="themes">Themes</h2>
-<p>Functions to generate themes.</p>
+<p>Predefined themes to style <code>GT</code> objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -449,6 +457,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="icons-and-images" class="level2">
 <h2 class="anchored" data-anchor-id="icons-and-images">Icons and Images</h2>
+<p>Functions to enhance <code>GT</code> objects by adding icons, ratings, or images to cells or headers alike.</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -466,8 +475,9 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="html-and-formatting" class="level2">
-<h2 class="anchored" data-anchor-id="html-and-formatting">HTML and Formatting</h2>
+<section id="utilities" class="level2">
+<h2 class="anchored" data-anchor-id="utilities">Utilities</h2>
+<p>Helper functions to extend <code>GT</code> functionality, including HTML features and formatting tools.</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -475,10 +485,14 @@ ul.task-list li input[type="checkbox"] {
 <td>Convert to percent and show less than <code>1%</code> as <code>&lt;1%</code> in grey.</td>
 </tr>
 <tr class="even">
+<td><a href="../reference/gt_add_divider.html#gt_extras.gt_add_divider">gt_add_divider</a></td>
+<td>Add dividers to specified columns in a GT table.</td>
+</tr>
+<tr class="odd">
 <td><a href="../reference/gt_hyperlink.html#gt_extras.gt_hyperlink">gt_hyperlink</a></td>
 <td>Create HTML hyperlinks for use in <code>GT</code> cells.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="../reference/with_tooltip.html#gt_extras.with_tooltip">with_tooltip</a></td>
 <td>Create HTML text with tooltip functionality for use in <code>GT</code> cells.</td>
 </tr>

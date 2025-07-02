@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>fmt_pct_extra – gt-extras</title>
+<title>gt_add_divider – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_add_divider.html" rel="next">
-<link href="../reference/img_header.html" rel="prev">
+<link href="../reference/gt_hyperlink.html" rel="next">
+<link href="../reference/fmt_pct_extra.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">fmt_pct_extra</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/gt_add_divider.html">gt_add_divider</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -349,13 +349,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">fmt_pct_extra</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_add_divider.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_add_divider.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_add_divider</span></a>
   </div>
 </li>
@@ -392,9 +392,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">fmt_pct_extra</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/gt_add_divider.html">gt_add_divider</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">fmt_pct_extra</h1>
+<h1 class="title">gt_add_divider</h1>
 </div>
 
 
@@ -411,9 +411,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fmt_pct_extra(gt, columns, scale<span class="op">=</span><span class="dv">100</span>, threshold<span class="op">=</span><span class="fl">1.0</span>, color<span class="op">=</span><span class="st">'grey'</span>, decimals<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Convert to percent and show less than <code>1%</code> as <code>&lt;1%</code> in grey.</p>
-<p>The <code>fmt_pct_extra()</code> function takes an existing <code>GT</code> object and formats a column of numeric values as percentages. Values below the specified threshold are displayed as <code>"&lt;threshold%"</code> instead of their actual percentage value, and in a unique color.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_add_divider(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    columns,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    sides<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    divider_style<span class="op">=</span><span class="st">'solid'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    weight<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    include_labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add dividers to specified columns in a GT table.</p>
+<p>The <code>gt_add_divider()</code> function takes an existing <code>GT</code> object and adds dividers to the specified columns. Dividers can be applied to one or more sides of the cells, with customizable color, style, and weight. Optionally, dividers can also be applied to column labels.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
@@ -423,23 +431,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code><span class="parameter-name"><strong>columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
 <dd>
-<p>The columns containing numeric values to format as percentages.</p>
+<p>The columns to which dividers should be applied.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>scale</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dt><code><span class="parameter-name"><strong>sides</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['right', 'left', 'top', 'bottom', 'all'] | list[Literal['right', 'left', 'top', 'bottom', 'all']]</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'right'</span></code></dt>
 <dd>
-<p>Multiplication factor to convert values to percentages. Use <code>100</code> if values are decimals <code>(0.05 -&gt; 5%)</code> (default), use <code>1</code> if values are already percentages <code>(5 -&gt; 5%)</code>.</p>
-</dd>
-<dt><code><span class="parameter-name"><strong>threshold</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1.0</span></code></dt>
-<dd>
-<p>The percentage threshold below which values are displayed as <code>"&lt;threshold%"</code> instead of their actual value. Note this refers to the scaled value, not the original.</p>
+<p>The sides of the cells where dividers should be added. Options include <code>"right"</code>, <code>"left"</code>, <code>"top"</code>, <code>"bottom"</code>, or <code>"all"</code>. A list of sides can also be provided to apply dividers to multiple sides.</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'grey'</span></code></dt>
 <dd>
-<p>The color to use for values below the threshold.</p>
+<p>The color of the dividers.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dt><code><span class="parameter-name"><strong>divider_style</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['solid', 'dashed', 'dotted', 'hidden', 'double']</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'solid'</span></code></dt>
 <dd>
-<p>Number of decimal places to display for percentages.</p>
+<p>The style of the dividers. Options include <code>"solid"</code>, <code>"dashed"</code>, <code>"dotted"</code>, <code>"hidden"</code>, and <code>"double"</code>.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>weight</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">2</span></code></dt>
+<dd>
+<p>The thickness of the dividers in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_labels</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dd>
+<p>Whether to include dividers in the column labels. If <code>True</code>, dividers will be applied to both the body and the column labels. If <code>False</code>, dividers will only be applied to the body.</p>
 </dd>
 </dl>
 </section>
@@ -448,166 +460,160 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl>
 <dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>A <code>GT</code> object with formatted percentage column.</p>
+<p>A <code>GT</code> object with dividers added to the specified columns.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="00b40612" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> towny</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>towny_mini <span class="op">=</span> towny[</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_1996_2001_pct"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_2001_2006_pct"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pop_change_2006_2011_pct"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>].tail(<span class="dv">10</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    GT(towny_mini)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Population Change"</span>, columns<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        pop_change_1996_2001_pct<span class="op">=</span><span class="st">"'96-'01"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        pop_change_2001_2006_pct<span class="op">=</span><span class="st">"'01-'06"</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        pop_change_2006_2011_pct<span class="op">=</span><span class="st">"'06-'11"</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    gte.fmt_pct_extra,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    threshold<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"green"</span>,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="26fac0fc" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> peeps</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>peeps_mini <span class="op">=</span> peeps.head(<span class="dv">6</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    GT(peeps_mini)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .cols_hide([</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name_family"</span>, <span class="st">"postcode"</span>, <span class="st">"country"</span>, <span class="st">"country_code"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dob"</span>, <span class="st">"gender"</span>, <span class="st">"state_prov"</span>, <span class="st">"email_addr"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(<span class="st">"Location"</span>, [<span class="st">"address"</span>, <span class="st">"city"</span>])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(<span class="st">"Body Measurements"</span>, [<span class="st">"height_cm"</span>, <span class="st">"weight_kg"</span>])</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    gte.gt_add_divider,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">"name_given"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#FFB90F"</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    divider_style<span class="op">=</span><span class="st">"double"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    weight<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>).pipe(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    gte.gt_add_divider,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">"phone_number"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"purple"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    sides<span class="op">=</span>[<span class="st">"right"</span>, <span class="st">"left"</span>],</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    weight<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="ykgewchnjp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="irqrctmydg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#ykgewchnjp table {
+#irqrctmydg table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#ykgewchnjp thead, tbody, tfoot, tr, td, th { border-style: none; }
+#irqrctmydg thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#ykgewchnjp p { margin: 0; padding: 0; }
- #ykgewchnjp .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #ykgewchnjp .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #ykgewchnjp .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #ykgewchnjp .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #ykgewchnjp .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ykgewchnjp .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ykgewchnjp .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ykgewchnjp .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #ykgewchnjp .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #ykgewchnjp .gt_column_spanner_outer:first-child { padding-left: 0; }
- #ykgewchnjp .gt_column_spanner_outer:last-child { padding-right: 0; }
- #ykgewchnjp .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #ykgewchnjp .gt_spanner_row { border-bottom-style: hidden; }
- #ykgewchnjp .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #ykgewchnjp .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #ykgewchnjp .gt_from_md> :first-child { margin-top: 0; }
- #ykgewchnjp .gt_from_md> :last-child { margin-bottom: 0; }
- #ykgewchnjp .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #ykgewchnjp .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #ykgewchnjp .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #ykgewchnjp .gt_row_group_first td { border-top-width: 2px; }
- #ykgewchnjp .gt_row_group_first th { border-top-width: 2px; }
- #ykgewchnjp .gt_striped { background-color: rgba(128,128,128,0.05); }
- #ykgewchnjp .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ykgewchnjp .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #ykgewchnjp .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #ykgewchnjp .gt_left { text-align: left; }
- #ykgewchnjp .gt_center { text-align: center; }
- #ykgewchnjp .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #ykgewchnjp .gt_font_normal { font-weight: normal; }
- #ykgewchnjp .gt_font_bold { font-weight: bold; }
- #ykgewchnjp .gt_font_italic { font-style: italic; }
- #ykgewchnjp .gt_super { font-size: 65%; }
- #ykgewchnjp .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #ykgewchnjp .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#irqrctmydg p { margin: 0; padding: 0; }
+ #irqrctmydg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #irqrctmydg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #irqrctmydg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #irqrctmydg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #irqrctmydg .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #irqrctmydg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #irqrctmydg .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #irqrctmydg .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #irqrctmydg .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #irqrctmydg .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #irqrctmydg .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #irqrctmydg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #irqrctmydg .gt_spanner_row { border-bottom-style: hidden; }
+ #irqrctmydg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #irqrctmydg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #irqrctmydg .gt_from_md> :first-child { margin-top: 0; }
+ #irqrctmydg .gt_from_md> :last-child { margin-bottom: 0; }
+ #irqrctmydg .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #irqrctmydg .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #irqrctmydg .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #irqrctmydg .gt_row_group_first td { border-top-width: 2px; }
+ #irqrctmydg .gt_row_group_first th { border-top-width: 2px; }
+ #irqrctmydg .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #irqrctmydg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #irqrctmydg .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #irqrctmydg .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #irqrctmydg .gt_left { text-align: left; }
+ #irqrctmydg .gt_center { text-align: center; }
+ #irqrctmydg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #irqrctmydg .gt_font_normal { font-weight: normal; }
+ #irqrctmydg .gt_font_bold { font-weight: bold; }
+ #irqrctmydg .gt_font_italic { font-style: italic; }
+ #irqrctmydg .gt_super { font-size: 65%; }
+ #irqrctmydg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #irqrctmydg .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
 <tr class="gt_col_headings gt_spanner_row">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="name">name</th>
-  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Population-Change">
-    <span class="gt_column_spanner">Population Change</span>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="border-right: 8px double #FFB90F;" scope="col" id="name_given">name_given</th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Location">
+    <span class="gt_column_spanner">Location</span>
+  </th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" style="border-right: 5px solid purple;border-left: 5px solid purple;" scope="col" id="phone_number">phone_number</th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Body-Measurements">
+    <span class="gt_column_spanner">Body Measurements</span>
   </th>
 </tr>
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_1996_2001_pct">'96-'01</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_2001_2006_pct">'01-'06</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="pop_change_2006_2011_pct">'06-'11</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="address">address</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="city">city</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="height_cm">height_cm</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="weight_kg">weight_kg</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <td class="gt_row gt_left">Whitchurch-Stouffville</td>
-    <td class="gt_row gt_right">11.6%</td>
-    <td class="gt_row gt_right">6.7%</td>
-    <td class="gt_row gt_right">54.3%</td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Ruth</td>
+    <td class="gt_row gt_left">4299 Bobcat Drive</td>
+    <td class="gt_row gt_left">Baileys Crossroads</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">240-783-7630</td>
+    <td class="gt_row gt_right">153</td>
+    <td class="gt_row gt_right">76.4</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">White River</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right">-15.3%</td>
-    <td class="gt_row gt_right">-27.8%</td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Peter</td>
+    <td class="gt_row gt_left">3705 Hidden Pond Road</td>
+    <td class="gt_row gt_left">Red Boiling Springs</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">615-699-3517</td>
+    <td class="gt_row gt_right">175</td>
+    <td class="gt_row gt_right">74.9</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">Whitestone</td>
-    <td class="gt_row gt_right">6.4%</td>
-    <td class="gt_row gt_right">20.8%</td>
-    <td class="gt_row gt_right">-10.9%</td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Fanette</td>
+    <td class="gt_row gt_left">4200 Swick Hill Street</td>
+    <td class="gt_row gt_left">New Orleans</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">985-205-2970</td>
+    <td class="gt_row gt_right">167</td>
+    <td class="gt_row gt_right">61.6</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">Whitewater</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Judyta</td>
+    <td class="gt_row gt_left">2287 Cherry Ridge Drive</td>
+    <td class="gt_row gt_left">Oakfield</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">585-948-7790</td>
+    <td class="gt_row gt_right">156</td>
+    <td class="gt_row gt_right">54.5</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">Wilmot</td>
-    <td class="gt_row gt_right">7.5%</td>
-    <td class="gt_row gt_right">15.0%</td>
-    <td class="gt_row gt_right">12.4%</td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Leonard</td>
+    <td class="gt_row gt_left">1496 Hillhaven Drive</td>
+    <td class="gt_row gt_left">Los Angeles</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">323-857-6576</td>
+    <td class="gt_row gt_right">177</td>
+    <td class="gt_row gt_right">113.2</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">Windsor</td>
-    <td class="gt_row gt_right">5.4%</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_left">Wollaston</td>
-    <td class="gt_row gt_right">-5.6%</td>
-    <td class="gt_row gt_right">7.5%</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_left">Woodstock</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right">8.3%</td>
-    <td class="gt_row gt_right">5.4%</td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_left">Woolwich</td>
-    <td class="gt_row gt_right">5.1%</td>
-    <td class="gt_row gt_right">8.0%</td>
-    <td class="gt_row gt_right">17.7%</td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_left">Zorra</td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
-    <td class="gt_row gt_right"><span style="color:green;">&lt;5%</span></td>
+    <td style="border-right: 8px double #FFB90F;" class="gt_row gt_left">Maymun</td>
+    <td class="gt_row gt_left">4088 Barnes Avenue</td>
+    <td class="gt_row gt_left">Hamilton</td>
+    <td style="border-right: 5px solid purple;border-left: 5px solid purple;" class="gt_row gt_right">513-738-1936</td>
+    <td class="gt_row gt_right">172</td>
+    <td class="gt_row gt_right">88.4</td>
   </tr>
 </tbody>
 
@@ -1024,13 +1030,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/img_header.html" class="pagination-link" aria-label="img_header">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">img_header</span>
+      <a href="../reference/fmt_pct_extra.html" class="pagination-link" aria-label="fmt_pct_extra">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">fmt_pct_extra</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_add_divider.html" class="pagination-link" aria-label="gt_add_divider">
-        <span class="nav-page-text">gt_add_divider</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_hyperlink.html" class="pagination-link" aria-label="gt_hyperlink">
+        <span class="nav-page-text">gt_hyperlink</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
