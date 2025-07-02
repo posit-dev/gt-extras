@@ -18,11 +18,7 @@ def gt_add_divider(
     weight: int = 2,
     include_labels: bool = True,
 ) -> GT:
-    locations = [
-        loc.body(
-            columns=columns,
-        )
-    ]
+    locations = [loc.body(columns=columns)]
 
     if include_labels:
         locations.append(loc.column_labels(columns=columns))
