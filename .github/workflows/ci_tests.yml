@@ -35,3 +35,23 @@ jobs:
       - name: Test
         run: |
           uv run pytest
+
+  release-pypi:
+    name: "Release to PyPI"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [test]
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - name: "Build Package"
+        run: |
+          python -m pip install build wheel
+          python -m build --sdist --wheel
+      - name: "Deploy to PyPI"
+        uses: pypa/gh-action-pypi-publish@release/v1
