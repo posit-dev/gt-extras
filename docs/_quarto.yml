@@ -15,8 +15,10 @@ website:
   page-navigation: true
   navbar:
     left:
-      - text: Get Started
-        file: get-started/index.qmd
+      - text: Intro
+        file: articles/intro.qmd
+      # - text: Get Started
+      #   file: get-started/index.qmd
       - reference/index.qmd
     right:
       - icon: github
@@ -34,7 +36,9 @@ quartodoc:
     table_style: description-list
 
   # write sidebar data
-  sidebar: _sidebar.yml
+  sidebar:
+    file: "_sidebar.yml"
+    collapse-level: 1
 
   sections:
     - title: Plotting
