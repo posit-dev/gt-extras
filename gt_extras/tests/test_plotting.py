@@ -267,8 +267,8 @@ def test_gt_plt_conf_int_computed_ci():
     gt_test = GT(df)
     html = gt_plt_conf_int(gt=gt_test, column="data").as_raw_html()
 
-    assert ">2.4</div>" in html
-    assert ">4</div>" in html
+    assert ">-4.7</div>" in html
+    assert ">11.1</div>" in html
     assert ">4.1</div>" in html
     assert ">5.9</div>" in html
 
