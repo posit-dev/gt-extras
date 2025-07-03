@@ -1,14 +1,14 @@
 from __future__ import annotations
 from typing import Literal
 
-__all__ = ["gt_hyperlink", "with_tooltip"]
+__all__ = ["with_hyperlink", "with_tooltip"]
 
 
-def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
+def with_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     """
     Create HTML hyperlinks for use in `GT` cells.
 
-    The `gt_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
+    The `with_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
     used within table cells.
 
     Parameters
@@ -52,12 +52,12 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     )
 
     df["Package"] = [
-        gte.gt_hyperlink(name, url)
+        gte.with_hyperlink(name, url)
         for name, url in zip(df["name"], df["url"])
     ]
 
     df["Github Stars"] = [
-        gte.gt_hyperlink(github_stars, repo_url, new_tab=False)
+        gte.with_hyperlink(github_stars, repo_url, new_tab=False)
         for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
     ]
 

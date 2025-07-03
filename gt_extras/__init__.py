@@ -23,7 +23,7 @@ from .plotting import (
     gt_plt_bar_stack,
 )
 
-from .html import gt_hyperlink, with_tooltip
+from .html import with_hyperlink, with_tooltip
 
 from .formatting import fmt_pct_extra
 
@@ -52,7 +52,7 @@ __all__ = [
     "gt_plt_dumbbell",
     "gt_plt_winloss",
     "gt_plt_bar_stack",
-    "gt_hyperlink",
+    "with_hyperlink",
     "with_tooltip",
     "fmt_pct_extra",
     "img_header",
