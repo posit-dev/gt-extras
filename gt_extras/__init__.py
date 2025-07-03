@@ -23,7 +23,7 @@ from .plotting import (
     gt_plt_bar_stack,
 )
 
-from .html import gt_hyperlink, with_tooltip
+from .html import gt_hyperlink, with_tooltip, gt_merge_stack
 
 from .formatting import fmt_pct_extra
 
@@ -54,6 +54,7 @@ __all__ = [
     "gt_plt_bar_stack",
     "gt_hyperlink",
     "with_tooltip",
+    "gt_merge_stack",
     "fmt_pct_extra",
     "img_header",
     "gt_add_divider",

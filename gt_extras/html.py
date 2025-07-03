@@ -1,7 +1,9 @@
 from __future__ import annotations
 from typing import Literal
 
-__all__ = ["gt_hyperlink", "with_tooltip"]
+from great_tables import GT
+
+__all__ = ["gt_hyperlink", "with_tooltip", "gt_merge_stack"]
 
 
 def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
@@ -152,3 +154,7 @@ def with_tooltip(
         style += f"color: {color}; "
 
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'
+
+
+def gt_merge_stack(gt: GT) -> GT:
+    pass
