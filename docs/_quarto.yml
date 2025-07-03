@@ -95,8 +95,8 @@ quartodoc:
       contents:
         - fmt_pct_extra
         - gt_add_divider
-        - with_hyperlink
         - gt_merge_stack
+        - with_hyperlink
         - with_tooltip
 
 
