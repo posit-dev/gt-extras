@@ -436,51 +436,51 @@
     ]
   },
   {
-    "objectID": "reference/gt_color_box.html",
-    "href": "reference/gt_color_box.html",
-    "title": "gt_color_box",
+    "objectID": "reference/with_hyperlink.html",
+    "href": "reference/with_hyperlink.html",
+    "title": "with_hyperlink",
     "section": "",
-    "text": "gt_color_box(\n    gt,\n    columns,\n    domain=None,\n    palette=None,\n    alpha=0.2,\n    min_width=70,\n    min_height=20,\n    font_weight='normal',\n)\nAdd PFF-style color boxes to numeric columns in a GT object.\nThe gt_color_box() function takes an existing GT object and adds colored boxes to specified numeric columns. Each box contains a colored square and the numeric value, with colors mapped to the data values using a gradient palette.",
+    "text": "with_hyperlink(text, url, new_tab=True)\nCreate HTML hyperlinks for use in GT cells.\nThe with_hyperlink() function creates properly formatted HTML hyperlink elements that can be used within table cells.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_color_box"
+      "Utilities",
+      "with_hyperlink"
     ]
   },
   {
-    "objectID": "reference/gt_color_box.html#parameters",
-    "href": "reference/gt_color_box.html#parameters",
-    "title": "gt_color_box",
+    "objectID": "reference/with_hyperlink.html#parameters",
+    "href": "reference/with_hyperlink.html#parameters",
+    "title": "with_hyperlink",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr\n\nThe columns to target. Can be a single column name or a list of column names.\n\ndomain : list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred to be the min and max of the data range.\n\npalette : list[str] | str | None = None\n\nThe color palette to use. This should be a list of colors (e.g., [\"#FF0000\", \"#00FF00\", \"#0000FF\"]). A ColorBrewer palette could also be used, just supply the name (see GT.data_color() for additional reference). If None, then a default palette will be used.\n\nalpha : float = 0.2\n\nThe alpha (transparency) value for the background colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nmin_width : int | float = 70\n\nThe minimum width of each color box in pixels.\n\nmin_height : int | float = 20\n\nThe minimum height of each color box in pixels.\n\nfont_weight : str = 'normal'\n\nA string indicating the weight of the font for the numeric values. Can be \"normal\", \"bold\", or other CSS font-weight values. Defaults to \"normal\".",
+    "text": "Parameters\n\ntext : str\n\nA string that will be displayed as the clickable link text.\n\nurl : str\n\nA string indicating the destination URL for the hyperlink.\n\nnew_tab : bool = True\n\nA boolean indicating whether the link should open in a new browser tab or the current tab.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_color_box"
+      "Utilities",
+      "with_hyperlink"
     ]
   },
   {
-    "objectID": "reference/gt_color_box.html#returns",
-    "href": "reference/gt_color_box.html#returns",
-    "title": "gt_color_box",
+    "objectID": "reference/with_hyperlink.html#returns",
+    "href": "reference/with_hyperlink.html#returns",
+    "title": "with_hyperlink",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
+    "text": "Returns\n\n : str\n\nAn string containing the HTML formatted hyperlink element.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_color_box"
+      "Utilities",
+      "with_hyperlink"
     ]
   },
   {
-    "objectID": "reference/gt_color_box.html#examples",
-    "href": "reference/gt_color_box.html#examples",
-    "title": "gt_color_box",
+    "objectID": "reference/with_hyperlink.html#examples",
+    "href": "reference/with_hyperlink.html#examples",
+    "title": "with_hyperlink",
     "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import islands\nimport gt_extras as gte\n\nislands_mini = (\n    islands\n    .sort_values(by=\"size\", ascending=False)\n    .head(10)\n)\n\ngt = (\n    GT(islands_mini, rowname_col=\"name\")\n    .tab_stubhead(label=\"Island\")\n)\n\ngt.pipe(gte.gt_color_box, columns=\"size\", palette=[\"lightblue\", \"navy\"])\n\n\n\n\n\n\n\n  Island\n  size\n\n\n\n  \n    Asia\n    \n            \n                \n                16988\n            \n        \n  \n  \n    Africa\n    \n            \n                \n                11506\n            \n        \n  \n  \n    North America\n    \n            \n                \n                9390\n            \n        \n  \n  \n    South America\n    \n            \n                \n                6795\n            \n        \n  \n  \n    Antarctica\n    \n            \n                \n                5500\n            \n        \n  \n  \n    Europe\n    \n            \n                \n                3745\n            \n        \n  \n  \n    Australia\n    \n            \n                \n                2968\n            \n        \n  \n  \n    Greenland\n    \n            \n                \n                840\n            \n        \n  \n  \n    New Guinea\n    \n            \n                \n                306\n            \n        \n  \n  \n    Borneo\n    \n            \n                \n                280",
+    "text": "Examples\n\nimport pandas as pd\nfrom great_tables import GT\nimport gt_extras as gte\n\ndf = pd.DataFrame(\n    {\n        \"name\": [\"Great Tables\", \"Plotnine\", \"Quarto\"],\n        \"url\": [\n            \"https://posit-dev.github.io/great-tables/\",\n            \"https://plotnine.org/\",\n            \"https://quarto.org/\",\n        ],\n        \"github_stars\": [2334, 4256, 4628],\n        \"repo_url\": [\n            \"https://github.com/posit-dev/great-tables\",\n            \"https://github.com/has2k1/plotnine\",\n            \"https://github.com/quarto-dev/quarto-cli\",\n        ],\n    }\n)\n\ndf[\"Package\"] = [\n    gte.with_hyperlink(name, url)\n    for name, url in zip(df[\"name\"], df[\"url\"])\n]\n\ndf[\"Github Stars\"] = [\n    gte.with_hyperlink(github_stars, repo_url, new_tab=False)\n    for github_stars, repo_url in zip(df[\"github_stars\"], df[\"repo_url\"])\n]\n\nGT(df[[\"Package\", \"Github Stars\"]])\n\n\n\n\n\n\n\n  Package\n  Github Stars\n\n\n\n  \n    Great Tables\n    2334\n  \n  \n    Plotnine\n    4256\n  \n  \n    Quarto\n    4628",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_color_box"
+      "Utilities",
+      "with_hyperlink"
     ]
   },
   {
@@ -788,7 +788,7 @@
     "href": "reference/gt_fa_rating.html#example",
     "title": "gt_fa_rating",
     "section": "Example",
-    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5",
+    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5",
     "crumbs": [
       "API Reference",
       "Icons and Images",
@@ -844,51 +844,51 @@
     ]
   },
   {
-    "objectID": "reference/gt_hyperlink.html",
-    "href": "reference/gt_hyperlink.html",
-    "title": "gt_hyperlink",
+    "objectID": "reference/gt_color_box.html",
+    "href": "reference/gt_color_box.html",
+    "title": "gt_color_box",
     "section": "",
-    "text": "gt_hyperlink(text, url, new_tab=True)\nCreate HTML hyperlinks for use in GT cells.\nThe gt_hyperlink() function creates properly formatted HTML hyperlink elements that can be used within table cells.",
+    "text": "gt_color_box(\n    gt,\n    columns,\n    domain=None,\n    palette=None,\n    alpha=0.2,\n    min_width=70,\n    min_height=20,\n    font_weight='normal',\n)\nAdd PFF-style color boxes to numeric columns in a GT object.\nThe gt_color_box() function takes an existing GT object and adds colored boxes to specified numeric columns. Each box contains a colored square and the numeric value, with colors mapped to the data values using a gradient palette.",
     "crumbs": [
       "API Reference",
-      "Utilities",
-      "gt_hyperlink"
+      "Colors",
+      "gt_color_box"
     ]
   },
   {
-    "objectID": "reference/gt_hyperlink.html#parameters",
-    "href": "reference/gt_hyperlink.html#parameters",
-    "title": "gt_hyperlink",
+    "objectID": "reference/gt_color_box.html#parameters",
+    "href": "reference/gt_color_box.html#parameters",
+    "title": "gt_color_box",
     "section": "Parameters",
-    "text": "Parameters\n\ntext : str\n\nA string that will be displayed as the clickable link text.\n\nurl : str\n\nA string indicating the destination URL for the hyperlink.\n\nnew_tab : bool = True\n\nA boolean indicating whether the link should open in a new browser tab or the current tab.",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr\n\nThe columns to target. Can be a single column name or a list of column names.\n\ndomain : list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred to be the min and max of the data range.\n\npalette : list[str] | str | None = None\n\nThe color palette to use. This should be a list of colors (e.g., [\"#FF0000\", \"#00FF00\", \"#0000FF\"]). A ColorBrewer palette could also be used, just supply the name (see GT.data_color() for additional reference). If None, then a default palette will be used.\n\nalpha : float = 0.2\n\nThe alpha (transparency) value for the background colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nmin_width : int | float = 70\n\nThe minimum width of each color box in pixels.\n\nmin_height : int | float = 20\n\nThe minimum height of each color box in pixels.\n\nfont_weight : str = 'normal'\n\nA string indicating the weight of the font for the numeric values. Can be \"normal\", \"bold\", or other CSS font-weight values. Defaults to \"normal\".",
     "crumbs": [
       "API Reference",
-      "Utilities",
-      "gt_hyperlink"
+      "Colors",
+      "gt_color_box"
     ]
   },
   {
-    "objectID": "reference/gt_hyperlink.html#returns",
-    "href": "reference/gt_hyperlink.html#returns",
-    "title": "gt_hyperlink",
+    "objectID": "reference/gt_color_box.html#returns",
+    "href": "reference/gt_color_box.html#returns",
+    "title": "gt_color_box",
     "section": "Returns",
-    "text": "Returns\n\n : str\n\nAn string containing the HTML formatted hyperlink element.",
+    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
     "crumbs": [
       "API Reference",
-      "Utilities",
-      "gt_hyperlink"
+      "Colors",
+      "gt_color_box"
     ]
   },
   {
-    "objectID": "reference/gt_hyperlink.html#examples",
-    "href": "reference/gt_hyperlink.html#examples",
-    "title": "gt_hyperlink",
+    "objectID": "reference/gt_color_box.html#examples",
+    "href": "reference/gt_color_box.html#examples",
+    "title": "gt_color_box",
     "section": "Examples",
-    "text": "Examples\n\nimport pandas as pd\nfrom great_tables import GT\nimport gt_extras as gte\n\ndf = pd.DataFrame(\n    {\n        \"name\": [\"Great Tables\", \"Plotnine\", \"Quarto\"],\n        \"url\": [\n            \"https://posit-dev.github.io/great-tables/\",\n            \"https://plotnine.org/\",\n            \"https://quarto.org/\",\n        ],\n        \"github_stars\": [2334, 4256, 4628],\n        \"repo_url\": [\n            \"https://github.com/posit-dev/great-tables\",\n            \"https://github.com/has2k1/plotnine\",\n            \"https://github.com/quarto-dev/quarto-cli\",\n        ],\n    }\n)\n\ndf[\"Package\"] = [\n    gte.gt_hyperlink(name, url)\n    for name, url in zip(df[\"name\"], df[\"url\"])\n]\n\ndf[\"Github Stars\"] = [\n    gte.gt_hyperlink(github_stars, repo_url, new_tab=False)\n    for github_stars, repo_url in zip(df[\"github_stars\"], df[\"repo_url\"])\n]\n\nGT(df[[\"Package\", \"Github Stars\"]])\n\n\n\n\n\n\n\n  Package\n  Github Stars\n\n\n\n  \n    Great Tables\n    2334\n  \n  \n    Plotnine\n    4256\n  \n  \n    Quarto\n    4628",
+    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import islands\nimport gt_extras as gte\n\nislands_mini = (\n    islands\n    .sort_values(by=\"size\", ascending=False)\n    .head(10)\n)\n\ngt = (\n    GT(islands_mini, rowname_col=\"name\")\n    .tab_stubhead(label=\"Island\")\n)\n\ngt.pipe(gte.gt_color_box, columns=\"size\", palette=[\"lightblue\", \"navy\"])\n\n\n\n\n\n\n\n  Island\n  size\n\n\n\n  \n    Asia\n    \n            \n                \n                16988\n            \n        \n  \n  \n    Africa\n    \n            \n                \n                11506\n            \n        \n  \n  \n    North America\n    \n            \n                \n                9390\n            \n        \n  \n  \n    South America\n    \n            \n                \n                6795\n            \n        \n  \n  \n    Antarctica\n    \n            \n                \n                5500\n            \n        \n  \n  \n    Europe\n    \n            \n                \n                3745\n            \n        \n  \n  \n    Australia\n    \n            \n                \n                2968\n            \n        \n  \n  \n    Greenland\n    \n            \n                \n                840\n            \n        \n  \n  \n    New Guinea\n    \n            \n                \n                306\n            \n        \n  \n  \n    Borneo\n    \n            \n                \n                280",
     "crumbs": [
       "API Reference",
-      "Utilities",
-      "gt_hyperlink"
+      "Colors",
+      "gt_color_box"
     ]
   },
   {
@@ -1040,7 +1040,7 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\ngt_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
+    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -1090,7 +1090,7 @@
     "href": "reference/index.html#utilities",
     "title": "API Reference",
     "section": "",
-    "text": "Helper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\ngt_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
+    "text": "Helper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
     "crumbs": [
       "API Reference"
     ]
