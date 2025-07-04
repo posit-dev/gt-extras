@@ -7,7 +7,7 @@ html-table-processing: none
 
 <div style="text-align: center;">
 
-# gt-extras 
+# gt-extras
 
 </div>
 
@@ -19,7 +19,7 @@ We provide a collection of helper functions to enhance tables created with the P
 The functions in **gt-extras** are designed to make it easier to add plots, icons, color gradients, and other enhancements to your tables. We wrap up common patterns and boilerplate so you can focus on your data and presentation. It is based on the R package [gtExtras](https://jthomasmock.github.io/gtExtras/index.html), which was designed with a similar goal in mind.
 
 ### How can I use it?
-Install the latest release from **PyPI**: 
+Install the latest release from **PyPI**:
 
 ```bash
 $ pip install gt_extras
@@ -36,7 +36,7 @@ gtcars_mini = gtcars.iloc[5:15].copy().reset_index(drop=True)
 gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 
 (
-    # Start with a standard GT 
+    # Start with a standard GT
     GT(gtcars_mini, rowname_col="model")
     .tab_stubhead(label="Car")
     .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
@@ -77,10 +77,19 @@ For a more comprehensive guide, head over to the [Get Started](../get-started/) 
 - Use pre-built themes for quick styling
 - Utilize helper utilities for common table tasks
 
-> ⚠️ gt-extras is currently in development, expect breaking changes.
+::: {.callout-warning collapse="false"}
+gt-extras is currently in development, expect breaking changes.
+:::
 
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).
+
+::: {.callout-tip collapse="false"}
+## What you might get to consider
+
+Some of the work that went into this project was featued on the [_great tables blog_](https://posit-dev.github.io/great-tables/blog/plots-in-tables/), if you choose to contribute hopefully that can give you a sense of the process!
+
+:::
 
 ## Code of Conduct
 Please note that the **gt-extras** project is released with a [contributor code of conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).<br>By participating in this project you agree to abide by its terms.
