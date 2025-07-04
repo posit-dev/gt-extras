@@ -211,7 +211,7 @@ def test_gt_merge_stack_custom_styles(sample_gt):
         font_weight_secondary="bold",
         color_main="blue",
         color_secondary="red",
-        small_cap=False,
+        small_caps=False,
     )
     html = gt.as_raw_html()
 

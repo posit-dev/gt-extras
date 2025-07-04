@@ -181,6 +181,8 @@ def gt_merge_stack(
     the bottom section displays values from the second column (`col2`). Both sections can be
     styled independently with customizable font sizes, weights, colors, and text variants.
 
+    The resulting table will hide `col2`, and the orignal `col1` will contain the merged entries.
+
     Parameters
     ----------
     gt
@@ -227,7 +229,6 @@ def gt_merge_stack(
     import gt_extras as gte
 
     df = pd.read_csv("../assets/teams_colors_logos.csv")
-    # df = pd.read_csv("./docs/assets/teams_colors_logos.csv")
     df = (df.filter(items=["team_nick", "team_abbr", "team_conf", "team_division", "team_wordmark"]).head(8))
 
     gt = GT(df, groupname_col="team_conf", rowname_col="team_nick")
