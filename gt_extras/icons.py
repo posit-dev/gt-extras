@@ -260,8 +260,52 @@ def gt_fa_rating(
     return res
 
 
-def gt_fa_rank_change(gt: GT) -> GT:
-    def _make_ranked_cell_html() -> str:
+def gt_fa_rank_change(
+    gt: GT,
+    column: SelectExpr,
+    neutral_range: list[int] | int = [0],
+    # TODO: choose
+    icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"] = "angles",
+    color_up: str = "green",
+    color_down: str = "purple",
+    color_neutral: str = "grey",
+    font_color: str = "black",
+    show_text: bool = True,
+) -> GT:
+    """ """
+
+    # TODO: consider in this and in others, do I really need to pass all these params in?
+    # I can just get them from the parent function, but maybe that's less clean.
+    def _make_ranked_cell_html(
+        value: float,
+        icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"],
+        color_up: str,
+        color_down: str,
+        color_neutral: str,
+        font_color: str,
+        show_text: bool,
+        neutral_range: list[int],  # note not an int
+        # direction: Literal["up", "down", "neutral"],
+    ) -> str:
         pass
+
+    # TODO call util function for numeric check
+
+    # if neutral range is int, coerce to list
+
+    res = gt
+    res = res.fmt(
+        lambda x: _make_ranked_cell_html(
+            x,
+            icon_type=icon_type,
+            color_up=color_up,
+            color_down=color_down,
+            color_neutral=color_neutral,
+            font_color=font_color,
+            show_text=show_text,
+            neutral_range=neutral_range,
+        ),
+        columns=column,
+    )
 
     pass
