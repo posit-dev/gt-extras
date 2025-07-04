@@ -84,6 +84,7 @@ quartodoc:
         or headers alike.
       contents:
         - fa_icon_repeat
+        - gt_fa_rank_change
         - gt_fa_rating
         - img_header
 

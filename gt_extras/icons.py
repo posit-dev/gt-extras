@@ -1,14 +1,13 @@
 from __future__ import annotations
+
+from math import floor
 from typing import Literal
 
+from faicons import icon_svg
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 
-from math import floor
-
-from faicons import icon_svg
-
-__all__ = ["fa_icon_repeat", "gt_fa_rating"]
+__all__ = ["fa_icon_repeat", "gt_fa_rating", "gt_fa_rank_change"]
 
 
 def fa_icon_repeat(
@@ -252,9 +251,17 @@ def gt_fa_rating(
         return div_html
 
     # Apply the formatting to the columns
-    res = gt.fmt(
+    res = gt
+    res = res.fmt(
         lambda x: _make_rating_html(x),
         columns=columns,
     )
 
     return res
+
+
+def gt_fa_rank_change(gt: GT) -> GT:
+    def _make_ranked_cell_html() -> str:
+        pass
+
+    pass
