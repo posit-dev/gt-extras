@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Literal
 
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr
+from great_tables._tbl_data import SelectExpr, is_na
 
 from gt_extras._utils_column import _validate_and_get_single_column
 
@@ -288,18 +288,23 @@ def gt_merge_stack(
 
         return html
 
+    _, col1_vals = _validate_and_get_single_column(gt, expr=col1)
     _, col2_vals = _validate_and_get_single_column(gt, expr=col2)
 
     res = gt
 
     for i in range(len(gt._tbl_data)):
+        col1_val = col1_vals[i]
         col2_val = col2_vals[i]
 
-        # None and pd.nan checks?
+        if is_na(gt._tbl_data, col1_val):
+            col1_val = ""
+        if is_na(gt._tbl_data, col2_val):
+            col2_val = ""
 
         res = res.fmt(
-            lambda x, col2_val=col2_val: _make_merge_stack_html(
-                col1_val=x,
+            lambda _, col1_val=col1_val, col2_val=col2_val: _make_merge_stack_html(
+                col1_val=col1_val,
                 col2_val=col2_val,
                 font_size_main=font_size_main,
                 font_size_secondary=font_size_secondary,
