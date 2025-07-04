@@ -1,6 +1,7 @@
 # Import objects from the module
 from .colors import (
     gt_color_box,
+    gt_data_color_by_group,
     gt_highlight_cols,
     gt_highlight_rows,
     gt_hulk_col_numeric,
@@ -39,6 +40,7 @@ __all__ = [
     "gt_theme_dot_matrix",
     "gt_theme_dark",
     "gt_theme_pff",
+    "gt_data_color_by_group",
     "gt_highlight_cols",
     "gt_highlight_rows",
     "gt_hulk_col_numeric",
