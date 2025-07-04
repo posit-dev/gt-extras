@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import Literal
 
 from great_tables import GT
@@ -170,7 +171,7 @@ def gt_merge_stack(
     | int = "normal",
     color_main: str = "black",
     color_secondary: str = "grey",
-    small_cap: bool = True,
+    small_caps: bool = True,
 ) -> GT:
     """
     Merge two columns into a stacked format within a `GT` table.
@@ -210,7 +211,7 @@ def gt_merge_stack(
     color_secondary
         The text color for the bottom section of the stack.
 
-    small_cap
+    small_caps
         A boolean indicating whether the top section should use small caps styling.
 
     Returns
@@ -250,9 +251,9 @@ def gt_merge_stack(
         font_weight_secondary: str,
         color_main: str,
         color_secondary: str,
-        small_cap: bool,
+        small_caps: bool,
     ) -> str:
-        font_variant = "small-caps" if small_cap else "normal"
+        font_variant = "small-caps" if small_caps else "normal"
 
         top_section_html = f"""
         <div style="line-height:{font_size_main}px;">
@@ -312,7 +313,7 @@ def gt_merge_stack(
                 font_weight_secondary=font_weight_secondary,
                 color_main=color_main,
                 color_secondary=color_secondary,
-                small_cap=small_cap,
+                small_caps=small_caps,
             ),
             columns=col1,
             rows=[i],
