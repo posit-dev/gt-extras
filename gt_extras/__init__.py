@@ -10,7 +10,12 @@ from .themes import (
     gt_theme_pff,
 )
 
-from .colors import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
+from .colors import (
+    gt_data_color_by_group,
+    gt_highlight_cols,
+    gt_hulk_col_numeric,
+    gt_color_box,
+)
 
 from .icons import fa_icon_repeat, gt_fa_rating
 
@@ -41,6 +46,7 @@ __all__ = [
     "gt_theme_dot_matrix",
     "gt_theme_dark",
     "gt_theme_pff",
+    "gt_data_color_by_group",
     "gt_highlight_cols",
     "gt_hulk_col_numeric",
     "gt_color_box",
