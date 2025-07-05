@@ -53,6 +53,198 @@
   </tbody>
   '''
 # ---
+# name: test_gt_data_color_by_group_pd_multiple_groups
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #25bce6;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pd_multiple_singletons
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pd_no_groups
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pd_single_group
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #ad8560;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #2fa2c8;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #49b7dd;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #e57c55;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pl_multiple_groups
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #25bce6;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pl_multiple_singletons
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pl_no_groups
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
+# name: test_gt_data_color_by_group_pl_single_group
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #ad8560;" class="gt_row gt_right">2</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #2fa2c8;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #49b7dd;" class="gt_row gt_right">4</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #e57c55;" class="gt_row gt_right">5</td>
+    </tr>
+    <tr>
+      <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">6</td>
+    </tr>
+  </tbody>
+  '''
+# ---
 # name: test_gt_highlight_cols
   '''
   <tbody class="gt_table_body">

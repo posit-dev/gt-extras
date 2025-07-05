@@ -1,9 +1,61 @@
 from great_tables import GT
 import numpy as np
 import pandas as pd
-from gt_extras import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
+import polars as pl
+from gt_extras import (
+    gt_data_color_by_group,
+    gt_highlight_cols,
+    gt_hulk_col_numeric,
+    gt_color_box,
+)
 from conftest import assert_rendered_body
 import pytest
+
+
+def test_gt_data_color_by_group_pd_no_groups(snapshot):
+    df = pd.DataFrame({"B": [1, 2, 3, 4, 5, 6]})
+    assert_rendered_body(snapshot, gt_data_color_by_group(GT(df)))
+
+
+def test_gt_data_color_by_group_pd_single_group(snapshot):
+    df = pd.DataFrame({"A": [1, 1, 1, 1, 1, 1], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
+
+
+def test_gt_data_color_by_group_pd_multiple_singletons(snapshot):
+    df = pd.DataFrame({"A": [1, 2, 3, 4, 5, 6], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
+
+
+def test_gt_data_color_by_group_pd_multiple_groups(snapshot):
+    df = pd.DataFrame({"A": [1, 2, 2, 3, 3, 3], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
+
+
+def test_gt_data_color_by_group_pl_no_groups(snapshot):
+    df = pl.DataFrame({"B": [1, 2, 3, 4, 5, 6]})
+    assert_rendered_body(snapshot, gt_data_color_by_group(GT(df)))
+
+
+def test_gt_data_color_by_group_pl_single_group(snapshot):
+    df = pl.DataFrame({"A": [1, 1, 1, 1, 1, 1], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
+
+
+def test_gt_data_color_by_group_pl_multiple_singletons(snapshot):
+    df = pl.DataFrame({"A": [1, 2, 3, 4, 5, 6], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
+
+
+def test_gt_data_color_by_group_pl_multiple_groups(snapshot):
+    df = pl.DataFrame({"A": [1, 2, 2, 3, 3, 3], "B": [1, 2, 3, 4, 5, 6]})
+    gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+    assert_rendered_body(snapshot, gt)
 
 
 def test_gt_highlight_cols(snapshot, mini_gt):
