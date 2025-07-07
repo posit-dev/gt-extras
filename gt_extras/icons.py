@@ -264,12 +264,13 @@ def gt_fa_rank_change(
     gt: GT,
     column: SelectExpr,
     neutral_range: list[int] | int = [0],
-    # TODO: choose
     icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"] = "angles",
+    width: float = 16,
     color_up: str = "green",
-    color_down: str = "purple",
+    color_down: str = "red",
     color_neutral: str = "grey",
     font_color: str = "black",
+    font_size: int = 12,
     show_text: bool = True,
 ) -> GT:
     """ """
@@ -282,16 +283,56 @@ def gt_fa_rank_change(
         color_up: str,
         color_down: str,
         color_neutral: str,
-        font_color: str,
         show_text: bool,
-        neutral_range: list[int],  # note not an int
-        # direction: Literal["up", "down", "neutral"],
+        font_color: str,
+        font_size: int,
+        neutral_range: list[int],  # note not an int\
+        width: float,
     ) -> str:
-        pass
+        if value is None or is_na(gt._tbl_data, value):
+            return "<bold style='color:#d3d3d3;'>--</bold>"
+
+        # Ensure neutral_range is a list with two elements (min and max)
+        if isinstance(neutral_range, (int, float)):
+            neutral_min, neutral_max = neutral_range, neutral_range
+        elif isinstance(neutral_range, list) and len(neutral_range) == 2:
+            neutral_min, neutral_max = min(neutral_range), max(neutral_range)
+        else:
+            raise ValueError(
+                "neutral_range must be a single number or a list with exactly two numbers."
+            )
+
+        if neutral_min <= value <= neutral_max:
+            color = color_neutral
+            fa_name = "equals"
+        elif value > neutral_max:
+            color = color_up
+            fa_name = f"{icon_type}-up"
+        else:  # value < neutral_min
+            color = color_down
+            fa_name = f"{icon_type}-down"
+
+        width = f"{width}px"
+
+        my_fa = icon_svg(name=fa_name, fill=color, width=width, a11y="sem")
+        text_value = str(value) if show_text else ""
+
+        html = html = f"""
+        <div aria-label="{text_value}" role="img" style="
+            padding:0px;
+            display:inline-flex;
+            align-items:center;
+            color:{font_color};
+            font-weight:bold;
+            font-size:{font_size}px;
+        ">
+            <div style="display:flex; margin-right:2px;">{my_fa}</div>
+            <div>{text_value}</div>
+        </div>
+        """
+        return html.strip()
 
     # TODO call util function for numeric check
-
-    # if neutral range is int, coerce to list
 
     res = gt
     res = res.fmt(
@@ -302,10 +343,12 @@ def gt_fa_rank_change(
             color_down=color_down,
             color_neutral=color_neutral,
             font_color=font_color,
+            font_size=font_size,
             show_text=show_text,
             neutral_range=neutral_range,
+            width=width,
         ),
         columns=column,
     )
 
-    pass
+    return res
