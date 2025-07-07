@@ -1,0 +1,61 @@
+# serializer version: 1
+# name: test_gt_fa_rank_change_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">A</td>
+      <td class="gt_row gt_right"><div aria-label="3" role="img" style="
+              padding:0px;
+              display:inline-grid;
+              grid-template-columns: auto 1.2em;
+              align-items:center;
+              gap:1.5px;
+              color:black;
+              font-weight:bold;
+              font-size:12px;
+              min-width:12px;
+          ">
+              <div><svg viewBox="0 0 448 512" preserveAspectRatio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+    <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+              <div style="text-align:right;">3</div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">B</td>
+      <td class="gt_row gt_right"><div aria-label="-2" role="img" style="
+              padding:0px;
+              display:inline-grid;
+              grid-template-columns: auto 1.2em;
+              align-items:center;
+              gap:1.5px;
+              color:black;
+              font-weight:bold;
+              font-size:12px;
+              min-width:12px;
+          ">
+              <div><svg viewBox="0 0 448 512" preserveAspectRatio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+    <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+              <div style="text-align:right;">-2</div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">C</td>
+      <td class="gt_row gt_right"><div aria-label="0" role="img" style="
+              padding:0px;
+              display:inline-grid;
+              grid-template-columns: auto 1.2em;
+              align-items:center;
+              gap:1.5px;
+              color:black;
+              font-weight:bold;
+              font-size:12px;
+              min-width:12px;
+          ">
+              <div><svg viewBox="0 0 448 512" preserveAspectRatio="none" aria-label="Equals" role="img" class="fa" style="fill:grey;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Equals</title>
+    <path d="M48 128c-17.7 0-32 14.3-32 32s14.3 32 32 32H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H48zm0 192c-17.7 0-32 14.3-32 32s14.3 32 32 32H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H48z"></path></svg></div>
+              <div style="text-align:right;">0</div>
+          </div></td>
+    </tr>
+  </tbody>
+  '''
+# ---
