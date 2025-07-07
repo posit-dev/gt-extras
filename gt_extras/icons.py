@@ -291,16 +291,13 @@ def gt_fa_rank_change(
         The column containing numeric rank change values.
 
     neutral_range
-        A single number or list of two numbers defining the neutral range. If a single number,
-        only that exact value is considered neutral. If a list of two numbers, any value within
+        A single number or list of numbers defining the neutral range. If a single number,
+        only that exact value is considered neutral. If a list of numbers, any value within
         that range (inclusive) is considered neutral.
 
     icon_type
         The type of FontAwesome icon to use for indicating direction. Options include `"angles"`,
         `"arrow"`, `"turn"`, `"chevron"`, and `"caret"`.
-
-    width
-        The width of the icons in pixels.
 
     color_up
         The color for positive (upward) rank changes.
@@ -317,8 +314,8 @@ def gt_fa_rank_change(
     font_color
         The color for the numeric text displayed alongside the icons.
 
-    font_size
-        The font size for the numeric text in pixels.
+    size
+        The size of the font as well as the icon.
 
     Returns
     -------
@@ -328,17 +325,34 @@ def gt_fa_rank_change(
     Example
     -------
     ```{python}
-    import pandas as pd
     from great_tables import GT
+    from great_tables.data import towny
     import gt_extras as gte
 
-    df = pd.DataFrame({
-        "Team": ["Lakers", "Warriors", "Celtics", "Heat"],
-        "Rank_Change": [3, -200, 0, 1]
-    })
+    mini_towny = towny.head(10)
+    gt = GT(mini_towny).cols_hide(None).cols_unhide("name")
 
-    gt = GT(df)
-    gt.pipe(gte.gt_fa_rank_change, column="Rank_Change")
+    columns = [
+        "pop_change_1996_2001_pct",
+        "pop_change_2001_2006_pct",
+        "pop_change_2006_2011_pct",
+    ]
+
+    for col in columns:
+        gt = (
+            gt
+            .cols_align(columns=col, align="center")
+            .cols_unhide(col)
+            .cols_label({col: col[11:20]})
+
+            .pipe(
+                gte.gt_fa_rank_change,
+                column=col,
+                neutral_range=[-0.01, 0.01],
+            )
+        )
+
+    gt
     ```
     """
 
