@@ -1,14 +1,13 @@
 from __future__ import annotations
+
 from typing import Literal
 
-from great_tables import GT, style, loc
-from great_tables._tbl_data import SelectExpr, is_na
-from great_tables._locations import resolve_cols_c
-
-from great_tables._data_color.base import _html_color, _add_alpha
-from great_tables._data_color.constants import DEFAULT_PALETTE, ALL_PALETTES
+from great_tables import GT, loc, style
+from great_tables._data_color.base import _add_alpha, _html_color
+from great_tables._data_color.constants import ALL_PALETTES, DEFAULT_PALETTE
 from great_tables._data_color.palettes import GradientPalette
-
+from great_tables._locations import resolve_cols_c
+from great_tables._tbl_data import SelectExpr, is_na
 
 from gt_extras._utils_column import (
     _scale_numeric_column,
