@@ -1,11 +1,11 @@
 from __future__ import annotations
+
 import warnings
 
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr, is_na
-from great_tables._locations import resolve_cols_c
-
 from great_tables._data_color.base import _rescale_numeric
+from great_tables._locations import resolve_cols_c
+from great_tables._tbl_data import SelectExpr, is_na
 
 __all__ = ["_validate_and_get_single_column", "_scale_numeric_column"]
 
@@ -109,7 +109,10 @@ def _scale_numeric_column(
     for orig_val, scaled_val in zip(col_vals, scaled_vals):
         if is_na(data_table, orig_val):
             scaled_vals_fixed.append(0)
+
         elif is_na(data_table, scaled_val):
+            # consider handling by leaving the original val, and having a third color/category.
+
             # If original value < domain[0], set to 0; if > domain[1], set to 1
             if orig_val < min(domain):
                 warnings.warn(
@@ -117,6 +120,7 @@ def _scale_numeric_column(
                     category=UserWarning,
                 )
                 scaled_vals_fixed.append(0)
+
             else:
                 warnings.warn(
                     f"Value {orig_val} in column '{col_name}' is greater than the domain maximum {max(domain)}. Setting to {max(domain)}.",

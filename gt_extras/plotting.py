@@ -1,27 +1,23 @@
 from __future__ import annotations
-from typing import Literal
+
 import warnings
+from typing import Literal
 
 from great_tables import GT, html
-from great_tables._tbl_data import SelectExpr, is_na
-from great_tables._locations import resolve_cols_c
-
-from gt_extras._utils_column import (
-    _validate_and_get_single_column,
-    _scale_numeric_column,
-)
-
-from gt_extras._utils_color import _get_discrete_colors_from_palette
-
 from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
-
+from great_tables._locations import resolve_cols_c
+from great_tables._tbl_data import SelectExpr, is_na
+from scipy.stats import sem, t, tmean
 from svg import SVG, Line, Rect, Text
 
-from scipy.stats import t, sem, tmean
-
+from gt_extras._utils_color import _get_discrete_colors_from_palette
+from gt_extras._utils_column import (
+    _scale_numeric_column,
+    _validate_and_get_single_column,
+)
 
 __all__ = [
     "gt_plt_bar",
@@ -38,6 +34,8 @@ __all__ = [
 # TODO: default font for labels?
 
 # TODO: how to handle negative values? Plots can't really have negative length
+
+# change height to float
 
 
 def gt_plt_bar(
