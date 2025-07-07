@@ -7,6 +7,8 @@ from faicons import icon_svg
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 
+from gt_extras._utils_column import _validate_and_get_single_column
+
 __all__ = ["fa_icon_repeat", "gt_fa_rating", "gt_fa_rank_change"]
 
 
@@ -332,7 +334,7 @@ def gt_fa_rank_change(
 
     df = pd.DataFrame({
         "Team": ["Lakers", "Warriors", "Celtics", "Heat"],
-        "Rank_Change": [3, -2, 0, 1]
+        "Rank_Change": [3, -200, 0, 1]
     })
 
     gt = GT(df)
@@ -351,18 +353,12 @@ def gt_fa_rank_change(
         show_text: bool,
         font_color: str,
         size: int,
-        neutral_range: list[int],  # note not an int\
+        neutral_min: float,
+        neutral_max: float,
+        max_text_width: float,
     ) -> str:
         if value is None or is_na(gt._tbl_data, value):
             return "<bold style='color:#d3d3d3;'>--</bold>"
-
-        # Ensure neutral_range is a list with two elements (min and max)
-        if isinstance(neutral_range, (int, float)):
-            neutral_min, neutral_max = neutral_range, neutral_range
-        elif isinstance(neutral_range, list):
-            neutral_min, neutral_max = min(neutral_range), max(neutral_range)
-        else:
-            raise ValueError("neutral_range must be a single number or a list")
 
         if neutral_min <= value <= neutral_max:
             color = color_neutral
@@ -379,13 +375,17 @@ def gt_fa_rank_change(
             f'<div style="text-align:right;">{str(value)}</div>' if show_text else ""
         )
 
-        with_auto = "auto" if show_text else ""
+        # Set up grid columns
+        if show_text:
+            grid_columns = f"auto {max_text_width}"
+        else:
+            grid_columns = "auto"
 
         html = f"""
         <div aria-label="{str(value)}" role="img" style="
             padding:0px;
             display:inline-grid;
-            grid-template-columns: {with_auto} {size}px;
+            grid-template-columns: {grid_columns};
             align-items:center;
             gap:{size / 8}px;
             color:{font_color};
@@ -399,6 +399,25 @@ def gt_fa_rank_change(
         """
         return html.strip()
 
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+
+    max_text_width = 0
+    for value in col_vals:
+        if value is not None and not is_na(gt._tbl_data, value):
+            text_length = len(str(value))
+            max_text_width = max(max_text_width, text_length)
+
+    # Convert to em units (approximate 0.6em per character)
+    max_text_width = f"{max_text_width * 0.6}em"
+
+    # Ensure neutral_range is a list with two elements (min and max)
+    if isinstance(neutral_range, (int, float)):
+        neutral_min, neutral_max = neutral_range, neutral_range
+    elif isinstance(neutral_range, list):
+        neutral_min, neutral_max = min(neutral_range), max(neutral_range)
+    else:
+        raise ValueError("neutral_range must be a single number or a list")
+
     res = gt
     res = res.fmt(
         lambda x: _make_ranked_cell_html(
@@ -410,7 +429,9 @@ def gt_fa_rank_change(
             font_color=font_color,
             size=size,
             show_text=show_text,
-            neutral_range=neutral_range,
+            neutral_min=neutral_min,
+            neutral_max=neutral_max,
+            max_text_width=max_text_width,
         ),
         columns=column,
     )
