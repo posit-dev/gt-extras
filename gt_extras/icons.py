@@ -265,15 +265,80 @@ def gt_fa_rank_change(
     column: SelectExpr,
     neutral_range: list[int] | int = [0],
     icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"] = "angles",
-    width: float = 16,
     color_up: str = "green",
     color_down: str = "red",
     color_neutral: str = "grey",
-    font_color: str = "black",
-    font_size: int = 12,
     show_text: bool = True,
+    font_color: str = "black",
+    size: int = 12,
 ) -> GT:
-    """ """
+    """
+    Create rank change indicators in `GT` cells using FontAwesome icons.
+
+    This function represents numeric rank changes in table column(s) by displaying FontAwesome
+    icons alongside the numeric values. Positive values show up-pointing icons (e.g., arrows up),
+    negative values show down-pointing icons (e.g., arrows down), and values within the neutral
+    range show neutral indicators (equals sign).
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing numeric rank change values.
+
+    neutral_range
+        A single number or list of two numbers defining the neutral range. If a single number,
+        only that exact value is considered neutral. If a list of two numbers, any value within
+        that range (inclusive) is considered neutral.
+
+    icon_type
+        The type of FontAwesome icon to use for indicating direction. Options include `"angles"`,
+        `"arrow"`, `"turn"`, `"chevron"`, and `"caret"`.
+
+    width
+        The width of the icons in pixels.
+
+    color_up
+        The color for positive (upward) rank changes.
+
+    color_down
+        The color for negative (downward) rank changes.
+
+    color_neutral
+        The color for neutral rank changes (values within the neutral range).
+
+    show_text
+        Whether to display the numeric value alongside the icon.
+
+    font_color
+        The color for the numeric text displayed alongside the icons.
+
+    font_size
+        The font size for the numeric text in pixels.
+
+    Returns
+    -------
+    GT
+        A `GT` object with rank change indicators added to the specified column.
+
+    Example
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.DataFrame({
+        "Team": ["Lakers", "Warriors", "Celtics", "Heat"],
+        "Rank_Change": [3, -2, 0, 1]
+    })
+
+    gt = GT(df)
+    gt.pipe(gte.gt_fa_rank_change, column="Rank_Change")
+    ```
+    """
 
     # TODO: consider in this and in others, do I really need to pass all these params in?
     # I can just get them from the parent function, but maybe that's less clean.
@@ -285,9 +350,8 @@ def gt_fa_rank_change(
         color_neutral: str,
         show_text: bool,
         font_color: str,
-        font_size: int,
+        size: int,
         neutral_range: list[int],  # note not an int\
-        width: float,
     ) -> str:
         if value is None or is_na(gt._tbl_data, value):
             return "<bold style='color:#d3d3d3;'>--</bold>"
@@ -295,12 +359,10 @@ def gt_fa_rank_change(
         # Ensure neutral_range is a list with two elements (min and max)
         if isinstance(neutral_range, (int, float)):
             neutral_min, neutral_max = neutral_range, neutral_range
-        elif isinstance(neutral_range, list) and len(neutral_range) == 2:
+        elif isinstance(neutral_range, list):
             neutral_min, neutral_max = min(neutral_range), max(neutral_range)
         else:
-            raise ValueError(
-                "neutral_range must be a single number or a list with exactly two numbers."
-            )
+            raise ValueError("neutral_range must be a single number or a list")
 
         if neutral_min <= value <= neutral_max:
             color = color_neutral
@@ -312,27 +374,30 @@ def gt_fa_rank_change(
             color = color_down
             fa_name = f"{icon_type}-down"
 
-        width = f"{width}px"
+        my_fa = icon_svg(name=fa_name, fill=color, width=f"{size}px", a11y="sem")
+        text_div = (
+            f'<div style="text-align:right;">{str(value)}</div>' if show_text else ""
+        )
 
-        my_fa = icon_svg(name=fa_name, fill=color, width=width, a11y="sem")
-        text_value = str(value) if show_text else ""
+        with_auto = "auto" if show_text else ""
 
-        html = html = f"""
-        <div aria-label="{text_value}" role="img" style="
+        html = f"""
+        <div aria-label="{str(value)}" role="img" style="
             padding:0px;
-            display:inline-flex;
+            display:inline-grid;
+            grid-template-columns: {with_auto} {size}px;
             align-items:center;
+            gap:{size / 8}px;
             color:{font_color};
             font-weight:bold;
-            font-size:{font_size}px;
+            font-size:{size}px;
+            min-width:{size}px;
         ">
-            <div style="display:flex; margin-right:2px;">{my_fa}</div>
-            <div>{text_value}</div>
+            <div>{my_fa}</div>
+            {text_div}
         </div>
         """
         return html.strip()
-
-    # TODO call util function for numeric check
 
     res = gt
     res = res.fmt(
@@ -343,10 +408,9 @@ def gt_fa_rank_change(
             color_down=color_down,
             color_neutral=color_neutral,
             font_color=font_color,
-            font_size=font_size,
+            size=size,
             show_text=show_text,
             neutral_range=neutral_range,
-            width=width,
         ),
         columns=column,
     )
