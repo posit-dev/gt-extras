@@ -52,7 +52,7 @@ def gt_highlight_cols(
         (light blue) will be used as a default.
 
     alpha
-        An integer `[0, 1]` for the alpha transparency value for the color as single value in the
+        A float `[0, 1]` for the alpha transparency value for the color as single value in the
         range of `0` (fully transparent) to `1` (fully opaque). If not provided the fill color will
         either be fully opaque or use alpha information from the color value if it is supplied in
         the `"#RRGGBBAA"` format.
@@ -109,7 +109,8 @@ def gt_highlight_cols(
     if include_column_labels:
         locations.append(loc.column_labels(columns=columns))
 
-    res = gt.tab_style(
+    res = gt
+    res = res.tab_style(
         style=[
             style.fill(color=fill),
             style.text(weight=font_weight, color=font_color),
@@ -143,7 +144,7 @@ def gt_highlight_rows(
         An existing `GT` object.
 
     rows
-        The rows to target, in the form of a list of row indices. the coloring is applied to all
+        The rows to target, in the form of a list of row indices. If `None`, the coloring is applied to all
         rows.
 
     fill
@@ -151,7 +152,7 @@ def gt_highlight_rows(
         (light blue) will be used as a default.
 
     alpha
-        An integer `[0, 1]` for the alpha transparency value for the color as single value in the
+        A float `[0, 1]` for the alpha transparency value for the color as single value in the
         range of `0` (fully transparent) to `1` (fully opaque). If not provided the fill color will
         either be fully opaque or use alpha information from the color value if it is supplied in
         the `"#RRGGBBAA"` format.

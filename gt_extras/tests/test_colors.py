@@ -1,9 +1,15 @@
-from great_tables import GT
 import numpy as np
 import pandas as pd
-from gt_extras import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
-from conftest import assert_rendered_body
 import pytest
+from conftest import assert_rendered_body
+from great_tables import GT
+
+from gt_extras import (
+    gt_color_box,
+    gt_highlight_cols,
+    gt_highlight_rows,
+    gt_hulk_col_numeric,
+)
 
 
 def test_gt_highlight_cols(snapshot, mini_gt):
@@ -11,14 +17,23 @@ def test_gt_highlight_cols(snapshot, mini_gt):
     assert_rendered_body(snapshot, gt=res)
 
 
-def test_gt_highlight_cols_font(mini_gt):
-    res = gt_highlight_cols(mini_gt, font_weight="bolder").as_raw_html()
-    assert "bolder" in res
+def test_gt_highlight_cols_all_params(mini_gt):
+    html = gt_highlight_cols(
+        mini_gt,
+        columns=[1, 2],
+        font_weight="bolder",
+        font_color="#cccccc",
+        fill="#aaaaaa",
+        include_column_labels=True,
+    ).as_raw_html()
+
+    assert "bolder" in html
+    assert html.count("background-color: #aaaaaa;") == 8
+    assert html.count("#cccccc") == 8
 
 
 def test_gt_highlight_cols_alpha(mini_gt):
-    res = gt_highlight_cols(mini_gt, alpha=0.2, columns="num")
-    html = res.as_raw_html()
+    html = gt_highlight_cols(mini_gt, alpha=0.2, columns="num").as_raw_html()
     assert "#80bcd833" in html
 
 
@@ -34,6 +49,47 @@ def test_gt_highlight_cols_font_weight_invalid_string(mini_gt):
 def test_gt_highlight_cols_font_weight_invalid_type(mini_gt, invalid_weight):
     with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
         gt_highlight_cols(mini_gt, font_weight=invalid_weight)
+
+
+def test_gt_highlight_rows(snapshot, mini_gt):
+    res = gt_highlight_rows(mini_gt, rows=[0, 1])
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_highlight_rows_all_params():
+    df = pd.DataFrame({"rowname": ["A", "B", "C"], "num": [1, 2, 3]})
+    gt_with_rowname = GT(df, rowname_col="rowname")
+    html = gt_highlight_rows(
+        gt_with_rowname,
+        rows=[1, 2],
+        font_weight="bolder",
+        font_color="#cccccc",
+        fill="#aaaaaa",
+        include_row_labels=True,
+    ).as_raw_html()
+
+    assert "bolder" in html
+    assert html.count("background-color: #aaaaaa;") == 4
+    assert html.count("#cccccc") == 4
+
+
+def test_gt_highlight_rows_alpha(mini_gt):
+    html = gt_highlight_rows(mini_gt, rows=[0], alpha=0.3).as_raw_html()
+    assert "#80bcd84C" in html
+
+
+def test_gt_highlight_rows_font_weight_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError,
+        match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
+    ):
+        gt_highlight_rows(mini_gt, rows=[0], font_weight="invalid")
+
+
+@pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
+def test_gt_highlight_rows_font_weight_invalid_type(mini_gt, invalid_weight):
+    with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
+        gt_highlight_rows(mini_gt, rows=[0], font_weight=invalid_weight)
 
 
 def test_gt_hulk_col_numeric_snap(snapshot, mini_gt):
