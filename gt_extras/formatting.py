@@ -168,6 +168,7 @@ def gt_duplicate_column(
     original_name, _ = _validate_and_get_single_column(gt, column)
 
     # If dupe_name is given, it overrides append_text
+    append_text = append_text or "_dupe"
     if dupe_name is not None:
         new_col_name = dupe_name
     else:

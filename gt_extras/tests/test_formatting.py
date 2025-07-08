@@ -1,8 +1,11 @@
-from great_tables import GT
-from gt_extras.formatting import fmt_pct_extra
-import pandas as pd
 import numpy as np
+import pandas as pd
+import polars as pl
+import pyarrow as pa
+import pytest
+from great_tables import GT
 
+from gt_extras.formatting import fmt_pct_extra, gt_duplicate_column
 from gt_extras.tests.conftest import assert_rendered_body
 
 
@@ -91,3 +94,67 @@ def test_fmt_pct_extra_with_none_values():
 
     assert isinstance(result, GT)
     assert "25%" in html
+
+
+def test_gt_duplicate_column_snap(snapshot, mini_gt):
+    res = gt_duplicate_column(mini_gt, column="num")
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_duplicate_column_basic(mini_gt):
+    res = gt_duplicate_column(mini_gt, column="num", append_text="_copy")
+    html = res.as_raw_html()
+
+    assert "num_copy" in res._tbl_data.columns
+    assert "num_copy" in html
+    assert all(res._tbl_data["num"] == res._tbl_data["num_copy"])
+
+
+def test_gt_duplicate_column_custom_name(mini_gt):
+    res = gt_duplicate_column(mini_gt, column="num", dupe_name="duplicated_num")
+    html = res.as_raw_html()
+
+    assert "duplicated_num" in res._tbl_data.columns
+    assert "duplicated_num" in html
+    assert all(res._tbl_data["num"] == res._tbl_data["duplicated_num"])
+
+
+def test_gt_duplicate_column_position(mini_gt):
+    res = gt_duplicate_column(mini_gt, column="num", after="char")
+    html = res.as_raw_html()
+
+    assert "num_dupe" in res._tbl_data.columns
+    assert "num_dupe" in html
+
+    columns = list(res._boxhead)
+    assert columns[2].column_label == "num_dupe"
+
+
+def test_gt_duplicate_column_polars():
+    df = pl.DataFrame({"num": [1, 2, 3], "char": ["a", "b", "c"]})
+    gt_test = GT(df)
+
+    res = gt_duplicate_column(gt_test, column="num", append_text="_copy")
+    html = res.as_raw_html()
+
+    assert "num_copy" in res._tbl_data.columns
+    assert "num_copy" in html
+
+    original_values = res._tbl_data.get_column("num").to_list()
+    duplicated_values = res._tbl_data.get_column("num_copy").to_list()
+    assert original_values == duplicated_values
+
+
+def test_gt_duplicate_column_invalid_type():
+    data = pa.table({"num": [1, 2, 3], "char": ["a", "b", "c"]})
+    gt_test = GT(data)
+
+    with pytest.raises(TypeError, match="Unsupported type"):
+        gt_duplicate_column(gt_test, column="num")
+
+
+def test_gt_duplicate_column_invalid_name(mini_gt):
+    with pytest.raises(
+        ValueError, match="cannot be the same as the original column name"
+    ):
+        gt_duplicate_column(mini_gt, column="num", dupe_name="num")
