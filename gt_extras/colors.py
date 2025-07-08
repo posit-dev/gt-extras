@@ -26,7 +26,7 @@ def gt_highlight_cols(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "#80bcd8",
-    alpha: int | None = None,
+    alpha: float | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
     include_column_labels: bool = False,
@@ -101,7 +101,7 @@ def gt_highlight_cols(
     elif not isinstance(font_weight, (int, float)):
         raise TypeError("Font_weight must be an int, float, or str")
 
-    if alpha:
+    if alpha is not None:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
     # conditionally apply to row labels
@@ -125,17 +125,17 @@ def gt_highlight_rows(
     gt: GT,
     rows: SelectExpr,
     fill: str = "#80bcd8",
-    alpha: int | None = None,
+    alpha: float | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
     include_row_labels: bool = False,
 ) -> GT:
     # TODO: see if the color can be displayed in some cool way in the docs
     """
-    Add color highlighting to one or more specific columns.
+    Add color highlighting to one or more specific rows.
 
-    The `gt_highlight_cols()` function takes an existing `GT` object and adds highlighting color
-    to the cell background of a specific column(s).
+    The `gt_highlight_rows()` function takes an existing `GT` object and adds highlighting color
+    to the cell background of a specific rows(s).
 
     Parameters
     ----------
@@ -144,7 +144,7 @@ def gt_highlight_rows(
 
     rows
         The rows to target, in the form of a list of row indices. the coloring is applied to all
-        columns.
+        rows.
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
@@ -200,7 +200,7 @@ def gt_highlight_rows(
     elif not isinstance(font_weight, (int, float)):
         raise TypeError("Font_weight must be an int, float, or str")
 
-    if alpha:
+    if alpha is not None:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
     # conditionally apply to row labels
