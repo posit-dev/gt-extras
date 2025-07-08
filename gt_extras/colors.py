@@ -44,7 +44,7 @@ def gt_highlight_cols(
 
     columns
         The columns to target. Can either be a single column name or a series of column names
-        provided in a list. If `None`, the alignment is applied to all columns.
+        provided in a list. If `None`, the coloring is applied to all columns.
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
@@ -107,6 +107,96 @@ def gt_highlight_cols(
             style.borders(sides=["top", "bottom"], color=fill),
         ],
         locations=loc.body(columns=columns),
+    )
+
+    return res
+
+
+def gt_highlight_rows(
+    gt: GT,
+    rows: SelectExpr,
+    fill: str = "#80bcd8",
+    alpha: int | None = None,
+    font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
+    font_color: str = "#000000",
+) -> GT:
+    # TODO: see if the color can be displayed in some cool way in the docs
+    """
+    Add color highlighting to one or more specific columns.
+
+    The `gt_highlight_cols()` function takes an existing `GT` object and adds highlighting color
+    to the cell background of a specific column(s).
+
+    Parameters
+    ----------
+    gt
+        An existing `GT` object.
+
+    rows
+        The rows to target, in the form of a list of row indices. the coloring is applied to all
+        columns.
+
+    fill
+        A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
+        (light blue) will be used as a default.
+
+    alpha
+        An integer `[0, 1]` for the alpha transparency value for the color as single value in the
+        range of `0` (fully transparent) to `1` (fully opaque). If not provided the fill color will
+        either be fully opaque or use alpha information from the color value if it is supplied in
+        the `"#RRGGBBAA"` format.
+
+    font_weight
+        A string or number indicating the weight of the font. Can be a text-based keyword such as
+        `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between `1` and `1000`,
+        inclusive. Note that only variable fonts may support the numeric mapping of weight.
+
+    font_color
+        A string indicating the text color. If nothing is provided, then `"#000000"`
+        (black) will be used as a default.
+
+    Returns
+    -------
+    GT
+        The `GT` object is returned. This is the same object that the method is called on so that
+        we can facilitate method chaining.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label=md("*Car*"))
+    )
+
+    gt.pipe(gte.gt_highlight_cols, rows=[2, 7])
+    ```
+    """
+    # Throw if `font_weight` is not one of the allowed values
+    if isinstance(font_weight, str):
+        if font_weight not in ["normal", "bold", "bolder", "lighter"]:
+            raise ValueError(
+                "Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer"
+            )
+    elif not isinstance(font_weight, (int, float)):
+        raise TypeError("Font_weight must be an int, float, or str")
+
+    if alpha:
+        fill = _html_color(colors=[fill], alpha=alpha)[0]
+
+    res = gt.tab_style(
+        style=[
+            style.fill(color=fill),
+            style.text(weight=font_weight, color=font_color),
+            style.borders(sides=["left", "right"], color=fill),
+        ],
+        locations=loc.body(rows=rows),
     )
 
     return res
@@ -388,13 +478,5 @@ def gt_color_box(
                 columns=column,
                 rows=[i],
             )
-
-    return res
-
-
-def gt_highlight_rows(gt: GT, rows: SelectExpr) -> GT:
-    """ """
-
-    res = gt
 
     return res
