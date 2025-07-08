@@ -5,7 +5,7 @@ import warnings
 from great_tables import GT
 from great_tables._data_color.base import _rescale_numeric
 from great_tables._locations import resolve_cols_c
-from great_tables._tbl_data import SelectExpr, is_na
+from great_tables._tbl_data import SelectExpr, is_na, to_list
 
 __all__ = ["_validate_and_get_single_column", "_scale_numeric_column"]
 
@@ -46,7 +46,7 @@ def _validate_and_get_single_column(
         )
 
     col_name = col_names[0]
-    col_vals = gt._tbl_data[col_name].to_list()
+    col_vals = to_list(gt._tbl_data[col_name])
 
     return col_name, col_vals
 

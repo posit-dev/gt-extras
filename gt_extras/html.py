@@ -174,7 +174,7 @@ def gt_merge_stack(
     small_caps: bool = True,
 ) -> GT:
     """
-    Merge two columns into a stacked format within a `GT` table.
+    Merge two columns into a stacked format within a `GT` object.
 
     The `gt_merge_stack()` function combines two columns in a `GT` object into a single column
     with a stacked format. The top section displays values from the first column (`col1`), and
