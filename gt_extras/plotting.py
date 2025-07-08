@@ -393,7 +393,7 @@ def gt_plt_dot(
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
-    ci_columns: SelectExpr | None = None,
+    ci_columns: SelectExpr = None,
     ci: float = 0.95,
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float = 100,

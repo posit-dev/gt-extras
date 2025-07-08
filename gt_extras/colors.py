@@ -124,7 +124,7 @@ def gt_highlight_cols(
 
 def gt_highlight_rows(
     gt: GT,
-    rows: SelectExpr,
+    rows: SelectExpr = None,
     fill: str = "#80bcd8",
     alpha: float | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
