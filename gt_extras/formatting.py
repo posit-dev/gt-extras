@@ -3,7 +3,7 @@ from __future__ import annotations
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 
-__all__ = ["fmt_pct_extra"]
+__all__ = ["fmt_pct_extra", "gt_duplicate_column"]
 
 
 def fmt_pct_extra(
@@ -97,4 +97,12 @@ def fmt_pct_extra(
         else:
             return f"{pct_value:.{decimals}f}%"
 
-    return gt.fmt(_fmt_pct_single_val, columns=columns)
+    res = gt
+    res = res.fmt(_fmt_pct_single_val, columns=columns)
+
+    return res
+
+
+def gt_duplicate_column(gt: GT) -> GT:
+    res = gt
+    return res

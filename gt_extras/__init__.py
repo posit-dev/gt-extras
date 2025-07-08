@@ -5,7 +5,7 @@ from .colors import (
     gt_highlight_rows,
     gt_hulk_col_numeric,
 )
-from .formatting import fmt_pct_extra
+from .formatting import fmt_pct_extra, gt_duplicate_column
 from .html import gt_merge_stack, with_hyperlink, with_tooltip
 from .icons import fa_icon_repeat, gt_fa_rank_change, gt_fa_rating
 from .images import img_header
@@ -55,6 +55,7 @@ __all__ = [
     "with_tooltip",
     "gt_merge_stack",
     "fmt_pct_extra",
+    "gt_duplicate_column",
     "img_header",
     "gt_add_divider",
 ]
