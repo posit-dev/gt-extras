@@ -1,5 +1,10 @@
 # Import objects from the module
-from .colors import gt_color_box, gt_highlight_cols, gt_hulk_col_numeric
+from .colors import (
+    gt_color_box,
+    gt_highlight_cols,
+    gt_highlight_rows,
+    gt_hulk_col_numeric,
+)
 from .formatting import fmt_pct_extra
 from .html import gt_merge_stack, with_hyperlink, with_tooltip
 from .icons import fa_icon_repeat, gt_fa_rank_change, gt_fa_rating
@@ -34,6 +39,7 @@ __all__ = [
     "gt_theme_dark",
     "gt_theme_pff",
     "gt_highlight_cols",
+    "gt_highlight_rows",
     "gt_hulk_col_numeric",
     "gt_color_box",
     "fa_icon_repeat",

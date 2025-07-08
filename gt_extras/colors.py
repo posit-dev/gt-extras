@@ -14,7 +14,12 @@ from gt_extras._utils_column import (
     _validate_and_get_single_column,
 )
 
-__all__ = ["gt_highlight_cols", "gt_hulk_col_numeric", "gt_color_box"]
+__all__ = [
+    "gt_highlight_cols",
+    "gt_highlight_rows",
+    "gt_hulk_col_numeric",
+    "gt_color_box",
+]
 
 
 def gt_highlight_cols(
@@ -383,5 +388,13 @@ def gt_color_box(
                 columns=column,
                 rows=[i],
             )
+
+    return res
+
+
+def gt_highlight_rows(gt: GT, rows: SelectExpr) -> GT:
+    """ """
+
+    res = gt
 
     return res
