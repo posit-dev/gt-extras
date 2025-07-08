@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import pandas as pd
+import polars as pl
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr, is_na
+from great_tables._gt_data import Boxhead, ColInfo
+from great_tables._tbl_data import SelectExpr, copy_frame, is_na
 
 from gt_extras._utils_column import _validate_and_get_single_column
 
@@ -112,7 +115,7 @@ def gt_duplicate_column(
     append_text: str | None = "_dupe",
     dupe_name: str | None = None,
 ) -> GT:
-    original_name, original_vals = _validate_and_get_single_column(gt, column)
+    original_name, _ = _validate_and_get_single_column(gt, column)
 
     # If dupe_name is given, it overrides append_text
     if dupe_name is not None:
@@ -121,11 +124,53 @@ def gt_duplicate_column(
         new_col_name = original_name + append_text
 
     if new_col_name == original_name:
-        # throw warning (modify name in place) or error?
-        pass
+        raise ValueError(
+            f"The new column name '{new_col_name}' cannot be the same as the original column name '{original_name}'."
+        )
 
     res = gt
-    # Now make the duplicate new col
+    new_data_table = copy_frame(res._tbl_data)
+    new_body = res._body.copy()
+
+    # get the boxhead info
+    original_col_info = None
+    for col_info in res._boxhead:
+        if col_info.var == original_name:
+            original_col_info = col_info
+            break
+
+    # make the new boxhead entry
+    new_col_info = ColInfo(
+        var=new_col_name,
+        type=original_col_info.type,
+        column_label=new_col_name,
+        column_align=original_col_info.column_align,
+        column_width=original_col_info.column_width,
+    )
+
+    # A little clunky, but I dont have any other solutions
+    if isinstance(new_data_table, pd.DataFrame):
+        new_data_table[new_col_name] = new_data_table[original_name]
+        new_body.body[new_col_name] = new_body.body[original_name]
+
+    elif isinstance(new_data_table, pl.DataFrame):
+        new_data_table = new_data_table.with_columns(
+            new_data_table[original_name].alias(new_col_name)
+        )
+        new_body.body = new_body.body.with_columns(
+            new_body.body[original_name].alias(new_col_name)
+        )
+
+    else:
+        raise TypeError(
+            """Unsupported type.
+            This function will only work if the underlying data is a Polars or Pandas dataframe."""
+        )
+
+    new_boxhead_list = list(res._boxhead._d) + [new_col_info]
+    new_boxhead = Boxhead(new_boxhead_list)
+
+    res = res._replace(_tbl_data=new_data_table, _boxhead=new_boxhead, _body=new_body)
 
     if after is None:
         res.cols_move_to_end(new_col_name)
