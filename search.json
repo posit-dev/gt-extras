@@ -628,99 +628,99 @@
     ]
   },
   {
-    "objectID": "reference/gt_fa_rating.html",
-    "href": "reference/gt_fa_rating.html",
-    "title": "gt_fa_rating",
+    "objectID": "reference/gt_highlight_cols.html",
+    "href": "reference/gt_highlight_cols.html",
+    "title": "gt_highlight_cols",
     "section": "",
-    "text": "gt_fa_rating(\n    gt,\n    columns,\n    max_rating=5,\n    name='star',\n    primary_color='gold',\n    secondary_color='gray',\n    height=20,\n)\nCreate icon ratings in GT cells using FontAwesome icons.\nThis function represents numeric ratings in table column(s) by displaying a row of FontAwesome icons (such as stars) in each cell. Filled icons indicate the rating value, while unfilled icons represent the remainder up to the maximum rating. Hover the icons to see the original numeric rating.",
+    "text": "gt_highlight_cols(\n    gt,\n    columns=None,\n    fill='#80bcd8',\n    alpha=None,\n    font_weight='normal',\n    font_color='#000000',\n    include_column_labels=False,\n)\nAdd color highlighting to one or more specific columns.\nThe gt_highlight_cols() function takes an existing GT object and adds highlighting color to the cell background of a specific column(s).",
     "crumbs": [
       "API Reference",
-      "Icons and Images",
-      "gt_fa_rating"
+      "Colors",
+      "gt_highlight_cols"
     ]
   },
   {
-    "objectID": "reference/gt_fa_rating.html#parameters",
-    "href": "reference/gt_fa_rating.html#parameters",
-    "title": "gt_fa_rating",
+    "objectID": "reference/gt_highlight_cols.html#parameters",
+    "href": "reference/gt_highlight_cols.html#parameters",
+    "title": "gt_highlight_cols",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncolumns : SelectExpr\n\nOne or more columns containing numeric rating values.\n\nmax_rating : int = 5\n\nThe maximum rating value (number of total icons).\n\nname : str = 'star'\n\nThe FontAwesome icon name to use.\n\nprimary_color : str = 'gold'\n\nThe color for filled icons.\n\nsecondary_color : str = 'gray'\n\nThe color for unfilled icons.\n\nheight : int = 20\n\nThe height of the rating icons in pixels.",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column or a list of columns (by name or index). If None, the coloring is applied to all columns.\n\nfill : str = '#80bcd8'\n\nA string indicating the fill color. If nothing is provided, then \"#80bcd8\" (light blue) will be used as a default.\n\nalpha : float | None = None\n\nA float [0, 1] for the alpha transparency value for the color as single value in the range of 0 (fully transparent) to 1 (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the \"#RRGGBBAA\" format.\n\nfont_weight : Literal['normal', 'bold', 'bolder', 'lighter'] | int = 'normal'\n\nA string or number indicating the weight of the font. Can be a text-based keyword such as \"normal\", \"bold\", \"lighter\", \"bolder\", or, a numeric value between 1 and 1000, inclusive. Note that only variable fonts may support the numeric mapping of weight.\n\nfont_color : str = '#000000'\n\nA string indicating the text color. If nothing is provided, then \"#000000\" (black) will be used as a default.\n\ninclude_column_labels : bool = False\n\nWhether to highlight column labels of the assigned columns.",
     "crumbs": [
       "API Reference",
-      "Icons and Images",
-      "gt_fa_rating"
+      "Colors",
+      "gt_highlight_cols"
     ]
   },
   {
-    "objectID": "reference/gt_fa_rating.html#returns",
-    "href": "reference/gt_fa_rating.html#returns",
-    "title": "gt_fa_rating",
+    "objectID": "reference/gt_highlight_cols.html#returns",
+    "href": "reference/gt_highlight_cols.html#returns",
+    "title": "gt_highlight_cols",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nA GT object with icon ratings added to the specified column(s).",
+    "text": "Returns\n\n : GT\n\nThe GT object is returned. This is the same object that the method is called on so that we can facilitate method chaining.",
     "crumbs": [
       "API Reference",
-      "Icons and Images",
-      "gt_fa_rating"
+      "Colors",
+      "gt_highlight_cols"
     ]
   },
   {
-    "objectID": "reference/gt_fa_rating.html#example",
-    "href": "reference/gt_fa_rating.html#example",
-    "title": "gt_fa_rating",
-    "section": "Example",
-    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5",
-    "crumbs": [
-      "API Reference",
-      "Icons and Images",
-      "gt_fa_rating"
-    ]
-  },
-  {
-    "objectID": "reference/gt_plt_dot.html",
-    "href": "reference/gt_plt_dot.html",
-    "title": "gt_plt_dot",
-    "section": "",
-    "text": "gt_plt_dot(gt, category_col, data_col, domain=None, palette=None)\nCreate dot plots with thin horizontal bars in GT cells.\nThe gt_plt_dot() function takes an existing GT object and adds dot plots with horizontal bar charts to a specified category column. Each cell displays a colored dot with the category label and a horizontal bar representing the corresponding numeric value from the data column.",
-    "crumbs": [
-      "API Reference",
-      "Plotting",
-      "gt_plt_dot"
-    ]
-  },
-  {
-    "objectID": "reference/gt_plt_dot.html#parameters",
-    "href": "reference/gt_plt_dot.html#parameters",
-    "title": "gt_plt_dot",
-    "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncategory_col : SelectExpr\n\nThe column containing category labels that will be displayed next to colored dots.\n\ndata_col : SelectExpr\n\nThe column containing numeric values that will determine the length of the horizontal bars.\n\ndomain : list[int] | list[float] | None = None\n\nThe domain of values to use for the color scheme. This can be a list of floats or integers. If None, the domain is automatically set to [0, max(data_col)].\n\npalette : list[str] | str | None = None\n\nThe color palette to use. This should be a list of colors (e.g., [\"#FF0000\", \"#00FF00\", \"#0000FF\"]). A ColorBrewer palette could also be used, just supply the name (see GT.data_color() for additional reference). If None, then a default palette will be used.",
-    "crumbs": [
-      "API Reference",
-      "Plotting",
-      "gt_plt_dot"
-    ]
-  },
-  {
-    "objectID": "reference/gt_plt_dot.html#returns",
-    "href": "reference/gt_plt_dot.html#returns",
-    "title": "gt_plt_dot",
-    "section": "Returns",
-    "text": "Returns\n\n : GT\n\nA GT object with dot plots and horizontal bars added to the specified category column.",
-    "crumbs": [
-      "API Reference",
-      "Plotting",
-      "gt_plt_dot"
-    ]
-  },
-  {
-    "objectID": "reference/gt_plt_dot.html#examples",
-    "href": "reference/gt_plt_dot.html#examples",
-    "title": "gt_plt_dot",
+    "objectID": "reference/gt_highlight_cols.html#examples",
+    "href": "reference/gt_highlight_cols.html#examples",
+    "title": "gt_highlight_cols",
     "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.loc[8:20, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_plt_dot, category_col=\"mfr\", data_col=\"hp\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n\n\n\n  \n    F12Berlinetta\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    731.0\n    509.0\n    11.0\n  \n  \n    LaFerrari\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    949.0\n    664.0\n    12.0\n  \n  \n    NSX\n    \n            \n                Acura\n                \n                \n            \n            \n                   \n            \n        \n    573.0\n    476.0\n    21.0\n  \n  \n    GT-R\n    \n            \n                Nissan\n                \n                \n            \n            \n                   \n            \n        \n    545.0\n    436.0\n    16.0\n  \n  \n    Aventador\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    700.0\n    507.0\n    11.0\n  \n  \n    Huracan\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    610.0\n    413.0\n    16.0\n  \n  \n    Gallardo\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    550.0\n    398.0\n    12.0\n  \n  \n    Continental GT\n    \n            \n                Bentley\n                \n                \n            \n            \n                   \n            \n        \n    500.0\n    487.0\n    15.0\n  \n  \n    Granturismo\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    454.0\n    384.0\n    13.0\n  \n  \n    Quattroporte\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    404.0\n    406.0\n    16.0\n  \n  \n    Ghibli\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    345.0\n    369.0\n    17.0\n  \n  \n    6-Series\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    315.0\n    330.0\n    20.0\n  \n  \n    i8\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    357.0\n    420.0\n    28.0",
+    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(8)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n)\n\ngt.pipe(gte.gt_highlight_cols, columns=\"hp\")\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0",
     "crumbs": [
       "API Reference",
-      "Plotting",
-      "gt_plt_dot"
+      "Colors",
+      "gt_highlight_cols"
+    ]
+  },
+  {
+    "objectID": "reference/gt_hulk_col_numeric.html",
+    "href": "reference/gt_hulk_col_numeric.html",
+    "title": "gt_hulk_col_numeric",
+    "section": "",
+    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT object.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
+    "crumbs": [
+      "API Reference",
+      "Colors",
+      "gt_hulk_col_numeric"
+    ]
+  },
+  {
+    "objectID": "reference/gt_hulk_col_numeric.html#parameters",
+    "href": "reference/gt_hulk_col_numeric.html#parameters",
+    "title": "gt_hulk_col_numeric",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column or a list of columns (by name or index). If None, the color gradient is applied to all columns.\n\npalette : str | list[str] = 'PRGn'\n\nThe color palette to use for the gradient. Can be a string referencing a palette name or a list of color hex codes. Defaults to the \"PRGn\" palette from the ColorBrewer package.\n\ndomain : list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred from the data.\n\nna_color : str | None = None\n\nThe color to use for missing (NA) values. If None, a default color is used.\n\nalpha : int | float | None = None\n\nThe alpha (transparency) value for the colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nreverse : bool = False\n\nIf True, reverses the color palette direction.\n\nautocolor_text : bool = True\n\nIf True, automatically adjusts text color for readability against the background.",
+    "crumbs": [
+      "API Reference",
+      "Colors",
+      "gt_hulk_col_numeric"
+    ]
+  },
+  {
+    "objectID": "reference/gt_hulk_col_numeric.html#returns",
+    "href": "reference/gt_hulk_col_numeric.html#returns",
+    "title": "gt_hulk_col_numeric",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
+    "crumbs": [
+      "API Reference",
+      "Colors",
+      "gt_hulk_col_numeric"
+    ]
+  },
+  {
+    "objectID": "reference/gt_hulk_col_numeric.html#examples",
+    "href": "reference/gt_hulk_col_numeric.html#examples",
+    "title": "gt_hulk_col_numeric",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.loc[0:8, [\"model\", \"mfr\", \"year\", \"hp\", \"trq\", \"mpg_h\"]]\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_hulk_col_numeric, columns=[\"hp\", \"trq\", \"mpg_h\"])\n\n\n\n\n\n\n\n  Car\n  mfr\n  year\n  hp\n  trq\n  mpg_h\n\n\n\n  \n    GT\n    Ford\n    2017\n    647.0\n    550.0\n    18.0\n  \n  \n    458 Speciale\n    Ferrari\n    2015\n    597.0\n    398.0\n    17.0\n  \n  \n    458 Spider\n    Ferrari\n    2015\n    562.0\n    398.0\n    17.0\n  \n  \n    458 Italia\n    Ferrari\n    2014\n    562.0\n    398.0\n    17.0\n  \n  \n    488 GTB\n    Ferrari\n    2016\n    661.0\n    561.0\n    22.0\n  \n  \n    California\n    Ferrari\n    2015\n    553.0\n    557.0\n    23.0\n  \n  \n    GTC4Lusso\n    Ferrari\n    2017\n    680.0\n    514.0\n    17.0\n  \n  \n    FF\n    Ferrari\n    2015\n    652.0\n    504.0\n    16.0\n  \n  \n    F12Berlinetta\n    Ferrari\n    2015\n    731.0\n    509.0\n    16.0\n  \n\n\n\n\n\n\n        \n\n\nA more involved setup.\n\nfrom great_tables.data import towny\n\ntowny_mini = towny[\n    [\n        \"name\",\n        \"pop_change_1996_2001_pct\",\n        \"pop_change_2001_2006_pct\",\n        \"pop_change_2006_2011_pct\",\n        \"pop_change_2011_2016_pct\",\n        \"pop_change_2016_2021_pct\",\n    ]\n].head(10)\n\ngt = (\n    GT(towny_mini, rowname_col=\"name\")\n    .tab_stubhead(label=\"Town\")\n    .tab_spanner(\n        label=\"Population Change\",\n        columns=[1, 2, 3, 4, 5]\n    )\n    .cols_label(\n        pop_change_1996_2001_pct=\"1996-2001\",\n        pop_change_2001_2006_pct=\"2001-2006\",\n        pop_change_2006_2011_pct=\"2006-2011\",\n        pop_change_2011_2016_pct=\"2011-2016\",\n        pop_change_2016_2021_pct=\"2016-2021\",\n    )\n)\n\ngt.pipe(gte.gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])\n\n\n\n\n\n\n\n  Town\n  \n    Population Change\n  \n\n\n  1996-2001\n  2001-2006\n  2006-2011\n  2011-2016\n  2016-2021\n\n\n\n  \n    Addington Highlands\n    -0.0111\n    0.0458\n    0.002\n    -0.0791\n    0.0932\n  \n  \n    Adelaide Metcalfe\n    0.0067\n    -0.0044\n    -0.0341\n    -0.0125\n    0.007\n  \n  \n    Adjala-Tosorontio\n    0.0773\n    0.0608\n    -0.0086\n    0.0351\n    0.0013\n  \n  \n    Admaston/Bromley\n    -0.0046\n    -0.0382\n    0.0471\n    0.032\n    0.0204\n  \n  \n    Ajax\n    0.1447\n    0.2226\n    0.2155\n    0.0919\n    0.0584\n  \n  \n    Alberton\n    -0.0691\n    0.0021\n    -0.0981\n    0.1215\n    -0.0155\n  \n  \n    Alfred and Plantagenet\n    0.0334\n    0.0071\n    0.0626\n    0.0526\n    0.0278\n  \n  \n    Algonquin Highlands\n    0.083\n    0.0816\n    0.1063\n    0.0755\n    0.1008\n  \n  \n    Alnwick/Haldimand\n    0.0575\n    0.1008\n    0.0283\n    0.0381\n    0.0879\n  \n  \n    Amaranth\n    0.0928\n    0.0199\n    0.0307\n    0.0293\n    0.0608",
+    "crumbs": [
+      "API Reference",
+      "Colors",
+      "gt_hulk_col_numeric"
     ]
   },
   {
@@ -784,99 +784,147 @@
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html",
-    "href": "reference/gt_hulk_col_numeric.html",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_plt_dot.html",
+    "href": "reference/gt_plt_dot.html",
+    "title": "gt_plt_dot",
     "section": "",
-    "text": "gt_hulk_col_numeric(\n    gt,\n    columns=None,\n    palette='PRGn',\n    domain=None,\n    na_color=None,\n    alpha=None,\n    reverse=False,\n    autocolor_text=True,\n)\nApply a color gradient to numeric columns in a GT object.\nThe gt_hulk_col_numeric() function takes an existing GT object and applies a color gradient to the background of specified numeric columns, based on their values. This is useful for visually emphasizing the distribution or magnitude of numeric data within a table.",
+    "text": "gt_plt_dot(gt, category_col, data_col, domain=None, palette=None)\nCreate dot plots with thin horizontal bars in GT cells.\nThe gt_plt_dot() function takes an existing GT object and adds dot plots with horizontal bar charts to a specified category column. Each cell displays a colored dot with the category label and a horizontal bar representing the corresponding numeric value from the data column.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_hulk_col_numeric"
+      "Plotting",
+      "gt_plt_dot"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#parameters",
-    "href": "reference/gt_hulk_col_numeric.html#parameters",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_plt_dot.html#parameters",
+    "href": "reference/gt_plt_dot.html#parameters",
+    "title": "gt_plt_dot",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column or a list of columns (by name or index). If None, the color gradient is applied to all columns.\n\npalette : str | list[str] = 'PRGn'\n\nThe color palette to use for the gradient. Can be a string referencing a palette name or a list of color hex codes. Defaults to the \"PRGn\" palette from the ColorBrewer package.\n\ndomain : list[int] | list[float] | None = None\n\nThe range of values to map to the color palette. Should be a list of two values (min and max). If None, the domain is inferred from the data.\n\nna_color : str | None = None\n\nThe color to use for missing (NA) values. If None, a default color is used.\n\nalpha : int | float | None = None\n\nThe alpha (transparency) value for the colors, as a float between 0 (fully transparent) and 1 (fully opaque).\n\nreverse : bool = False\n\nIf True, reverses the color palette direction.\n\nautocolor_text : bool = True\n\nIf True, automatically adjusts text color for readability against the background.",
+    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncategory_col : SelectExpr\n\nThe column containing category labels that will be displayed next to colored dots.\n\ndata_col : SelectExpr\n\nThe column containing numeric values that will determine the length of the horizontal bars.\n\ndomain : list[int] | list[float] | None = None\n\nThe domain of values to use for the color scheme. This can be a list of floats or integers. If None, the domain is automatically set to [0, max(data_col)].\n\npalette : list[str] | str | None = None\n\nThe color palette to use. This should be a list of colors (e.g., [\"#FF0000\", \"#00FF00\", \"#0000FF\"]). A ColorBrewer palette could also be used, just supply the name (see GT.data_color() for additional reference). If None, then a default palette will be used.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_hulk_col_numeric"
+      "Plotting",
+      "gt_plt_dot"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#returns",
-    "href": "reference/gt_hulk_col_numeric.html#returns",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_plt_dot.html#returns",
+    "href": "reference/gt_plt_dot.html#returns",
+    "title": "gt_plt_dot",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe modified GT object, allowing for method chaining.",
+    "text": "Returns\n\n : GT\n\nA GT object with dot plots and horizontal bars added to the specified category column.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_hulk_col_numeric"
+      "Plotting",
+      "gt_plt_dot"
     ]
   },
   {
-    "objectID": "reference/gt_hulk_col_numeric.html#examples",
-    "href": "reference/gt_hulk_col_numeric.html#examples",
-    "title": "gt_hulk_col_numeric",
+    "objectID": "reference/gt_plt_dot.html#examples",
+    "href": "reference/gt_plt_dot.html#examples",
+    "title": "gt_plt_dot",
     "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.loc[0:8, [\"model\", \"mfr\", \"year\", \"hp\", \"trq\", \"mpg_h\"]]\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_hulk_col_numeric, columns=[\"hp\", \"trq\", \"mpg_h\"])\n\n\n\n\n\n\n\n  Car\n  mfr\n  year\n  hp\n  trq\n  mpg_h\n\n\n\n  \n    GT\n    Ford\n    2017\n    647.0\n    550.0\n    18.0\n  \n  \n    458 Speciale\n    Ferrari\n    2015\n    597.0\n    398.0\n    17.0\n  \n  \n    458 Spider\n    Ferrari\n    2015\n    562.0\n    398.0\n    17.0\n  \n  \n    458 Italia\n    Ferrari\n    2014\n    562.0\n    398.0\n    17.0\n  \n  \n    488 GTB\n    Ferrari\n    2016\n    661.0\n    561.0\n    22.0\n  \n  \n    California\n    Ferrari\n    2015\n    553.0\n    557.0\n    23.0\n  \n  \n    GTC4Lusso\n    Ferrari\n    2017\n    680.0\n    514.0\n    17.0\n  \n  \n    FF\n    Ferrari\n    2015\n    652.0\n    504.0\n    16.0\n  \n  \n    F12Berlinetta\n    Ferrari\n    2015\n    731.0\n    509.0\n    16.0\n  \n\n\n\n\n\n\n        \n\n\nA more involved setup.\n\nfrom great_tables.data import towny\n\ntowny_mini = towny[\n    [\n        \"name\",\n        \"pop_change_1996_2001_pct\",\n        \"pop_change_2001_2006_pct\",\n        \"pop_change_2006_2011_pct\",\n        \"pop_change_2011_2016_pct\",\n        \"pop_change_2016_2021_pct\",\n    ]\n].head(10)\n\ngt = (\n    GT(towny_mini, rowname_col=\"name\")\n    .tab_stubhead(label=\"Town\")\n    .tab_spanner(\n        label=\"Population Change\",\n        columns=[1, 2, 3, 4, 5]\n    )\n    .cols_label(\n        pop_change_1996_2001_pct=\"1996-2001\",\n        pop_change_2001_2006_pct=\"2001-2006\",\n        pop_change_2006_2011_pct=\"2006-2011\",\n        pop_change_2011_2016_pct=\"2011-2016\",\n        pop_change_2016_2021_pct=\"2016-2021\",\n    )\n)\n\ngt.pipe(gte.gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])\n\n\n\n\n\n\n\n  Town\n  \n    Population Change\n  \n\n\n  1996-2001\n  2001-2006\n  2006-2011\n  2011-2016\n  2016-2021\n\n\n\n  \n    Addington Highlands\n    -0.0111\n    0.0458\n    0.002\n    -0.0791\n    0.0932\n  \n  \n    Adelaide Metcalfe\n    0.0067\n    -0.0044\n    -0.0341\n    -0.0125\n    0.007\n  \n  \n    Adjala-Tosorontio\n    0.0773\n    0.0608\n    -0.0086\n    0.0351\n    0.0013\n  \n  \n    Admaston/Bromley\n    -0.0046\n    -0.0382\n    0.0471\n    0.032\n    0.0204\n  \n  \n    Ajax\n    0.1447\n    0.2226\n    0.2155\n    0.0919\n    0.0584\n  \n  \n    Alberton\n    -0.0691\n    0.0021\n    -0.0981\n    0.1215\n    -0.0155\n  \n  \n    Alfred and Plantagenet\n    0.0334\n    0.0071\n    0.0626\n    0.0526\n    0.0278\n  \n  \n    Algonquin Highlands\n    0.083\n    0.0816\n    0.1063\n    0.0755\n    0.1008\n  \n  \n    Alnwick/Haldimand\n    0.0575\n    0.1008\n    0.0283\n    0.0381\n    0.0879\n  \n  \n    Amaranth\n    0.0928\n    0.0199\n    0.0307\n    0.0293\n    0.0608",
+    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars.loc[8:20, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_plt_dot, category_col=\"mfr\", data_col=\"hp\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n\n\n\n  \n    F12Berlinetta\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    731.0\n    509.0\n    11.0\n  \n  \n    LaFerrari\n    \n            \n                Ferrari\n                \n                \n            \n            \n                   \n            \n        \n    949.0\n    664.0\n    12.0\n  \n  \n    NSX\n    \n            \n                Acura\n                \n                \n            \n            \n                   \n            \n        \n    573.0\n    476.0\n    21.0\n  \n  \n    GT-R\n    \n            \n                Nissan\n                \n                \n            \n            \n                   \n            \n        \n    545.0\n    436.0\n    16.0\n  \n  \n    Aventador\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    700.0\n    507.0\n    11.0\n  \n  \n    Huracan\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    610.0\n    413.0\n    16.0\n  \n  \n    Gallardo\n    \n            \n                Lamborghini\n                \n                \n            \n            \n                   \n            \n        \n    550.0\n    398.0\n    12.0\n  \n  \n    Continental GT\n    \n            \n                Bentley\n                \n                \n            \n            \n                   \n            \n        \n    500.0\n    487.0\n    15.0\n  \n  \n    Granturismo\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    454.0\n    384.0\n    13.0\n  \n  \n    Quattroporte\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    404.0\n    406.0\n    16.0\n  \n  \n    Ghibli\n    \n            \n                Maserati\n                \n                \n            \n            \n                   \n            \n        \n    345.0\n    369.0\n    17.0\n  \n  \n    6-Series\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    315.0\n    330.0\n    20.0\n  \n  \n    i8\n    \n            \n                BMW\n                \n                \n            \n            \n                   \n            \n        \n    357.0\n    420.0\n    28.0",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_hulk_col_numeric"
+      "Plotting",
+      "gt_plt_dot"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html",
-    "href": "reference/gt_highlight_cols.html",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_fa_rating.html",
+    "href": "reference/gt_fa_rating.html",
+    "title": "gt_fa_rating",
     "section": "",
-    "text": "gt_highlight_cols(\n    gt,\n    columns=None,\n    fill='#80bcd8',\n    alpha=None,\n    font_weight='normal',\n    font_color='#000000',\n    include_column_labels=False,\n)\nAdd color highlighting to one or more specific columns.\nThe gt_highlight_cols() function takes an existing GT object and adds highlighting color to the cell background of a specific column(s).",
+    "text": "gt_fa_rating(\n    gt,\n    columns,\n    max_rating=5,\n    name='star',\n    primary_color='gold',\n    secondary_color='gray',\n    height=20,\n)\nCreate icon ratings in GT cells using FontAwesome icons.\nThis function represents numeric ratings in table column(s) by displaying a row of FontAwesome icons (such as stars) in each cell. Filled icons indicate the rating value, while unfilled icons represent the remainder up to the maximum rating. Hover the icons to see the original numeric rating.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_highlight_cols"
+      "Icons and Images",
+      "gt_fa_rating"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#parameters",
-    "href": "reference/gt_highlight_cols.html#parameters",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_fa_rating.html#parameters",
+    "href": "reference/gt_fa_rating.html#parameters",
+    "title": "gt_fa_rating",
     "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.\n\ncolumns : SelectExpr = None\n\nThe columns to target. Can be a single column or a list of columns (by name or index). If None, the coloring is applied to all columns.\n\nfill : str = '#80bcd8'\n\nA string indicating the fill color. If nothing is provided, then \"#80bcd8\" (light blue) will be used as a default.\n\nalpha : float | None = None\n\nA float [0, 1] for the alpha transparency value for the color as single value in the range of 0 (fully transparent) to 1 (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the \"#RRGGBBAA\" format.\n\nfont_weight : Literal['normal', 'bold', 'bolder', 'lighter'] | int = 'normal'\n\nA string or number indicating the weight of the font. Can be a text-based keyword such as \"normal\", \"bold\", \"lighter\", \"bolder\", or, a numeric value between 1 and 1000, inclusive. Note that only variable fonts may support the numeric mapping of weight.\n\nfont_color : str = '#000000'\n\nA string indicating the text color. If nothing is provided, then \"#000000\" (black) will be used as a default.\n\ninclude_column_labels : bool = False\n\nWhether to highlight column labels of the assigned columns.",
+    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncolumns : SelectExpr\n\nOne or more columns containing numeric rating values.\n\nmax_rating : int = 5\n\nThe maximum rating value (number of total icons).\n\nname : str = 'star'\n\nThe FontAwesome icon name to use.\n\nprimary_color : str = 'gold'\n\nThe color for filled icons.\n\nsecondary_color : str = 'gray'\n\nThe color for unfilled icons.\n\nheight : int = 20\n\nThe height of the rating icons in pixels.",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_highlight_cols"
+      "Icons and Images",
+      "gt_fa_rating"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#returns",
-    "href": "reference/gt_highlight_cols.html#returns",
-    "title": "gt_highlight_cols",
+    "objectID": "reference/gt_fa_rating.html#returns",
+    "href": "reference/gt_fa_rating.html#returns",
+    "title": "gt_fa_rating",
     "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe GT object is returned. This is the same object that the method is called on so that we can facilitate method chaining.",
+    "text": "Returns\n\n : GT\n\nA GT object with icon ratings added to the specified column(s).",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_highlight_cols"
+      "Icons and Images",
+      "gt_fa_rating"
     ]
   },
   {
-    "objectID": "reference/gt_highlight_cols.html#examples",
-    "href": "reference/gt_highlight_cols.html#examples",
-    "title": "gt_highlight_cols",
-    "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(8)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n)\n\ngt.pipe(gte.gt_highlight_cols, columns=\"hp\")\n\n\n\n\n\n\n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0\n  \n  \n    California\n    2015\n    553.0\n    557.0\n  \n  \n    GTC4Lusso\n    2017\n    680.0\n    514.0\n  \n  \n    FF\n    2015\n    652.0\n    504.0",
+    "objectID": "reference/gt_fa_rating.html#example",
+    "href": "reference/gt_fa_rating.html#example",
+    "title": "gt_fa_rating",
+    "section": "Example",
+    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5",
     "crumbs": [
       "API Reference",
-      "Colors",
-      "gt_highlight_cols"
+      "Icons and Images",
+      "gt_fa_rating"
+    ]
+  },
+  {
+    "objectID": "reference/gt_duplicate_column.html",
+    "href": "reference/gt_duplicate_column.html",
+    "title": "gt_duplicate_column",
+    "section": "",
+    "text": "gt_duplicate_column(gt, column, after=None, append_text='_dupe', dupe_name=None)\nDuplicate a column in a GT object.\nThe gt_duplicate_column() function takes an existing GT object and creates a duplicate (without styling) of the specified column. The duplicated column can be renamed using either dupe_name or by appending text to the original column name, and positioned at a specific location in the table.",
+    "crumbs": [
+      "API Reference",
+      "Utilities",
+      "gt_duplicate_column"
+    ]
+  },
+  {
+    "objectID": "reference/gt_duplicate_column.html#parameters",
+    "href": "reference/gt_duplicate_column.html#parameters",
+    "title": "gt_duplicate_column",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncolumn : SelectExpr\n\nThe column to duplicate. Can be a column name or index.\n\nafter : str | None = None\n\nThe column after which to place the duplicated column. If None, the duplicated column will be moved to the end of the table.\n\nappend_text : str | None = '_dupe'\n\nText to append to the original column name for the duplicate. Only used if dupe_name is not provided. Defaults to \"_dupe\".\n\ndupe_name : str | None = None\n\nThe name for the duplicated column. If provided, this overrides append_text.",
+    "crumbs": [
+      "API Reference",
+      "Utilities",
+      "gt_duplicate_column"
+    ]
+  },
+  {
+    "objectID": "reference/gt_duplicate_column.html#returns",
+    "href": "reference/gt_duplicate_column.html#returns",
+    "title": "gt_duplicate_column",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nA GT object with the duplicated column added.",
+    "crumbs": [
+      "API Reference",
+      "Utilities",
+      "gt_duplicate_column"
+    ]
+  },
+  {
+    "objectID": "reference/gt_duplicate_column.html#examples",
+    "href": "reference/gt_duplicate_column.html#examples",
+    "title": "gt_duplicate_column",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"mfr\", \"model\", \"year\", \"hp\"]].head(5)\ngt = GT(gtcars_mini)\n\n# Duplicate with custom name and position\ngt.pipe(\n    gte.gt_duplicate_column,\n    column=\"hp\",\n    after=\"year\",\n)\n\n\n\n\n\n\n\n  mfr\n  model\n  year\n  hp_dupe\n  hp\n\n\n\n  \n    Ford\n    GT\n    2017\n    647.0\n    647.0\n  \n  \n    Ferrari\n    458 Speciale\n    2015\n    597.0\n    597.0\n  \n  \n    Ferrari\n    458 Spider\n    2015\n    562.0\n    562.0\n  \n  \n    Ferrari\n    458 Italia\n    2014\n    562.0\n    562.0\n  \n  \n    Ferrari\n    488 GTB\n    2016\n    661.0\n    661.0",
+    "crumbs": [
+      "API Reference",
+      "Utilities",
+      "gt_duplicate_column"
     ]
   },
   {
@@ -992,7 +1040,7 @@
     "href": "reference/gt_add_divider.html",
     "title": "gt_add_divider",
     "section": "",
-    "text": "gt_add_divider(\n    gt,\n    columns,\n    sides='right',\n    color='grey',\n    divider_style='solid',\n    weight=2,\n    include_labels=True,\n)\nAdd dividers to specified columns in a GT table.\nThe gt_add_divider() function takes an existing GT object and adds dividers to the specified columns. Dividers can be applied to one or more sides of the cells, with customizable color, style, and weight. Optionally, dividers can also be applied to column labels.",
+    "text": "gt_add_divider(\n    gt,\n    columns,\n    sides='right',\n    color='grey',\n    divider_style='solid',\n    weight=2,\n    include_labels=True,\n)\nAdd dividers to specified columns in a GT object.\nThe gt_add_divider() function takes an existing GT object and adds dividers to the specified columns. Dividers can be applied to one or more sides of the cells, with customizable color, style, and weight. Optionally, dividers can also be applied to column labels.",
     "crumbs": [
       "API Reference",
       "Utilities",
@@ -1136,7 +1184,7 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_highlight_rows\nAdd color highlighting to one or more specific rows.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rank_change\nCreate rank change indicators in GT cells using FontAwesome icons.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT table.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
+    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_highlight_rows\nAdd color highlighting to one or more specific rows.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rank_change\nCreate rank change indicators in GT cells using FontAwesome icons.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT object.\n\n\ngt_duplicate_column\nDuplicate a column in a GT object.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT object.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -1186,7 +1234,7 @@
     "href": "reference/index.html#utilities",
     "title": "API Reference",
     "section": "",
-    "text": "Helper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT table.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT table.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
+    "text": "Helper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT object.\n\n\ngt_duplicate_column\nDuplicate a column in a GT object.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT object.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -1388,7 +1436,7 @@
     "href": "reference/gt_merge_stack.html",
     "title": "gt_merge_stack",
     "section": "",
-    "text": "gt_merge_stack(\n    gt,\n    col1,\n    col2,\n    font_size_main=14,\n    font_size_secondary=10,\n    font_weight_main='bold',\n    font_weight_secondary='normal',\n    color_main='black',\n    color_secondary='grey',\n    small_caps=True,\n)\nMerge two columns into a stacked format within a GT table.\nThe gt_merge_stack() function combines two columns in a GT object into a single column with a stacked format. The top section displays values from the first column (col1), and the bottom section displays values from the second column (col2). Both sections can be styled independently with customizable font sizes, weights, colors, and text variants.\nThe resulting table will hide col2, and the orignal col1 will contain the merged entries.",
+    "text": "gt_merge_stack(\n    gt,\n    col1,\n    col2,\n    font_size_main=14,\n    font_size_secondary=10,\n    font_weight_main='bold',\n    font_weight_secondary='normal',\n    color_main='black',\n    color_secondary='grey',\n    small_caps=True,\n)\nMerge two columns into a stacked format within a GT object.\nThe gt_merge_stack() function combines two columns in a GT object into a single column with a stacked format. The top section displays values from the first column (col1), and the bottom section displays values from the second column (col2). Both sections can be styled independently with customizable font sizes, weights, colors, and text variants.\nThe resulting table will hide col2, and the orignal col1 will contain the merged entries.",
     "crumbs": [
       "API Reference",
       "Utilities",
