@@ -64,8 +64,8 @@ def gt_plt_bar(
         A `GT` object to modify.
 
     columns
-        The columns to target. Can be a single column name or a list of column names. If `None`,
-        the bar plot is applied to all numeric columns.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the bar plot is applied to all numeric columns.
 
     fill
         The fill color for the bars.
@@ -393,7 +393,7 @@ def gt_plt_dot(
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
-    ci_columns: SelectExpr | None = None,
+    ci_columns: SelectExpr = None,
     ci: float = 0.95,
     # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float = 100,

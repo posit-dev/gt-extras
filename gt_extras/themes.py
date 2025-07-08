@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from great_tables import GT, style, loc, google_font
+from great_tables import GT, google_font, loc, style
 
 __all__ = [
     "gt_theme_538",
@@ -559,11 +559,11 @@ def gt_theme_pff(
     gt
         An existing `GT` object.
     divider
-        Zero or more column names to visually divide with a preceding border.
+        Zero or more column names/indices to visually divide with a preceding border.
     spanners
         Optional list of spanners to style, as referenced by the `GT` spanner ids.
     rank_col
-        Optional single column name to highlight as a rank column.
+        Optional single column name/index to highlight as a rank column.
 
     Returns
     -------

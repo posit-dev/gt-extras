@@ -61,6 +61,7 @@ quartodoc:
       contents:
         - gt_color_box
         - gt_highlight_cols
+        - gt_highlight_rows
         - gt_hulk_col_numeric
 
     - title: Themes
