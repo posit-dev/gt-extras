@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>with_hyperlink – gt-extras</title>
+<title>gt_highlight_rows – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/with_tooltip.html" rel="next">
-<link href="../reference/gt_merge_stack.html" rel="prev">
+<link href="../reference/gt_hulk_col_numeric.html" rel="next">
+<link href="../reference/gt_highlight_cols.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/with_hyperlink.html">with_hyperlink</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_color_box.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_highlight_rows.html">gt_highlight_rows</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -223,13 +223,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Colors</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_color_box.html" class="sidebar-item-text sidebar-link">
@@ -244,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_highlight_rows.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_highlight_rows.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_highlight_rows</span></a>
   </div>
 </li>
@@ -352,13 +352,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
  <span class="menu-text">Utilities</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/fmt_pct_extra.html" class="sidebar-item-text sidebar-link">
@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/with_hyperlink.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/with_hyperlink.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">with_hyperlink</span></a>
   </div>
 </li>
@@ -410,9 +410,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/fmt_pct_extra.html">Utilities</a></li><li class="breadcrumb-item"><a href="../reference/with_hyperlink.html">with_hyperlink</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_color_box.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_highlight_rows.html">gt_highlight_rows</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">with_hyperlink</h1>
+<h1 class="title">gt_highlight_rows</h1>
 </div>
 
 
@@ -429,139 +429,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>with_hyperlink(text, url, new_tab<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Create HTML hyperlinks for use in <code>GT</code> cells.</p>
-<p>The <code>with_hyperlink()</code> function creates properly formatted HTML hyperlink elements that can be used within table cells.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_highlight_rows(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    rows<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">'#80bcd8'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    font_weight<span class="op">=</span><span class="st">'normal'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    font_color<span class="op">=</span><span class="st">'#000000'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    include_row_labels<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add color highlighting to one or more specific rows.</p>
+<p>The <code>gt_highlight_rows()</code> function takes an existing <code>GT</code> object and adds highlighting color to the cell background of a specific rows(s).</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
-<dt><code><span class="parameter-name"><strong>text</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"><strong>gt</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>A string that will be displayed as the clickable link text.</p>
+<p>An existing <code>GT</code> object.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>url</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"><strong>rows</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>A string indicating the destination URL for the hyperlink.</p>
+<p>The rows to target. Can be a single row or a list of rows (by name or index). If <code>None</code>, the coloring is applied to all rows.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>new_tab</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dt><code><span class="parameter-name"><strong>fill</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'#80bcd8'</span></code></dt>
 <dd>
-<p>A boolean indicating whether the link should open in a new browser tab or the current tab.</p>
+<p>A string indicating the fill color. If nothing is provided, then <code>"#80bcd8"</code> (light blue) will be used as a default.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>alpha</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>A float <code>[0, 1]</code> for the alpha transparency value for the color as single value in the range of <code>0</code> (fully transparent) to <code>1</code> (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the <code>"#RRGGBBAA"</code> format.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>font_weight</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['normal', 'bold', 'bolder', 'lighter'] | int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'normal'</span></code></dt>
+<dd>
+<p>A string or number indicating the weight of the font. Can be a text-based keyword such as <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a numeric value between <code>1</code> and <code>1000</code>, inclusive. Note that only variable fonts may support the numeric mapping of weight.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>font_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'#000000'</span></code></dt>
+<dd>
+<p>A string indicating the text color. If nothing is provided, then <code>"#000000"</code> (black) will be used as a default.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_row_labels</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
+<dd>
+<p>Whether to highlight row labels of the assigned rows.</p>
 </dd>
 </dl>
 </section>
 <section id="returns" class="level2 doc-section doc-section-returns">
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
 <dl>
-<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>An string containing the HTML formatted hyperlink element.</p>
+<p>The <code>GT</code> object is returned. This is the same object that the method is called on so that we can facilitate method chaining.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="21cd2441" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
+<div id="300abb60" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: [<span class="st">"Great Tables"</span>, <span class="st">"Plotnine"</span>, <span class="st">"Quarto"</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"url"</span>: [</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://posit-dev.github.io/great-tables/"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://plotnine.org/"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://quarto.org/"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"github_stars"</span>: [<span class="dv">2334</span>, <span class="dv">4256</span>, <span class="dv">4628</span>],</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"repo_url"</span>: [</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/posit-dev/great-tables"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/has2k1/plotnine"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"https://github.com/quarto-dev/quarto-cli"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Package"</span>] <span class="op">=</span> [</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    gte.with_hyperlink(name, url)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, url <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"name"</span>], df[<span class="st">"url"</span>])</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Github Stars"</span>] <span class="op">=</span> [</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    gte.with_hyperlink(github_stars, repo_url, new_tab<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> github_stars, repo_url <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"github_stars"</span>], df[<span class="st">"repo_url"</span>])</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>GT(df[[<span class="st">"Package"</span>, <span class="st">"Github Stars"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars[[<span class="st">"model"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"trq"</span>]].head(<span class="dv">8</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span>md(<span class="st">"*Car*"</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_highlight_rows, rows<span class="op">=</span>[<span class="dv">2</span>, <span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="oehmggvsar" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rgzvnorpjj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#oehmggvsar table {
+#rgzvnorpjj table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#oehmggvsar thead, tbody, tfoot, tr, td, th { border-style: none; }
+#rgzvnorpjj thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#oehmggvsar p { margin: 0; padding: 0; }
- #oehmggvsar .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #oehmggvsar .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #oehmggvsar .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #oehmggvsar .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #oehmggvsar .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #oehmggvsar .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #oehmggvsar .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #oehmggvsar .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #oehmggvsar .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #oehmggvsar .gt_column_spanner_outer:first-child { padding-left: 0; }
- #oehmggvsar .gt_column_spanner_outer:last-child { padding-right: 0; }
- #oehmggvsar .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #oehmggvsar .gt_spanner_row { border-bottom-style: hidden; }
- #oehmggvsar .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #oehmggvsar .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #oehmggvsar .gt_from_md> :first-child { margin-top: 0; }
- #oehmggvsar .gt_from_md> :last-child { margin-bottom: 0; }
- #oehmggvsar .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #oehmggvsar .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #oehmggvsar .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #oehmggvsar .gt_row_group_first td { border-top-width: 2px; }
- #oehmggvsar .gt_row_group_first th { border-top-width: 2px; }
- #oehmggvsar .gt_striped { background-color: rgba(128,128,128,0.05); }
- #oehmggvsar .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #oehmggvsar .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #oehmggvsar .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #oehmggvsar .gt_left { text-align: left; }
- #oehmggvsar .gt_center { text-align: center; }
- #oehmggvsar .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #oehmggvsar .gt_font_normal { font-weight: normal; }
- #oehmggvsar .gt_font_bold { font-weight: bold; }
- #oehmggvsar .gt_font_italic { font-style: italic; }
- #oehmggvsar .gt_super { font-size: 65%; }
- #oehmggvsar .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #oehmggvsar .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#rgzvnorpjj p { margin: 0; padding: 0; }
+ #rgzvnorpjj .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #rgzvnorpjj .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #rgzvnorpjj .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #rgzvnorpjj .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #rgzvnorpjj .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #rgzvnorpjj .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #rgzvnorpjj .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #rgzvnorpjj .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #rgzvnorpjj .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #rgzvnorpjj .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #rgzvnorpjj .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #rgzvnorpjj .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #rgzvnorpjj .gt_spanner_row { border-bottom-style: hidden; }
+ #rgzvnorpjj .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #rgzvnorpjj .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #rgzvnorpjj .gt_from_md> :first-child { margin-top: 0; }
+ #rgzvnorpjj .gt_from_md> :last-child { margin-bottom: 0; }
+ #rgzvnorpjj .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #rgzvnorpjj .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #rgzvnorpjj .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #rgzvnorpjj .gt_row_group_first td { border-top-width: 2px; }
+ #rgzvnorpjj .gt_row_group_first th { border-top-width: 2px; }
+ #rgzvnorpjj .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #rgzvnorpjj .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #rgzvnorpjj .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #rgzvnorpjj .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #rgzvnorpjj .gt_left { text-align: left; }
+ #rgzvnorpjj .gt_center { text-align: center; }
+ #rgzvnorpjj .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #rgzvnorpjj .gt_font_normal { font-weight: normal; }
+ #rgzvnorpjj .gt_font_bold { font-weight: bold; }
+ #rgzvnorpjj .gt_font_italic { font-style: italic; }
+ #rgzvnorpjj .gt_super { font-size: 65%; }
+ #rgzvnorpjj .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #rgzvnorpjj .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Package">Package</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Github-Stars">Github Stars</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<em>Car</em>"><em>Car</em></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <td class="gt_row gt_left"><a href="https://posit-dev.github.io/great-tables/" target="_blank">Great Tables</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/posit-dev/great-tables" target="_self">2334</a></td>
+    <th class="gt_row gt_left gt_stub">GT</th>
+    <td class="gt_row gt_right">2017</td>
+    <td class="gt_row gt_right">647.0</td>
+    <td class="gt_row gt_right">550.0</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left"><a href="https://plotnine.org/" target="_blank">Plotnine</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/has2k1/plotnine" target="_self">4256</a></td>
+    <th class="gt_row gt_left gt_stub">458 Speciale</th>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">597.0</td>
+    <td class="gt_row gt_right">398.0</td>
   </tr>
   <tr>
-    <td class="gt_row gt_left"><a href="https://quarto.org/" target="_blank">Quarto</a></td>
-    <td class="gt_row gt_left"><a href="https://github.com/quarto-dev/quarto-cli" target="_self">4628</a></td>
+    <th class="gt_row gt_left gt_stub">458 Spider</th>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">2015</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">398.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">458 Italia</th>
+    <td class="gt_row gt_right">2014</td>
+    <td class="gt_row gt_right">562.0</td>
+    <td class="gt_row gt_right">398.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">488 GTB</th>
+    <td class="gt_row gt_right">2016</td>
+    <td class="gt_row gt_right">661.0</td>
+    <td class="gt_row gt_right">561.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">California</th>
+    <td class="gt_row gt_right">2015</td>
+    <td class="gt_row gt_right">553.0</td>
+    <td class="gt_row gt_right">557.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">GTC4Lusso</th>
+    <td class="gt_row gt_right">2017</td>
+    <td class="gt_row gt_right">680.0</td>
+    <td class="gt_row gt_right">514.0</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">FF</th>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">2015</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">652.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">504.0</td>
   </tr>
 </tbody>
 
@@ -978,13 +1020,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_merge_stack.html" class="pagination-link" aria-label="gt_merge_stack">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_merge_stack</span>
+      <a href="../reference/gt_highlight_cols.html" class="pagination-link" aria-label="gt_highlight_cols">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_highlight_cols</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/with_tooltip.html" class="pagination-link" aria-label="with_tooltip">
-        <span class="nav-page-text">with_tooltip</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_hulk_col_numeric.html" class="pagination-link" aria-label="gt_hulk_col_numeric">
+        <span class="nav-page-text">gt_hulk_col_numeric</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

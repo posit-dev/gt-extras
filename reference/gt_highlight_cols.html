@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_hulk_col_numeric.html" rel="next">
+<link href="../reference/gt_highlight_rows.html" rel="next">
 <link href="../reference/gt_color_box.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -240,6 +240,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_highlight_cols.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_highlight_cols</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/gt_highlight_rows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">gt_highlight_rows</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -430,7 +436,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    font_weight<span class="op">=</span><span class="st">'normal'</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    font_color<span class="op">=</span><span class="st">'#000000'</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    include_column_labels<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Add color highlighting to one or more specific columns.</p>
 <p>The <code>gt_highlight_cols()</code> function takes an existing <code>GT</code> object and adds highlighting color to the cell background of a specific column(s).</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
@@ -442,15 +449,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code><span class="parameter-name"><strong>columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>The columns to target. Can either be a single column name or a series of column names provided in a list. If <code>None</code>, the alignment is applied to all columns.</p>
+<p>The columns to target. Can be a single column or a list of columns (by name or index). If <code>None</code>, the coloring is applied to all columns.</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>fill</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'#80bcd8'</span></code></dt>
 <dd>
 <p>A string indicating the fill color. If nothing is provided, then <code>"#80bcd8"</code> (light blue) will be used as a default.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>alpha</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>alpha</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>An integer <code>[0, 1]</code> for the alpha transparency value for the color as single value in the range of <code>0</code> (fully transparent) to <code>1</code> (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the <code>"#RRGGBBAA"</code> format.</p>
+<p>A float <code>[0, 1]</code> for the alpha transparency value for the color as single value in the range of <code>0</code> (fully transparent) to <code>1</code> (fully opaque). If not provided the fill color will either be fully opaque or use alpha information from the color value if it is supplied in the <code>"#RRGGBBAA"</code> format.</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>font_weight</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['normal', 'bold', 'bolder', 'lighter'] | int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'normal'</span></code></dt>
 <dd>
@@ -459,6 +466,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dt><code><span class="parameter-name"><strong>font_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'#000000'</span></code></dt>
 <dd>
 <p>A string indicating the text color. If nothing is provided, then <code>"#000000"</code> (black) will be used as a default.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_column_labels</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
+<dd>
+<p>Whether to highlight column labels of the assigned columns.</p>
 </dd>
 </dl>
 </section>
@@ -473,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="53e107c8" class="cell" data-execution_count="1">
+<div id="01294a16" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
@@ -487,52 +498,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_highlight_cols, columns<span class="op">=</span><span class="st">"hp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="cumdupuyru" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ahsoxrnecr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#cumdupuyru table {
+#ahsoxrnecr table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#cumdupuyru thead, tbody, tfoot, tr, td, th { border-style: none; }
+#ahsoxrnecr thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#cumdupuyru p { margin: 0; padding: 0; }
- #cumdupuyru .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #cumdupuyru .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #cumdupuyru .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #cumdupuyru .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #cumdupuyru .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cumdupuyru .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cumdupuyru .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cumdupuyru .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #cumdupuyru .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #cumdupuyru .gt_column_spanner_outer:first-child { padding-left: 0; }
- #cumdupuyru .gt_column_spanner_outer:last-child { padding-right: 0; }
- #cumdupuyru .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #cumdupuyru .gt_spanner_row { border-bottom-style: hidden; }
- #cumdupuyru .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #cumdupuyru .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #cumdupuyru .gt_from_md> :first-child { margin-top: 0; }
- #cumdupuyru .gt_from_md> :last-child { margin-bottom: 0; }
- #cumdupuyru .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #cumdupuyru .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #cumdupuyru .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #cumdupuyru .gt_row_group_first td { border-top-width: 2px; }
- #cumdupuyru .gt_row_group_first th { border-top-width: 2px; }
- #cumdupuyru .gt_striped { background-color: rgba(128,128,128,0.05); }
- #cumdupuyru .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cumdupuyru .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #cumdupuyru .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #cumdupuyru .gt_left { text-align: left; }
- #cumdupuyru .gt_center { text-align: center; }
- #cumdupuyru .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #cumdupuyru .gt_font_normal { font-weight: normal; }
- #cumdupuyru .gt_font_bold { font-weight: bold; }
- #cumdupuyru .gt_font_italic { font-style: italic; }
- #cumdupuyru .gt_super { font-size: 65%; }
- #cumdupuyru .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #cumdupuyru .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#ahsoxrnecr p { margin: 0; padding: 0; }
+ #ahsoxrnecr .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #ahsoxrnecr .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #ahsoxrnecr .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #ahsoxrnecr .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #ahsoxrnecr .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ahsoxrnecr .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ahsoxrnecr .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ahsoxrnecr .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #ahsoxrnecr .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #ahsoxrnecr .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #ahsoxrnecr .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #ahsoxrnecr .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #ahsoxrnecr .gt_spanner_row { border-bottom-style: hidden; }
+ #ahsoxrnecr .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #ahsoxrnecr .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #ahsoxrnecr .gt_from_md> :first-child { margin-top: 0; }
+ #ahsoxrnecr .gt_from_md> :last-child { margin-bottom: 0; }
+ #ahsoxrnecr .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #ahsoxrnecr .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #ahsoxrnecr .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #ahsoxrnecr .gt_row_group_first td { border-top-width: 2px; }
+ #ahsoxrnecr .gt_row_group_first th { border-top-width: 2px; }
+ #ahsoxrnecr .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #ahsoxrnecr .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ahsoxrnecr .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #ahsoxrnecr .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #ahsoxrnecr .gt_left { text-align: left; }
+ #ahsoxrnecr .gt_center { text-align: center; }
+ #ahsoxrnecr .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #ahsoxrnecr .gt_font_normal { font-weight: normal; }
+ #ahsoxrnecr .gt_font_bold { font-weight: bold; }
+ #ahsoxrnecr .gt_font_italic { font-style: italic; }
+ #ahsoxrnecr .gt_super { font-size: 65%; }
+ #ahsoxrnecr .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #ahsoxrnecr .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
@@ -549,49 +560,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <tr>
     <th class="gt_row gt_left gt_stub">GT</th>
     <td class="gt_row gt_right">2017</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">647.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">647.0</td>
     <td class="gt_row gt_right">550.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Speciale</th>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">597.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">597.0</td>
     <td class="gt_row gt_right">398.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Spider</th>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
     <td class="gt_row gt_right">398.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">458 Italia</th>
     <td class="gt_row gt_right">2014</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">562.0</td>
     <td class="gt_row gt_right">398.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">488 GTB</th>
     <td class="gt_row gt_right">2016</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">661.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">661.0</td>
     <td class="gt_row gt_right">561.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">California</th>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">553.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">553.0</td>
     <td class="gt_row gt_right">557.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">GTC4Lusso</th>
     <td class="gt_row gt_right">2017</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">680.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">680.0</td>
     <td class="gt_row gt_right">514.0</td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">FF</th>
     <td class="gt_row gt_right">2015</td>
-    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;" class="gt_row gt_right">652.0</td>
+    <td style="background-color: #80bcd8; color: #000000;font-weight: normal; border-top: 1px solid #80bcd8;border-bottom: 1px solid #80bcd8;border-left: 1px solid #80bcd8;border-right: 1px solid #80bcd8;" class="gt_row gt_right">652.0</td>
     <td class="gt_row gt_right">504.0</td>
   </tr>
 </tbody>
@@ -1014,8 +1025,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_hulk_col_numeric.html" class="pagination-link" aria-label="gt_hulk_col_numeric">
-        <span class="nav-page-text">gt_hulk_col_numeric</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_highlight_rows.html" class="pagination-link" aria-label="gt_highlight_rows">
+        <span class="nav-page-text">gt_highlight_rows</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
