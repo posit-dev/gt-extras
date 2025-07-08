@@ -115,6 +115,56 @@ def gt_duplicate_column(
     append_text: str | None = "_dupe",
     dupe_name: str | None = None,
 ) -> GT:
+    """
+    Duplicate a column in a GT table.
+
+    The `gt_duplicate_column()` function takes an existing `GT` object and creates a duplicate
+    (without styling) of the specified column. The duplicated column can be renamed using either
+    `dupe_name` or by appending text to the original column name, and positioned at a
+    specific location in the table.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column to duplicate. Can be a column name or index.
+
+    after
+        The column after which to place the duplicated column. If `None`, the duplicated
+        column will be moved to the end of the table.
+
+    append_text
+        Text to append to the original column name for the duplicate. Only used if
+        `dupe_name` is not provided. Defaults to `"_dupe"`.
+
+    dupe_name
+        The name for the duplicated column. If provided, this overrides `append_text`.
+
+    Returns
+    -------
+    GT
+        A `GT` object with the duplicated column added.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars[["mfr", "model", "year", "hp"]].head(5)
+    gt = GT(gtcars_mini)
+
+    # Duplicate with custom name and position
+    gt.pipe(
+        gte.gt_duplicate_column,
+        column="hp",
+        after="year",
+    )
+    ```
+    """
     original_name, _ = _validate_and_get_single_column(gt, column)
 
     # If dupe_name is given, it overrides append_text
@@ -173,8 +223,8 @@ def gt_duplicate_column(
     res = res._replace(_tbl_data=new_data_table, _boxhead=new_boxhead, _body=new_body)
 
     if after is None:
-        res.cols_move_to_end(new_col_name)
+        res = res.cols_move_to_end(new_col_name)
     else:
-        res.cols_move(new_col_name, after=after)
+        res = res.cols_move(new_col_name, after=after)
 
     return res
