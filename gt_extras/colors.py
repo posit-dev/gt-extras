@@ -29,6 +29,7 @@ def gt_highlight_cols(
     alpha: int | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
+    include_column_labels: bool = False,
 ) -> GT:
     # TODO: see if the color can be displayed in some cool way in the docs
     """
@@ -65,6 +66,9 @@ def gt_highlight_cols(
         A string indicating the text color. If nothing is provided, then `"#000000"`
         (black) will be used as a default.
 
+    include_column_labels
+        Whether to highlight column labels of the assigned columns.
+
     Returns
     -------
     GT
@@ -100,13 +104,18 @@ def gt_highlight_cols(
     if alpha:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
+    # conditionally apply to row labels
+    locations = [loc.body(columns=columns)]
+    if include_column_labels:
+        locations.append(loc.column_labels(columns=columns))
+
     res = gt.tab_style(
         style=[
             style.fill(color=fill),
             style.text(weight=font_weight, color=font_color),
-            style.borders(sides=["top", "bottom"], color=fill),
+            style.borders(color=fill),
         ],
-        locations=loc.body(columns=columns),
+        locations=locations,
     )
 
     return res
@@ -119,6 +128,7 @@ def gt_highlight_rows(
     alpha: int | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
     font_color: str = "#000000",
+    include_row_labels: bool = False,
 ) -> GT:
     # TODO: see if the color can be displayed in some cool way in the docs
     """
@@ -155,6 +165,9 @@ def gt_highlight_rows(
         A string indicating the text color. If nothing is provided, then `"#000000"`
         (black) will be used as a default.
 
+    include_row_labels
+        Whether to highlight row labels of the assigned rows.
+
     Returns
     -------
     GT
@@ -175,7 +188,7 @@ def gt_highlight_rows(
         .tab_stubhead(label=md("*Car*"))
     )
 
-    gt.pipe(gte.gt_highlight_cols, rows=[2, 7])
+    gt.pipe(gte.gt_highlight_rows, rows=[2, 7])
     ```
     """
     # Throw if `font_weight` is not one of the allowed values
@@ -190,13 +203,19 @@ def gt_highlight_rows(
     if alpha:
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
-    res = gt.tab_style(
+    # conditionally apply to row labels
+    locations = [loc.body(rows=rows)]
+    if include_row_labels:
+        locations.append(loc.stub(rows=rows))
+
+    res = gt
+    res = res.tab_style(
         style=[
             style.fill(color=fill),
             style.text(weight=font_weight, color=font_color),
-            style.borders(sides=["left", "right"], color=fill),
+            style.borders(color=fill),
         ],
-        locations=loc.body(rows=rows),
+        locations=locations,
     )
 
     return res
