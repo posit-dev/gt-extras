@@ -44,8 +44,8 @@ def gt_highlight_cols(
         An existing `GT` object.
 
     columns
-        The columns to target. Can either be a single column name or a series of column names
-        provided in a list. If `None`, the coloring is applied to all columns.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the coloring is applied to all columns.
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
@@ -144,8 +144,8 @@ def gt_highlight_rows(
         An existing `GT` object.
 
     rows
-        The rows to target, in the form of a list of row indices. If `None`, the coloring is applied to all
-        rows.
+        The rows to target. Can be a single row or a list of rows (by name or index).
+        If `None`, the coloring is applied to all rows.
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
@@ -246,8 +246,8 @@ def gt_hulk_col_numeric(
         An existing `GT` object.
 
     columns
-        The columns to target. Can be a single column name or a list of column names. If `None`,
-        the color gradient is applied to all columns.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the color gradient is applied to all columns.
 
     palette
         The color palette to use for the gradient. Can be a string referencing a palette name or a
@@ -364,7 +364,8 @@ def gt_color_box(
         An existing `GT` object.
 
     columns
-        The columns to target. Can be a single column name or a list of column names.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the coloring is applied to all columns.
 
     domain
         The range of values to map to the color palette. Should be a list of two values (min and

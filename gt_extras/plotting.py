@@ -64,8 +64,8 @@ def gt_plt_bar(
         A `GT` object to modify.
 
     columns
-        The columns to target. Can be a single column name or a list of column names. If `None`,
-        the bar plot is applied to all numeric columns.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the bar plot is applied to all numeric columns.
 
     fill
         The fill color for the bars.
