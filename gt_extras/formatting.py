@@ -116,7 +116,7 @@ def gt_duplicate_column(
     dupe_name: str | None = None,
 ) -> GT:
     """
-    Duplicate a column in a GT table.
+    Duplicate a column in a `GT` object.
 
     The `gt_duplicate_column()` function takes an existing `GT` object and creates a duplicate
     (without styling) of the specified column. The duplicated column can be renamed using either
