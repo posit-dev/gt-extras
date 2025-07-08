@@ -3,6 +3,8 @@ from __future__ import annotations
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 
+from gt_extras._utils_column import _validate_and_get_single_column
+
 __all__ = ["fmt_pct_extra", "gt_duplicate_column"]
 
 
@@ -103,6 +105,31 @@ def fmt_pct_extra(
     return res
 
 
-def gt_duplicate_column(gt: GT) -> GT:
+def gt_duplicate_column(
+    gt: GT,
+    column: SelectExpr,
+    after: str | None = None,
+    append_text: str | None = "_dupe",
+    dupe_name: str | None = None,
+) -> GT:
+    original_name, original_vals = _validate_and_get_single_column(gt, column)
+
+    # If dupe_name is given, it overrides append_text
+    if dupe_name is not None:
+        new_col_name = dupe_name
+    else:
+        new_col_name = original_name + append_text
+
+    if new_col_name == original_name:
+        # throw warning (modify name in place) or error?
+        pass
+
     res = gt
+    # Now make the duplicate new col
+
+    if after is None:
+        res.cols_move_to_end(new_col_name)
+    else:
+        res.cols_move(new_col_name, after=after)
+
     return res
