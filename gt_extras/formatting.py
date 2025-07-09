@@ -8,7 +8,7 @@ from great_tables._tbl_data import SelectExpr, copy_frame, is_na
 
 from gt_extras._utils_column import _validate_and_get_single_column
 
-__all__ = ["fmt_pct_extra", "gt_duplicate_column"]
+__all__ = ["fmt_pct_extra", "gt_duplicate_column", "gt_two_column_layout"]
 
 
 def fmt_pct_extra(
@@ -229,3 +229,12 @@ def gt_duplicate_column(
         res = res.cols_move(new_col_name, after=after)
 
     return res
+
+
+def gt_two_column_layout(gt1: GT, gt2: GT) -> str:
+    table_1_html = f'<div style="display:inline-block; float:left;">{gt1}</div>'
+    table_2_html = f'<div style="display:inline-block; float:right;">{gt2}</div>'
+
+    double_table_html = f"<div>{table_1_html}{table_2_html}</div>"
+
+    return double_table_html
