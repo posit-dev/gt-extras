@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import re
+from typing import Literal
+
 import pandas as pd
 import polars as pl
 from great_tables import GT
@@ -231,10 +234,131 @@ def gt_duplicate_column(
     return res
 
 
-def gt_two_column_layout(gt1: GT, gt2: GT) -> str:
-    table_1_html = f'<div style="display:inline-block; float:left;">{gt1}</div>'
-    table_2_html = f'<div style="display:inline-block; float:right;">{gt2}</div>'
+def gt_two_column_layout(
+    gt1: GT,
+    gt2: GT,
+    table_header_from: Literal[1, 2] | None = None,
+) -> str:
+    def extract_tab_header_and_style(gt: GT) -> dict:
+        """
+        Extract the title, subtitle, and full style block from a GT object's HTML.
+        """
+        html = gt.as_raw_html()
 
-    double_table_html = f"<div>{table_1_html}{table_2_html}</div>"
+        title = gt._heading.title if gt._heading.title else ""
+        subtitle = gt._heading.subtitle if gt._heading.subtitle else ""
+
+        # Extract the original table ID
+        id_match = re.search(r'<div id="([^"]*)"', html)
+        original_id = id_match.group(1) if id_match else ""
+
+        # Extract the entire style block
+        style_match = re.search(r"<style>(.*?)</style>", html, re.DOTALL)
+        style_content = style_match.group(1) if style_match else ""
+
+        # Replace the original ID with "mycombinedtable" in the CSS
+        if original_id:
+            style_content = style_content.replace(f"#{original_id}", "#mycombinedtable")
+            style_content = style_content.replace(
+                "mycombinedtable table", "mycombinedtable div"
+            )
+
+        # Extract title and subtitle class/style information
+        title_pattern = (
+            r'<td[^>]*class="([^"]*gt_title[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+            + re.escape(title)
+            + r"</td>"
+        )
+        title_match = re.search(title_pattern, html)
+        if title_match:
+            title_class = f"gt_table {title_match.group(1)}"
+            title_inline_style = title_match.group(2) or ""
+        else:
+            title_class = ""
+            title_inline_style = ""
+
+        subtitle_pattern = (
+            r'<td[^>]*class="([^"]*gt_subtitle[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+            + re.escape(subtitle)
+            + r"</td>"
+        )
+        subtitle_match = re.search(subtitle_pattern, html)
+        if subtitle_match:
+            subtitle_class = f"gt_table {subtitle_match.group(1)}"
+            subtitle_inline_style = subtitle_match.group(2) or ""
+        else:
+            subtitle_class = ""
+            subtitle_inline_style = ""
+
+        return {
+            "title": title,
+            "subtitle": subtitle,
+            "title_class": title_class,
+            "subtitle_class": subtitle_class,
+            "title_style": title_inline_style,
+            "subtitle_style": subtitle_inline_style,
+            "style": style_content,
+        }
+
+    # Extract header data if specified
+    if table_header_from == 1:
+        header_data = extract_tab_header_and_style(gt1)
+    elif table_header_from == 2:
+        header_data = extract_tab_header_and_style(gt2)
+    else:
+        header_data = None
+
+    # Build the header HTML if header data is available
+    if header_data and (header_data["title"] or header_data["subtitle"]):
+        header_html = f"""
+        <style>
+        {header_data["style"]}
+        </style>
+        """
+
+        # Add title if it exists
+        if header_data["title"]:
+            header_html += f"""
+            <div class="{header_data["title_class"]}" style="{header_data["title_style"]}">
+                {header_data["title"]}
+            </div>
+            """
+
+        # Add subtitle if it exists
+        if header_data["subtitle"]:
+            header_html += f"""
+            <div class="{header_data["subtitle_class"]}" style="{header_data["subtitle_style"]}">
+                {header_data["subtitle"]}
+            </div>
+            """
+
+        # Remove headers from the two tables
+        gt1_no_header = gt1.tab_header(title=None, subtitle=None)
+        table_1_html = gt1_no_header.as_raw_html()
+        gt2_no_header = gt2.tab_header(title=None, subtitle=None)
+        table_2_html = gt2_no_header.as_raw_html()
+
+        double_table_html = f"""
+        <div id="mycombinedtable">
+            {header_html}
+            <div style="display: inline-block; float: left;">
+                {table_1_html}
+            </div>
+            <div style="display: inline-block; float: right;">
+                {table_2_html}
+            </div>
+        </div>
+        """
+
+    # No predefined header
+    else:
+        table_1_html = (
+            f'<div style="display:inline-block; float:left;">{gt1.as_raw_html()}</div>'
+        )
+        table_2_html = (
+            f'<div style="display:inline-block; float:right;">{gt2.as_raw_html()}</div>'
+        )
+
+        double_table_html = f"<div>{table_1_html}{table_2_html}</div>"
 
     return double_table_html
