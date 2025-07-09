@@ -87,7 +87,7 @@ If you encounter a bug, have usage questions, or want to share ideas to make thi
 ::: {.callout-tip collapse="false"}
 ## What you might get to consider
 
-Some of the work that went into this project was featued on the [_great tables blog_](https://posit-dev.github.io/great-tables/blog/plots-in-tables/), if you choose to contribute hopefully that can give you a sense of the process!
+Some of the work that went into this project was featured on the [_great tables blog_](https://posit-dev.github.io/great-tables/blog/plots-in-tables/), if you choose to contribute hopefully that can give you a sense of the process!
 
 :::
 
