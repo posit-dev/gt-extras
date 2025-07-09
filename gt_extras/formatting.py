@@ -341,36 +341,26 @@ def gt_two_column_layout(
         gt2_no_header = gt2.tab_header(title=None, subtitle=None)
         table_2_html = gt2_no_header.as_raw_html()
 
-        double_table_html = f"""
-        <div id="mycombinedtable" style="display: inline-block; width: auto;">
-            {header_html}
-            <div style="overflow: auto; white-space: nowrap;">
-                <div style="display: inline-block; margin-right: 1em;">
-                    {table_1_html}
-                </div>
-                <div style="display: inline-block;">
-                    {table_2_html}
-                </div>
-            </div>
-        </div>
-        """
-
-    # No predefined header
     else:
+        header_html = ""
         table_1_html = gt1.as_raw_html()
         table_2_html = gt2.as_raw_html()
 
-        double_table_html = f"""
-        <div id="mycombinedtable" style="display: inline-block; width: auto;">
-            <div style="overflow: auto; white-space: nowrap;">
-                <div style="display: inline-block; margin-right: 1em;">
-                    {table_1_html}
-                </div>
-                <div style="display: inline-block;">
-                    {table_2_html}
-                </div>
+    # make the table html
+    double_table_html = f"""
+    <div id="mycombinedtable" style="display: inline-block; width: auto;">
+        {header_html}
+        <div style="overflow: auto; white-space: nowrap;">
+            <div style="display: inline-block; margin-right: 1em;">
+                {table_1_html}
+            </div>
+            <div style="display: inline-block;">
+                {table_2_html}
             </div>
         </div>
-        """
+    </div>
+    """
+
+    # do a show or save
 
     return double_table_html
