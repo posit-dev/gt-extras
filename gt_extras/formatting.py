@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import re
+import tempfile
+import webbrowser
+from pathlib import Path
 from typing import Literal
 
 import pandas as pd
 import polars as pl
 from great_tables import GT
+from great_tables._export import _create_temp_file_server
 from great_tables._gt_data import Boxhead, ColInfo
 from great_tables._tbl_data import SelectExpr, copy_frame, is_na
 
@@ -238,7 +242,15 @@ def gt_two_column_layout(
     gt1: GT,
     gt2: GT,
     table_header_from: Literal[1, 2] | None = None,
+    target: Literal["save", "notebook", "browser"] = "browser",
 ) -> str:
+    # TODO docstring
+    """
+    Returns
+    --------
+    The html layout is returned
+    """
+
     def extract_tab_header_and_style(gt: GT) -> dict:
         """
         Extract the title, subtitle, and full style block from a GT object's HTML.
@@ -362,5 +374,27 @@ def gt_two_column_layout(
     """
 
     # do a show or save
+    # based on code from great_tables `GT.show()`
+    if target == "notebook":
+        from IPython.core.display import display_html
+
+        # https://github.com/ipython/ipython/pull/10962
+        display_html(  # pyright: ignore[reportUnknownVariableType]
+            double_table_html, raw=True, metadata={"text/html": {"isolated": True}}
+        )
+    elif target == "browser":
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            f_path = Path(tmp_dir) / "index.html"
+            f_path.write_text(double_table_html, encoding="utf-8")
+
+            # create a server that closes after 1 request ----
+            server = _create_temp_file_server(f_path)
+            webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
+            server.handle_request()
+    elif target == "save":
+        # TODO save
+        pass
+    else:
+        raise Exception(f"Unknown target display: {target}")
 
     return double_table_html
