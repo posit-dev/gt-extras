@@ -319,7 +319,9 @@ def gt_two_column_layout(
         # Add title if it exists
         if header_data["title"]:
             header_html += f"""
-            <div class="{header_data["title_class"]}" style="{header_data["title_style"]}">
+            <div class="{header_data["title_class"]}"
+                style="width:100%; {header_data["title_style"]}"
+            >
                 {header_data["title"]}
             </div>
             """
@@ -327,7 +329,8 @@ def gt_two_column_layout(
         # Add subtitle if it exists
         if header_data["subtitle"]:
             header_html += f"""
-            <div class="{header_data["subtitle_class"]}" style="{header_data["subtitle_style"]}">
+            <div class="{header_data["subtitle_class"]}"
+                style="width:100%; {header_data["subtitle_style"]}">
                 {header_data["subtitle"]}
             </div>
             """
@@ -339,26 +342,35 @@ def gt_two_column_layout(
         table_2_html = gt2_no_header.as_raw_html()
 
         double_table_html = f"""
-        <div id="mycombinedtable">
+        <div id="mycombinedtable" style="display: inline-block; width: auto;">
             {header_html}
-            <div style="display: inline-block; float: left;">
-                {table_1_html}
-            </div>
-            <div style="display: inline-block; float: right;">
-                {table_2_html}
+            <div style="overflow: auto; white-space: nowrap;">
+                <div style="display: inline-block; margin-right: 1em;">
+                    {table_1_html}
+                </div>
+                <div style="display: inline-block;">
+                    {table_2_html}
+                </div>
             </div>
         </div>
         """
 
     # No predefined header
     else:
-        table_1_html = (
-            f'<div style="display:inline-block; float:left;">{gt1.as_raw_html()}</div>'
-        )
-        table_2_html = (
-            f'<div style="display:inline-block; float:right;">{gt2.as_raw_html()}</div>'
-        )
+        table_1_html = gt1.as_raw_html()
+        table_2_html = gt2.as_raw_html()
 
-        double_table_html = f"<div>{table_1_html}{table_2_html}</div>"
+        double_table_html = f"""
+        <div id="mycombinedtable" style="display: inline-block; width: auto;">
+            <div style="overflow: auto; white-space: nowrap;">
+                <div style="display: inline-block; margin-right: 1em;">
+                    {table_1_html}
+                </div>
+                <div style="display: inline-block;">
+                    {table_2_html}
+                </div>
+            </div>
+        </div>
+        """
 
     return double_table_html
