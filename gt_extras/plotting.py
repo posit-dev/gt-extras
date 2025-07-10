@@ -13,6 +13,7 @@ from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
 from svg import SVG, Line, Rect, Text
 
+from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
 from gt_extras._utils_column import (
     _scale_numeric_column,
@@ -28,28 +29,23 @@ __all__ = [
     "gt_plt_bar_stack",
 ]
 
-# TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
-# to handle the underlying _tbl_data.
-
 # TODO: default font for labels?
 
 # TODO: how to handle negative values? Plots can't really have negative length
-
-# change height to float
 
 
 def gt_plt_bar(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "purple",
-    bar_height: int = 20,
-    height: int = 30,
-    width: int = 60,
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
     stroke_color: str | None = "black",
     scale_type: Literal["percent", "number"] | None = None,
     scale_color: str = "white",
     domain: list[int] | list[float] | None = None,
-    # keep_columns: bool = False,
+    keep_columns: bool = False,
 ) -> GT:
     """
     Create horizontal bar plots in `GT` cells.
@@ -227,6 +223,18 @@ def gt_plt_bar(
             column,
         )
 
+        if keep_columns:
+            res = gt_duplicate_column(
+                res,
+                col_name,
+                after=col_name,
+                append_text=" value",
+            )
+            # res.show()
+
+            # print(col_name + (col_name + " value"))
+            res = res.cols_move(col_name, after=(f"{col_name} value"))
+
         scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
 
         # Apply the scaled value for each row, so the bar is proportional
@@ -239,6 +247,7 @@ def gt_plt_bar(
                 columns=column,
                 rows=[i],
             )
+
     return res
 
 
