@@ -179,7 +179,7 @@ def gt_duplicate_column(
         )
 
     res = gt
-    old_data_table = res._tbl_data
+    new_data_table = res._tbl_data
     new_body = res._body
 
     # get the boxhead info
@@ -199,12 +199,12 @@ def gt_duplicate_column(
     )
 
     new_data_table = nw.to_native(
-        nw.from_native(old_data_table).with_columns(
+        nw.from_native(new_data_table).with_columns(
             nw.col(original_name).alias(new_col_name)
         )
     )
 
-    new_body.body = nw.to_native(
+    new_body = nw.to_native(
         nw.from_native(new_body.body).with_columns(
             nw.col(original_name).alias(new_col_name)
         )
