@@ -447,7 +447,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    scale_type<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    scale_color<span class="op">=</span><span class="st">'white'</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    domain<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    keep_columns<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Create horizontal bar plots in <code>GT</code> cells.</p>
 <p>The <code>gt_plt_bar()</code> function takes an existing <code>GT</code> object and adds horizontal bar charts to specified columns. Each cell value is represented as a horizontal bar with length proportional to the cell’s numeric value relative to the column’s maximum value.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
@@ -465,15 +466,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>The fill color for the bars.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>bar_height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">20</span></code></dt>
+<dt><code><span class="parameter-name"><strong>bar_height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">20</span></code></dt>
 <dd>
 <p>The height of each individual bar in pixels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
 <dd>
 <p>The height of the bar plot in pixels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">60</span></code></dt>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">60</span></code></dt>
 <dd>
 <p>The width of the maximum bar in pixels</p>
 </dd>
@@ -489,6 +490,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>The color of text labels on the bars (when <code>scale_type</code> is not <code>None</code>).</p>
 </dd>
+<dt><code><span class="parameter-name"><strong>keep_columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
+<dd>
+<p>Whether to keep the original column values. In either case the plots will appear in their original columns, and if this flag is <code>True</code> then the original columns will be saved in new columns with the string <code>'value'</code> appended to the end of the column name. See <a href="https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column"><code>gt_duplicate_column()</code></a> for more details.</p>
+</dd>
 </dl>
 </section>
 <section id="returns" class="level2 doc-section doc-section-returns">
@@ -502,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="e4506239" class="cell" data-execution_count="1">
+<div id="3fb23f01" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
@@ -524,52 +529,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span> [<span class="st">"hp"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"mpg_c"</span>, <span class="st">"mpg_h"</span>]</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="ugzbeyqpmd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="djauywppcj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#ugzbeyqpmd table {
+#djauywppcj table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#ugzbeyqpmd thead, tbody, tfoot, tr, td, th { border-style: none; }
+#djauywppcj thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#ugzbeyqpmd p { margin: 0; padding: 0; }
- #ugzbeyqpmd .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #ugzbeyqpmd .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #ugzbeyqpmd .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #ugzbeyqpmd .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #ugzbeyqpmd .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ugzbeyqpmd .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ugzbeyqpmd .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ugzbeyqpmd .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #ugzbeyqpmd .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #ugzbeyqpmd .gt_column_spanner_outer:first-child { padding-left: 0; }
- #ugzbeyqpmd .gt_column_spanner_outer:last-child { padding-right: 0; }
- #ugzbeyqpmd .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #ugzbeyqpmd .gt_spanner_row { border-bottom-style: hidden; }
- #ugzbeyqpmd .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #ugzbeyqpmd .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #ugzbeyqpmd .gt_from_md> :first-child { margin-top: 0; }
- #ugzbeyqpmd .gt_from_md> :last-child { margin-bottom: 0; }
- #ugzbeyqpmd .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #ugzbeyqpmd .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #ugzbeyqpmd .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #ugzbeyqpmd .gt_row_group_first td { border-top-width: 2px; }
- #ugzbeyqpmd .gt_row_group_first th { border-top-width: 2px; }
- #ugzbeyqpmd .gt_striped { background-color: rgba(128,128,128,0.05); }
- #ugzbeyqpmd .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ugzbeyqpmd .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #ugzbeyqpmd .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #ugzbeyqpmd .gt_left { text-align: left; }
- #ugzbeyqpmd .gt_center { text-align: center; }
- #ugzbeyqpmd .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #ugzbeyqpmd .gt_font_normal { font-weight: normal; }
- #ugzbeyqpmd .gt_font_bold { font-weight: bold; }
- #ugzbeyqpmd .gt_font_italic { font-style: italic; }
- #ugzbeyqpmd .gt_super { font-size: 65%; }
- #ugzbeyqpmd .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #ugzbeyqpmd .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#djauywppcj p { margin: 0; padding: 0; }
+ #djauywppcj .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #djauywppcj .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #djauywppcj .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #djauywppcj .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #djauywppcj .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #djauywppcj .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #djauywppcj .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #djauywppcj .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #djauywppcj .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #djauywppcj .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #djauywppcj .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #djauywppcj .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #djauywppcj .gt_spanner_row { border-bottom-style: hidden; }
+ #djauywppcj .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #djauywppcj .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #djauywppcj .gt_from_md> :first-child { margin-top: 0; }
+ #djauywppcj .gt_from_md> :last-child { margin-bottom: 0; }
+ #djauywppcj .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #djauywppcj .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #djauywppcj .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #djauywppcj .gt_row_group_first td { border-top-width: 2px; }
+ #djauywppcj .gt_row_group_first th { border-top-width: 2px; }
+ #djauywppcj .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #djauywppcj .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #djauywppcj .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #djauywppcj .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #djauywppcj .gt_left { text-align: left; }
+ #djauywppcj .gt_center { text-align: center; }
+ #djauywppcj .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #djauywppcj .gt_font_normal { font-weight: normal; }
+ #djauywppcj .gt_font_bold { font-weight: bold; }
+ #djauywppcj .gt_font_italic { font-style: italic; }
+ #djauywppcj .gt_super { font-size: 65%; }
+ #djauywppcj .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #djauywppcj .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
