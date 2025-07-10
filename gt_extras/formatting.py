@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import narwhals as nw
+import narwhals.stable.v1 as nw
 from great_tables import GT
 from great_tables._gt_data import Boxhead, ColInfo
 from great_tables._tbl_data import SelectExpr, is_na
