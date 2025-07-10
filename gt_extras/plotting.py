@@ -1490,6 +1490,100 @@ def gt_plt_bar_pct(
     font_style: Literal["bold", "italic", "normal"] = "bold",
     font_size: str = "10px",
 ):
+    """
+    Create horizontal bar plots in percentage in `GT` cells.
+
+    The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
+    horizontal barplots via native HTML. Note that values default to being
+    normalized to the percent of the maximum observed value in the specified
+    column. You can turn this off if the values already represent a percentage
+    value representing 0–100.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column to target.
+
+    height
+        The height of the bar plot in pixels.
+
+    width
+        The width of the maximum bar in pixels.
+
+    fill
+        The fill color for the bars. Defaults to `purple`.
+
+    background
+        The background filling color for the bars. Defaults to `#e1e1e1`.
+
+    scaled
+        `True`/`False` logical indicating if the value is already scaled to a
+        percent of max (`True`) or if it needs to be scaled (`False`). Defaults to
+        `False`, meaning the value will be divided by the max value in that column
+        and then multiplied by 100.
+
+    labels
+        `True`/`False` logical representing if labels should be plotted. Defaults
+        to `False`, meaning that no value labels will be plotted.
+
+    label_cutoff
+        A number, 0 to 1, representing where to set the inside/outside label
+        boundary. Defaults to 0.40 (40%) of the column's maximum value. If the
+        value in that row is less than the cutoff, the label will be placed
+        outside the bar; otherwise, it will be placed within the bar. This
+        interacts with the overall width of the bar, so if you are not happy with
+        the placement of the labels, you may try adjusting the `width` argument as
+        well.
+
+    decimals
+        A number representing how many decimal places to be used in label
+        rounding. Defaults to 1.
+
+    font_style
+        The font style for the text labels displayed on the bars. Options are
+        `"bold"`, `"italic"`, or `"normal"`. Defaults to `"bold"`.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    Returns
+    -------
+    GT
+        A `GT` object with horizontal bar plots added to the specified columns.
+
+    Examples
+    --------
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+        pl.col("x").alias("x_unscaled"), pl.col("x").alias("x_scaled")
+    )
+
+    gt = GT(df)
+
+    (
+        gt.pipe(
+            gte.gt_plt_bar_pct,
+            column=["x_unscaled"],
+            scaled=False,
+            labels=True,
+            fill="green",
+        ).pipe(
+            gte.gt_plt_bar_pct,
+            column=["x_scaled"],
+            scaled=True,
+            labels=True,
+        )
+    )
+    ```
+    """
+
     def _not_na(val, tbl_data) -> bool:
         return val is not None and not is_na(tbl_data, val)
 
@@ -1541,45 +1635,55 @@ def gt_plt_bar_pct(
             )
             elements.append(outer_rect)
 
-            text = original_val
             if scaled:
                 _decimals = decimals
-                scaled_val_mul_100 = scaled_val * 100
-                if _is_effective_int(scaled_val_mul_100):
+                if _is_effective_int(scaled_val):
                     _decimals = 0
-                text = f"{scaled_val_mul_100:.{_decimals}f}%"
-
-            inner_rect = Rect(
-                x=0,
-                y=0,
-                width=px(width * scaled_val),
-                height=px(height),
-                fill=fill,
-            )
-
+                text = f"{scaled_val:.{_decimals}f}%"
+                inner_rect = Rect(
+                    x=0,
+                    y=0,
+                    width=px(width * scaled_val / max_x),
+                    height=px(height),
+                    fill=fill,
+                )
+            else:
+                _decimals = decimals
+                if _is_effective_int(scaled_val):
+                    _decimals = 0
+                text = f"{scaled_val:.{_decimals}f}%"
+                inner_rect = Rect(
+                    x=0,
+                    y=0,
+                    width=px(width * scaled_val * 0.01),
+                    height=px(height),
+                    fill=fill,
+                )
             elements.append(inner_rect)
 
             if labels:
+                padding = 5
+
                 if original_val < (label_cutoff * max_x):
                     inner_text = Text(
                         text=text,
-                        x=px(width * 0.45),
+                        x=px(width * scaled_val / max_x + padding),
                         y=px(height / 2),
-                        fill="#000000",
+                        fill=_ideal_fgnd_color(_html_color([background])[0]),
                         font_size=font_size,
                         font_style=font_style,
-                        text_anchor="left",
+                        text_anchor="start",
                         dominant_baseline="central",
                     )
                 else:
                     inner_text = Text(
                         text=text,
-                        x=px(width * 0.3),
+                        x=px(padding),
                         y=px(height / 2),
-                        fill="#FFFFFF",
+                        fill=_ideal_fgnd_color(_html_color([fill])[0]),
                         font_size=font_size,
                         font_style=font_style,
-                        text_anchor="end",
+                        text_anchor="start",
                         dominant_baseline="central",
                     )
                 elements.append(inner_text)
@@ -1606,12 +1710,16 @@ def gt_plt_bar_pct(
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
     tbl_data = gt._tbl_data
     if all(_is_na(val, tbl_data) for val in col_vals):
-        raise ValueError("All values are None.")
+        raise ValueError("All values in the column are None.")
 
     max_x = max(val for val in col_vals if _not_na(val, tbl_data))
 
-    # scaled_vals is required for rendering, regardless of whether `scaled` is True or False
-    scaled_vals = [val if _is_na(val, tbl_data) else (val / max_x) for val in col_vals]
+    if scaled:
+        scaled_vals = col_vals
+    else:
+        scaled_vals = [
+            val if _is_na(val, tbl_data) else (val / max_x * 100) for val in col_vals
+        ]
 
     res = gt
     # Apply the scaled value for each row, so the bar is proportional

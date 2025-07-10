@@ -898,5 +898,25 @@ def test_gt_plt_bar_stack_invalid_scale():
 
 
 def test_gt_plt_bar_pct(mini_gt):
-    html = gt_plt_bar_pct(gt=mini_gt, column=["num"]).as_raw_html()
+    html = gt_plt_bar_pct(gt=mini_gt, column="num").as_raw_html()
     assert html.count("<svg") == 3
+
+
+def test_test_gt_plt_bar_pct_column_containg_all_none():
+    df = pd.DataFrame({"num": [None, None, None]})
+    with pytest.raises(ValueError, match="All values in the column are None."):
+        gt_plt_bar_pct(GT(df), column="num")
+
+
+def test_test_gt_plt_bar_pct_label_cutoff_invalid_number(mini_gt):
+    with pytest.raises(
+        ValueError, match="Label_cutoff must be a number between 0 and 1."
+    ):
+        gt_plt_bar_pct(mini_gt, column="num", label_cutoff=100)
+
+
+def test_test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
+    ):
+        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")
