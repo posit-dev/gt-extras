@@ -8,6 +8,7 @@ from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
+from great_tables._helpers import pct, px
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
@@ -1472,4 +1473,155 @@ def gt_plt_bar_stack(
             {col_name: html(label_html)}
         )
 
+    return res
+
+
+def gt_plt_bar_pct(
+    gt: GT,
+    column: SelectExpr,
+    height: int = 16,
+    width: int = 100,
+    fill: str = "purple",
+    background: str = "#e1e1e1",
+    scaled: bool = False,
+    labels: bool = False,
+    label_cutoff: float = 0.4,
+    decimals: int = 1,
+    font_style: Literal["bold", "italic", "normal"] = "bold",
+    font_size: str = "10px",
+):
+    def _not_na(val, tbl_data) -> bool:
+        return val is not None and not is_na(tbl_data, val)
+
+    def _is_na(val, tbl_data) -> bool:
+        return not _not_na(val, tbl_data)
+
+    def _is_effective_int(val) -> bool:
+        return isinstance(val, int) or (isinstance(val, float) and val.is_integer())
+
+    if not (0 <= label_cutoff <= 1):
+        raise ValueError("Label_cutoff must be a number between 0 and 1.")
+
+    if font_style not in ["bold", "italic", "normal"]:
+        raise ValueError("Font_style must be one of 'bold', 'italic', or 'normal'.")
+
+    # Helper function to make the individual bars
+
+    def _make_bar_pct_html(
+        original_val: int | float,
+        scaled_val: int | float,
+        height: int,
+        width: int,
+        fill: str,
+        background: str,
+        scaled: bool,
+        labels: bool,
+        label_cutoff: float,
+        decimals: int,
+        font_style: Literal["bold", "italic", "normal"],
+        font_size: str,
+    ) -> str:
+        elements = []
+        if _is_na(scaled_val, tbl_data):
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=pct(width),
+                height=px(height),
+                fill="transparent",
+            )
+            elements.append(outer_rect)
+        else:
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=px(width),
+                height=px(height),
+                fill=background,
+            )
+            elements.append(outer_rect)
+
+            text = original_val
+            if scaled:
+                _decimals = decimals
+                scaled_val_mul_100 = scaled_val * 100
+                if _is_effective_int(scaled_val_mul_100):
+                    _decimals = 0
+                text = f"{scaled_val_mul_100:.{_decimals}f}%"
+
+            inner_rect = Rect(
+                x=0,
+                y=0,
+                width=px(width * scaled_val),
+                height=px(height),
+                fill=fill,
+            )
+
+            elements.append(inner_rect)
+
+            if labels:
+                if original_val < (label_cutoff * max_x):
+                    inner_text = Text(
+                        text=text,
+                        x=px(width * 0.45),
+                        y=px(height / 2),
+                        fill="#000000",
+                        font_size=font_size,
+                        font_style=font_style,
+                        text_anchor="left",
+                        dominant_baseline="central",
+                    )
+                else:
+                    inner_text = Text(
+                        text=text,
+                        x=px(width * 0.3),
+                        y=px(height / 2),
+                        fill="#FFFFFF",
+                        font_size=font_size,
+                        font_style=font_style,
+                        text_anchor="end",
+                        dominant_baseline="central",
+                    )
+                elements.append(inner_text)
+
+        canvas = SVG(width=px(width), height=px(height), elements=elements)
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+
+    def _make_bar_pct(scaled_val: int, original_val: int) -> str:
+        return _make_bar_pct_html(
+            original_val=original_val,
+            scaled_val=scaled_val,
+            height=height,
+            width=width,
+            fill=fill,
+            background=background,
+            scaled=scaled,
+            labels=labels,
+            label_cutoff=label_cutoff,
+            decimals=decimals,
+            font_style=font_style,
+            font_size=font_size,
+        )
+
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+    tbl_data = gt._tbl_data
+    if all(_is_na(val, tbl_data) for val in col_vals):
+        raise ValueError("All values are None.")
+
+    max_x = max(val for val in col_vals if _not_na(val, tbl_data))
+
+    # scaled_vals is required for rendering, regardless of whether `scaled` is True or False
+    scaled_vals = [val if _is_na(val, tbl_data) else (val / max_x) for val in col_vals]
+
+    res = gt
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_vals):
+        res = res.fmt(
+            lambda original_val, scaled_val=scaled_val: _make_bar_pct(
+                original_val=original_val,
+                scaled_val=scaled_val,
+            ),
+            columns=column,
+            rows=[i],
+        )
     return res

@@ -11,6 +11,7 @@ from .icons import fa_icon_repeat, gt_fa_rank_change, gt_fa_rating
 from .images import img_header
 from .plotting import (
     gt_plt_bar,
+    gt_plt_bar_pct,
     gt_plt_bar_stack,
     gt_plt_conf_int,
     gt_plt_dot,
@@ -46,6 +47,7 @@ __all__ = [
     "gt_fa_rank_change",
     "gt_fa_rating",
     "gt_plt_bar",
+    "gt_plt_bar_pct",
     "gt_plt_dot",
     "gt_plt_conf_int",
     "gt_plt_dumbbell",

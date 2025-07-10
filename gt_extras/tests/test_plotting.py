@@ -6,6 +6,7 @@ import numpy as np
 from great_tables import GT
 from gt_extras import (
     gt_plt_bar,
+    gt_plt_bar_pct,
     gt_plt_dot,
     gt_plt_conf_int,
     gt_plt_dumbbell,
@@ -888,3 +889,14 @@ def test_gt_plt_bar_stack_invalid_scale():
 
     with pytest.raises(ValueError):
         gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
+
+
+# def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
+#     res = gt_plt_bar_pct(gt=mini_gt, column="num")
+
+#     assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_bar_pct(mini_gt):
+    html = gt_plt_bar_pct(gt=mini_gt, column=["num"]).as_raw_html()
+    assert html.count("<svg") == 3
