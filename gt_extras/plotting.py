@@ -230,9 +230,6 @@ def gt_plt_bar(
                 after=col_name,
                 append_text=" value",
             )
-            # res.show()
-
-            # print(col_name + (col_name + " value"))
             res = res.cols_move(col_name, after=(f"{col_name} value"))
 
         scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
