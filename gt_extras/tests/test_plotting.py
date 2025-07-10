@@ -7,11 +7,11 @@ from great_tables import GT
 from gt_extras import (
     gt_plt_bar,
     gt_plt_bar_pct,
-    gt_plt_dot,
+    gt_plt_bar_stack,
     gt_plt_conf_int,
+    gt_plt_dot,
     gt_plt_dumbbell,
     gt_plt_winloss,
-    gt_plt_bar_stack,
 )
 
 
