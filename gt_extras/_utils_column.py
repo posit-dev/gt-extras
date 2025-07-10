@@ -20,7 +20,7 @@ def _validate_and_get_single_column(
     Parameters
     ----------
     gt
-        The GT object containing the data
+        The `GT` object containing the data
     expr
         The column expression to resolve
 

@@ -1,14 +1,21 @@
 from __future__ import annotations
 
+import re
+import tempfile
+import webbrowser
+from pathlib import Path
+from typing import Literal
+
 import pandas as pd
 import polars as pl
 from great_tables import GT
+from great_tables._export import _create_temp_file_server
 from great_tables._gt_data import Boxhead, ColInfo
 from great_tables._tbl_data import SelectExpr, copy_frame, is_na
 
 from gt_extras._utils_column import _validate_and_get_single_column
 
-__all__ = ["fmt_pct_extra", "gt_duplicate_column"]
+__all__ = ["fmt_pct_extra", "gt_duplicate_column", "gt_two_column_layout"]
 
 
 def fmt_pct_extra(
@@ -229,3 +236,165 @@ def gt_duplicate_column(
         res = res.cols_move(new_col_name, after=after)
 
     return res
+
+
+def gt_two_column_layout(
+    gt1: GT,
+    gt2: GT,
+    table_header_from: Literal[1, 2] | None = None,
+    target: Literal["save", "notebook", "browser"] = "browser",
+) -> str:
+    # TODO docstring
+    """
+    Returns
+    --------
+    The html layout is returned
+    """
+
+    def extract_tab_header_and_style(gt: GT) -> dict:
+        """
+        Extract the title, subtitle, and full style block from a GT object's HTML.
+        """
+        html = gt.as_raw_html()
+
+        title = gt._heading.title if gt._heading.title else ""
+        subtitle = gt._heading.subtitle if gt._heading.subtitle else ""
+
+        # Extract the original table ID
+        id_match = re.search(r'<div id="([^"]*)"', html)
+        original_id = id_match.group(1) if id_match else ""
+
+        # Extract the entire style block
+        style_match = re.search(r"<style>(.*?)</style>", html, re.DOTALL)
+        style_content = style_match.group(1) if style_match else ""
+
+        # Replace the original ID with "mycombinedtable" in the CSS
+        if original_id:
+            style_content = style_content.replace(f"#{original_id}", "#mycombinedtable")
+            style_content = style_content.replace(
+                "mycombinedtable table", "mycombinedtable div"
+            )
+
+        # Extract title and subtitle class/style information
+        title_pattern = (
+            r'<td[^>]*class="([^"]*gt_title[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+            + re.escape(title)
+            + r"</td>"
+        )
+        title_match = re.search(title_pattern, html)
+        if title_match:
+            title_class = f"gt_table {title_match.group(1)}"
+            title_inline_style = title_match.group(2) or ""
+        else:
+            title_class = ""
+            title_inline_style = ""
+
+        subtitle_pattern = (
+            r'<td[^>]*class="([^"]*gt_subtitle[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+            + re.escape(subtitle)
+            + r"</td>"
+        )
+        subtitle_match = re.search(subtitle_pattern, html)
+        if subtitle_match:
+            subtitle_class = f"gt_table {subtitle_match.group(1)}"
+            subtitle_inline_style = subtitle_match.group(2) or ""
+        else:
+            subtitle_class = ""
+            subtitle_inline_style = ""
+
+        return {
+            "title": title,
+            "subtitle": subtitle,
+            "title_class": title_class,
+            "subtitle_class": subtitle_class,
+            "title_style": title_inline_style,
+            "subtitle_style": subtitle_inline_style,
+            "style": style_content,
+        }
+
+    # Extract header data if specified
+    if table_header_from == 1:
+        header_data = extract_tab_header_and_style(gt1)
+    elif table_header_from == 2:
+        header_data = extract_tab_header_and_style(gt2)
+    else:
+        header_data = None
+
+    # Build the header HTML if header data is available
+    if header_data and (header_data["title"] or header_data["subtitle"]):
+        header_html = f"""
+        <style>
+        {header_data["style"]}
+        </style>
+        """
+
+        # Add title if it exists
+        if header_data["title"]:
+            header_html += f"""
+            <div class="{header_data["title_class"]}"
+                style="width:100%; {header_data["title_style"]}"
+            >
+                {header_data["title"]}
+            </div>
+            """
+
+        # Add subtitle if it exists
+        if header_data["subtitle"]:
+            header_html += f"""
+            <div class="{header_data["subtitle_class"]}"
+                style="width:100%; {header_data["subtitle_style"]}">
+                {header_data["subtitle"]}
+            </div>
+            """
+
+        # Remove headers from the two tables
+        gt1_no_header = gt1.tab_header(title=None, subtitle=None)
+        table_1_html = gt1_no_header.as_raw_html()
+        gt2_no_header = gt2.tab_header(title=None, subtitle=None)
+        table_2_html = gt2_no_header.as_raw_html()
+
+    else:
+        header_html = ""
+        table_1_html = gt1.as_raw_html()
+        table_2_html = gt2.as_raw_html()
+
+    # make the table html
+    double_table_html = f"""
+    <div id="mycombinedtable" style="display: inline-block; width: auto;">
+        {header_html}
+        <div style="overflow: auto; white-space: nowrap;">
+            <div style="display: inline-block; margin-right: 1em;">
+                {table_1_html}
+            </div>
+            <div style="display: inline-block;">
+                {table_2_html}
+            </div>
+        </div>
+    </div>
+    """
+
+    # do a show or save
+    # based on code from great_tables `GT.show()`
+    if target == "notebook":
+        from IPython.core.display import display_html
+
+        # https://github.com/ipython/ipython/pull/10962
+        display_html(  # pyright: ignore[reportUnknownVariableType]
+            double_table_html, raw=True, metadata={"text/html": {"isolated": True}}
+        )
+    elif target == "browser":
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            f_path = Path(tmp_dir) / "index.html"
+            f_path.write_text(double_table_html, encoding="utf-8")
+
+            # create a server that closes after 1 request ----
+            server = _create_temp_file_server(f_path)
+            webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
+            server.handle_request()
+    elif target == "save":
+        # TODO save
+        pass
+    else:
+        raise Exception(f"Unknown target display: {target}")
+
+    return double_table_html
