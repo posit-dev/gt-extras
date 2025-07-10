@@ -1635,22 +1635,9 @@ def gt_plt_bar_pct(
             )
             elements.append(outer_rect)
 
-            _decimals = decimals
-            if _is_effective_int(scaled_val):
-                _decimals = 0
-
             if scaled:
-                _text = f"{scaled_val:.{_decimals}f}%"
                 _width = px(width * scaled_val / max_x)
-                inner_rect = Rect(
-                    x=0,
-                    y=0,
-                    width=_width,
-                    height=px(height),
-                    fill=fill,
-                )
             else:
-                _text = f"{scaled_val:.{_decimals}f}%"
                 _width = px(width * scaled_val * 0.01)
 
             inner_rect = Rect(
@@ -1671,6 +1658,11 @@ def gt_plt_bar_pct(
                 else:
                     _x = px(padding)
                     _fill = _ideal_fgnd_color(_html_color([fill])[0])
+
+                _decimals = decimals
+                if _is_effective_int(scaled_val):
+                    _decimals = 0
+                _text = f"{scaled_val:.{_decimals}f}%"
 
                 inner_text = Text(
                     text=_text,
