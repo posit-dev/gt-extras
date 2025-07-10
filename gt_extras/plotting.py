@@ -70,14 +70,15 @@ def gt_plt_bar(
         The height of each individual bar in pixels.
 
     height
-        The height of the bar plot in pixels.
+        The height of the bar plot in pixels. In practice, this allows for the bar to appear
+        less stout, the larger the difference between `height` and `bar_height`.
 
     width
-        The width of the maximum bar in pixels
+        The width of the maximum bar in pixels. Not all bars will have this width.
 
     stroke_color
         The color of the vertical axis on the left side of the bar. The default is black, but if
-        `None` is passed no stroke will be drawn.
+        `None` is passed, no stroke will be drawn.
 
     scale_type
         The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
@@ -266,8 +267,9 @@ def gt_plt_dot(
     Create dot plots with thin horizontal bars in `GT` cells.
 
     The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
-    bar charts to a specified category column. Each cell displays a colored dot with the category
-    label and a horizontal bar representing the corresponding numeric value from the data column.
+    bar charts to a specified category column. Each cell displays a colored dot according to the
+    value in the assigned category column and a horizontal bar representing the corresponding
+    numeric value from the data column.
 
     Parameters
     ----------
@@ -275,7 +277,8 @@ def gt_plt_dot(
         A `GT` object to modify.
 
     category_col
-        The column containing category labels that will be displayed next to colored dots.
+        The column containing category labels that will be displayed next to colored dots. The
+        coloring of the dots are determined by this column.
 
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
@@ -448,7 +451,8 @@ def gt_plt_conf_int(
         The confidence level to use when computing the interval (if `ci_columns` is `None`).
 
     width
-        The width of the confidence interval plot in pixels.
+        The width of the confidence interval plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The width of the confidence interval plot in pixels.
@@ -751,7 +755,8 @@ def gt_plt_dumbbell(
         original column name is retained.
 
     width
-        The width of the dumbbell plot in pixels.
+        The width of the dumbbell plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
