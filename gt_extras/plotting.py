@@ -1635,57 +1635,53 @@ def gt_plt_bar_pct(
             )
             elements.append(outer_rect)
 
+            _decimals = decimals
+            if _is_effective_int(scaled_val):
+                _decimals = 0
+
             if scaled:
-                _decimals = decimals
-                if _is_effective_int(scaled_val):
-                    _decimals = 0
-                text = f"{scaled_val:.{_decimals}f}%"
+                _text = f"{scaled_val:.{_decimals}f}%"
+                _width = px(width * scaled_val / max_x)
                 inner_rect = Rect(
                     x=0,
                     y=0,
-                    width=px(width * scaled_val / max_x),
+                    width=_width,
                     height=px(height),
                     fill=fill,
                 )
             else:
-                _decimals = decimals
-                if _is_effective_int(scaled_val):
-                    _decimals = 0
-                text = f"{scaled_val:.{_decimals}f}%"
-                inner_rect = Rect(
-                    x=0,
-                    y=0,
-                    width=px(width * scaled_val * 0.01),
-                    height=px(height),
-                    fill=fill,
-                )
+                _text = f"{scaled_val:.{_decimals}f}%"
+                _width = px(width * scaled_val * 0.01)
+
+            inner_rect = Rect(
+                x=0,
+                y=0,
+                width=_width,
+                height=px(height),
+                fill=fill,
+            )
             elements.append(inner_rect)
 
             if labels:
                 padding = 5
 
                 if original_val < (label_cutoff * max_x):
-                    inner_text = Text(
-                        text=text,
-                        x=px(width * scaled_val / max_x + padding),
-                        y=px(height / 2),
-                        fill=_ideal_fgnd_color(_html_color([background])[0]),
-                        font_size=font_size,
-                        font_style=font_style,
-                        text_anchor="start",
-                        dominant_baseline="central",
-                    )
+                    _x = px(width * scaled_val / max_x + padding)
+                    _fill = _ideal_fgnd_color(_html_color([background])[0])
                 else:
-                    inner_text = Text(
-                        text=text,
-                        x=px(padding),
-                        y=px(height / 2),
-                        fill=_ideal_fgnd_color(_html_color([fill])[0]),
-                        font_size=font_size,
-                        font_style=font_style,
-                        text_anchor="start",
-                        dominant_baseline="central",
-                    )
+                    _x = px(padding)
+                    _fill = _ideal_fgnd_color(_html_color([fill])[0])
+
+                inner_text = Text(
+                    text=_text,
+                    x=_x,
+                    y=px(height / 2),
+                    fill=_fill,
+                    font_size=font_size,
+                    font_style=font_style,
+                    text_anchor="start",
+                    dominant_baseline="central",
+                )
                 elements.append(inner_text)
 
         canvas = SVG(width=px(width), height=px(height), elements=elements)
