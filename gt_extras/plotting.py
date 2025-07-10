@@ -201,7 +201,7 @@ def gt_plt_bar(
 
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
-        stroke_color = "#FFFFFF00"
+        stroke_color = "#FFFFFF00"  # TODO change to transparent
 
     def _make_bar(scaled_val: int, original_val: int) -> str:
         return _make_bar_html(
