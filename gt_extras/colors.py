@@ -67,7 +67,7 @@ def gt_highlight_cols(
         (black) will be used as a default.
 
     include_column_labels
-        Whether to highlight column labels of the assigned columns.
+        Whether to also highlight column labels of the assigned columns.
 
     Returns
     -------
@@ -167,7 +167,7 @@ def gt_highlight_rows(
         (black) will be used as a default.
 
     include_row_labels
-        Whether to highlight row labels of the assigned rows.
+        Whether to also highlight row labels of the assigned rows.
 
     Returns
     -------
@@ -238,7 +238,9 @@ def gt_hulk_col_numeric(
 
     The `gt_hulk_col_numeric()` function takes an existing `GT` object and applies a color gradient
     to the background of specified numeric columns, based on their values. This is useful for
-    visually emphasizing the distribution or magnitude of numeric data within a table.
+    visually emphasizing the distribution or magnitude of numeric data within a table. For more
+    customizable data coloring, see
+    [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color).
 
     Parameters
     ----------
@@ -268,7 +270,8 @@ def gt_hulk_col_numeric(
         If `True`, reverses the color palette direction.
 
     autocolor_text
-        If `True`, automatically adjusts text color for readability against the background.
+        If `True`, automatically adjusts text color for readability against the background,
+        otherwise the text color won't change.
 
     Returns
     -------
@@ -374,8 +377,8 @@ def gt_color_box(
     palette
         The color palette to use. This should be a list of colors
         (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
-        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
-        If `None`, then a default palette will be used.
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color)
+        for additional reference). If `None`, then a default palette will be used.
 
     alpha
         The alpha (transparency) value for the background colors, as a float between `0` (fully
@@ -416,6 +419,12 @@ def gt_color_box(
 
     gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
     ```
+
+    Note
+    --------
+    The exterior color box will expand to surround the widest cell in the column.
+    The height and width parameters are given as `min_width` and `min_height` to ensure a color box
+    always completely surrounds the text.
     """
     # Get the underlying `GT` data
     data_table = gt._tbl_data
