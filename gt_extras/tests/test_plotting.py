@@ -1,17 +1,17 @@
-import pytest
-from gt_extras.tests.conftest import assert_rendered_body
-
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
 from great_tables import GT
+
 from gt_extras import (
     gt_plt_bar,
-    gt_plt_dot,
+    gt_plt_bar_stack,
     gt_plt_conf_int,
+    gt_plt_dot,
     gt_plt_dumbbell,
     gt_plt_winloss,
-    gt_plt_bar_stack,
 )
+from gt_extras.tests.conftest import assert_rendered_body
 
 
 def test_gt_plt_bar_snap(snapshot, mini_gt):
@@ -99,20 +99,7 @@ def test_gt_plt_dot_basic(mini_gt):
     assert "width:100.0%; height:4px; border-radius:2px;" in html
 
 
-# TODO: remove when test_gt_plt_dot_with_palette_xfail() passes.
 def test_gt_plt_dot_with_palette(mini_gt):
-    html = gt_plt_dot(
-        gt=mini_gt,
-        category_col="char",
-        data_col="num",
-        palette=["#FF0000", "#00FF00", "#0000FF"],
-    ).as_raw_html()
-
-    assert "#ff0000" in html
-
-
-@pytest.mark.xfail(reason="Palette bug, issue #717 in great_tables")
-def test_gt_plt_dot_with_palette_xfail(mini_gt):
     html = gt_plt_dot(
         gt=mini_gt,
         category_col="char",
