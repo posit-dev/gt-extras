@@ -290,7 +290,7 @@ def gt_plt_dot(
     palette
         The color palette to use. This should be a list of colors
         (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
-        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color) for additional reference).
         If `None`, then a default palette will be used.
 
     Returns
@@ -314,6 +314,12 @@ def gt_plt_dot(
 
     gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
+
+    Note
+    -------
+    If the column is too narrow, the bar may render above the dot rather than below, as intended.
+    For the best way to resolve this issue please refer to
+    [`GT.cols_width()`](https://posit-dev.github.io/great-tables/reference/GT.cols_width)
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
@@ -988,8 +994,8 @@ def gt_plt_winloss(
     patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
     column, ensuring consistent bar spacing across all rows.
 
-    Wins must be represented as 1, ties as 0.5, and losses as 0.
-    Invalid values (not 0, 0.5, or 1) are skipped.
+    Wins must be represented as `1`, ties as `0.5`, and losses as `0`.
+    Invalid values (not `0`, `0.5`, or `1`) are skipped.
 
     Parameters
     ----------
@@ -1245,7 +1251,7 @@ def gt_plt_bar_stack(
     The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
     charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
     proportional to the values in the list. The scaling of the bars can be controlled using the
-    `scale_type` parameter.
+    `scale_type` - see below for more info.
 
     Parameters
     ----------
@@ -1261,7 +1267,8 @@ def gt_plt_bar_stack(
         header, with each label corresponding to a color in the palette.
 
     width
-        The total width of the stacked bar plot in pixels.
+        The total width of the stacked bar plot in pixels. If `scale_type = "absolute"`, this
+        value will determine the width of the maximum length bar plot.
 
     height
         The height of the stacked bar plot in pixels.
