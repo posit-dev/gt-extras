@@ -1370,6 +1370,10 @@ def gt_plt_bar_stack(
         scale_type="absolute",
     )
     ```
+
+    Note
+    -------
+    Values of `0` will not be displayed in the plots.
     """
 
     def _make_bar_stack_html(
