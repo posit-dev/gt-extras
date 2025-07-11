@@ -8,6 +8,7 @@ from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
+from great_tables._helpers import pct, px
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
@@ -22,6 +23,7 @@ from gt_extras._utils_column import (
 
 __all__ = [
     "gt_plt_bar",
+    "gt_plt_bar_pct",
     "gt_plt_dot",
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
@@ -1501,4 +1503,247 @@ def gt_plt_bar_stack(
             {col_name: html(label_html)}
         )
 
+    return res
+
+
+def gt_plt_bar_pct(
+    gt: GT,
+    column: SelectExpr,
+    height: int = 16,
+    width: int = 100,
+    fill: str = "purple",
+    background: str = "#e1e1e1",
+    scaled: bool = False,
+    labels: bool = False,
+    label_cutoff: float = 0.4,
+    decimals: int = 1,
+    font_style: Literal["bold", "italic", "normal"] = "bold",
+    font_size: int = 10,
+):
+    """
+    Create horizontal bar plots in percentage in `GT` cells.
+
+    The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
+    horizontal barplots via native HTML. Note that values default to being
+    normalized to the percent of the maximum observed value in the specified
+    column. You can turn this off if the values already represent a percentage value within 0–100.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column to target.
+
+    height
+        The height of the bar plot in pixels.
+
+    width
+        The width of the maximum bar in pixels.
+
+    fill
+        The fill color for the bars. Defaults to `purple`.
+
+    background
+        The background filling color for the bars. Defaults to `#e1e1e1`.
+
+    scaled
+        `True`/`False` logical indicating if the value is already scaled to a
+        percent of max (`True`) or if it needs to be scaled (`False`). Defaults to
+        `False`, meaning the value will be divided by the max value in that column
+        and then multiplied by 100.
+
+    labels
+        `True`/`False` logical representing if labels should be plotted. Defaults
+        to `False`, meaning that no value labels will be plotted.
+
+    label_cutoff
+        A number, 0 to 1, representing where to set the inside/outside label
+        boundary. Defaults to 0.40 (40%) of the column's maximum value. If the
+        value in that row is less than the cutoff, the label will be placed
+        outside the bar; otherwise, it will be placed within the bar. This
+        interacts with the overall width of the bar, so if you are not happy with
+        the placement of the labels, you may try adjusting the `width` argument as
+        well.
+
+    decimals
+        A number representing how many decimal places to be used in label
+        rounding. Defaults to 1.
+
+    font_style
+        The font style for the text labels displayed on the bars. Options are
+        `"bold"`, `"italic"`, or `"normal"`. Defaults to `"bold"`.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    Returns
+    -------
+    GT
+        A `GT` object with horizontal bar plots added to the specified columns.
+
+    Examples
+    --------
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+        pl.col("x").alias("x_unscaled"), pl.col("x").alias("x_scaled")
+    )
+
+    gt = GT(df)
+
+    (
+        gt.pipe(
+            gte.gt_plt_bar_pct,
+            column=["x_unscaled"],
+            scaled=False,
+            labels=True,
+            fill="green",
+        ).pipe(
+            gte.gt_plt_bar_pct,
+            column=["x_scaled"],
+            scaled=True,
+            labels=True,
+        )
+    )
+    ```
+    """
+
+    def _not_na(val, tbl_data) -> bool:
+        return val is not None and not is_na(tbl_data, val)
+
+    def _is_na(val, tbl_data) -> bool:
+        return not _not_na(val, tbl_data)
+
+    def _is_effective_int(val) -> bool:
+        return isinstance(val, int) or (isinstance(val, float) and val.is_integer())
+
+    if not (0 <= label_cutoff <= 1):
+        raise ValueError("Label_cutoff must be a number between 0 and 1.")
+
+    if font_style not in ["bold", "italic", "normal"]:
+        raise ValueError("Font_style must be one of 'bold', 'italic', or 'normal'.")
+
+    # Helper function to make the individual bars
+
+    def _make_bar_pct_html(
+        original_val: int | float,
+        scaled_val: int | float,
+        height: int,
+        width: int,
+        fill: str,
+        background: str,
+        scaled: bool,
+        labels: bool,
+        label_cutoff: float,
+        decimals: int,
+        font_style: Literal["bold", "italic", "normal"],
+        font_size: int,
+    ) -> str:
+        elements = []
+        if _is_na(scaled_val, tbl_data):
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=pct(width),
+                height=px(height),
+                fill="transparent",
+            )
+            elements.append(outer_rect)
+        else:
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=px(width),
+                height=px(height),
+                fill=background,
+            )
+            elements.append(outer_rect)
+
+            _width = width * scaled_val * 0.01
+
+            inner_rect = Rect(
+                x=0,
+                y=0,
+                width=px(_width),
+                height=px(height),
+                fill=fill,
+            )
+            elements.append(inner_rect)
+
+            if labels:
+                padding = 5.0
+
+                if _width < (label_cutoff * 100):
+                    _x = _width + padding
+                    _fill = _ideal_fgnd_color(_html_color([background])[0])
+                else:
+                    _x = padding
+                    _fill = _ideal_fgnd_color(_html_color([fill])[0])
+
+                _decimals = decimals
+                if _is_effective_int(scaled_val):
+                    _decimals = 0
+                _text = f"{scaled_val:.{_decimals}f}%"
+
+                inner_text = Text(
+                    text=_text,
+                    x=px(_x),
+                    y=px(height / 2),
+                    fill=_fill,
+                    font_size=px(font_size),
+                    font_style=font_style,
+                    text_anchor="start",
+                    dominant_baseline="central",
+                )
+                elements.append(inner_text)
+
+        canvas = SVG(width=px(width), height=px(height), elements=elements)
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+
+    def _make_bar_pct(scaled_val: int, original_val: int) -> str:
+        return _make_bar_pct_html(
+            original_val=original_val,
+            scaled_val=scaled_val,
+            height=height,
+            width=width,
+            fill=fill,
+            background=background,
+            scaled=scaled,
+            labels=labels,
+            label_cutoff=label_cutoff,
+            decimals=decimals,
+            font_style=font_style,
+            font_size=font_size,
+        )
+
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+    tbl_data = gt._tbl_data
+    if all(_is_na(val, tbl_data) for val in col_vals):
+        raise ValueError("All values in the column are None.")
+
+    max_x = max(val for val in col_vals if _not_na(val, tbl_data))
+
+    if scaled:
+        scaled_vals = col_vals
+    else:
+        scaled_vals = [
+            val if _is_na(val, tbl_data) else (val / max_x * 100) for val in col_vals
+        ]
+
+    res = gt
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_vals):
+        res = res.fmt(
+            lambda original_val, scaled_val=scaled_val: _make_bar_pct(
+                original_val=original_val,
+                scaled_val=scaled_val,
+            ),
+            columns=column,
+            rows=[i],
+        )
     return res

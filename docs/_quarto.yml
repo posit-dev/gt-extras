@@ -47,6 +47,7 @@ quartodoc:
         and win/loss charts, directly within columns of your existing `GT` objects.
       contents:
         - gt_plt_bar
+        - gt_plt_bar_pct
         - gt_plt_bar_stack
         - gt_plt_conf_int
         - gt_plt_dot
