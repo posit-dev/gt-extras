@@ -326,6 +326,7 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
     ----------
     gt
         An existing `GT` object.
+
     color
         A string indicating the color of the row striping, defaults to a light gray.
         Accepts either named colors or hex colors.
@@ -420,6 +421,7 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
     ----------
     gt
         An existing `GT` object.
+
     color
         A string indicating the color of the row striping, defaults to a light green.
         Accepts either named colors or hex colors.
@@ -558,10 +560,13 @@ def gt_theme_pff(
     ----------
     gt
         An existing `GT` object.
+
     divider
         Zero or more column names/indices to visually divide with a preceding border.
+
     spanners
         Optional list of spanners to style, as referenced by the `GT` spanner ids.
+
     rank_col
         Optional single column name/index to highlight as a rank column.
 

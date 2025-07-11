@@ -246,11 +246,11 @@
       <td class="gt_row gt_left"><div>
               <div style="display:inline-block; float:left; margin-right:0px;">
                   two
-                  <div style="height:0.7em; width:0.7em; background-color:#4cbd81;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                  <div style="height:0.7em; width:0.7em; background-color:#25bce6;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
                   <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
               </div>
               <div style="position:relative; top:1.2em;">
-                  <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#4cbd81; width:35.93593593593593%; height:4px; border-radius:2px;"></div> </div></div>
+                  <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#25bce6; width:35.93593593593593%; height:4px; border-radius:2px;"></div> </div></div>
               </div>
           </div></td>
       <td class="gt_row gt_right">2015-02-15</td>
@@ -266,11 +266,11 @@
       <td class="gt_row gt_left"><div>
               <div style="display:inline-block; float:left; margin-right:0px;">
                   three
-                  <div style="height:0.7em; width:0.7em; background-color:#9653ca;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
+                  <div style="height:0.7em; width:0.7em; background-color:#9e9e9e;border-radius:50%; margin-top:4px; display:inline-block;float:left; margin-right:2px;"></div>
                   <div style="display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"></div>
               </div>
               <div style="position:relative; top:1.2em;">
-                  <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#9653ca; width:2.7827827827827822%; height:4px; border-radius:2px;"></div> </div></div>
+                  <div><div style="flex-grow:1; margin-left:0px;">  <div style="background:#9e9e9e; width:2.7827827827827822%; height:4px; border-radius:2px;"></div> </div></div>
               </div>
           </div></td>
       <td class="gt_row gt_right">2015-03-15</td>

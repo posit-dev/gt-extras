@@ -157,6 +157,7 @@ def with_tooltip(
     if color != "none":
         style += f"color: {color}; "
 
+    # Why doesn't the output have to be wrapped in GT.html()?
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'
 
 
