@@ -61,6 +61,16 @@ def test_gt_plt_bar_scale_number(mini_gt):
     assert ">33.33</text>" in html
 
 
+def test_gt_plt_bar_keep_columns(mini_gt):
+    result = gt_plt_bar(gt=mini_gt, columns=["num"], keep_columns=True)
+    html = result.as_raw_html()
+
+    assert ">num value</th>" in html
+    assert ">num</th>" in html
+    assert ">2.222</td>" in html
+    assert html.count("<svg") == 3
+
+
 def test_gt_plt_bar_scale_none(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type=None).as_raw_html()
     assert "</text>" not in html

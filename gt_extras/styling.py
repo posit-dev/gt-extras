@@ -20,6 +20,7 @@ def gt_add_divider(
     weight: int = 2,
     include_labels: bool = True,
 ) -> GT:
+    # TODO: include a simpler example first
     """
     Add dividers to specified columns in a `GT` object.
 
