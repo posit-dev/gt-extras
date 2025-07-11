@@ -1649,7 +1649,7 @@ def gt_plt_bar_pct(
             if labels:
                 padding = 5.0
 
-                if original_val < (label_cutoff * max_x):
+                if _width < (label_cutoff * 100):
                     _x = _width + padding
                     _fill = _ideal_fgnd_color(_html_color([background])[0])
                 else:
