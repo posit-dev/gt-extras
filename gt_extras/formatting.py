@@ -207,30 +207,11 @@ def gt_duplicate_column(
         )
     )
 
-    new_body = nw.to_native(
+    new_body.body = nw.to_native(
         nw.from_native(new_body.body).with_columns(
             nw.col(original_name).alias(new_col_name)
         )
     )
-
-    # A little clunky, but I dont have any other solutions
-    # if isinstance(new_data_table, pd.DataFrame):
-    #     new_data_table[new_col_name] = new_data_table[original_name]
-    #     new_body.body[new_col_name] = new_body.body[original_name]
-
-    # elif isinstance(new_data_table, pl.DataFrame):
-    #     new_data_table = new_data_table.with_columns(
-    #         new_data_table[original_name].alias(new_col_name)
-    #     )
-    #     new_body.body = new_body.body.with_columns(
-    #         new_body.body[original_name].alias(new_col_name)
-    #     )
-
-    # else:
-    #     raise TypeError(
-    #         """Unsupported type.
-    #         This function will only work if the underlying data is a Polars or Pandas dataframe."""
-    #     )
 
     new_boxhead_list = list(res._boxhead._d) + [new_col_info]
     new_boxhead = Boxhead(new_boxhead_list)
