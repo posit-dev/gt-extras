@@ -85,6 +85,7 @@ quartodoc:
         Functions to enhance `GT` objects by adding icons, ratings, or images to cells
         or headers alike.
       contents:
+        - add_text_img
         - fa_icon_repeat
         - gt_fa_rank_change
         - gt_fa_rating

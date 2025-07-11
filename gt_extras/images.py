@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from great_tables import html
+from great_tables._helpers import px
 from great_tables._text import Html
 
-__all__ = ["img_header"]
+__all__ = ["add_text_img", "img_header"]
 
 
 def img_header(
@@ -90,14 +91,14 @@ def img_header(
 
     img_html = f"""
     <img src="{img_url}" style="
-        height:{height}px;
+        height:{px(height)};
         border-bottom:2px solid {border_color};"
     />
     """.strip()
 
     label_html = f"""
     <div style="
-        font-size:{font_size}px;
+        font-size:{px(font_size)};
         color:{text_color};
         text-align:center;
         width:100%;
@@ -114,3 +115,65 @@ def img_header(
     """.strip()
 
     return html(full_element)
+
+
+def add_text_img(
+    text: str,
+    img_url: str,
+    height: int = 30,
+    gap: float = 10.0,
+    left: bool = False,
+) -> Html:
+    """
+    Create an HTML element with text and an image, displayed inline.
+
+    Parameters
+    ----------
+    text
+        The text to display alongside the image.
+
+    img_url
+        The URL of the image to display. This can be a filepath or an image on the web.
+
+    height
+        The height of the image in pixels. Default is 30.
+
+    gap
+        The spacing between the text and the image in pixels. Default is 10.
+
+    left
+        If True, the image is displayed to the left of the text.
+
+    Returns
+    -------
+    Html
+        A Great Tables `html` element for the combined text and image.
+
+    Examples
+    --------
+    ```python
+    from gt_extras.images import add_text_img
+
+    html_element = add_text_img(
+        text="Example Text",
+        img_url="https://example.com/image.png",
+        height=40,
+        left=True
+    )
+    ```
+    """
+
+    # Determine the margin direction based on the `left` parameter
+    margin_direction = "margin-right" if left else "margin-left"
+
+    text_div = f"<div style='display:inline; vertical-align:top;'>{text}</div>"
+    img_div = f"""<div style='display:inline; {margin_direction}:{px(gap)};'>
+                    <img src='{img_url}' style='height:{px(height)};'/>
+                </div>"""
+
+    if not left:
+        combined_html = f"{text_div}{img_div}"
+    else:
+        combined_html = f"{img_div}{text_div}"
+
+    return html(combined_html)
