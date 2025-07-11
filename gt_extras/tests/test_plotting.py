@@ -902,20 +902,80 @@ def test_gt_plt_bar_pct(mini_gt):
     assert html.count("<svg") == 3
 
 
-def test_test_gt_plt_bar_pct_column_containg_all_none():
+def test_gt_plt_bar_pct_scaled_false(mini_gt):
+    html = gt_plt_bar_pct(mini_gt, column="num", labels=True).as_raw_html()
+    assert ">100%</text>" in html
+
+
+def test_gt_plt_bar_pct_scaled_true(mini_gt):
+    html = gt_plt_bar_pct(mini_gt, column="num", scaled=True, labels=True).as_raw_html()
+    assert ">33.3%</text>" in html
+
+
+def test_gt_plt_bar_pct_column_decimal(mini_gt):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", scaled=True, labels=True, decimals=2
+    ).as_raw_html()
+    assert ">33.33%</text>" in html
+
+
+def test_gt_plt_bar_pct_without_labels(mini_gt):
+    html = gt_plt_bar_pct(mini_gt, column="num").as_raw_html()
+    assert ">100%</text>" not in html
+
+
+def test_gt_plt_bar_pct_column_containing_effective_int():
+    df = pd.DataFrame({"num": [1, 2.0]})
+    html = gt_plt_bar_pct(GT(df), column="num", scaled=True, labels=True).as_raw_html()
+    assert ">1%</text>" in html
+    assert ">2%</text>" in html
+
+
+@pytest.mark.parametrize("height, width", [(16, 100), (17, 101)])
+def test_gt_plt_bar_pct_height_width(mini_gt, height, width):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", height=height, width=width, scaled=True, labels=True
+    ).as_raw_html()
+    assert f'height="{height}px">' in html
+    assert f'width="{width}px"' in html
+
+
+@pytest.mark.parametrize(
+    "font_style, font_size", [("bold", 10), ("italic", 11), ("normal", 12)]
+)
+def test_gt_plt_bar_pct_fnot_style_size(mini_gt, font_style, font_size):
+    html = gt_plt_bar_pct(
+        mini_gt,
+        column="num",
+        scaled=True,
+        labels=True,
+        font_style=font_style,
+        font_size=font_size,
+    ).as_raw_html()
+    assert f'font-style="{font_style}"' in html
+    assert f'font-size="{font_size}px"' in html
+
+
+def test_gt_plt_bar_pct_column_containing_some_none():
+    df = pd.DataFrame({"num": [1, None, None]})
+    html = gt_plt_bar_pct(GT(df), column="num").as_raw_html()
+    assert html.count('fill="transparent"/>') == 2
+
+
+def test_gt_plt_bar_pct_column_containing_all_none():
     df = pd.DataFrame({"num": [None, None, None]})
     with pytest.raises(ValueError, match="All values in the column are None."):
         gt_plt_bar_pct(GT(df), column="num")
 
 
-def test_test_gt_plt_bar_pct_label_cutoff_invalid_number(mini_gt):
+def test_gt_plt_bar_pct_label_cutoff_invalid_number(mini_gt):
     with pytest.raises(
         ValueError, match="Label_cutoff must be a number between 0 and 1."
     ):
         gt_plt_bar_pct(mini_gt, column="num", label_cutoff=100)
 
 
-def test_test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
+def test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
     with pytest.raises(
         ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
     ):

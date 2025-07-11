@@ -1488,7 +1488,7 @@ def gt_plt_bar_pct(
     label_cutoff: float = 0.4,
     decimals: int = 1,
     font_style: Literal["bold", "italic", "normal"] = "bold",
-    font_size: str = "10px",
+    font_size: int = 10,
 ):
     """
     Create horizontal bar plots in percentage in `GT` cells.
@@ -1496,8 +1496,7 @@ def gt_plt_bar_pct(
     The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
     horizontal barplots via native HTML. Note that values default to being
     normalized to the percent of the maximum observed value in the specified
-    column. You can turn this off if the values already represent a percentage
-    value representing 0–100.
+    column. You can turn this off if the values already represent a percentage value within 0–100.
 
     Parameters
     ----------
@@ -1613,7 +1612,7 @@ def gt_plt_bar_pct(
         label_cutoff: float,
         decimals: int,
         font_style: Literal["bold", "italic", "normal"],
-        font_size: str,
+        font_size: int,
     ) -> str:
         elements = []
         if _is_na(scaled_val, tbl_data):
@@ -1636,14 +1635,14 @@ def gt_plt_bar_pct(
             elements.append(outer_rect)
 
             if scaled:
-                _width = px(width * scaled_val / max_x)
+                _width = width * scaled_val / max_x
             else:
-                _width = px(width * scaled_val * 0.01)
+                _width = width * scaled_val * 0.01
 
             inner_rect = Rect(
                 x=0,
                 y=0,
-                width=_width,
+                width=px(_width),
                 height=px(height),
                 fill=fill,
             )
@@ -1653,10 +1652,10 @@ def gt_plt_bar_pct(
                 padding = 5
 
                 if original_val < (label_cutoff * max_x):
-                    _x = px(width * scaled_val / max_x + padding)
+                    _x = _width + padding
                     _fill = _ideal_fgnd_color(_html_color([background])[0])
                 else:
-                    _x = px(padding)
+                    _x = padding
                     _fill = _ideal_fgnd_color(_html_color([fill])[0])
 
                 _decimals = decimals
@@ -1666,10 +1665,10 @@ def gt_plt_bar_pct(
 
                 inner_text = Text(
                     text=_text,
-                    x=_x,
+                    x=px(_x),
                     y=px(height / 2),
                     fill=_fill,
-                    font_size=font_size,
+                    font_size=px(font_size),
                     font_style=font_style,
                     text_anchor="start",
                     dominant_baseline="central",
