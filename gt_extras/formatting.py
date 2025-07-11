@@ -182,8 +182,6 @@ def gt_duplicate_column(
         )
 
     res = gt
-    new_data_table = res._tbl_data
-    new_body = res._body
 
     # get the boxhead info
     original_col_info = None
@@ -201,12 +199,16 @@ def gt_duplicate_column(
         column_width=original_col_info.column_width,
     )
 
+    # Duplicate the col in the data_table data
+    original_data_table = res._tbl_data
     new_data_table = nw.to_native(
-        nw.from_native(new_data_table).with_columns(
+        nw.from_native(original_data_table).with_columns(
             nw.col(original_name).alias(new_col_name)
         )
     )
 
+    # Duplicate the col in the body element of body
+    new_body = res._body
     new_body.body = nw.to_native(
         nw.from_native(new_body.body).with_columns(
             nw.col(original_name).alias(new_col_name)
