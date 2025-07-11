@@ -17,8 +17,8 @@ website:
     left:
       - text: Intro
         file: articles/intro.qmd
-      # - text: Get Started
-      #   file: get-started/index.qmd
+      - text: Examples
+        file: examples/index.qmd
       - reference/index.qmd
     right:
       - icon: github
