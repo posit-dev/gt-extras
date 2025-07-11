@@ -157,14 +157,44 @@ def add_text_img(
 
     Examples
     --------
-    ```python
-    from gt_extras.images import add_text_img
+    ```{python}
+    import pandas as pd
+    from great_tables import GT, md
+    import gt_extras as gte
+    from great_tables import html
 
-    html_element = add_text_img(
-        text="Example Text",
-        img_url="https://example.com/image.png",
-        height=40,
-        left=True
+    df = pd.DataFrame(
+        {
+            "Player": ["Josh Hart", "Jalen Brunson"],
+            "Points": [1051, 1690],
+            "Assists": [453, 475],
+        }
+    )
+
+    hart_img = gte.add_text_img(
+        text="Josh Hart",
+        img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png",
+    )
+
+    brunson_img = gte.add_text_img(
+        text="Jalen Brunson",
+        img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
+    )
+
+    points_with_img = gte.add_text_img(
+        text="Points",
+        img_url="../assets/hoop.png",
+        left=True,
+    )
+
+    points_img_html = html(points_with_img)
+
+    df["Player"] = [hart_img, brunson_img]
+    gt = GT(df, rowname_col="Player")
+    (
+        gt
+        .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+        .cols_label({"Points": points_img_html})
     )
     ```
     """
