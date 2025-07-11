@@ -22,6 +22,7 @@ from gt_extras._utils_column import (
 
 __all__ = [
     "gt_plt_bar",
+    "gt_plt_bar_pct",
     "gt_plt_dot",
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
@@ -1634,10 +1635,7 @@ def gt_plt_bar_pct(
             )
             elements.append(outer_rect)
 
-            if scaled:
-                _width = width * scaled_val / max_x
-            else:
-                _width = width * scaled_val * 0.01
+            _width = width * scaled_val * 0.01
 
             inner_rect = Rect(
                 x=0,
@@ -1649,7 +1647,7 @@ def gt_plt_bar_pct(
             elements.append(inner_rect)
 
             if labels:
-                padding = 5
+                padding = 5.0
 
                 if original_val < (label_cutoff * max_x):
                     _x = _width + padding

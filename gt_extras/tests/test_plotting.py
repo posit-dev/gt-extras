@@ -924,6 +924,22 @@ def test_gt_plt_bar_pct_without_labels(mini_gt):
     assert ">100%</text>" not in html
 
 
+def test_gt_plt_bar_pct_label_placement():
+    df = pd.DataFrame({"x": [10, 20, 30, 40]})
+    gt = GT(df)
+    html_unscaled = gt_plt_bar_pct(gt, "x", scaled=False, labels=True).as_raw_html()
+
+    assert html_unscaled.count('x="5.0px" y="8.0px"') == 3
+    assert 'x="30.0px" y="8.0px"' in html_unscaled
+
+    html_scaled = gt_plt_bar_pct(gt, "x", scaled=True, labels=True).as_raw_html()
+
+    assert 'x="5.0px" y="8.0px"' in html_scaled
+    assert 'x="15.0px" y="8.0px"' in html_scaled
+    assert 'x="25.0px" y="8.0px"' in html_scaled
+    assert 'x="35.0px" y="8.0px"' in html_scaled
+
+
 def test_gt_plt_bar_pct_column_containing_effective_int():
     df = pd.DataFrame({"num": [1, 2.0]})
     html = gt_plt_bar_pct(GT(df), column="num", scaled=True, labels=True).as_raw_html()
