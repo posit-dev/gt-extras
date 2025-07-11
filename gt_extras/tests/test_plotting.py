@@ -891,10 +891,10 @@ def test_gt_plt_bar_stack_invalid_scale():
         gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
 
 
-# def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
-#     res = gt_plt_bar_pct(gt=mini_gt, column="num")
+def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
+    res = gt_plt_bar_pct(gt=mini_gt, column="num")
 
-#     assert_rendered_body(snapshot, gt=res)
+    assert_rendered_body(snapshot, gt=res)
 
 
 def test_gt_plt_bar_pct(mini_gt):
