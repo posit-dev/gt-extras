@@ -70,14 +70,15 @@ def gt_plt_bar(
         The height of each individual bar in pixels.
 
     height
-        The height of the bar plot in pixels.
+        The height of the bar plot in pixels. In practice, this allows for the bar to appear
+        less stout, the larger the difference between `height` and `bar_height`.
 
     width
-        The width of the maximum bar in pixels
+        The width of the maximum bar in pixels. Not all bars will have this width.
 
     stroke_color
         The color of the vertical axis on the left side of the bar. The default is black, but if
-        `None` is passed no stroke will be drawn.
+        `None` is passed, no stroke will be drawn.
 
     scale_type
         The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
@@ -266,8 +267,9 @@ def gt_plt_dot(
     Create dot plots with thin horizontal bars in `GT` cells.
 
     The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
-    bar charts to a specified category column. Each cell displays a colored dot with the category
-    label and a horizontal bar representing the corresponding numeric value from the data column.
+    bar charts to a specified category column. Each cell displays a colored dot according to the
+    value in the assigned category column and a horizontal bar representing the corresponding
+    numeric value from the data column.
 
     Parameters
     ----------
@@ -275,7 +277,8 @@ def gt_plt_dot(
         A `GT` object to modify.
 
     category_col
-        The column containing category labels that will be displayed next to colored dots.
+        The column containing category labels that will be displayed next to colored dots. The
+        coloring of the dots are determined by this column.
 
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
@@ -287,7 +290,7 @@ def gt_plt_dot(
     palette
         The color palette to use. This should be a list of colors
         (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
-        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color) for additional reference).
         If `None`, then a default palette will be used.
 
     Returns
@@ -311,6 +314,12 @@ def gt_plt_dot(
 
     gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
+
+    Note
+    -------
+    If the column is too narrow, the bar may render above the dot rather than below, as intended.
+    For the best way to resolve this issue please refer to
+    [`GT.cols_width()`](https://posit-dev.github.io/great-tables/reference/GT.cols_width)
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
@@ -448,7 +457,8 @@ def gt_plt_conf_int(
         The confidence level to use when computing the interval (if `ci_columns` is `None`).
 
     width
-        The width of the confidence interval plot in pixels.
+        The width of the confidence interval plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The width of the confidence interval plot in pixels.
@@ -751,7 +761,8 @@ def gt_plt_dumbbell(
         original column name is retained.
 
     width
-        The width of the dumbbell plot in pixels.
+        The width of the dumbbell plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
@@ -983,8 +994,8 @@ def gt_plt_winloss(
     patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
     column, ensuring consistent bar spacing across all rows.
 
-    Wins must be represented as 1, ties as 0.5, and losses as 0.
-    Invalid values (not 0, 0.5, or 1) are skipped.
+    Wins must be represented as `1`, ties as `0.5`, and losses as `0`.
+    Invalid values (not `0`, `0.5`, or `1`) are skipped.
 
     Parameters
     ----------
@@ -1240,7 +1251,7 @@ def gt_plt_bar_stack(
     The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
     charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
     proportional to the values in the list. The scaling of the bars can be controlled using the
-    `scale_type` parameter.
+    `scale_type` - see below for more info.
 
     Parameters
     ----------
@@ -1256,7 +1267,8 @@ def gt_plt_bar_stack(
         header, with each label corresponding to a color in the palette.
 
     width
-        The total width of the stacked bar plot in pixels.
+        The total width of the stacked bar plot in pixels. If `scale_type = "absolute"`, this
+        value will determine the width of the maximum length bar plot.
 
     height
         The height of the stacked bar plot in pixels.
@@ -1358,6 +1370,10 @@ def gt_plt_bar_stack(
         scale_type="absolute",
     )
     ```
+
+    Note
+    -------
+    Values of `0` will not be displayed in the plots.
     """
 
     def _make_bar_stack_html(

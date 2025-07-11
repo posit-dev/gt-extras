@@ -19,12 +19,14 @@ def fmt_pct_extra(
     color: str = "grey",
     decimals: int = 1,
 ) -> GT:
+    # TODO: would we want to infer the range? (as we do in gt_plt_bar_pct)
     """
     Convert to percent and show less than `1%` as `<1%` in grey.
 
     The `fmt_pct_extra()` function takes an existing `GT` object and formats a column of numeric
     values as percentages. Values below the specified threshold are displayed as `"<threshold%"`
-    instead of their actual percentage value, and in a unique color.
+    instead of their actual percentage value, and in a color of your choosing. The default behavior
+    expects values in the range `[0, 1]`, use `scale` if your values are in a different range.
 
     Parameters
     ----------
@@ -35,13 +37,14 @@ def fmt_pct_extra(
         The columns containing numeric values to format as percentages.
 
     scale
-        Multiplication factor to convert values to percentages.
-        Use `100` if values are decimals `(0.05 -> 5%)` (default),
+        Multiplication factor to convert values to percentages. For some common cases:
+        use `100` if values are decimals `(0.05 -> 5%)` (default),
         use `1` if values are already percentages `(5 -> 5%)`.
 
     threshold
         The percentage threshold below which values are displayed as `"<threshold%"` instead of
-        their actual value. Note this refers to the scaled value, not the original.
+        their actual value. Note this refers to the scaled value, not the original, so you will
+        have to provide `5` for `<5%` even if your original are in the range `[0,1]`.
 
     color
         The color to use for values below the threshold.

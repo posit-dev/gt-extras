@@ -14,6 +14,7 @@ def img_header(
     border_color: str = "black",
     text_color: str = "black",
 ) -> Html:
+    # TODO: test to see if this is useable in cells - I think it is.
     """
     Create an HTML header with an image and a label, apt for a column label.
 
