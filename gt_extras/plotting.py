@@ -92,7 +92,7 @@ def gt_plt_bar(
     keep_columns
         Whether to keep the original column values. In either case the plots will appear in their
         original columns, and if this flag is `True` then the original columns will be saved in new
-        columns with the string `'value'` appended to the end of the column name. See
+        columns with the string `"value"` appended to the end of the column name. See
         [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
         for more details.
 
