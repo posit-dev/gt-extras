@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_plt_conf_int – gt-extras</title>
+<title>gt_plt_bar_pct – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_plt_dot.html" rel="next">
-<link href="../reference/gt_plt_bar_stack.html" rel="prev">
+<link href="../reference/gt_plt_bar_stack.html" rel="next">
+<link href="../reference/gt_plt_bar.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_conf_int.html">gt_plt_conf_int</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_bar_pct.html">gt_plt_bar_pct</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_bar_pct.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_plt_bar_pct.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_plt_bar_pct</span></a>
   </div>
 </li>
@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_conf_int.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_plt_conf_int.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_plt_conf_int</span></a>
   </div>
 </li>
@@ -416,16 +416,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
-  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_conf_int.html">gt_plt_conf_int</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_bar_pct.html">gt_plt_bar_pct</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_plt_conf_int</h1>
+<h1 class="title">gt_plt_bar_pct</h1>
 </div>
 
 
@@ -442,23 +441,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_conf_int(</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_bar_pct(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    column,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ci_columns<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="fl">0.95</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">30</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dot_color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    dot_border_color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    line_color<span class="op">=</span><span class="st">'royalblue'</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    text_color<span class="op">=</span><span class="st">'black'</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    num_decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">16</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">'purple'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    background<span class="op">=</span><span class="st">'#e1e1e1'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    scaled<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    label_cutoff<span class="op">=</span><span class="fl">0.4</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    font_style<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">10</span>,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Create confidence interval plots in <code>GT</code> cells.</p>
-<p>The <code>gt_plt_conf_int()</code> function takes an existing <code>GT</code> object and adds horizontal confidence interval plots to a specified column. Each cell displays a horizontal bar representing the confidence interval, with a dot indicating the mean value. Optionally, the lower and upper confidence interval bounds can be provided directly, or the function can compute them.</p>
-<p>If <code>ci_columns</code> is not provided, the function assumes each cell in <code>column</code> contains a list of values and computes the confidence interval using a t-distribution.</p>
+<p>Create horizontal bar plots in percentage in <code>GT</code> cells.</p>
+<p>The <code>gt_plt_bar_pct()</code> function takes an existing <code>GT</code> object and adds horizontal barplots via native HTML. Note that values default to being normalized to the percent of the maximum observed value in the specified column. You can turn this off if the values already represent a percentage value within 0–100.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
@@ -468,47 +466,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code><span class="parameter-name"><strong>column</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
 <dd>
-<p>The column that contains the mean of the sample. This can either be a single number per row, if you have calculated the values ahead of time, or a list of values if you want to calculate the confidence intervals.</p>
+<p>The column to target.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>ci_columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">16</span></code></dt>
 <dd>
-<p>Optional columns representing the left/right confidence intervals of your sample. If <code>None</code>, the confidence interval will be computed from the data in <code>column</code> using a t-distribution.</p>
+<p>The height of the bar plot in pixels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>ci</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">0.95</span></code></dt>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
 <dd>
-<p>The confidence level to use when computing the interval (if <code>ci_columns</code> is <code>None</code>).</p>
+<p>The width of the maximum bar in pixels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">100</span></code></dt>
+<dt><code><span class="parameter-name"><strong>fill</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'purple'</span></code></dt>
 <dd>
-<p>The width of the confidence interval plot in pixels. Note that if the width is too narrow, some label text may overlap.</p>
+<p>The fill color for the bars. Defaults to <code>purple</code>.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
+<dt><code><span class="parameter-name"><strong>background</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'#e1e1e1'</span></code></dt>
 <dd>
-<p>The width of the confidence interval plot in pixels.</p>
+<p>The background filling color for the bars. Defaults to <code>#e1e1e1</code>.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>dot_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'red'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>scaled</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
 <dd>
-<p>The color of the mean dot.</p>
+<p><code>True</code>/<code>False</code> logical indicating if the value is already scaled to a percent of max (<code>True</code>) or if it needs to be scaled (<code>False</code>). Defaults to <code>False</code>, meaning the value will be divided by the max value in that column and then multiplied by 100.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>dot_border_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'red'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>labels</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
 <dd>
-<p>The color of the border around the mean dot.</p>
+<p><code>True</code>/<code>False</code> logical representing if labels should be plotted. Defaults to <code>False</code>, meaning that no value labels will be plotted.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>line_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'royalblue'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>label_cutoff</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">0.4</span></code></dt>
 <dd>
-<p>The color of the confidence interval bar.</p>
+<p>A number, 0 to 1, representing where to set the inside/outside label boundary. Defaults to 0.40 (40%) of the column’s maximum value. If the value in that row is less than the cutoff, the label will be placed outside the bar; otherwise, it will be placed within the bar. This interacts with the overall width of the bar, so if you are not happy with the placement of the labels, you may try adjusting the <code>width</code> argument as well.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>text_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'black'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
 <dd>
-<p>The color of the confidence interval labels.</p>
+<p>A number representing how many decimal places to be used in label rounding. Defaults to 1.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>font_style</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">Literal['bold', 'italic', 'normal']</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'bold'</span></code></dt>
+<dd>
+<p>The font style for the text labels displayed on the bars. Options are <code>"bold"</code>, <code>"italic"</code>, or <code>"normal"</code>. Defaults to <code>"bold"</code>.</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>font_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">10</span></code></dt>
 <dd>
-<p>The size of the text for the confidence interval labels. A value of 0 will result in hiding the text.</p>
-</dd>
-<dt><code><span class="parameter-name"><strong>num_decimals</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
-<dd>
-<p>The number of decimals to display when rounding the value of the confidence interval labels.</p>
+<p>The font size for the text labels displayed on the bars.</p>
 </dd>
 </dl>
 </section>
@@ -517,155 +515,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl>
 <dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>A <code>GT</code> object with confidence interval plots added to the specified column.</p>
+<p>A <code>GT</code> object with horizontal bar plots added to the specified columns.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="018fa0e0" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div id="292e3e8d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'group'</span>: [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>],</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mean'</span>: [<span class="fl">5.2</span>, <span class="fl">7.8</span>, <span class="fl">3.4</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ci_lower'</span>: [<span class="fl">3.1</span>, <span class="fl">6.1</span>, <span class="fl">1.8</span>],</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ci_upper'</span>: [<span class="fl">7.3</span>, <span class="fl">9.7</span>, <span class="fl">5.0</span>],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ci'</span>: [<span class="fl">5.2</span>, <span class="fl">7.8</span>, <span class="fl">3.4</span>],</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> GT(df)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    gte.gt_plt_conf_int,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">'ci'</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ci_columns<span class="op">=</span>[<span class="st">'ci_lower'</span>, <span class="st">'ci_upper'</span>],</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">120</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame({<span class="st">"x"</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]}).with_columns(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"x"</span>).alias(<span class="st">"x_unscaled"</span>), pl.col(<span class="st">"x"</span>).alias(<span class="st">"x_scaled"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> GT(df)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    gt.pipe(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        gte.gt_plt_bar_pct,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span>[<span class="st">"x_unscaled"</span>],</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        scaled<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="st">"green"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ).pipe(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        gte.gt_plt_bar_pct,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span>[<span class="st">"x_scaled"</span>],</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        scaled<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        labels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="ukticguewz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="iaafoqpgck" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#ukticguewz table {
+#iaafoqpgck table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#ukticguewz thead, tbody, tfoot, tr, td, th { border-style: none; }
+#iaafoqpgck thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#ukticguewz p { margin: 0; padding: 0; }
- #ukticguewz .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #ukticguewz .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #ukticguewz .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #ukticguewz .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #ukticguewz .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ukticguewz .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ukticguewz .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ukticguewz .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #ukticguewz .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #ukticguewz .gt_column_spanner_outer:first-child { padding-left: 0; }
- #ukticguewz .gt_column_spanner_outer:last-child { padding-right: 0; }
- #ukticguewz .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #ukticguewz .gt_spanner_row { border-bottom-style: hidden; }
- #ukticguewz .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #ukticguewz .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #ukticguewz .gt_from_md> :first-child { margin-top: 0; }
- #ukticguewz .gt_from_md> :last-child { margin-bottom: 0; }
- #ukticguewz .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #ukticguewz .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #ukticguewz .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #ukticguewz .gt_row_group_first td { border-top-width: 2px; }
- #ukticguewz .gt_row_group_first th { border-top-width: 2px; }
- #ukticguewz .gt_striped { background-color: rgba(128,128,128,0.05); }
- #ukticguewz .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ukticguewz .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #ukticguewz .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #ukticguewz .gt_left { text-align: left; }
- #ukticguewz .gt_center { text-align: center; }
- #ukticguewz .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #ukticguewz .gt_font_normal { font-weight: normal; }
- #ukticguewz .gt_font_bold { font-weight: bold; }
- #ukticguewz .gt_font_italic { font-style: italic; }
- #ukticguewz .gt_super { font-size: 65%; }
- #ukticguewz .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #ukticguewz .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#iaafoqpgck p { margin: 0; padding: 0; }
+ #iaafoqpgck .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #iaafoqpgck .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #iaafoqpgck .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #iaafoqpgck .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #iaafoqpgck .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #iaafoqpgck .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #iaafoqpgck .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #iaafoqpgck .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #iaafoqpgck .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #iaafoqpgck .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #iaafoqpgck .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #iaafoqpgck .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #iaafoqpgck .gt_spanner_row { border-bottom-style: hidden; }
+ #iaafoqpgck .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #iaafoqpgck .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #iaafoqpgck .gt_from_md> :first-child { margin-top: 0; }
+ #iaafoqpgck .gt_from_md> :last-child { margin-bottom: 0; }
+ #iaafoqpgck .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #iaafoqpgck .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #iaafoqpgck .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #iaafoqpgck .gt_row_group_first td { border-top-width: 2px; }
+ #iaafoqpgck .gt_row_group_first th { border-top-width: 2px; }
+ #iaafoqpgck .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #iaafoqpgck .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #iaafoqpgck .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #iaafoqpgck .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #iaafoqpgck .gt_left { text-align: left; }
+ #iaafoqpgck .gt_center { text-align: center; }
+ #iaafoqpgck .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #iaafoqpgck .gt_font_normal { font-weight: normal; }
+ #iaafoqpgck .gt_font_bold { font-weight: bold; }
+ #iaafoqpgck .gt_font_italic { font-style: italic; }
+ #iaafoqpgck .gt_super { font-size: 65%; }
+ #iaafoqpgck .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #iaafoqpgck .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 
 <tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="group">group</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mean">mean</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ci_lower">ci_lower</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ci_upper">ci_upper</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ci">ci</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="x">x</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="x_unscaled">x_unscaled</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="x_scaled">x_scaled</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <td class="gt_row gt_left">A</td>
-    <td class="gt_row gt_right">5.2</td>
-    <td class="gt_row gt_right">3.1</td>
-    <td class="gt_row gt_right">7.3</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
-            <div style="position:absolute;left:26.455696202531648px;bottom:11.5px;color:black;font-size:10px;">3.1</div>
-            <div style="position:absolute;left:79.62025316455697px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">7.3</div>
-            <div style="
-                position:absolute; left:26.455696202531648px;
-                top:18.5px; width:53.16455696202532px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:50.03797468354431px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
+    <td class="gt_row gt_right">10</td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="25.0px" height="16px" fill="green"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#000000" x="30.0px" y="8.0px">25%</text></svg></div></td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="10.0px" height="16px" fill="purple"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#000000" x="15.0px" y="8.0px">10%</text></svg></div></td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">B</td>
-    <td class="gt_row gt_right">7.8</td>
-    <td class="gt_row gt_right">6.1</td>
-    <td class="gt_row gt_right">9.7</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
-            <div style="position:absolute;left:64.43037974683546px;bottom:11.5px;color:black;font-size:10px;">6.1</div>
-            <div style="position:absolute;left:110.00000000000001px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">9.7</div>
-            <div style="
-                position:absolute; left:64.43037974683546px;
-                top:18.5px; width:45.56962025316456px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:82.9493670886076px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
+    <td class="gt_row gt_right">20</td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="50.0px" height="16px" fill="green"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#FFFFFF" x="5.0px" y="8.0px">50%</text></svg></div></td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="20.0px" height="16px" fill="purple"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#000000" x="25.0px" y="8.0px">20%</text></svg></div></td>
   </tr>
   <tr>
-    <td class="gt_row gt_left">C</td>
-    <td class="gt_row gt_right">3.4</td>
-    <td class="gt_row gt_right">1.8</td>
-    <td class="gt_row gt_right">5.0</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:120px; height:30px;">
-            <div style="position:absolute;left:10.000000000000002px;bottom:11.5px;color:black;font-size:10px;">1.8</div>
-            <div style="position:absolute;left:50.50632911392406px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">5</div>
-            <div style="
-                position:absolute; left:10.000000000000002px;
-                top:18.5px; width:40.50632911392406px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:27.25316455696203px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
+    <td class="gt_row gt_right">30</td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="75.0px" height="16px" fill="green"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#FFFFFF" x="5.0px" y="8.0px">75%</text></svg></div></td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="30.0px" height="16px" fill="purple"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#000000" x="35.0px" y="8.0px">30%</text></svg></div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">40</td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="100.0px" height="16px" fill="green"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#FFFFFF" x="5.0px" y="8.0px">100%</text></svg></div></td>
+    <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100px" height="16px"><rect x="0" y="0" width="100px" height="16px" fill="#e1e1e1"></rect><rect x="0" y="0" width="40.0px" height="16px" fill="purple"></rect><text dominant-baseline="central" text-anchor="start" font-size="10px" font-style="bold" fill="#FFFFFF" x="5.0px" y="8.0px">40%</text></svg></div></td>
   </tr>
 </tbody>
 
@@ -676,170 +634,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         
 </div>
 </div>
-<p>Alternatively we can pass in a column of lists, and the function will compute the CI’s for us.</p>
-<div id="64186b3c" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">37</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>n_per_group <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>]</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> [<span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">25</span>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sds <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">16</span>, <span class="dv">10</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the data</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (grp, mean, sd) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(groups, means, sds)):</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> np.random.normal(mean, sd, n_per_group)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    data.extend([{<span class="st">"grp"</span>: grp, <span class="st">"values"</span>: val} <span class="cf">for</span> val <span class="kw">in</span> values])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>df_raw <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>df_summary <span class="op">=</span> (</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    df_raw</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">"grp"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    .agg({<span class="st">"values"</span>: [<span class="st">"count"</span>, <span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="bu">list</span>]})</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>df_summary.columns <span class="op">=</span> [<span class="st">"n"</span>, <span class="st">"avg"</span>, <span class="st">"sd"</span>, <span class="st">"ci"</span>]</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> GT(df_summary)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    gte.gt_plt_conf_int,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"ci"</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="dv">160</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div id="hozisdgjug" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>
-#hozisdgjug table {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-
-#hozisdgjug thead, tbody, tfoot, tr, td, th { border-style: none; }
- tr { background-color: transparent; }
-#hozisdgjug p { margin: 0; padding: 0; }
- #hozisdgjug .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #hozisdgjug .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #hozisdgjug .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #hozisdgjug .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #hozisdgjug .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #hozisdgjug .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #hozisdgjug .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #hozisdgjug .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #hozisdgjug .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #hozisdgjug .gt_column_spanner_outer:first-child { padding-left: 0; }
- #hozisdgjug .gt_column_spanner_outer:last-child { padding-right: 0; }
- #hozisdgjug .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #hozisdgjug .gt_spanner_row { border-bottom-style: hidden; }
- #hozisdgjug .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #hozisdgjug .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #hozisdgjug .gt_from_md> :first-child { margin-top: 0; }
- #hozisdgjug .gt_from_md> :last-child { margin-bottom: 0; }
- #hozisdgjug .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #hozisdgjug .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #hozisdgjug .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #hozisdgjug .gt_row_group_first td { border-top-width: 2px; }
- #hozisdgjug .gt_row_group_first th { border-top-width: 2px; }
- #hozisdgjug .gt_striped { background-color: rgba(128,128,128,0.05); }
- #hozisdgjug .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #hozisdgjug .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #hozisdgjug .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #hozisdgjug .gt_left { text-align: left; }
- #hozisdgjug .gt_center { text-align: center; }
- #hozisdgjug .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #hozisdgjug .gt_font_normal { font-weight: normal; }
- #hozisdgjug .gt_font_bold { font-weight: bold; }
- #hozisdgjug .gt_font_italic { font-style: italic; }
- #hozisdgjug .gt_super { font-size: 65%; }
- #hozisdgjug .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #hozisdgjug .gt_asterisk { font-size: 100%; vertical-align: 0; }
- 
-</style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-
-<tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="avg">avg</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sd">sd</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ci">ci</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-  <tr>
-    <td class="gt_row gt_right">50</td>
-    <td class="gt_row gt_right">21.391</td>
-    <td class="gt_row gt_right">9.99</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
-            <div style="position:absolute;left:32.20130958590729px;bottom:11.5px;color:black;font-size:10px;">18.6</div>
-            <div style="position:absolute;left:97.4139864973232px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">24.2</div>
-            <div style="
-                position:absolute; left:32.20130958590729px;
-                top:18.5px; width:65.21267691141591px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:61.80764804161524px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_right">50</td>
-    <td class="gt_row gt_right">21.719</td>
-    <td class="gt_row gt_right">16.927</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
-            <div style="position:absolute;left:13.333333333333332px;bottom:11.5px;color:black;font-size:10px;">16.9</div>
-            <div style="position:absolute;left:123.83031011391128px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">26.5</div>
-            <div style="
-                position:absolute; left:13.333333333333332px;
-                top:18.5px; width:110.49697678057795px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:65.58182172362231px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
-  </tr>
-  <tr>
-    <td class="gt_row gt_right">50</td>
-    <td class="gt_row gt_right">25.528</td>
-    <td class="gt_row gt_right">10.522</td>
-    <td class="gt_row gt_right"><div style="position:relative; width:160px; height:30px;">
-            <div style="position:absolute;left:77.98028274821667px;bottom:11.5px;color:black;font-size:10px;">22.5</div>
-            <div style="position:absolute;left:146.66666666666666px;bottom:11.5px;color:black;font-size:10px;transform:translateX(-100%);">28.5</div>
-            <div style="
-                position:absolute; left:77.98028274821667px;
-                top:18.5px; width:68.68638391844999px;
-                height:3.0px; background:royalblue; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:109.32347470744166px;
-                top:17.0px; width:6.0px; height:6.0px;
-                background:red; border-radius:50%;
-                border:1.5px solid red; box-sizing:border-box;
-            "></div>
-            </div></td>
-  </tr>
-</tbody>
-
-
-</table>
-
-</div>
-        
-</div>
-</div>
-</section>
-<section id="note" class="level2 doc-section doc-section-note">
-<h2 class="doc-section doc-section-note anchored" data-anchor-id="note">Note</h2>
-<p>All confidence intervals are scaled to a common range for visual alignment.</p>
 
 
 </section>
@@ -1246,13 +1040,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_plt_bar_stack.html" class="pagination-link" aria-label="gt_plt_bar_stack">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_bar_stack</span>
+      <a href="../reference/gt_plt_bar.html" class="pagination-link" aria-label="gt_plt_bar">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_bar</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_plt_dot.html" class="pagination-link" aria-label="gt_plt_dot">
-        <span class="nav-page-text">gt_plt_dot</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_plt_bar_stack.html" class="pagination-link" aria-label="gt_plt_bar_stack">
+        <span class="nav-page-text">gt_plt_bar_stack</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

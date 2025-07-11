@@ -720,89 +720,6 @@
     ]
   },
   {
-    "objectID": "reference/gt_theme_guardian.html",
-    "href": "reference/gt_theme_guardian.html",
-    "title": "gt_theme_guardian",
-    "section": "",
-    "text": "gt_theme_guardian(gt)\nApplies a Guardian-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by The Guardian’s data tables.",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_guardian"
-    ]
-  },
-  {
-    "objectID": "reference/gt_theme_guardian.html#parameters",
-    "href": "reference/gt_theme_guardian.html#parameters",
-    "title": "gt_theme_guardian",
-    "section": "Parameters",
-    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_guardian"
-    ]
-  },
-  {
-    "objectID": "reference/gt_theme_guardian.html#returns",
-    "href": "reference/gt_theme_guardian.html#returns",
-    "title": "gt_theme_guardian",
-    "section": "Returns",
-    "text": "Returns\n\n : GT\n\nThe themed GT object, allowing for method chaining.",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_guardian"
-    ]
-  },
-  {
-    "objectID": "reference/gt_theme_guardian.html#examples",
-    "href": "reference/gt_theme_guardian.html#examples",
-    "title": "gt_theme_guardian",
-    "section": "Examples",
-    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(5)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n    .tab_header(title=\"Car Collection\")\n)\n\ngt.pipe(gte.gt_theme_guardian)\n\n\n\n\n\n\n  \n    Car Collection\n  \n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0",
-    "crumbs": [
-      "API Reference",
-      "Themes",
-      "gt_theme_guardian"
-    ]
-  },
-  {
-    "objectID": "articles/intro.html#features",
-    "href": "articles/intro.html#features",
-    "title": "gt-extras",
-    "section": "Features",
-    "text": "Features\n\nApply color gradients and highlights\nAdd plots to table cells for visual data representation\nEmbed FontAwesome icons\nUse pre-built themes for quick styling\nUtilize helper utilities for common table tasks\n\n\n\n\n\n\n\nWarning\n\n\n\n\n\ngt-extras is currently in development, expect breaking changes."
-  },
-  {
-    "objectID": "articles/intro.html#contributing",
-    "href": "articles/intro.html#contributing",
-    "title": "gt-extras",
-    "section": "Contributing",
-    "text": "Contributing\nIf you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an issue.\n\n\n\n\n\n\nWhat you might get to consider\n\n\n\n\n\nSome of the work that went into this project was featured on the great tables blog, if you choose to contribute hopefully that can give you a sense of the process!"
-  },
-  {
-    "objectID": "articles/intro.html#code-of-conduct",
-    "href": "articles/intro.html#code-of-conduct",
-    "title": "gt-extras",
-    "section": "Code of Conduct",
-    "text": "Code of Conduct\nPlease note that the gt-extras project is released with a contributor code of conduct.By participating in this project you agree to abide by its terms."
-  },
-  {
-    "objectID": "articles/intro.html#license",
-    "href": "articles/intro.html#license",
-    "title": "gt-extras",
-    "section": "License",
-    "text": "License\nGreat Tables is licensed under the MIT license.\n© Posit Software, PBC."
-  },
-  {
-    "objectID": "get-started/index.html",
-    "href": "get-started/index.html",
-    "title": "Get Started",
-    "section": "",
-    "text": "Nothing yet in Get Started! Come back later.\nTo read the docs, go to Package Reference."
-  },
-  {
     "objectID": "reference/gt_plt_bar_stack.html",
     "href": "reference/gt_plt_bar_stack.html",
     "title": "gt_plt_bar_stack",
@@ -860,6 +777,137 @@
       "API Reference",
       "Plotting",
       "gt_plt_bar_stack"
+    ]
+  },
+  {
+    "objectID": "get-started/index.html",
+    "href": "get-started/index.html",
+    "title": "Get Started",
+    "section": "",
+    "text": "Nothing yet in Get Started! Come back later.\nTo read the docs, go to Package Reference."
+  },
+  {
+    "objectID": "articles/intro.html#features",
+    "href": "articles/intro.html#features",
+    "title": "gt-extras",
+    "section": "Features",
+    "text": "Features\n\nApply color gradients and highlights\nAdd plots to table cells for visual data representation\nEmbed FontAwesome icons\nUse pre-built themes for quick styling\nUtilize helper utilities for common table tasks\n\n\n\n\n\n\n\nWarning\n\n\n\n\n\ngt-extras is currently in development, expect breaking changes."
+  },
+  {
+    "objectID": "articles/intro.html#contributing",
+    "href": "articles/intro.html#contributing",
+    "title": "gt-extras",
+    "section": "Contributing",
+    "text": "Contributing\nIf you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an issue.\n\n\n\n\n\n\nWhat you might get to consider\n\n\n\n\n\nSome of the work that went into this project was featured on the great tables blog, if you choose to contribute hopefully that can give you a sense of the process!"
+  },
+  {
+    "objectID": "articles/intro.html#code-of-conduct",
+    "href": "articles/intro.html#code-of-conduct",
+    "title": "gt-extras",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\nPlease note that the gt-extras project is released with a contributor code of conduct.By participating in this project you agree to abide by its terms."
+  },
+  {
+    "objectID": "articles/intro.html#license",
+    "href": "articles/intro.html#license",
+    "title": "gt-extras",
+    "section": "License",
+    "text": "License\nGreat Tables is licensed under the MIT license.\n© Posit Software, PBC."
+  },
+  {
+    "objectID": "reference/gt_theme_guardian.html",
+    "href": "reference/gt_theme_guardian.html",
+    "title": "gt_theme_guardian",
+    "section": "",
+    "text": "gt_theme_guardian(gt)\nApplies a Guardian-inspired theme to a GT object.\nThis function styles a GT object with a look inspired by The Guardian’s data tables.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_guardian"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_guardian.html#parameters",
+    "href": "reference/gt_theme_guardian.html#parameters",
+    "title": "gt_theme_guardian",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nAn existing GT object.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_guardian"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_guardian.html#returns",
+    "href": "reference/gt_theme_guardian.html#returns",
+    "title": "gt_theme_guardian",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nThe themed GT object, allowing for method chaining.",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_guardian"
+    ]
+  },
+  {
+    "objectID": "reference/gt_theme_guardian.html#examples",
+    "href": "reference/gt_theme_guardian.html#examples",
+    "title": "gt_theme_guardian",
+    "section": "Examples",
+    "text": "Examples\n\nfrom great_tables import GT, md\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = gtcars[[\"model\", \"year\", \"hp\", \"trq\"]].head(5)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=md(\"*Car*\"))\n    .tab_header(title=\"Car Collection\")\n)\n\ngt.pipe(gte.gt_theme_guardian)\n\n\n\n\n\n\n  \n    Car Collection\n  \n\n  Car\n  year\n  hp\n  trq\n\n\n\n  \n    GT\n    2017\n    647.0\n    550.0\n  \n  \n    458 Speciale\n    2015\n    597.0\n    398.0\n  \n  \n    458 Spider\n    2015\n    562.0\n    398.0\n  \n  \n    458 Italia\n    2014\n    562.0\n    398.0\n  \n  \n    488 GTB\n    2016\n    661.0\n    561.0",
+    "crumbs": [
+      "API Reference",
+      "Themes",
+      "gt_theme_guardian"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar_pct.html",
+    "href": "reference/gt_plt_bar_pct.html",
+    "title": "gt_plt_bar_pct",
+    "section": "",
+    "text": "gt_plt_bar_pct(\n    gt,\n    column,\n    height=16,\n    width=100,\n    fill='purple',\n    background='#e1e1e1',\n    scaled=False,\n    labels=False,\n    label_cutoff=0.4,\n    decimals=1,\n    font_style='bold',\n    font_size=10,\n)\nCreate horizontal bar plots in percentage in GT cells.\nThe gt_plt_bar_pct() function takes an existing GT object and adds horizontal barplots via native HTML. Note that values default to being normalized to the percent of the maximum observed value in the specified column. You can turn this off if the values already represent a percentage value within 0–100.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar_pct"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar_pct.html#parameters",
+    "href": "reference/gt_plt_bar_pct.html#parameters",
+    "title": "gt_plt_bar_pct",
+    "section": "Parameters",
+    "text": "Parameters\n\ngt : GT\n\nA GT object to modify.\n\ncolumn : SelectExpr\n\nThe column to target.\n\nheight : int = 16\n\nThe height of the bar plot in pixels.\n\nwidth : int = 100\n\nThe width of the maximum bar in pixels.\n\nfill : str = 'purple'\n\nThe fill color for the bars. Defaults to purple.\n\nbackground : str = '#e1e1e1'\n\nThe background filling color for the bars. Defaults to #e1e1e1.\n\nscaled : bool = False\n\nTrue/False logical indicating if the value is already scaled to a percent of max (True) or if it needs to be scaled (False). Defaults to False, meaning the value will be divided by the max value in that column and then multiplied by 100.\n\nlabels : bool = False\n\nTrue/False logical representing if labels should be plotted. Defaults to False, meaning that no value labels will be plotted.\n\nlabel_cutoff : float = 0.4\n\nA number, 0 to 1, representing where to set the inside/outside label boundary. Defaults to 0.40 (40%) of the column’s maximum value. If the value in that row is less than the cutoff, the label will be placed outside the bar; otherwise, it will be placed within the bar. This interacts with the overall width of the bar, so if you are not happy with the placement of the labels, you may try adjusting the width argument as well.\n\ndecimals : int = 1\n\nA number representing how many decimal places to be used in label rounding. Defaults to 1.\n\nfont_style : Literal['bold', 'italic', 'normal'] = 'bold'\n\nThe font style for the text labels displayed on the bars. Options are \"bold\", \"italic\", or \"normal\". Defaults to \"bold\".\n\nfont_size : int = 10\n\nThe font size for the text labels displayed on the bars.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar_pct"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar_pct.html#returns",
+    "href": "reference/gt_plt_bar_pct.html#returns",
+    "title": "gt_plt_bar_pct",
+    "section": "Returns",
+    "text": "Returns\n\n : GT\n\nA GT object with horizontal bar plots added to the specified columns.",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar_pct"
+    ]
+  },
+  {
+    "objectID": "reference/gt_plt_bar_pct.html#examples",
+    "href": "reference/gt_plt_bar_pct.html#examples",
+    "title": "gt_plt_bar_pct",
+    "section": "Examples",
+    "text": "Examples\n\nimport polars as pl\nfrom great_tables import GT\nimport gt_extras as gte\n\ndf = pl.DataFrame({\"x\": [10, 20, 30, 40]}).with_columns(\n    pl.col(\"x\").alias(\"x_unscaled\"), pl.col(\"x\").alias(\"x_scaled\")\n)\n\ngt = GT(df)\n\n(\n    gt.pipe(\n        gte.gt_plt_bar_pct,\n        column=[\"x_unscaled\"],\n        scaled=False,\n        labels=True,\n        fill=\"green\",\n    ).pipe(\n        gte.gt_plt_bar_pct,\n        column=[\"x_scaled\"],\n        scaled=True,\n        labels=True,\n    )\n)\n\n\n\n\n\n\n\n  x\n  x_unscaled\n  x_scaled\n\n\n\n  \n    10\n    25%\n    10%\n  \n  \n    20\n    50%\n    20%\n  \n  \n    30\n    75%\n    30%\n  \n  \n    40\n    100%\n    40%",
+    "crumbs": [
+      "API Reference",
+      "Plotting",
+      "gt_plt_bar_pct"
     ]
   },
   {
@@ -1119,7 +1167,7 @@
     "href": "reference/index.html",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_highlight_rows\nAdd color highlighting to one or more specific rows.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rank_change\nCreate rank change indicators in GT cells using FontAwesome icons.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT object.\n\n\ngt_duplicate_column\nDuplicate a column in a GT object.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT object.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
+    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_pct\nCreate horizontal bar plots in percentage in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.\n\n\n\n\n\n\nFunctions to apply color-based formatting, highlight specific columns, or create colorful styles with palettes that are easy on the eye.\n\n\n\ngt_color_box\nAdd PFF-style color boxes to numeric columns in a GT object.\n\n\ngt_highlight_cols\nAdd color highlighting to one or more specific columns.\n\n\ngt_highlight_rows\nAdd color highlighting to one or more specific rows.\n\n\ngt_hulk_col_numeric\nApply a color gradient to numeric columns in a GT object.\n\n\n\n\n\n\nPredefined themes to style GT objects, inspired by popular design styles such as ESPN, The Guardian, and Excel.\n\n\n\ngt_theme_538\nApplies a FiveThirtyEight-inspired theme to a GT object.\n\n\ngt_theme_dark\nApplies a dark mode theme to a GT object.\n\n\ngt_theme_dot_matrix\nApplies a dot-matrix-inspired theme to a GT object.\n\n\ngt_theme_espn\nApplies an ESPN-inspired theme to a GT object.\n\n\ngt_theme_excel\nApplies an Excel-inspired theme to a GT object.\n\n\ngt_theme_guardian\nApplies a Guardian-inspired theme to a GT object.\n\n\ngt_theme_nytimes\nApplies a New York Times-inspired theme to a GT object.\n\n\ngt_theme_pff\nApplies a Pro Football Focus (PFF)-inspired theme to a GT object.\n\n\n\n\n\n\nFunctions to enhance GT objects by adding icons, ratings, or images to cells or headers alike.\n\n\n\nfa_icon_repeat\nCreate repeated FontAwesome SVG icons as HTML.\n\n\ngt_fa_rank_change\nCreate rank change indicators in GT cells using FontAwesome icons.\n\n\ngt_fa_rating\nCreate icon ratings in GT cells using FontAwesome icons.\n\n\nimg_header\nCreate an HTML header with an image and a label, apt for a column label.\n\n\n\n\n\n\nHelper functions to extend GT functionality, including HTML features and formatting tools.\n\n\n\nfmt_pct_extra\nConvert to percent and show less than 1% as &lt;1% in grey.\n\n\ngt_add_divider\nAdd dividers to specified columns in a GT object.\n\n\ngt_duplicate_column\nDuplicate a column in a GT object.\n\n\ngt_merge_stack\nMerge two columns into a stacked format within a GT object.\n\n\nwith_hyperlink\nCreate HTML hyperlinks for use in GT cells.\n\n\nwith_tooltip\nCreate HTML text with tooltip functionality for use in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -1129,7 +1177,7 @@
     "href": "reference/index.html#plotting",
     "title": "API Reference",
     "section": "",
-    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.",
+    "text": "Functions to create various types of visualizations, such as bars, dots, and win/loss charts, directly within columns of your existing GT objects.\n\n\n\ngt_plt_bar\nCreate horizontal bar plots in GT cells.\n\n\ngt_plt_bar_pct\nCreate horizontal bar plots in percentage in GT cells.\n\n\ngt_plt_bar_stack\nCreate stacked horizontal bar plots in GT cells.\n\n\ngt_plt_conf_int\nCreate confidence interval plots in GT cells.\n\n\ngt_plt_dot\nCreate dot plots with thin horizontal bars in GT cells.\n\n\ngt_plt_dumbbell\nCreate dumbbell plots in GT cells.\n\n\ngt_plt_winloss\nCreate win/loss charts in GT cells.",
     "crumbs": [
       "API Reference"
     ]
@@ -1323,7 +1371,7 @@
     "href": "reference/gt_fa_rating.html#example",
     "title": "gt_fa_rating",
     "section": "Example",
-    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n    5.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5\n    4.0 out of 5",
+    "text": "Example\n\nfrom random import randint\nfrom great_tables import GT\nfrom great_tables.data import gtcars\nimport gt_extras as gte\n\ngtcars_mini = (\n    gtcars\n    .loc[8:15, [\"model\", \"mfr\", \"hp\", \"trq\", \"mpg_c\"]]\n    .assign(rating=[randint(1, 5) for _ in range(8)])\n)\n\ngt = (\n    GT(gtcars_mini, rowname_col=\"model\")\n    .tab_stubhead(label=\"Car\")\n)\n\ngt.pipe(gte.gt_fa_rating, columns=\"rating\", name=\"r-project\")\n\n\n\n\n\n\n\n  Car\n  mfr\n  hp\n  trq\n  mpg_c\n  rating\n\n\n\n  \n    F12Berlinetta\n    Ferrari\n    731.0\n    509.0\n    11.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    LaFerrari\n    Ferrari\n    949.0\n    664.0\n    12.0\n      1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n    1.0 out of 5\n  \n  \n  \n    NSX\n    Acura\n    573.0\n    476.0\n    21.0\n      3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n    3.0 out of 5\n  \n  \n  \n    GT-R\n    Nissan\n    545.0\n    436.0\n    16.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Aventador\n    Lamborghini\n    700.0\n    507.0\n    11.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Huracan\n    Lamborghini\n    610.0\n    413.0\n    16.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Gallardo\n    Lamborghini\n    550.0\n    398.0\n    12.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n  \n  \n  \n    Continental GT\n    Bentley\n    500.0\n    487.0\n    15.0\n      2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5\n    2.0 out of 5",
     "crumbs": [
       "API Reference",
       "Icons and Images",
