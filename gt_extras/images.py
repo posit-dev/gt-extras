@@ -92,6 +92,8 @@ def img_header(
     img_html = f"""
     <img src="{img_url}" style="
         height:{px(height)};
+        object-fit:contain;
+        object-position: bottom;
         border-bottom:2px solid {border_color};"
     />
     """.strip()
@@ -121,11 +123,13 @@ def add_text_img(
     text: str,
     img_url: str,
     height: int = 30,
-    gap: float = 10.0,
+    gap: float = 3.0,
     left: bool = False,
-) -> Html:
+) -> str:
     """
-    Create an HTML element with text and an image, displayed inline.
+    Create an HTML element with text and an image, displayed inline. Note that depending on where
+    you are placing the output in the table, you may need to wrap it in
+    [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html).
 
     Parameters
     ----------
@@ -136,18 +140,20 @@ def add_text_img(
         The URL of the image to display. This can be a filepath or an image on the web.
 
     height
-        The height of the image in pixels. Default is 30.
+        The height of the image in pixels.
 
     gap
-        The spacing between the text and the image in pixels. Default is 10.
+        The spacing between the text and the image in pixels.
 
     left
-        If True, the image is displayed to the left of the text.
+        If `True`, the image is displayed to the left of the text.
 
     Returns
     -------
-    Html
-        A Great Tables `html` element for the combined text and image.
+    str
+        A string with html content of the combined image and text. Depending on where you are
+        placing the output in the table, you may need to wrap it in
+        [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html).
 
     Examples
     --------
@@ -163,17 +169,17 @@ def add_text_img(
     ```
     """
 
-    # Determine the margin direction based on the `left` parameter
-    margin_direction = "margin-right" if left else "margin-left"
+    image_first = "row" if left else "row-reverse"
 
-    text_div = f"<div style='display:inline; vertical-align:top;'>{text}</div>"
-    img_div = f"""<div style='display:inline; {margin_direction}:{px(gap)};'>
-                    <img src='{img_url}' style='height:{px(height)};'/>
-                </div>"""
+    combined_html = f"""
+    <div style='display: flex; flex-direction: {image_first}; align-items: center; gap: {px(gap)};'>
+        <div style='flex-shrink: 0;'>
+            <img src='{img_url}' style='height: {px(height)}; width: auto; object-fit: contain;' />
+        </div>
+        <div style='flex-grow: 1;'>
+            {text}
+        </div>
+    </div>
+    """.strip()
 
-    if not left:
-        combined_html = f"{text_div}{img_div}"
-    else:
-        combined_html = f"{img_div}{text_div}"
-
-    return html(combined_html)
+    return combined_html
