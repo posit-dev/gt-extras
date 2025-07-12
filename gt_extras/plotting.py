@@ -1524,7 +1524,7 @@ def gt_plt_bar_pct(
     Create horizontal bar plots in percentage in `GT` cells.
 
     The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
-    horizontal barplots via native HTML. By default, values are normalized
+    horizontal bar plots via native HTML. By default, values are normalized
     as a percentage of the maximum value in the specified column. If the values
     already represent percentages (i.e., between 0–100), you can disable this
     behavior by setting `autoscale=False`.
