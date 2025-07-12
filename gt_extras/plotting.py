@@ -1513,7 +1513,7 @@ def gt_plt_bar_pct(
     width: int = 100,
     fill: str = "purple",
     background: str = "#e1e1e1",
-    scaled: bool = False,
+    autoscale: bool = True,
     labels: bool = False,
     label_cutoff: float = 0.4,
     decimals: int = 1,
@@ -1524,9 +1524,10 @@ def gt_plt_bar_pct(
     Create horizontal bar plots in percentage in `GT` cells.
 
     The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
-    horizontal barplots via native HTML. Note that values default to being
-    normalized to the percent of the maximum observed value in the specified
-    column. You can turn this off if the values already represent a percentage value within 0–100.
+    horizontal bar plots via native HTML. By default, values are normalized
+    as a percentage of the maximum value in the specified column. If the values
+    already represent percentages (i.e., between 0–100), you can disable this
+    behavior by setting `autoscale=False`.
 
     Parameters
     ----------
@@ -1548,11 +1549,11 @@ def gt_plt_bar_pct(
     background
         The background filling color for the bars. Defaults to `#e1e1e1`.
 
-    scaled
-        `True`/`False` logical indicating if the value is already scaled to a
-        percent of max (`True`) or if it needs to be scaled (`False`). Defaults to
-        `False`, meaning the value will be divided by the max value in that column
-        and then multiplied by 100.
+    autoscale
+        Indicates whether the function should automatically scale the values.
+        If `True`, values will be divided by the column's maximum and multiplied by 100.
+        If `False`, the values are assumed to already be scaled appropriately.
+        Defaults to `True`.
 
     labels
         `True`/`False` logical representing if labels should be plotted. Defaults
@@ -1585,13 +1586,27 @@ def gt_plt_bar_pct(
 
     Examples
     --------
+    The `autoscale` parameter is perhaps the most important in the `gt_plt_bar_pct()` function.
+    This example demonstrates the difference between `autoscale=True` and `autoscale=False` using column `x`:
+
+    * **When `autoscale=True`**:
+    The function scales the values relative to the maximum in the column.
+    For example, `[10, 20, 30, 40]` becomes `[25%, 50%, 75%, 100%]`,
+    which are used for both bar lengths and labels.
+
+    * **When `autoscale=False`**:
+    The values are assumed to already represent percentages.
+    The function uses them as-is — e.g., `[10%, 20%, 30%, 40%]`,
+    which are directly reflected in both the bar lengths and labels.
+
     ```{python}
     import polars as pl
     from great_tables import GT
     import gt_extras as gte
 
     df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
-        pl.col("x").alias("x_unscaled"), pl.col("x").alias("x_scaled")
+        pl.col("x").alias("autoscale_on"),
+        pl.col("x").alias("autoscale_off"),
     )
 
     gt = GT(df)
@@ -1599,18 +1614,20 @@ def gt_plt_bar_pct(
     (
         gt.pipe(
             gte.gt_plt_bar_pct,
-            column=["x_unscaled"],
-            scaled=False,
+            column=["autoscale_on"],
+            autoscale=True,
             labels=True,
             fill="green",
         ).pipe(
             gte.gt_plt_bar_pct,
-            column=["x_scaled"],
-            scaled=True,
+            column=["autoscale_off"],
+            autoscale=False,
             labels=True,
         )
     )
     ```
+    Finally, label colors are automatically adjusted based on the `fill` and `background` parameters
+    to ensure optimal readability.
     """
 
     def _not_na(val, tbl_data) -> bool:
@@ -1637,7 +1654,7 @@ def gt_plt_bar_pct(
         width: int,
         fill: str,
         background: str,
-        scaled: bool,
+        autoscale: bool,
         labels: bool,
         label_cutoff: float,
         decimals: int,
@@ -1713,7 +1730,7 @@ def gt_plt_bar_pct(
             width=width,
             fill=fill,
             background=background,
-            scaled=scaled,
+            autoscale=autoscale,
             labels=labels,
             label_cutoff=label_cutoff,
             decimals=decimals,
@@ -1728,9 +1745,8 @@ def gt_plt_bar_pct(
 
     max_x = max(val for val in col_vals if _not_na(val, tbl_data))
 
-    if scaled:
-        scaled_vals = col_vals
-    else:
+    scaled_vals = col_vals
+    if autoscale:
         scaled_vals = [
             val if _is_na(val, tbl_data) else (val / max_x * 100) for val in col_vals
         ]
