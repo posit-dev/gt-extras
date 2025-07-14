@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
-from great_tables import GT
+from great_tables import GT, loc, style
 
 from gt_extras import (
     gt_plt_bar,
@@ -52,41 +52,33 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
     assert 'height="-345px"' not in html
 
 
-def test_gt_plt_bar_scale_percent(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type="percent").as_raw_html()
-    assert html.count("%</text>") == 3
-
-
-def test_gt_plt_bar_scale_number(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type="number").as_raw_html()
+def test_gt_plt_bar_show_labels_true(mini_gt):
+    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=True).as_raw_html()
     assert ">33.33</text>" in html
 
 
 def test_gt_plt_bar_keep_columns(mini_gt):
-    result = gt_plt_bar(gt=mini_gt, columns=["num"], keep_columns=True)
+    gt = mini_gt.tab_style(
+        style=style.fill("lightblue"),
+        locations=loc.body(),
+    )
+    result = gt_plt_bar(gt=gt, columns=["num"], keep_columns=True)
     html = result.as_raw_html()
 
-    assert ">num value</th>" in html
+    assert ">num plot</th>" in html
     assert ">num</th>" in html
     assert ">2.222</td>" in html
     assert html.count("<svg") == 3
 
 
-def test_gt_plt_bar_scale_none(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type=None).as_raw_html()
+def test_gt_plt_bar_show_labels_false(mini_gt):
+    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=False).as_raw_html()
     assert "</text>" not in html
 
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None).as_raw_html()
     assert html.count("#FFFFFF00") == 3
-
-
-def test_gt_plt_bar_scale_type_invalid_string(mini_gt):
-    with pytest.raises(
-        ValueError, match="Scale_type must be one of `None`, 'percent', or 'number'"
-    ):
-        gt_plt_bar(mini_gt, scale_type="invalid")
 
 
 def test_gt_plt_bar_type_error(mini_gt):

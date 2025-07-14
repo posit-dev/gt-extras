@@ -44,8 +44,8 @@ def gt_plt_bar(
     height: float = 30,
     width: float = 60,
     stroke_color: str | None = "black",
-    scale_type: Literal["percent", "number"] | None = None,
-    scale_color: str = "white",
+    show_labels: bool = False,
+    label_color: str = "white",
     domain: list[int] | list[float] | None = None,
     keep_columns: bool = False,
 ) -> GT:
@@ -82,12 +82,11 @@ def gt_plt_bar(
         The color of the vertical axis on the left side of the bar. The default is black, but if
         `None` is passed, no stroke will be drawn.
 
-    scale_type
-        The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
-        labels.
+    show_labels
+        Whether or not to show labels on the bars.
 
-    scale_color
-        The color of text labels on the bars (when `scale_type` is not `None`).
+    label_color
+        The color of text labels on the bars (when `show_labels` is not `False`).
 
     keep_columns
         Whether to keep the original column values. In either case the plots will appear in their
@@ -131,12 +130,6 @@ def gt_plt_bar(
     --------
     Each column's bars are scaled independently based on that column's min/max values.
     """
-    # A version with svg.py
-
-    # Throw if `scale_type` is not one of the allowed values
-    if scale_type not in [None, "percent", "number"]:
-        raise ValueError("Scale_type must be one of `None`, 'percent', or 'number'")
-
     if bar_height > height:
         bar_height = height
         warnings.warn(
@@ -160,15 +153,13 @@ def gt_plt_bar(
         height: int,
         width: int,
         stroke_color: str,
-        scale_type: Literal["percent", "number"] | None,
-        scale_color: str,
+        show_labels: bool,
+        label_color: str,
     ) -> str:
         UNITS = "px"  # TODO: let use control this?
 
         text = ""
-        if scale_type == "percent":
-            text = str(round(original_val * 100)) + "%"
-        if scale_type == "number":
+        if show_labels:
             text = original_val
 
         canvas = SVG(
@@ -188,7 +179,7 @@ def gt_plt_bar(
                     text=text,
                     x=str((width * scaled_val) * 0.98) + UNITS,
                     y=str(height / 2) + UNITS,
-                    fill=scale_color,
+                    fill=label_color,
                     font_size=bar_height * 0.6,
                     text_anchor="end",
                     dominant_baseline="central",
@@ -218,8 +209,8 @@ def gt_plt_bar(
             height=height,
             width=width,
             stroke_color=stroke_color,
-            scale_type=scale_type,
-            scale_color=scale_color,
+            show_labels=show_labels,
+            label_color=label_color,
         )
 
     # Get names of columns
@@ -233,16 +224,17 @@ def gt_plt_bar(
             column,
         )
 
+        scaled_vals = _scale_numeric_column(res._tbl_data, col_name, col_vals, domain)
+
+        # The location of the plot column will be right after the original column
         if keep_columns:
             res = gt_duplicate_column(
                 res,
                 col_name,
                 after=col_name,
-                append_text=" value",
+                append_text=" plot",
             )
-            res = res.cols_move(col_name, after=(f"{col_name} value"))
-
-        scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
+            col_name = col_name + " plot"
 
         # Apply the scaled value for each row, so the bar is proportional
         for i, scaled_val in enumerate(scaled_vals):
@@ -251,7 +243,7 @@ def gt_plt_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
                 ),
-                columns=column,
+                columns=col_name,
                 rows=[i],
             )
 
