@@ -86,14 +86,14 @@ def gt_plt_bar(
         Whether or not to show labels on the bars.
 
     label_color
-        The color of text labels on the bars (when `show_labels` is not `False`).
+        The color of text labels on the bars (when `show_labels` is `True`).
 
     keep_columns
-        Whether to keep the original column values. In either case the plots will appear in their
-        original columns, and if this flag is `True` then the original columns will be saved in new
-        columns with the string `"value"` appended to the end of the column name. See
-        [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        Whether to keep the original column values. If this flag is `True`, the plotted values will
+        be duplicated into a new column with the string " plot" appended to the end of the column
+        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
         for more details.
+
 
     Returns
     -------
