@@ -140,8 +140,6 @@ def test_add_text_img_alt_text():
         alt_text="Example Alt Text",
     )
 
-    print(result)
-
     assert isinstance(result, str)
     assert "Alt Text Test" in result
     assert "https://example.com/image.png" in result
