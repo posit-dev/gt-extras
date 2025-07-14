@@ -86,7 +86,7 @@ def gt_plt_bar(
         Whether or not to show labels on the bars.
 
     label_color
-        The color of text labels on the bars (when `show_labels` is not `False`).
+        The color of text labels on the bars (when `show_labels` is `True`).
 
     keep_columns
         Whether to keep the original column values. If this flag is `True`, the plotted values will
