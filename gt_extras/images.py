@@ -15,7 +15,6 @@ def img_header(
     border_color: str = "black",
     text_color: str = "black",
 ) -> Html:
-    # TODO: test to see if this is useable in cells - I think it is.
     """
     Create an HTML header with an image and a label, apt for a column label.
 
@@ -87,6 +86,9 @@ def img_header(
         )
     )
     ```
+    See Also
+    -------
+    [`add_text_img()`](https://posit-dev.github.io/gt-extras/reference/add_text_img)
     """
 
     img_html = f"""
@@ -222,6 +224,9 @@ def add_text_img(
         .cols_align("center")
     )
     ```
+    See Also
+    --------
+    [`img_header()`](https://posit-dev.github.io/gt-extras/reference/img_header)
     """
 
     image_first = "row" if left else "row-reverse"
