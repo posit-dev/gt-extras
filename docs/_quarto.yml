@@ -47,6 +47,7 @@ quartodoc:
         and win/loss charts, directly within columns of your existing `GT` objects.
       contents:
         - gt_plt_bar
+        - gt_plt_bar_pct
         - gt_plt_bar_stack
         - gt_plt_conf_int
         - gt_plt_dot
@@ -84,6 +85,7 @@ quartodoc:
         Functions to enhance `GT` objects by adding icons, ratings, or images to cells
         or headers alike.
       contents:
+        - add_text_img
         - fa_icon_repeat
         - gt_fa_rank_change
         - gt_fa_rating

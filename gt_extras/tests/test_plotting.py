@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
 import pytest
-from great_tables import GT
+from great_tables import GT, loc, style
 
 from gt_extras import (
     gt_plt_bar,
+    gt_plt_bar_pct,
     gt_plt_bar_stack,
     gt_plt_conf_int,
     gt_plt_dot,
@@ -51,31 +52,33 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
     assert 'height="-345px"' not in html
 
 
-def test_gt_plt_bar_scale_percent(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type="percent").as_raw_html()
-    assert html.count("%</text>") == 3
-
-
-def test_gt_plt_bar_scale_number(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type="number").as_raw_html()
+def test_gt_plt_bar_show_labels_true(mini_gt):
+    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=True).as_raw_html()
     assert ">33.33</text>" in html
 
 
-def test_gt_plt_bar_scale_none(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], scale_type=None).as_raw_html()
+def test_gt_plt_bar_keep_columns(mini_gt):
+    gt = mini_gt.tab_style(
+        style=style.fill("lightblue"),
+        locations=loc.body(),
+    )
+    result = gt_plt_bar(gt=gt, columns=["num"], keep_columns=True)
+    html = result.as_raw_html()
+
+    assert ">num plot</th>" in html
+    assert ">num</th>" in html
+    assert ">2.222</td>" in html
+    assert html.count("<svg") == 3
+
+
+def test_gt_plt_bar_show_labels_false(mini_gt):
+    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=False).as_raw_html()
     assert "</text>" not in html
 
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None).as_raw_html()
     assert html.count("#FFFFFF00") == 3
-
-
-def test_gt_plt_bar_scale_type_invalid_string(mini_gt):
-    with pytest.raises(
-        ValueError, match="Scale_type must be one of `None`, 'percent', or 'number'"
-    ):
-        gt_plt_bar(mini_gt, scale_type="invalid")
 
 
 def test_gt_plt_bar_type_error(mini_gt):
@@ -875,3 +878,119 @@ def test_gt_plt_bar_stack_invalid_scale():
 
     with pytest.raises(ValueError):
         gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
+
+
+def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
+    res = gt_plt_bar_pct(gt=mini_gt, column="num")
+
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_bar_pct(mini_gt):
+    html = gt_plt_bar_pct(gt=mini_gt, column="num").as_raw_html()
+    assert html.count("<svg") == 3
+
+
+def test_gt_plt_bar_pct_autoscale_on(mini_gt):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", autoscale=True, labels=True
+    ).as_raw_html()
+    assert ">100%</text>" in html
+
+
+def test_gt_plt_bar_pct_autoscale_off(mini_gt):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", autoscale=False, labels=True
+    ).as_raw_html()
+    assert ">33.3%</text>" in html
+
+
+def test_gt_plt_bar_pct_without_labels(mini_gt):
+    html = gt_plt_bar_pct(mini_gt, column="num", labels=False).as_raw_html()
+    assert "</text>" not in html
+
+
+def test_gt_plt_bar_pct_column_decimal(mini_gt):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", autoscale=False, labels=True, decimals=2
+    ).as_raw_html()
+    assert ">33.33%</text>" in html
+
+
+def test_gt_plt_bar_pct_label_placement():
+    df = pd.DataFrame({"x": [10, 20, 30, 40]})
+    gt = GT(df)
+    html_autoscale_on = gt_plt_bar_pct(
+        gt, "x", autoscale=True, labels=True
+    ).as_raw_html()
+
+    assert html_autoscale_on.count('x="5.0px" y="8.0px"') == 3
+    assert 'x="30.0px" y="8.0px"' in html_autoscale_on
+
+    html_autoscale_off = gt_plt_bar_pct(
+        gt, "x", autoscale=False, labels=True
+    ).as_raw_html()
+
+    assert 'x="5.0px" y="8.0px"' in html_autoscale_off
+    assert 'x="15.0px" y="8.0px"' in html_autoscale_off
+    assert 'x="25.0px" y="8.0px"' in html_autoscale_off
+    assert 'x="35.0px" y="8.0px"' in html_autoscale_off
+
+
+def test_gt_plt_bar_pct_column_containing_effective_int():
+    df = pd.DataFrame({"num": [1, 2.0]})
+    html = gt_plt_bar_pct(
+        GT(df), column="num", autoscale=False, labels=True
+    ).as_raw_html()
+    assert ">1%</text>" in html
+    assert ">2%</text>" in html
+
+
+@pytest.mark.parametrize("height, width", [(16, 100), (17, 101)])
+def test_gt_plt_bar_pct_height_width(mini_gt, height, width):
+    html = gt_plt_bar_pct(
+        mini_gt, column="num", height=height, width=width, labels=True
+    ).as_raw_html()
+    assert f'height="{height}px">' in html
+    assert f'width="{width}px"' in html
+
+
+@pytest.mark.parametrize(
+    "font_style, font_size", [("bold", 10), ("italic", 11), ("normal", 12)]
+)
+def test_gt_plt_bar_pct_fnot_style_size(mini_gt, font_style, font_size):
+    html = gt_plt_bar_pct(
+        mini_gt,
+        column="num",
+        labels=True,
+        font_style=font_style,
+        font_size=font_size,
+    ).as_raw_html()
+    assert f'font-style="{font_style}"' in html
+    assert f'font-size="{font_size}px"' in html
+
+
+def test_gt_plt_bar_pct_column_containing_some_none():
+    df = pd.DataFrame({"num": [1, None, None]})
+    html = gt_plt_bar_pct(GT(df), column="num").as_raw_html()
+    assert html.count('fill="transparent"/>') == 2
+
+
+def test_gt_plt_bar_pct_column_containing_all_none():
+    df = pd.DataFrame({"num": [None, None, None]})
+    with pytest.raises(ValueError, match="All values in the column are None."):
+        gt_plt_bar_pct(GT(df), column="num")
+
+
+def test_gt_plt_bar_pct_label_cutoff_invalid_number(mini_gt):
+    with pytest.raises(
+        ValueError, match="Label_cutoff must be a number between 0 and 1."
+    ):
+        gt_plt_bar_pct(mini_gt, column="num", label_cutoff=100)
+
+
+def test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
+    ):
+        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")

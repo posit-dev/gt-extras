@@ -21,6 +21,7 @@ dependencies = [
     "great-tables>=0.18.0",
     "scipy>=1.13.1",
     "svg-py>=1.6.0",
+    "narwhals>=1.0.0",
 ]
 
 authors = [

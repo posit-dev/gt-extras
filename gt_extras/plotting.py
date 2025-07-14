@@ -8,11 +8,13 @@ from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
+from great_tables._helpers import pct, px
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
 from svg import SVG, Line, Rect, Text
 
+from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
 from gt_extras._utils_column import (
     _scale_numeric_column,
@@ -21,6 +23,7 @@ from gt_extras._utils_column import (
 
 __all__ = [
     "gt_plt_bar",
+    "gt_plt_bar_pct",
     "gt_plt_dot",
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
@@ -28,28 +31,23 @@ __all__ = [
     "gt_plt_bar_stack",
 ]
 
-# TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
-# to handle the underlying _tbl_data.
-
 # TODO: default font for labels?
 
 # TODO: how to handle negative values? Plots can't really have negative length
-
-# change height to float
 
 
 def gt_plt_bar(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "purple",
-    bar_height: int = 20,
-    height: int = 30,
-    width: int = 60,
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
     stroke_color: str | None = "black",
-    scale_type: Literal["percent", "number"] | None = None,
-    scale_color: str = "white",
+    show_labels: bool = False,
+    label_color: str = "white",
     domain: list[int] | list[float] | None = None,
-    # keep_columns: bool = False,
+    keep_columns: bool = False,
 ) -> GT:
     """
     Create horizontal bar plots in `GT` cells.
@@ -74,21 +72,28 @@ def gt_plt_bar(
         The height of each individual bar in pixels.
 
     height
-        The height of the bar plot in pixels.
+        The height of the bar plot in pixels. In practice, this allows for the bar to appear
+        less stout, the larger the difference between `height` and `bar_height`.
 
     width
-        The width of the maximum bar in pixels
+        The width of the maximum bar in pixels. Not all bars will have this width.
 
     stroke_color
         The color of the vertical axis on the left side of the bar. The default is black, but if
-        `None` is passed no stroke will be drawn.
+        `None` is passed, no stroke will be drawn.
 
-    scale_type
-        The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
-        labels.
+    show_labels
+        Whether or not to show labels on the bars.
 
-    scale_color
-        The color of text labels on the bars (when `scale_type` is not `None`).
+    label_color
+        The color of text labels on the bars (when `show_labels` is `True`).
+
+    keep_columns
+        Whether to keep the original column values. If this flag is `True`, the plotted values will
+        be duplicated into a new column with the string " plot" appended to the end of the column
+        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
 
     Returns
     -------
@@ -125,12 +130,6 @@ def gt_plt_bar(
     --------
     Each column's bars are scaled independently based on that column's min/max values.
     """
-    # A version with svg.py
-
-    # Throw if `scale_type` is not one of the allowed values
-    if scale_type not in [None, "percent", "number"]:
-        raise ValueError("Scale_type must be one of `None`, 'percent', or 'number'")
-
     if bar_height > height:
         bar_height = height
         warnings.warn(
@@ -154,15 +153,13 @@ def gt_plt_bar(
         height: int,
         width: int,
         stroke_color: str,
-        scale_type: Literal["percent", "number"] | None,
-        scale_color: str,
+        show_labels: bool,
+        label_color: str,
     ) -> str:
         UNITS = "px"  # TODO: let use control this?
 
         text = ""
-        if scale_type == "percent":
-            text = str(round(original_val * 100)) + "%"
-        if scale_type == "number":
+        if show_labels:
             text = original_val
 
         canvas = SVG(
@@ -182,7 +179,7 @@ def gt_plt_bar(
                     text=text,
                     x=str((width * scaled_val) * 0.98) + UNITS,
                     y=str(height / 2) + UNITS,
-                    fill=scale_color,
+                    fill=label_color,
                     font_size=bar_height * 0.6,
                     text_anchor="end",
                     dominant_baseline="central",
@@ -212,8 +209,8 @@ def gt_plt_bar(
             height=height,
             width=width,
             stroke_color=stroke_color,
-            scale_type=scale_type,
-            scale_color=scale_color,
+            show_labels=show_labels,
+            label_color=label_color,
         )
 
     # Get names of columns
@@ -227,7 +224,17 @@ def gt_plt_bar(
             column,
         )
 
-        scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
+        scaled_vals = _scale_numeric_column(res._tbl_data, col_name, col_vals, domain)
+
+        # The location of the plot column will be right after the original column
+        if keep_columns:
+            res = gt_duplicate_column(
+                res,
+                col_name,
+                after=col_name,
+                append_text=" plot",
+            )
+            col_name = col_name + " plot"
 
         # Apply the scaled value for each row, so the bar is proportional
         for i, scaled_val in enumerate(scaled_vals):
@@ -236,9 +243,10 @@ def gt_plt_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
                 ),
-                columns=column,
+                columns=col_name,
                 rows=[i],
             )
+
     return res
 
 
@@ -253,8 +261,9 @@ def gt_plt_dot(
     Create dot plots with thin horizontal bars in `GT` cells.
 
     The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
-    bar charts to a specified category column. Each cell displays a colored dot with the category
-    label and a horizontal bar representing the corresponding numeric value from the data column.
+    bar charts to a specified category column. Each cell displays a colored dot according to the
+    value in the assigned category column and a horizontal bar representing the corresponding
+    numeric value from the data column.
 
     Parameters
     ----------
@@ -262,7 +271,8 @@ def gt_plt_dot(
         A `GT` object to modify.
 
     category_col
-        The column containing category labels that will be displayed next to colored dots.
+        The column containing category labels that will be displayed next to colored dots. The
+        coloring of the dots are determined by this column.
 
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
@@ -274,7 +284,7 @@ def gt_plt_dot(
     palette
         The color palette to use. This should be a list of colors
         (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
-        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color) for additional reference).
         If `None`, then a default palette will be used.
 
     Returns
@@ -298,6 +308,12 @@ def gt_plt_dot(
 
     gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
+
+    Note
+    -------
+    If the column is too narrow, the bar may render above the dot rather than below, as intended.
+    For the best way to resolve this issue please refer to
+    [`GT.cols_width()`](https://posit-dev.github.io/great-tables/reference/GT.cols_width)
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
@@ -435,7 +451,8 @@ def gt_plt_conf_int(
         The confidence level to use when computing the interval (if `ci_columns` is `None`).
 
     width
-        The width of the confidence interval plot in pixels.
+        The width of the confidence interval plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The width of the confidence interval plot in pixels.
@@ -738,7 +755,8 @@ def gt_plt_dumbbell(
         original column name is retained.
 
     width
-        The width of the dumbbell plot in pixels.
+        The width of the dumbbell plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
@@ -970,8 +988,8 @@ def gt_plt_winloss(
     patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
     column, ensuring consistent bar spacing across all rows.
 
-    Wins must be represented as 1, ties as 0.5, and losses as 0.
-    Invalid values (not 0, 0.5, or 1) are skipped.
+    Wins must be represented as `1`, ties as `0.5`, and losses as `0`.
+    Invalid values (not `0`, `0.5`, or `1`) are skipped.
 
     Parameters
     ----------
@@ -1227,7 +1245,7 @@ def gt_plt_bar_stack(
     The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
     charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
     proportional to the values in the list. The scaling of the bars can be controlled using the
-    `scale_type` parameter.
+    `scale_type` - see below for more info.
 
     Parameters
     ----------
@@ -1243,7 +1261,8 @@ def gt_plt_bar_stack(
         header, with each label corresponding to a color in the palette.
 
     width
-        The total width of the stacked bar plot in pixels.
+        The total width of the stacked bar plot in pixels. If `scale_type = "absolute"`, this
+        value will determine the width of the maximum length bar plot.
 
     height
         The height of the stacked bar plot in pixels.
@@ -1345,6 +1364,10 @@ def gt_plt_bar_stack(
         scale_type="absolute",
     )
     ```
+
+    Note
+    -------
+    Values of `0` will not be displayed in the plots.
     """
 
     def _make_bar_stack_html(
@@ -1472,4 +1495,263 @@ def gt_plt_bar_stack(
             {col_name: html(label_html)}
         )
 
+    return res
+
+
+def gt_plt_bar_pct(
+    gt: GT,
+    column: SelectExpr,
+    height: int = 16,
+    width: int = 100,
+    fill: str = "purple",
+    background: str = "#e1e1e1",
+    autoscale: bool = True,
+    labels: bool = False,
+    label_cutoff: float = 0.4,
+    decimals: int = 1,
+    font_style: Literal["bold", "italic", "normal"] = "bold",
+    font_size: int = 10,
+):
+    """
+    Create horizontal bar plots in percentage in `GT` cells.
+
+    The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
+    horizontal bar plots via native HTML. By default, values are normalized
+    as a percentage of the maximum value in the specified column. If the values
+    already represent percentages (i.e., between 0–100), you can disable this
+    behavior by setting `autoscale=False`.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column to target.
+
+    height
+        The height of the bar plot in pixels.
+
+    width
+        The width of the maximum bar in pixels.
+
+    fill
+        The fill color for the bars. Defaults to `purple`.
+
+    background
+        The background filling color for the bars. Defaults to `#e1e1e1`.
+
+    autoscale
+        Indicates whether the function should automatically scale the values.
+        If `True`, values will be divided by the column's maximum and multiplied by 100.
+        If `False`, the values are assumed to already be scaled appropriately.
+        Defaults to `True`.
+
+    labels
+        `True`/`False` logical representing if labels should be plotted. Defaults
+        to `False`, meaning that no value labels will be plotted.
+
+    label_cutoff
+        A number, 0 to 1, representing where to set the inside/outside label
+        boundary. Defaults to 0.40 (40%) of the column's maximum value. If the
+        value in that row is less than the cutoff, the label will be placed
+        outside the bar; otherwise, it will be placed within the bar. This
+        interacts with the overall width of the bar, so if you are not happy with
+        the placement of the labels, you may try adjusting the `width` argument as
+        well.
+
+    decimals
+        A number representing how many decimal places to be used in label
+        rounding. Defaults to 1.
+
+    font_style
+        The font style for the text labels displayed on the bars. Options are
+        `"bold"`, `"italic"`, or `"normal"`. Defaults to `"bold"`.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    Returns
+    -------
+    GT
+        A `GT` object with horizontal bar plots added to the specified columns.
+
+    Examples
+    --------
+    The `autoscale` parameter is perhaps the most important in the `gt_plt_bar_pct()` function.
+    This example demonstrates the difference between `autoscale=True` and `autoscale=False` using column `x`:
+
+    * **When `autoscale=True`**:
+    The function scales the values relative to the maximum in the column.
+    For example, `[10, 20, 30, 40]` becomes `[25%, 50%, 75%, 100%]`,
+    which are used for both bar lengths and labels.
+
+    * **When `autoscale=False`**:
+    The values are assumed to already represent percentages.
+    The function uses them as-is — e.g., `[10%, 20%, 30%, 40%]`,
+    which are directly reflected in both the bar lengths and labels.
+
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+        pl.col("x").alias("autoscale_on"),
+        pl.col("x").alias("autoscale_off"),
+    )
+
+    gt = GT(df)
+
+    (
+        gt.pipe(
+            gte.gt_plt_bar_pct,
+            column=["autoscale_on"],
+            autoscale=True,
+            labels=True,
+            fill="green",
+        ).pipe(
+            gte.gt_plt_bar_pct,
+            column=["autoscale_off"],
+            autoscale=False,
+            labels=True,
+        )
+    )
+    ```
+    Finally, label colors are automatically adjusted based on the `fill` and `background` parameters
+    to ensure optimal readability.
+    """
+
+    def _not_na(val, tbl_data) -> bool:
+        return val is not None and not is_na(tbl_data, val)
+
+    def _is_na(val, tbl_data) -> bool:
+        return not _not_na(val, tbl_data)
+
+    def _is_effective_int(val) -> bool:
+        return isinstance(val, int) or (isinstance(val, float) and val.is_integer())
+
+    if not (0 <= label_cutoff <= 1):
+        raise ValueError("Label_cutoff must be a number between 0 and 1.")
+
+    if font_style not in ["bold", "italic", "normal"]:
+        raise ValueError("Font_style must be one of 'bold', 'italic', or 'normal'.")
+
+    # Helper function to make the individual bars
+
+    def _make_bar_pct_html(
+        original_val: int | float,
+        scaled_val: int | float,
+        height: int,
+        width: int,
+        fill: str,
+        background: str,
+        autoscale: bool,
+        labels: bool,
+        label_cutoff: float,
+        decimals: int,
+        font_style: Literal["bold", "italic", "normal"],
+        font_size: int,
+    ) -> str:
+        elements = []
+        if _is_na(scaled_val, tbl_data):
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=pct(width),
+                height=px(height),
+                fill="transparent",
+            )
+            elements.append(outer_rect)
+        else:
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=px(width),
+                height=px(height),
+                fill=background,
+            )
+            elements.append(outer_rect)
+
+            _width = width * scaled_val * 0.01
+
+            inner_rect = Rect(
+                x=0,
+                y=0,
+                width=px(_width),
+                height=px(height),
+                fill=fill,
+            )
+            elements.append(inner_rect)
+
+            if labels:
+                padding = 5.0
+
+                if _width < (label_cutoff * 100):
+                    _x = _width + padding
+                    _fill = _ideal_fgnd_color(_html_color([background])[0])
+                else:
+                    _x = padding
+                    _fill = _ideal_fgnd_color(_html_color([fill])[0])
+
+                _decimals = decimals
+                if _is_effective_int(scaled_val):
+                    _decimals = 0
+                _text = f"{scaled_val:.{_decimals}f}%"
+
+                inner_text = Text(
+                    text=_text,
+                    x=px(_x),
+                    y=px(height / 2),
+                    fill=_fill,
+                    font_size=px(font_size),
+                    font_style=font_style,
+                    text_anchor="start",
+                    dominant_baseline="central",
+                )
+                elements.append(inner_text)
+
+        canvas = SVG(width=px(width), height=px(height), elements=elements)
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+
+    def _make_bar_pct(scaled_val: int, original_val: int) -> str:
+        return _make_bar_pct_html(
+            original_val=original_val,
+            scaled_val=scaled_val,
+            height=height,
+            width=width,
+            fill=fill,
+            background=background,
+            autoscale=autoscale,
+            labels=labels,
+            label_cutoff=label_cutoff,
+            decimals=decimals,
+            font_style=font_style,
+            font_size=font_size,
+        )
+
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+    tbl_data = gt._tbl_data
+    if all(_is_na(val, tbl_data) for val in col_vals):
+        raise ValueError("All values in the column are None.")
+
+    max_x = max(val for val in col_vals if _not_na(val, tbl_data))
+
+    scaled_vals = col_vals
+    if autoscale:
+        scaled_vals = [
+            val if _is_na(val, tbl_data) else (val / max_x * 100) for val in col_vals
+        ]
+
+    res = gt
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_vals):
+        res = res.fmt(
+            lambda original_val, scaled_val=scaled_val: _make_bar_pct(
+                original_val=original_val,
+                scaled_val=scaled_val,
+            ),
+            columns=column,
+            rows=[i],
+        )
     return res

@@ -173,7 +173,7 @@ def gt_fa_rating(
         The color for unfilled icons.
 
     height
-        The height of the rating icons in pixels.
+        The height of the rating icons in pixels. The icon's width will be scaled proportionally.
 
     Returns
     -------
@@ -278,9 +278,10 @@ def gt_fa_rank_change(
     Create rank change indicators in `GT` cells using FontAwesome icons.
 
     This function represents numeric rank changes in table column(s) by displaying FontAwesome
-    icons alongside the numeric values. Positive values show up-pointing icons (e.g., arrows up),
-    negative values show down-pointing icons (e.g., arrows down), and values within the neutral
-    range show neutral indicators (equals sign).
+    icons alongside the numeric values. Values greater than the maximum of `neutral_range` show
+    up-pointing icons (e.g., arrows up), values less than the minimum of the range show
+    down-pointing icons (e.g., arrows down), and values within the neutral range show neutral
+    indicators (equals sign).
 
     Parameters
     ----------
@@ -315,7 +316,8 @@ def gt_fa_rank_change(
         The color for the numeric text displayed alongside the icons.
 
     size
-        The size of the font as well as the icon.
+        The size of the font as well as the icon. Specificially it is both the width of the icon
+        in pixels and the font size of the text.
 
     Returns
     -------

@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import polars as pl
-import pyarrow as pa
 import pytest
 from great_tables import GT
 
@@ -143,14 +142,6 @@ def test_gt_duplicate_column_polars():
     original_values = res._tbl_data.get_column("num").to_list()
     duplicated_values = res._tbl_data.get_column("num_copy").to_list()
     assert original_values == duplicated_values
-
-
-def test_gt_duplicate_column_invalid_type():
-    data = pa.table({"num": [1, 2, 3], "char": ["a", "b", "c"]})
-    gt_test = GT(data)
-
-    with pytest.raises(TypeError, match="Unsupported type"):
-        gt_duplicate_column(gt_test, column="num")
 
 
 def test_gt_duplicate_column_invalid_name(mini_gt):
