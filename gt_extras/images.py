@@ -159,9 +159,8 @@ def add_text_img(
     --------
     ```{python}
     import pandas as pd
-    from great_tables import GT, md
+    from great_tables import GT, md, html
     import gt_extras as gte
-    from great_tables import html
 
     df = pd.DataFrame(
         {
@@ -170,6 +169,8 @@ def add_text_img(
             "Assists": [453, 475],
         }
     )
+
+    #### Add images to cell values ####
 
     hart_img = gte.add_text_img(
         text="Josh Hart",
@@ -181,20 +182,29 @@ def add_text_img(
         img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
     )
 
+    #### Add images to colunmn headers ####
+
     points_with_img = gte.add_text_img(
         text="Points",
         img_url="../assets/hoop.png",
         left=True,
     )
 
+    assists_with_img = gte.add_text_img(
+        text="Assists",
+        img_url="../assets/pass.png",
+        left=True,
+    )
+
     points_img_html = html(points_with_img)
+    assists_img_html = html(assists_with_img)
 
     df["Player"] = [hart_img, brunson_img]
     gt = GT(df, rowname_col="Player")
     (
-        gt
-        .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
-        .cols_label({"Points": points_img_html})
+        gt.tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+        .cols_label({"Points": points_img_html, "Assists": assists_img_html})
+        .cols_align("center")
     )
     ```
     """
