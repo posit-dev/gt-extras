@@ -131,6 +131,24 @@ def test_add_text_img_custom_gap():
     assert "gap:15.0px;" in result
 
 
+def test_add_text_img_alt_text():
+    result = add_text_img(
+        text="Alt Text Test",
+        img_url="https://example.com/image.png",
+        height=40,
+        left=True,
+        alt_text="Example Alt Text",
+    )
+
+    print(result)
+
+    assert isinstance(result, str)
+    assert "Alt Text Test" in result
+    assert "https://example.com/image.png" in result
+    assert "alt='Example Alt Text'" in result
+    assert "height:40px;" in result
+
+
 def test_add_text_img_empty_text():
     result = add_text_img(
         text="",

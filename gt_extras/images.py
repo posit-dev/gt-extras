@@ -125,10 +125,13 @@ def add_text_img(
     height: int = 30,
     gap: float = 3.0,
     left: bool = False,
+    alt_text: str = "",
 ) -> str:
     """
-    Create an HTML element with text and an image, displayed inline. Note that depending on where
-    you are placing the output in the table, you may need to wrap it in
+    Create an HTML element with text and an image, displayed inline.
+
+    Note that depending on where
+    you are placing the output in the table, you may want to wrap it in
     [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html).
 
     Parameters
@@ -148,11 +151,15 @@ def add_text_img(
     left
         If `True`, the image is displayed to the left of the text.
 
+    alt_text
+        The alternative text for the image, used for accessibility and displayed if the image
+        cannot be loaded.
+
     Returns
     -------
     str
         A string with html content of the combined image and text. Depending on where you are
-        placing the output in the table, you may need to wrap it in
+        placing the output in the table, you may want to wrap it in
         [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html).
 
     Examples
@@ -185,6 +192,7 @@ def add_text_img(
         GT(df, rowname_col="Player")
         .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
     )
+
     gt
     ```
 
@@ -221,7 +229,8 @@ def add_text_img(
     combined_html = f"""
     <div style='display:flex; flex-direction:{image_first}; align-items:center; gap:{px(gap)};'>
         <div style='flex-shrink: 0;'>
-            <img src='{img_url}' style='height:{px(height)}; width:auto; object-fit:contain;' />
+            <img src='{img_url}' alt='{alt_text}'
+            style='height:{px(height)}; width:auto; object-fit:contain;' />
         </div>
         <div style='flex-grow:1;'>
             {text}

@@ -3,7 +3,8 @@
   '''
   <div style='display:flex; flex-direction:row; align-items:center; gap:3.0px;'>
           <div style='flex-shrink: 0;'>
-              <img src='https://example.com/image.png' style='height:40px; width:auto; object-fit:contain;' />
+              <img src='https://example.com/image.png' alt=''
+              style='height:40px; width:auto; object-fit:contain;' />
           </div>
           <div style='flex-grow:1;'>
               Test Text
