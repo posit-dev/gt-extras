@@ -170,8 +170,6 @@ def add_text_img(
         }
     )
 
-    #### Add images to cell values ####
-
     hart_img = gte.add_text_img(
         text="Josh Hart",
         img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png",
@@ -182,8 +180,19 @@ def add_text_img(
         img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
     )
 
-    #### Add images to colunmn headers ####
+    df["Player"] = [hart_img, brunson_img]
+    gt = (
+        GT(df, rowname_col="Player")
+        .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+    )
+    gt
+    ```
 
+    We can even apply the `add_text_img()` function to content ouside of body/stub cells.
+    We must remember to wrap the output in [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html)
+    so the table renders the element properly.
+
+    ```{python}
     points_with_img = gte.add_text_img(
         text="Points",
         img_url="../assets/hoop.png",
@@ -199,10 +208,8 @@ def add_text_img(
     points_img_html = html(points_with_img)
     assists_img_html = html(assists_with_img)
 
-    df["Player"] = [hart_img, brunson_img]
-    gt = GT(df, rowname_col="Player")
     (
-        gt.tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+        gt
         .cols_label({"Points": points_img_html, "Assists": assists_img_html})
         .cols_align("center")
     )
