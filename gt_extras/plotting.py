@@ -224,16 +224,17 @@ def gt_plt_bar(
             column,
         )
 
+        scaled_vals = _scale_numeric_column(res._tbl_data, col_name, col_vals, domain)
+
+        # The location of the plot column will be right after the original column
         if keep_columns:
             res = gt_duplicate_column(
                 res,
                 col_name,
                 after=col_name,
-                append_text=" value",
+                append_text=" plot",
             )
-            res = res.cols_move(col_name, after=(f"{col_name} value"))
-
-        scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
+            col_name = col_name + " plot"
 
         # Apply the scaled value for each row, so the bar is proportional
         for i, scaled_val in enumerate(scaled_vals):
@@ -242,7 +243,7 @@ def gt_plt_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
                 ),
-                columns=column,
+                columns=col_name,
                 rows=[i],
             )
 

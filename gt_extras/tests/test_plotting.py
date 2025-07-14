@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
-from great_tables import GT
+from great_tables import GT, loc, style
 
 from gt_extras import (
     gt_plt_bar,
@@ -58,10 +58,14 @@ def test_gt_plt_bar_show_labels_true(mini_gt):
 
 
 def test_gt_plt_bar_keep_columns(mini_gt):
-    result = gt_plt_bar(gt=mini_gt, columns=["num"], keep_columns=True)
+    gt = mini_gt.tab_style(
+        style=style.fill("lightblue"),
+        locations=loc.body(),
+    )
+    result = gt_plt_bar(gt=gt, columns=["num"], keep_columns=True)
     html = result.as_raw_html()
 
-    assert ">num value</th>" in html
+    assert ">num plot</th>" in html
     assert ">num</th>" in html
     assert ">2.222</td>" in html
     assert html.count("<svg") == 3
