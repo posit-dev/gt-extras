@@ -16,7 +16,7 @@ def img_header(
     text_color: str = "black",
 ) -> Html:
     """
-    Create an HTML header with an image and a label, apt for a column label.
+    Create an HTML header with an image and a label, suitable for a column label.
 
     Parameters
     ----------
@@ -198,7 +198,7 @@ def add_text_img(
     gt
     ```
 
-    We can even apply the `add_text_img()` function to content ouside of body/stub cells.
+    We can even apply the `add_text_img()` function to content outside of body/stub cells.
     We must remember to wrap the output in [`GT.html()`](https://posit-dev.github.io/great-tables/reference/html)
     so the table renders the element properly.
 
@@ -229,13 +229,13 @@ def add_text_img(
     [`img_header()`](https://posit-dev.github.io/gt-extras/reference/img_header)
     """
 
-    image_first = "row" if left else "row-reverse"
+    flex_direction = "row" if left else "row-reverse"
 
     combined_html = f"""
-    <div style='display:flex; flex-direction:{image_first}; align-items:center; gap:{px(gap)};'>
+    <div style='display:flex; flex-direction:{flex_direction}; align-items:center; gap:{px(gap)};'>
         <div style='flex-shrink: 0;'>
             <img src='{img_url}' alt='{alt_text}'
-            style='height:{px(height)}; width:auto; object-fit:contain;' />
+            style='height:{px(height)}; width:auto; object-fit:contain;'/>
         </div>
         <div style='flex-grow:1;'>
             {text}
