@@ -1,4 +1,16 @@
 # serializer version: 1
+# name: test_add_text_img_snapshot
+  '''
+  <div style='display:flex; flex-direction:row; align-items:center; gap:3.0px;'>
+          <div style='flex-shrink: 0;'>
+              <img src='https://example.com/image.png' style='height:40px; width:auto; object-fit:contain;' />
+          </div>
+          <div style='flex-grow:1;'>
+              Test Text
+          </div>
+      </div>
+  '''
+# ---
 # name: test_img_header_snapshot
   Html(text='<div style="text-align:center;">\n        <img src="https://example.com/image.png" style="\n        height:60px;\n        object-fit:contain;\n        object-position: bottom;\n        border-bottom:2px solid black;"\n    />\n        <div style="\n        font-size:12px;\n        color:black;\n        text-align:center;\n        width:100%;\n    ">\n        Test Label\n    </div>\n    </div>')
 # ---

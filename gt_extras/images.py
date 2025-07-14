@@ -219,11 +219,11 @@ def add_text_img(
     image_first = "row" if left else "row-reverse"
 
     combined_html = f"""
-    <div style='display: flex; flex-direction: {image_first}; align-items: center; gap: {px(gap)};'>
+    <div style='display:flex; flex-direction:{image_first}; align-items:center; gap:{px(gap)};'>
         <div style='flex-shrink: 0;'>
-            <img src='{img_url}' style='height: {px(height)}; width: auto; object-fit: contain;' />
+            <img src='{img_url}' style='height:{px(height)}; width:auto; object-fit:contain;' />
         </div>
-        <div style='flex-grow: 1;'>
+        <div style='flex-grow:1;'>
             {text}
         </div>
     </div>
