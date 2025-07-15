@@ -102,6 +102,7 @@ quartodoc:
         - gt_add_divider
         - gt_duplicate_column
         - gt_merge_stack
+        - gt_two_column_layout
         - with_hyperlink
         - with_tooltip
 
