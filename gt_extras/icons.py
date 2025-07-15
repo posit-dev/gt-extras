@@ -117,10 +117,10 @@ def fa_icon_repeat(
     icon = icon_svg(
         name=name,
         fill=fill,
-        fill_opacity=fill_opacity,
+        fill_opacity=str(fill_opacity),
         stroke=stroke,
         stroke_width=stroke_width,
-        stroke_opacity=stroke_opacity,
+        stroke_opacity=str(stroke_opacity),
         height=height,
         width=width,
         margin_left=margin_left,
@@ -371,7 +371,7 @@ def gt_fa_rank_change(
         size: int,
         neutral_min: float,
         neutral_max: float,
-        max_text_width: float,
+        max_text_width: str,
     ) -> str:
         if value is None or is_na(gt._tbl_data, value):
             return "<bold style='color:#d3d3d3;'>--</bold>"
