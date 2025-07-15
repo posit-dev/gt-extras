@@ -30,9 +30,11 @@ def gt_data_color_by_group(
     Perform data cell colorization by group.
 
     The `gt_data_color_by_group()` function takes an existing `GT` object and adds colors to data
-    cells according to their values within their group (as identified by `groupname_col`).
+    cells according to their values within their group (as identified by
+    [`groupname_col`](https://posit-dev.github.io/great-tables/reference/GT.html#parameters)).
 
-    Please refer to `GT.data_color` for more details and examples.
+    Please refer to [`GT.data_color`](https://posit-dev.github.io/great-tables/reference/GT.data_color)
+    for more details and examples.
 
     Parameters
     ----------
@@ -45,6 +47,31 @@ def gt_data_color_by_group(
         This should be a list of colors (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer
         palette could also be used, just supply the name (reference available in the *Color palette
         access from ColorBrewer* section). If `None`, then a default palette will be used.
+
+    Examples
+    --------
+    ```{python}
+    from great_tables import GT, md
+    from great_tables.data import exibble
+    import gt_extras as gte
+
+    gt = (
+        GT(exibble, rowname_col="row", groupname_col="group")
+        .cols_hide(columns=None)
+        .cols_unhide("num")
+        .cols_label({"num": "color by group"})
+        .pipe(gte.gt_duplicate_column, column="num", dupe_name="color all")
+        .tab_source_note(md("Left: `gt_data_color_by_group`, Right: `data_color`"))
+    )
+
+    (
+        gt
+        .data_color(columns="color all", palette="PiYG")
+        .pipe(gte.gt_data_color_by_group, columns=["num"], palette="PiYG")
+    )
+    ```
+    Notice how in the fourth row, the color is at the green end of the palette because
+    it is the highest in its group when we call `gt_data_color_by_group`.
     """
     for group in gt._stub.group_rows:
         gt = gt.data_color(columns, list(map(int, group.indices)), palette)
