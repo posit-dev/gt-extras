@@ -241,7 +241,25 @@ def gt_duplicate_column(
 
 
 class GTCombinedLayout:
-    """A wrapper class for combined GT layouts that enables automatic HTML rendering."""
+    """
+    Represents the combined layout of two `GT` objects rendered side by side.
+
+    This class is returned by [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout)
+    and is designed for automatic rendering in Jupyter notebooks and other HTML-aware environments.
+
+    Parameters
+    ----------
+    html_content
+        The combined HTML content representing the two tables in a single layout.
+
+    Methods
+    -------
+    _repr_html_()
+        Returns the HTML content for notebook rendering.
+
+    __str__()
+        Returns the HTML content as a string.
+    """
 
     def __init__(self, html_content: str):
         self.html_content = html_content
