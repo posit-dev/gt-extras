@@ -1509,7 +1509,7 @@ def gt_plt_bar_pct(
     labels: bool = False,
     label_cutoff: float = 0.4,
     decimals: int = 1,
-    font_style: Literal["bold", "italic", "normal"] = "bold",
+    font_style: Literal["oblique", "italic", "normal"] = "normal",
     font_size: int = 10,
 ):
     """
@@ -1536,16 +1536,15 @@ def gt_plt_bar_pct(
         The width of the maximum bar in pixels.
 
     fill
-        The fill color for the bars. Defaults to `purple`.
+        The fill color for the bars.
 
     background
-        The background filling color for the bars. Defaults to `#e1e1e1`.
+        The background filling color for the bars. Defaults to `#e1e1e1` (a light grey).
 
     autoscale
         Indicates whether the function should automatically scale the values.
         If `True`, values will be divided by the column's maximum and multiplied by 100.
         If `False`, the values are assumed to already be scaled appropriately.
-        Defaults to `True`.
 
     labels
         `True`/`False` logical representing if labels should be plotted. Defaults
@@ -1562,11 +1561,11 @@ def gt_plt_bar_pct(
 
     decimals
         A number representing how many decimal places to be used in label
-        rounding. Defaults to 1.
+        rounding.
 
     font_style
         The font style for the text labels displayed on the bars. Options are
-        `"bold"`, `"italic"`, or `"normal"`. Defaults to `"bold"`.
+        `"oblique"`, `"italic"`, or `"normal"`.
 
     font_size
         The font size for the text labels displayed on the bars.
@@ -1650,7 +1649,7 @@ def gt_plt_bar_pct(
         labels: bool,
         label_cutoff: float,
         decimals: int,
-        font_style: Literal["bold", "italic", "normal"],
+        font_style: Literal["oblique", "italic", "normal"],
         font_size: int,
     ) -> str:
         elements = []
