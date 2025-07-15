@@ -532,7 +532,9 @@ def gt_color_box(
 
             res = res.fmt(
                 lambda x, fill=color_val: _make_color_box(
-                    value=x, fill=fill, alpha=alpha
+                    value=x,
+                    fill=fill,  # This type warning occurs because color_scale_fn returns a list[str | none]
+                    alpha=alpha,
                 ),
                 columns=column,
                 rows=[i],
