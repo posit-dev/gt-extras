@@ -61,6 +61,7 @@ quartodoc:
         styles with palettes that are easy on the eye.
       contents:
         - gt_color_box
+        - gt_data_color_by_group
         - gt_highlight_cols
         - gt_highlight_rows
         - gt_hulk_col_numeric
