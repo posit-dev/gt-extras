@@ -1,12 +1,11 @@
-from great_tables._utils_render_html import (
-    create_columns_component_h,
-    create_body_component_h,
-    create_source_notes_component_h,
-    create_heading_component_h,
-)
-from great_tables import GT, exibble
-
 import pytest
+from great_tables import GT, exibble
+from great_tables._utils_render_html import (
+    create_body_component_h,
+    create_columns_component_h,
+    create_heading_component_h,
+    create_source_notes_component_h,
+)
 
 __all__ = [
     "mini_gt",
@@ -20,7 +19,7 @@ __all__ = [
 
 @pytest.fixture(scope="module")
 def mini_gt():
-    mini_exibble = exibble.head(3)
+    mini_exibble = exibble.head(3)  # type: ignore
     return GT(mini_exibble, id="mini_table")
 
 

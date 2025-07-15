@@ -75,7 +75,7 @@ def test_gt_highlight_cols_font_weight_invalid_string(mini_gt):
         ValueError,
         match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
     ):
-        gt_highlight_cols(mini_gt, font_weight="invalid")
+        gt_highlight_cols(mini_gt, font_weight="invalid")  # type: ignore
 
 
 @pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
@@ -116,7 +116,7 @@ def test_gt_highlight_rows_font_weight_invalid_string(mini_gt):
         ValueError,
         match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
     ):
-        gt_highlight_rows(mini_gt, rows=[0], font_weight="invalid")
+        gt_highlight_rows(mini_gt, rows=[0], font_weight="invalid")  # type: ignore
 
 
 @pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])

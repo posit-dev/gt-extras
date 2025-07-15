@@ -877,7 +877,7 @@ def test_gt_plt_bar_stack_invalid_scale():
     gt_test = GT(df)
 
     with pytest.raises(ValueError):
-        gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
+        gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")  # type: ignore
 
 
 def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
@@ -993,4 +993,4 @@ def test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
     with pytest.raises(
         ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
     ):
-        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")
+        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")  # type: ignore
