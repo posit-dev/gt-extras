@@ -15,11 +15,40 @@ from gt_extras._utils_column import (
 )
 
 __all__ = [
+    "gt_data_color_by_group",
     "gt_highlight_cols",
     "gt_highlight_rows",
     "gt_hulk_col_numeric",
     "gt_color_box",
 ]
+
+
+def gt_data_color_by_group(
+    gt: GT, columns: SelectExpr = None, palette: str | list[str] | None = None
+) -> GT:
+    """
+    Perform data cell colorization by group.
+
+    The `gt_data_color_by_group()` function takes an existing `GT` object and adds colors to data
+    cells according to their values within their group (as identified by `groupname_col`).
+
+    Please refer to `GT.data_color` for more details and examples.
+
+    Parameters
+    ----------
+    columns
+        The columns to target.
+        Can either be a single column name or a series of column names provided in a list.
+
+    palette
+        The color palette to use.
+        This should be a list of colors (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer
+        palette could also be used, just supply the name (reference available in the *Color palette
+        access from ColorBrewer* section). If `None`, then a default palette will be used.
+    """
+    for group in gt._stub.group_rows:
+        gt = gt.data_color(columns, list(map(int, group.indices)), palette)
+    return gt
 
 
 def gt_highlight_cols(

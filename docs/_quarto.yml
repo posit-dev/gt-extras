@@ -61,6 +61,7 @@ quartodoc:
         styles with palettes that are easy on the eye.
       contents:
         - gt_color_box
+        - gt_data_color_by_group
         - gt_highlight_cols
         - gt_highlight_rows
         - gt_hulk_col_numeric
@@ -85,6 +86,7 @@ quartodoc:
         Functions to enhance `GT` objects by adding icons, ratings, or images to cells
         or headers alike.
       contents:
+        - add_text_img
         - fa_icon_repeat
         - gt_fa_rank_change
         - gt_fa_rating
