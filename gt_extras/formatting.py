@@ -297,16 +297,28 @@ def gt_two_column_layout(
     import gt_extras as gte
     import pandas as pd
 
-    # Create two example tables
     df1 = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
     df2 = pd.DataFrame({"X": [7, 8, 9], "Y": [10, 11, 12]})
 
-    gt1 = GT(df1).tab_header(title="Table 1", subtitle="First Table")
-    gt2 = GT(df2).tab_header(title="Table 2", subtitle="Second Table")
+    gt1 = GT(df1).tab_header(title="Table 1", subtitle="1st Table")
+    gt2 = GT(df2).tab_header(title="Table 2", subtitle="2nd Table")
 
-    # Combine the tables into a two-column layout (auto-renders in Quarto)
+    gte.gt_two_column_layout(gt1, gt2)
+    ```
+
+    Alternatively, we can combine data from the same table in a two column layout like so:
+
+    ```{python}
+    df1 = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+    df2 = pd.DataFrame({"A": [7, 8, 9], "B": [10, 11, 12]})
+
+    gt1 = GT(df1).tab_header(title="Joined Table")
+    gt2 = GT(df2)
+
     gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
     ```
+
+
     """
 
     def extract_tab_header_and_style(gt: GT) -> dict:
@@ -354,7 +366,12 @@ def gt_two_column_layout(
         )
         subtitle_match = re.search(subtitle_pattern, html)
         if subtitle_match:
-            subtitle_class = f"gt_table {subtitle_match.group(1)}"
+            # Exclude gt_bottom_border from class string if present
+            class_str = subtitle_match.group(1)
+            class_str = " ".join(
+                c for c in class_str.split() if c != "gt_bottom_border"
+            )
+            subtitle_class = f"gt_table {class_str}"
             subtitle_inline_style = subtitle_match.group(2) or ""
         else:
             subtitle_class = ""
