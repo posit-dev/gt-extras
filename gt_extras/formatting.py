@@ -240,17 +240,73 @@ def gt_duplicate_column(
     return res
 
 
+class GTCombinedLayout:
+    """A wrapper class for combined GT layouts that enables automatic HTML rendering."""
+
+    def __init__(self, html_content: str):
+        self.html_content = html_content
+
+    def _repr_html_(self):
+        return self.html_content
+
+    def __str__(self):
+        return self.html_content
+
+
 def gt_two_column_layout(
     gt1: GT,
     gt2: GT,
+    target: Literal["notebook", "browser"] | None = None,  # TODO: add save
     table_header_from: Literal[1, 2] | None = None,
-    target: Literal["save", "notebook", "browser"] = "browser",
-) -> str:
-    # TODO docstring
+) -> GTCombinedLayout:
     """
+    Combine two `GT` objects into a two-column layout.
+
+    This function takes two `GT` objects and arranges them side by side in a single HTML output.
+    Optionally, the header (title and subtitle) from one of the tables can be included at the top
+    of the combined layout. The output can be displayed directly in a Jupyter notebook, opened in
+    a browser, or returned as HTML.
+
+    Parameters
+    ----------
+    gt1
+        The first table to include in the layout. This table will appear on the left side.
+
+    gt2
+        The second table to include in the layout. This table will appear on the right side.
+
+    target
+        Determines how the combined layout is displayed. Use `"notebook"` to display in a Jupyter
+        notebook, `"browser"` to open in a web browser. If `None`, returns the layout object
+        for automatic rendering. Currently, `"save"` is not yet implemented.
+
+    table_header_from
+        Determines which table's header (title and subtitle) to include in the combined layout.
+        If set to `1`, the header from `gt1` will be used. If set to `2`, the header from `gt2`
+        will be used. If `None`, no header will be included.
+
     Returns
+    -------
+    GTCombinedLayout
+        A layout object that automatically renders as HTML in Jupyter notebooks and Quarto documents.
+
+    Examples
     --------
-    The html layout is returned
+    ```{python}
+    from great_tables import GT
+    import gt_extras as gte
+    import pandas as pd
+
+    # Create two example tables
+    df1 = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+    df2 = pd.DataFrame({"X": [7, 8, 9], "Y": [10, 11, 12]})
+
+    gt1 = GT(df1).tab_header(title="Table 1", subtitle="First Table")
+    gt2 = GT(df2).tab_header(title="Table 2", subtitle="Second Table")
+
+    # Combine the tables into a two-column layout (auto-renders in Quarto)
+    gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
+    ```
     """
 
     def extract_tab_header_and_style(gt: GT) -> dict:
@@ -394,9 +450,10 @@ def gt_two_column_layout(
             webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
             server.handle_request()
     elif target == "save":
-        # TODO save
-        pass
-    else:
+        return NotImplementedError(
+            "At the moment, only notebook and browser display options are available."
+        )
+    elif target is not None:
         raise Exception(f"Unknown target display: {target}")
 
-    return double_table_html
+    return GTCombinedLayout(double_table_html)
