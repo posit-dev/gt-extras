@@ -445,9 +445,9 @@ def gt_two_column_layout(
             """
 
         # Remove headers from the two tables
-        gt1_no_header = gt1.tab_header(title=None, subtitle=None)
+        gt1_no_header = gt1.tab_header(title=None, subtitle=None)  # type: ignore
         table_1_html = gt1_no_header.as_raw_html()
-        gt2_no_header = gt2.tab_header(title=None, subtitle=None)
+        gt2_no_header = gt2.tab_header(title=None, subtitle=None)  # type: ignore
         table_2_html = gt2_no_header.as_raw_html()
 
     else:
