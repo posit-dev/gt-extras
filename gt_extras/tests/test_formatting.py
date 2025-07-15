@@ -249,3 +249,13 @@ def test_gt_two_column_layout_invalid_target(two_dfs):
     gt2 = GT(df2)
     with pytest.raises(Exception, match="Unknown target display"):
         gt_two_column_layout(gt1, gt2, target="invalid")
+
+
+@pytest.mark.xfail(reason="Notebook target test not implemented yet")
+def test_gt_two_column_layout_notebook_target():
+    assert False
+
+
+@pytest.mark.xfail(reason="Browser target test not implemented yet")
+def test_gt_two_column_layout_browser_target():
+    assert False
