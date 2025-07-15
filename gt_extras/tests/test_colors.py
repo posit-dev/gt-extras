@@ -1,15 +1,48 @@
 import numpy as np
 import pandas as pd
+import polars as pl
 import pytest
 from conftest import assert_rendered_body
 from great_tables import GT
 
 from gt_extras import (
     gt_color_box,
+    gt_data_color_by_group,
     gt_highlight_cols,
     gt_highlight_rows,
     gt_hulk_col_numeric,
 )
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_no_groups(DataFrame):
+    df = DataFrame({"B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df)).as_raw_html()
+    assert 'style="color:' not in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_single_group(DataFrame):
+    df = DataFrame({"A": [1, 1, 1, 1, 1, 1], "B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df, groupname_col="A")).as_raw_html()
+
+    assert "color: #FFFFFF; background-color: #000000;" in html
+    assert "color: #000000; background-color: #ad8560;" in html
+    assert "color: #000000; background-color: #2fa2c8;" in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_multiple_singletons(DataFrame):
+    df = DataFrame({"A": [1, 2, 3, 4, 5, 6], "B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df, groupname_col="A")).as_raw_html()
+    assert html.count("color: #FFFFFF; background-color: #000000;") == 6
+
+
+def test_gt_data_color_by_group_multiple_groups(snapshot):
+    for DataFrame in [pd.DataFrame, pl.DataFrame]:
+        df = DataFrame({"A": [1, 2, 2, 3, 3, 3], "B": [1, 2, 3, 4, 5, 6]})
+        gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+        assert_rendered_body(snapshot(name="pd_and_pl"), gt)
 
 
 def test_gt_highlight_cols(snapshot, mini_gt):
