@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_theme_guardian – gt-extras</title>
+<title>gt_data_color_by_group – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,15 +58,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_theme_nytimes.html" rel="next">
-<link href="../reference/gt_theme_excel.html" rel="prev">
+<link href="../reference/gt_highlight_cols.html" rel="next">
+<link href="../reference/gt_color_box.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -104,9 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -156,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_color_box.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_data_color_by_group.html">gt_data_color_by_group</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -229,13 +226,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Colors</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_color_box.html" class="sidebar-item-text sidebar-link">
@@ -244,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_data_color_by_group.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_data_color_by_group.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_data_color_by_group</span></a>
   </div>
 </li>
@@ -270,13 +267,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Themes</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/gt_theme_538.html" class="sidebar-item-text sidebar-link">
@@ -309,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_theme_guardian.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_theme_guardian</span></a>
   </div>
 </li>
@@ -425,176 +422,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#gt_extras.gt_data_color_by_group" id="toc-gt_extras.gt_data_color_by_group" class="nav-link active" data-scroll-target="#gt_extras.gt_data_color_by_group">gt_data_color_by_group</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_theme_538.html">Themes</a></li><li class="breadcrumb-item"><a href="../reference/gt_theme_guardian.html">gt_theme_guardian</a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title">gt_theme_guardian</h1>
-</div>
+<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_color_box.html">Colors</a></li><li class="breadcrumb-item"><a href="../reference/gt_data_color_by_group.html">gt_data_color_by_group</a></li></ol></nav></header>
 
 
 
-<div class="quarto-title-meta column-body">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_theme_guardian(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Applies a Guardian-inspired theme to a <code>GT</code> object.</p>
-<p>This function styles a <code>GT</code> object with a look inspired by The Guardian’s data tables.</p>
+<section id="gt_extras.gt_data_color_by_group" class="level1">
+<h1>gt_data_color_by_group</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_data_color_by_group(gt, columns<span class="op">=</span><span class="va">None</span>, palette<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perform data cell colorization by group.</p>
+<p>The <code>gt_data_color_by_group()</code> function takes an existing <code>GT</code> object and adds colors to data cells according to their values within their group (as identified by <code>groupname_col</code>).</p>
+<p>Please refer to <code>GT.data_color</code> for more details and examples.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
-<dt><code><span class="parameter-name"><strong>gt</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
+<dt><code><span class="parameter-name"><strong>columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>An existing <code>GT</code> object.</p>
+<p>The columns to target. Can either be a single column name or a series of column names provided in a list.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>palette</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | list[str] | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dd>
+<p>The color palette to use. This should be a list of colors (e.g., <code>["#FF0000", "#00FF00", "#0000FF"]</code>). A ColorBrewer palette could also be used, just supply the name (reference available in the <em>Color palette access from ColorBrewer</em> section). If <code>None</code>, then a default palette will be used.</p>
 </dd>
 </dl>
+
+
 </section>
-<section id="returns" class="level2 doc-section doc-section-returns">
-<h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
-<dl>
-<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
-<dd>
-<p>The themed <code>GT</code> object, allowing for method chaining.</p>
-</dd>
-</dl>
-</section>
-<section id="examples" class="level2 doc-section doc-section-examples">
-<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="a93a5851" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars[[<span class="st">"model"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"trq"</span>]].head(<span class="dv">5</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span>md(<span class="st">"*Car*"</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Car Collection"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_theme_guardian)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div id="ivpficbsdg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-#ivpficbsdg table {
-          font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-
-#ivpficbsdg thead, tbody, tfoot, tr, td, th { border-style: none; }
- tr { background-color: transparent; }
-#ivpficbsdg p { margin: 0; padding: 0; }
- #ivpficbsdg .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #f6f6f6; width: auto; border-top-style: solid; border-top-width: 1px; border-top-color: #40c5ff; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #ivpficbsdg .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #ivpficbsdg .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #f6f6f6; border-bottom-width: 0; }
- #ivpficbsdg .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #f6f6f6; border-top-width: 0; }
- #ivpficbsdg .gt_heading { background-color: #f6f6f6; text-align: left; border-bottom-color: #f6f6f6; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ivpficbsdg .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 0px; border-bottom-color: #D3D3D3; }
- #ivpficbsdg .gt_col_headings { border-top-style: solid; border-top-width: 1px; border-top-color: #ececec; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ivpficbsdg .gt_col_heading { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #ivpficbsdg .gt_column_spanner_outer { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #ivpficbsdg .gt_column_spanner_outer:first-child { padding-left: 0; }
- #ivpficbsdg .gt_column_spanner_outer:last-child { padding-right: 0; }
- #ivpficbsdg .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #ececec; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #ivpficbsdg .gt_spanner_row { border-bottom-style: hidden; }
- #ivpficbsdg .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; text-transform: inherit; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #ivpficbsdg .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: bold; border-top-style: solid; border-top-width: 1px; border-top-color: grey; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: grey; vertical-align: middle; }
- #ivpficbsdg .gt_from_md> :first-child { margin-top: 0; }
- #ivpficbsdg .gt_from_md> :last-child { margin-bottom: 0; }
- #ivpficbsdg .gt_row { padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 0px; border-top-color: white; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #ivpficbsdg .gt_stub { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #ivpficbsdg .gt_stub_row_group { color: #333333; background-color: #f6f6f6; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #ivpficbsdg .gt_row_group_first td { border-top-width: 1px; }
- #ivpficbsdg .gt_row_group_first th { border-top-width: 1px; }
- #ivpficbsdg .gt_striped { background-color: #ececec; }
- #ivpficbsdg .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 3px; border-bottom-color: white; }
- #ivpficbsdg .gt_sourcenotes { color: #333333; background-color: #f6f6f6; border-bottom-style: none; border-bottom-width: 0px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #ivpficbsdg .gt_sourcenote { font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #ivpficbsdg .gt_left { text-align: left; }
- #ivpficbsdg .gt_center { text-align: center; }
- #ivpficbsdg .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #ivpficbsdg .gt_font_normal { font-weight: normal; }
- #ivpficbsdg .gt_font_bold { font-weight: bold; }
- #ivpficbsdg .gt_font_italic { font-style: italic; }
- #ivpficbsdg .gt_super { font-size: 65%; }
- #ivpficbsdg .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #ivpficbsdg .gt_asterisk { font-size: 100%; vertical-align: 0; }
- 
-</style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-
-  <tr class="gt_heading">
-    <td colspan="4" class="gt_heading gt_title gt_font_normal" style="color: #005689;font-size: 22px;font-weight: 700;">Car Collection</td>
-  </tr>
-<tr class="gt_col_headings">
-  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<em>Car</em>"><em>Car</em></th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year">year</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-  <tr>
-    <th class="gt_row gt_left gt_stub">GT</th>
-    <td class="gt_row gt_right">2017</td>
-    <td class="gt_row gt_right">647.0</td>
-    <td class="gt_row gt_right">550.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">458 Speciale</th>
-    <td class="gt_row gt_right gt_striped">2015</td>
-    <td class="gt_row gt_right gt_striped">597.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">458 Spider</th>
-    <td class="gt_row gt_right">2015</td>
-    <td class="gt_row gt_right">562.0</td>
-    <td class="gt_row gt_right">398.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">458 Italia</th>
-    <td class="gt_row gt_right gt_striped">2014</td>
-    <td class="gt_row gt_right gt_striped">562.0</td>
-    <td class="gt_row gt_right gt_striped">398.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">488 GTB</th>
-    <td class="gt_row gt_right">2016</td>
-    <td class="gt_row gt_right">661.0</td>
-    <td class="gt_row gt_right">561.0</td>
-  </tr>
-</tbody>
-
-
-</table>
-
-</div>
-        
-</div>
-</div>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -999,13 +860,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_theme_excel.html" class="pagination-link" aria-label="gt_theme_excel">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_theme_excel</span>
+      <a href="../reference/gt_color_box.html" class="pagination-link" aria-label="gt_color_box">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_color_box</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_theme_nytimes.html" class="pagination-link" aria-label="gt_theme_nytimes">
-        <span class="nav-page-text">gt_theme_nytimes</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_highlight_cols.html" class="pagination-link" aria-label="gt_highlight_cols">
+        <span class="nav-page-text">gt_highlight_cols</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
