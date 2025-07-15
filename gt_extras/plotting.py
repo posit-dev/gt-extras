@@ -146,12 +146,12 @@ def gt_plt_bar(
 
     # Helper function to make the individual bars
     def _make_bar_html(
-        scaled_val: int,
-        original_val: int,
+        scaled_val: float,
+        original_val: int | float,
         fill: str,
-        bar_height: int,
-        height: int,
-        width: int,
+        bar_height: float,
+        height: float,
+        width: float,
         stroke_color: str,
         show_labels: bool,
         label_color: str,
@@ -163,8 +163,8 @@ def gt_plt_bar(
             text = original_val
 
         canvas = SVG(
-            width=str(width) + UNITS,
-            height=str(height) + UNITS,
+            width=width,
+            height=height,
             elements=[
                 Rect(
                     x=0,
@@ -200,7 +200,7 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "#FFFFFF00"  # TODO change to transparent
 
-    def _make_bar(scaled_val: int, original_val: int) -> str:
+    def _make_bar(scaled_val: float, original_val: int | float) -> str:
         return _make_bar_html(
             scaled_val=scaled_val,
             original_val=original_val,
@@ -721,7 +721,7 @@ def gt_plt_dumbbell(
     gt: GT,
     col1: SelectExpr,  # exactly 1 col
     col2: SelectExpr,  # exactly 1 col
-    label: str = None,
+    label: str | None = None,
     width: float = 100,
     height: float = 30,
     col1_color: str = "purple",
