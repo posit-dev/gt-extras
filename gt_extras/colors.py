@@ -6,7 +6,7 @@ from great_tables import GT, loc, style
 from great_tables._data_color.base import _add_alpha, _html_color
 from great_tables._data_color.constants import ALL_PALETTES, DEFAULT_PALETTE
 from great_tables._data_color.palettes import GradientPalette
-from great_tables._locations import resolve_cols_c
+from great_tables._locations import RowSelectExpr, resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 
 from gt_extras._utils_column import (
@@ -153,7 +153,7 @@ def gt_highlight_cols(
 
 def gt_highlight_rows(
     gt: GT,
-    rows: SelectExpr = None,
+    rows: RowSelectExpr = None,
     fill: str = "#80bcd8",
     alpha: float | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
