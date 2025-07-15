@@ -467,7 +467,7 @@ def gt_two_column_layout(
             webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
             server.handle_request()
     elif target == "save":
-        return NotImplementedError(
+        raise NotImplementedError(
             "At the moment, only notebook and browser display options are available."
         )
     elif target is not None:
