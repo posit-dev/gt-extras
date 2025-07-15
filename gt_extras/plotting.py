@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Literal
+from typing import Literal, cast
 
 from great_tables import GT, html
 from great_tables._data_color.base import (
@@ -12,7 +12,7 @@ from great_tables._helpers import pct, px
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Line, Rect, Text
+from svg import SVG, Element, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -162,38 +162,36 @@ def gt_plt_bar(
         if show_labels:
             text = original_val
 
-        canvas = SVG(
-            width=width,
-            height=height,
-            elements=[
-                Rect(
-                    x=0,
-                    y=str((height - bar_height) / 2) + UNITS,
-                    width=str(width * scaled_val) + UNITS,
-                    height=str(bar_height) + UNITS,
-                    fill=fill,
-                    # onmouseover="this.style.fill= 'blue';",
-                    # onmouseout=f"this.style.fill='{fill}';",
-                ),
-                Text(
-                    text=text,
-                    x=str((width * scaled_val) * 0.98) + UNITS,
-                    y=str(height / 2) + UNITS,
-                    fill=label_color,
-                    font_size=bar_height * 0.6,
-                    text_anchor="end",
-                    dominant_baseline="central",
-                ),
-                Line(
-                    x1=0,
-                    x2=0,
-                    y1=0,
-                    y2=str(height) + UNITS,
-                    stroke_width=str(height / 10) + UNITS,
-                    stroke=stroke_color,
-                ),
-            ],
-        )
+        elements = [
+            Rect(
+                x=0,
+                y=str((height - bar_height) / 2) + UNITS,
+                width=str(width * scaled_val) + UNITS,
+                height=str(bar_height) + UNITS,
+                fill=fill,
+                # onmouseover="this.style.fill= 'blue';",
+                # onmouseout=f"this.style.fill='{fill}';",
+            ),
+            Text(
+                text=text,
+                x=str((width * scaled_val) * 0.98) + UNITS,
+                y=str(height / 2) + UNITS,
+                fill=label_color,
+                font_size=bar_height * 0.6,
+                text_anchor="end",
+                dominant_baseline="central",
+            ),
+            Line(
+                x1=0,
+                x2=0,
+                y1=0,
+                y2=str(height) + UNITS,
+                stroke_width=str(height / 10) + UNITS,
+                stroke=stroke_color,
+            ),
+        ]
+
+        canvas = SVG(width=width, height=height, elements=cast(list[Element], elements))
         return f'<div style="display: flex;">{canvas.as_str()}</div>'
 
     # Allow the user to hide the vertical stroke
