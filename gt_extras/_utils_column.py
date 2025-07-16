@@ -55,7 +55,7 @@ def _scale_numeric_column(
     data_table,
     col_name: str,
     col_vals: list,
-    domain: list[int] | list[float] | None = None,
+    domain: list[float] | None = None,
     default_domain_min_zero: bool = True,
 ) -> list[float]:
     """

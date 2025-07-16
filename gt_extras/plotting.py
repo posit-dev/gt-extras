@@ -196,7 +196,7 @@ def gt_plt_bar(
 
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
-        stroke_color = "#FFFFFF00"  # TODO change to transparent
+        stroke_color = "transparent"
 
     def _make_bar(scaled_val: float, original_val: int | float) -> str:
         return _make_bar_html(
@@ -328,11 +328,14 @@ def gt_plt_dot(
 
     def _make_dot_and_bar_html(
         bar_val: float,
-        fill: str,
+        fill: str | None,
         dot_category_label: str,
     ) -> str:
         if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
             return "<div></div>"
+
+        if fill is None:
+            fill = "transparent"
 
         label_div_style = "display:inline-block; float:left; margin-right:0px;"
 
@@ -369,9 +372,16 @@ def gt_plt_dot(
         data_col,
     )
 
+    # convert list[int] to list[float]
+    if domain is not None:
+        domain = [float(x) for x in domain]
+
     # Process numeric data column
     scaled_data_vals = _scale_numeric_column(
-        data_table, data_col_name, data_col_vals, domain
+        data_table,
+        data_col_name,
+        data_col_vals,
+        domain,
     )
 
     # Validate and get category column
@@ -392,7 +402,9 @@ def gt_plt_dot(
 
         res = res.fmt(
             lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
-                dot_category_label=x, fill=fill, bar_val=data
+                dot_category_label=x,
+                fill=fill,
+                bar_val=data,
             ),
             columns=category_col,
             rows=[i],

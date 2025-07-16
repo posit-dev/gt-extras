@@ -78,7 +78,7 @@ def test_gt_plt_bar_show_labels_false(mini_gt):
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None).as_raw_html()
-    assert html.count("#FFFFFF00") == 3
+    assert html.count('line stroke="transparent"') == 3
 
 
 def test_gt_plt_bar_type_error(mini_gt):
@@ -128,7 +128,7 @@ def test_gt_plt_dot_with_domain_expanded(mini_gt):
 def test_gt_plt_dot_with_domain_restricted(mini_gt):
     with pytest.warns(
         UserWarning,
-        match="Value 33.33 in column 'num' is greater than the domain maximum 10. Setting to 10.",
+        match="Value 33.33 in column 'num' is greater than the domain maximum 10.0. Setting to 10.0.",
     ):
         html = gt_plt_dot(
             gt=mini_gt, category_col="char", data_col="num", domain=[0, 10]
