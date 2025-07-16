@@ -223,11 +223,11 @@ def test_gt_color_box_custom_domain(mini_gt):
 
     messages = [str(w.message) for w in record]
     assert any(
-        "Value 0.1111 in column 'num' is less than the domain minimum 1.0" in m
+        "Value 0.1111 in column 'num' is less than the domain minimum 1" in m
         for m in messages
     )
     assert any(
-        "Value 33.33 in column 'num' is greater than the domain maximum 3.0" in m
+        "Value 33.33 in column 'num' is greater than the domain maximum 3" in m
         for m in messages
     )
 

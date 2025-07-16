@@ -128,7 +128,7 @@ def test_gt_plt_dot_with_domain_expanded(mini_gt):
 def test_gt_plt_dot_with_domain_restricted(mini_gt):
     with pytest.warns(
         UserWarning,
-        match="Value 33.33 in column 'num' is greater than the domain maximum 10.0. Setting to 10.0.",
+        match="Value 33.33 in column 'num' is greater than the domain maximum 10. Setting to 10.",
     ):
         html = gt_plt_dot(
             gt=mini_gt, category_col="char", data_col="num", domain=[0, 10]

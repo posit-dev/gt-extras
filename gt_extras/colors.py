@@ -512,8 +512,6 @@ def gt_color_box(
 
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
     palette = _get_palette(palette)
-    if domain is not None:
-        domain = [float(x) for x in domain]
 
     res = gt
     for column in columns_resolved:

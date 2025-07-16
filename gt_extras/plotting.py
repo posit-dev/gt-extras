@@ -371,10 +371,6 @@ def gt_plt_dot(
         data_col,
     )
 
-    # convert list[int] to list[float]
-    if domain is not None:
-        domain = [float(x) for x in domain]
-
     # Process numeric data column
     scaled_data_vals = _scale_numeric_column(
         data_table,
