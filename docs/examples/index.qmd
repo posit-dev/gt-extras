@@ -2,3 +2,17 @@
 pagetitle: Examples
 notebook-links: false
 ---
+
+## Examples
+
+
+::::: {.grid}
+
+:::{.g-col-lg-5 .g-col-12 .example .shrink-example}
+### [Two Column Layout](./cookbook/index.qmd#two-column-layout)
+{{< embed cookbook/index.qmd#two-column-layout >}}
+:::
+
+
+
+:::::

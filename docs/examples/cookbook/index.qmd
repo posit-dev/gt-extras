@@ -11,9 +11,10 @@ from great_tables import GT
 import gt_extras as gte
 ```
 
-
+## Two Column Layout
 
 ```{python}
+# | label: two-column-layout
 from great_tables.data import islands
 
 islands_first_10 = (
@@ -36,13 +37,18 @@ def make_gt_table(data):
         .fmt_integer(columns="size")
         .tab_header(title="Large Landmasses of the World")
     )
+
+    gt = gt.pipe(
+        gte.gt_color_box,
+        columns="size",
+        domain=[0, 17000],
+        palette=["lightblue", "darkblue"]
+    )
+
     return gt
 
 gt1 = make_gt_table(islands_first_10)
 gt2 = make_gt_table(islands_second_10)
 
-gte.gt_two_column_layout(gt1, gt2, table_header_from=1, target="browser")
-
-
-
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
