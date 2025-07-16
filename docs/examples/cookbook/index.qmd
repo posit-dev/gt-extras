@@ -18,13 +18,13 @@ On this page you will find on the left, basic tables created with **great-tables
 
 ### Two Column Layout
 
-::::: {.grid}
+<!-- ::::: {.grid} -->
 
-:::{.g-col-lg-6 .g-col-12 .shrink-example}
+<!-- :::{.g-col-lg-6 .g-col-12 .shrink-example} -->
 #### Large Landmasses
 
 ```{python}
-# | label : large-landmasses
+# | label: large-landmasses
 # | code-fold: true
 # | code-summary: "Show the code"
 from great_tables.data import islands
@@ -48,12 +48,12 @@ islands_first_20 = (
 make_simple_table(islands_first_20)
 ```
 
-:::
+<!-- ::: -->
 
-:::{.g-col-lg-6 .g-col-12 .shrink-example}
+<!-- :::{.g-col-lg-6 .g-col-12 .shrink-example} -->
 #### gt_two_column_layout
 ```{python}
-# | label : two-column-layout
+# | label: two-column-layout
 # | code-fold: true
 # | code-summary: "Show the code"
 def make_color_box_table(data):
@@ -86,9 +86,9 @@ gt2 = make_color_box_table(islands_second_10)
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
 
-:::
+<!-- ::: -->
 
-:::::
+<!-- ::::: -->
 
 
 
