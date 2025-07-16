@@ -2,3 +2,47 @@
 title: Cookbook
 jupyter: python3
 ---
+
+```{python}
+# | label: setup
+import polars as pl
+from great_tables import GT
+
+import gt_extras as gte
+```
+
+
+
+```{python}
+from great_tables.data import islands
+
+islands_first_10 = (
+    pl.from_pandas(islands)
+    .sort("size", descending=True)
+    .slice(0, 10)
+)
+
+islands_second_10 = (
+    pl.from_pandas(islands)
+    .sort("size", descending=True)
+    .slice(10, 10)
+)
+
+def make_gt_table(data):
+    gt = (
+        GT(data)
+        .tab_stub(rowname_col="name")
+        .tab_stubhead(label="landmass")
+        .fmt_integer(columns="size")
+        .tab_header(title="Large Landmasses of the World")
+    )
+    return gt
+
+gt1 = make_gt_table(islands_first_10)
+gt2 = make_gt_table(islands_second_10)
+
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1, target="browser")
+
+
+
+```

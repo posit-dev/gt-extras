@@ -19,5 +19,8 @@
             "source.organizeImports": "explicit"
         },
     },
+    "[quarto]": {
+        "editor.formatOnSave": false
+    },
     "python.analysis.typeCheckingMode": "standard",
 }
