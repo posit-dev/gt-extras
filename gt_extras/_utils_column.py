@@ -98,7 +98,12 @@ def _scale_numeric_column(
                 domain = [min(col_vals_filtered), max(col_vals_filtered)]
 
         # Rescale based on the given domain
-        scaled_vals = _rescale_numeric(df=data_table, vals=col_vals, domain=domain)
+        scaled_vals = _rescale_numeric(
+            df=data_table,
+            vals=col_vals,
+            # Alternatively we could convert the domain to floats, but I dont mind ignoring this
+            domain=domain,  # type: ignore
+        )
     else:
         raise TypeError(
             f"Invalid column type provided ({col_name}). Please ensure that the column is numeric."
