@@ -194,7 +194,9 @@ def test_gt_plt_dot_with_na_in_category():
     )
     gt = GT(df)
 
-    result = gt_plt_dot(gt=gt, category_col="category", data_col="values")
+    with pytest.warns(UserWarning, match="A color value is None and has been coerced"):
+        result = gt_plt_dot(gt=gt, category_col="category", data_col="values")
+
     html = result.as_raw_html()
 
     assert isinstance(result, GT)

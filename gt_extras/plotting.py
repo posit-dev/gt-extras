@@ -328,14 +328,11 @@ def gt_plt_dot(
 
     def _make_dot_and_bar_html(
         bar_val: float,
-        fill: str | None,
+        fill: str,
         dot_category_label: str,
     ) -> str:
         if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
             return "<div></div>"
-
-        if fill is None:
-            fill = "transparent"
 
         label_div_style = "display:inline-block; float:left; margin-right:0px;"
 
