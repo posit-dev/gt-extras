@@ -4,7 +4,12 @@ import polars as pl
 import pytest
 from great_tables import GT
 
-from gt_extras.formatting import fmt_pct_extra, gt_duplicate_column
+from gt_extras.formatting import (
+    GTCombinedLayout,
+    fmt_pct_extra,
+    gt_duplicate_column,
+    gt_two_column_layout,
+)
 from gt_extras.tests.conftest import assert_rendered_body
 
 
@@ -139,8 +144,8 @@ def test_gt_duplicate_column_polars():
     assert "num_copy" in res._tbl_data.columns
     assert "num_copy" in html
 
-    original_values = res._tbl_data.get_column("num").to_list()
-    duplicated_values = res._tbl_data.get_column("num_copy").to_list()
+    original_values = res._tbl_data.get_column("num").to_list()  # type: ignore
+    duplicated_values = res._tbl_data.get_column("num_copy").to_list()  # type: ignore
     assert original_values == duplicated_values
 
 
@@ -149,3 +154,108 @@ def test_gt_duplicate_column_invalid_name(mini_gt):
         ValueError, match="cannot be the same as the original column name"
     ):
         gt_duplicate_column(mini_gt, column="num", dupe_name="num")
+
+
+@pytest.fixture
+def two_dfs():
+    df1 = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
+    df2 = pd.DataFrame({"A": [5, 6], "B": [7, 8]})
+    return df1, df2
+
+
+def test_gt_two_column_layout_snapshot(snapshot, two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1, id="id1").tab_header(title="Header 1", subtitle="Subtitle 1")
+    gt2 = GT(df2, id="id2").tab_header(title="Header 2", subtitle="Subtitle 2")
+
+    result = gt_two_column_layout(gt1, gt2, table_header_from=1)
+    assert snapshot == str(result)
+
+
+def test_gt_two_column_layout_basic(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1).tab_header(title="Left Table", subtitle="Left Subtitle")
+    gt2 = GT(df2).tab_header(title="Right Table", subtitle="Right Subtitle")
+
+    result = gt_two_column_layout(gt1, gt2)
+    html = str(result)
+
+    assert "Left Table" in html
+    assert "Right Table" in html
+    assert '<div id="mycombinedtable"' in html
+    assert "<table" in html
+
+
+def test_gt_two_column_layout_with_header_from_1(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1).tab_header(title="Header 1", subtitle="Subtitle 1")
+    gt2 = GT(df2).tab_header(title="Header 2", subtitle="Subtitle 2")
+
+    result = gt_two_column_layout(gt1, gt2, table_header_from=1)
+    html = str(result)
+
+    assert "Header 1" in html
+    assert "Subtitle 1" in html
+    assert "Header 2" not in html
+    assert "Subtitle 2" not in html
+
+
+def test_gt_two_column_layout_with_header_from_2(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1).tab_header(title="Header 1", subtitle="Subtitle 1")
+    gt2 = GT(df2).tab_header(title="Header 2", subtitle="Subtitle 2")
+
+    result = gt_two_column_layout(gt1, gt2, table_header_from=2)
+    html = str(result)
+
+    assert "Header 2" in html
+    assert "Subtitle 2" in html
+    assert "Header 1" not in html
+    assert "Subtitle 1" not in html
+
+
+def test_gt_two_column_layout_no_headers(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1)
+    gt2 = GT(df2)
+
+    result = gt_two_column_layout(gt1, gt2, table_header_from=1)
+    html = str(result)
+
+    assert "Header" not in html
+    assert "Subtitle" not in html
+
+
+def test_gt_combined_layout_repr_html():
+    html = "<div>hello world</div>"
+    layout = GTCombinedLayout(html)
+    assert layout._repr_html_() == html
+
+
+def test_gt_two_column_layout_save_target(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1)
+    gt2 = GT(df2)
+    with pytest.raises(
+        NotImplementedError,
+        match="At the moment, only notebook and browser display options are available.",
+    ):
+        gt_two_column_layout(gt1, gt2, target="save")  # type: ignore
+
+
+def test_gt_two_column_layout_invalid_target(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1)
+    gt2 = GT(df2)
+    with pytest.raises(Exception, match="Unknown target display"):
+        gt_two_column_layout(gt1, gt2, target="invalid")  # type: ignore
+
+
+@pytest.mark.xfail(reason="Notebook target test not implemented yet")
+def test_gt_two_column_layout_notebook_target():
+    assert False
+
+
+@pytest.mark.xfail(reason="Browser target test not implemented yet")
+def test_gt_two_column_layout_browser_target():
+    assert False

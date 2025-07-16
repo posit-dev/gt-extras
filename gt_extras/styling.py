@@ -105,7 +105,7 @@ def gt_add_divider(
         style=style.borders(
             sides=sides,
             color=color,
-            weight=weight,
+            weight=f"{weight}px",
             style=divider_style,
         ),
         locations=locations,

@@ -20,7 +20,7 @@ def _validate_and_get_single_column(
     Parameters
     ----------
     gt
-        The GT object containing the data
+        The `GT` object containing the data
     expr
         The column expression to resolve
 
@@ -55,7 +55,7 @@ def _scale_numeric_column(
     data_table,
     col_name: str,
     col_vals: list,
-    domain: list[int] | list[float] | None = None,
+    domain: list[float] | list[int] | None = None,
     default_domain_min_zero: bool = True,
 ) -> list[float]:
     """
@@ -98,7 +98,12 @@ def _scale_numeric_column(
                 domain = [min(col_vals_filtered), max(col_vals_filtered)]
 
         # Rescale based on the given domain
-        scaled_vals = _rescale_numeric(df=data_table, vals=col_vals, domain=domain)
+        scaled_vals = _rescale_numeric(
+            df=data_table,
+            vals=col_vals,
+            # Alternatively we could convert the domain to floats, but I dont mind ignoring this
+            domain=domain,  # type: ignore
+        )
     else:
         raise TypeError(
             f"Invalid column type provided ({col_name}). Please ensure that the column is numeric."
