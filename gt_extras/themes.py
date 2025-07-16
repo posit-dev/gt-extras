@@ -48,13 +48,13 @@ def gt_theme_538(gt: GT) -> GT:
     ```
     """
     gt_themed = (
-        gt.opt_table_font(font=google_font("Cairo"), weight=400)
+        gt.opt_table_font(font=google_font("Cairo"))
         .tab_style(
-            style=style.text(font=google_font("Chivo"), weight=700),
+            style=style.text(font=google_font("Chivo"), weight="bold"),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(font=google_font("Chivo"), weight=300),
+            style=style.text(font=google_font("Chivo")),
             locations=loc.subtitle(),
         )
         .tab_style(
@@ -65,7 +65,6 @@ def gt_theme_538(gt: GT) -> GT:
                     transform="uppercase",
                     v_align="bottom",
                     size="14px",
-                    weight=200,
                 ),
             ],
             locations=[loc.column_labels(), loc.stubhead()],
@@ -626,7 +625,7 @@ def gt_theme_pff(
         gt_themed = (
             gt_themed.tab_spanner(
                 columns=[
-                    col
+                    str(col)
                     for col in gt._boxhead._get_column_labels()
                     if col not in span_cols
                 ],
