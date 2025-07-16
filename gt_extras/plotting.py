@@ -8,11 +8,10 @@ from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
-from great_tables._helpers import pct, px
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Element, Line, Rect, Text
+from svg import SVG, Element, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -156,26 +155,24 @@ def gt_plt_bar(
         show_labels: bool,
         label_color: str,
     ) -> str:
-        UNITS = "px"  # TODO: let use control this?
-
         text = ""
         if show_labels:
-            text = original_val
+            text = str(original_val)
 
         elements = [
             Rect(
                 x=0,
-                y=str((height - bar_height) / 2) + UNITS,
-                width=str(width * scaled_val) + UNITS,
-                height=str(bar_height) + UNITS,
+                y=Length((height - bar_height) / 2, "px"),
+                width=Length(width * scaled_val, "px"),
+                height=Length(bar_height, "px"),
                 fill=fill,
                 # onmouseover="this.style.fill= 'blue';",
                 # onmouseout=f"this.style.fill='{fill}';",
             ),
             Text(
                 text=text,
-                x=str((width * scaled_val) * 0.98) + UNITS,
-                y=str(height / 2) + UNITS,
+                x=Length((width * scaled_val) * 0.98, "px"),
+                y=Length(height / 2, "px"),
                 fill=label_color,
                 font_size=bar_height * 0.6,
                 text_anchor="end",
@@ -185,8 +182,8 @@ def gt_plt_bar(
                 x1=0,
                 x2=0,
                 y1=0,
-                y2=str(height) + UNITS,
-                stroke_width=str(height / 10) + UNITS,
+                y2=Length(height, "px"),
+                stroke_width=Length(height / 10, "px"),
                 stroke=stroke_color,
             ),
         ]
@@ -222,7 +219,12 @@ def gt_plt_bar(
             column,
         )
 
-        scaled_vals = _scale_numeric_column(res._tbl_data, col_name, col_vals, domain)
+        scaled_vals = _scale_numeric_column(
+            res._tbl_data,
+            col_name,
+            col_vals,
+            domain,
+        )
 
         # The location of the plot column will be right after the original column
         if keep_columns:
@@ -1646,13 +1648,13 @@ def gt_plt_bar_pct(
     # Helper function to make the individual bars
 
     def _make_bar_pct_html(
-        original_val: int | float,
+        # original_val: int | float,
         scaled_val: int | float,
         height: int,
         width: int,
         fill: str,
         background: str,
-        autoscale: bool,
+        # autoscale: bool,
         labels: bool,
         label_cutoff: float,
         decimals: int,
@@ -1664,8 +1666,8 @@ def gt_plt_bar_pct(
             outer_rect = Rect(
                 x=0,
                 y=0,
-                width=pct(width),
-                height=px(height),
+                width=Length(width, "%"),
+                height=Length(height, "px"),
                 fill="transparent",
             )
             elements.append(outer_rect)
@@ -1673,8 +1675,8 @@ def gt_plt_bar_pct(
             outer_rect = Rect(
                 x=0,
                 y=0,
-                width=px(width),
-                height=px(height),
+                width=Length(width, "px"),
+                height=Length(height, "px"),
                 fill=background,
             )
             elements.append(outer_rect)
@@ -1684,8 +1686,8 @@ def gt_plt_bar_pct(
             inner_rect = Rect(
                 x=0,
                 y=0,
-                width=px(_width),
-                height=px(height),
+                width=Length(_width, "px"),
+                height=Length(height, "px"),
                 fill=fill,
             )
             elements.append(inner_rect)
@@ -1707,28 +1709,32 @@ def gt_plt_bar_pct(
 
                 inner_text = Text(
                     text=_text,
-                    x=px(_x),
-                    y=px(height / 2),
+                    x=Length(_x, "px"),
+                    y=Length(height / 2, "px"),
                     fill=_fill,
-                    font_size=px(font_size),
+                    font_size=Length(font_size, "px"),
                     font_style=font_style,
                     text_anchor="start",
                     dominant_baseline="central",
                 )
                 elements.append(inner_text)
 
-        canvas = SVG(width=px(width), height=px(height), elements=elements)
+        canvas = SVG(
+            width=Length(width, "px"),
+            height=Length(height, "px"),
+            elements=elements,
+        )
         return f'<div style="display: flex;">{canvas.as_str()}</div>'
 
-    def _make_bar_pct(scaled_val: int, original_val: int) -> str:
+    def _make_bar_pct(scaled_val: int) -> str:
         return _make_bar_pct_html(
-            original_val=original_val,
+            # original_val=original_val,
             scaled_val=scaled_val,
             height=height,
             width=width,
             fill=fill,
             background=background,
-            autoscale=autoscale,
+            # autoscale=autoscale,
             labels=labels,
             label_cutoff=label_cutoff,
             decimals=decimals,
@@ -1753,10 +1759,7 @@ def gt_plt_bar_pct(
     # Apply the scaled value for each row, so the bar is proportional
     for i, scaled_val in enumerate(scaled_vals):
         res = res.fmt(
-            lambda original_val, scaled_val=scaled_val: _make_bar_pct(
-                original_val=original_val,
-                scaled_val=scaled_val,
-            ),
+            lambda _, scaled_val=scaled_val: _make_bar_pct(scaled_val=scaled_val),
             columns=column,
             rows=[i],
         )
