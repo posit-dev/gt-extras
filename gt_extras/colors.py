@@ -4,11 +4,11 @@ from typing import Literal
 
 from great_tables import GT, loc, style
 from great_tables._data_color.base import _add_alpha, _html_color
-from great_tables._data_color.constants import ALL_PALETTES, DEFAULT_PALETTE
 from great_tables._data_color.palettes import GradientPalette
 from great_tables._locations import RowSelectExpr, resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 
+from gt_extras._utils_color import _get_palette
 from gt_extras._utils_column import (
     _scale_numeric_column,
     _validate_and_get_single_column,
@@ -496,6 +496,9 @@ def gt_color_box(
         return html.strip()
 
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
+    palette = _get_palette(palette)
+    if domain is not None:
+        domain = [float(x) for x in domain]
 
     res = gt
     for column in columns_resolved:
@@ -507,18 +510,12 @@ def gt_color_box(
 
         # Process numeric data column
         scaled_vals = _scale_numeric_column(
-            data_table, col_name, col_vals, domain, default_domain_min_zero=False
+            data_table,
+            col_name,
+            col_vals,
+            domain,
+            default_domain_min_zero=False,
         )
-
-        # If palette is not provided, use a default palette
-        if palette is None:
-            palette = DEFAULT_PALETTE
-        # Otherwise get the palette from great_tables._data_color
-        elif isinstance(palette, str):
-            palette = ALL_PALETTES.get(palette, [palette])
-
-        # Standardize values in `palette` to hexadecimal color values
-        palette = _html_color(colors=palette)
 
         # Create a color scale function from the palette
         color_scale_fn = GradientPalette(colors=palette)
