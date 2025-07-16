@@ -215,3 +215,23 @@ def test_gt_color_box_with_na():
     html = res.as_raw_html()
 
     assert html.count("<div></div>") == 2
+
+
+def test_gt_color_box_custom_domain(mini_gt):
+    with pytest.warns(UserWarning) as record:
+        res = gt_color_box(mini_gt, columns="num", domain=[1, 3])
+
+    messages = [str(w.message) for w in record]
+    assert any(
+        "Value 0.1111 in column 'num' is less than the domain minimum 1.0" in m
+        for m in messages
+    )
+    assert any(
+        "Value 33.33 in column 'num' is greater than the domain maximum 3.0" in m
+        for m in messages
+    )
+
+    html = res.as_raw_html()
+    assert "background-color:#000000;" in html
+    assert "background-color:#56a6da;" in html
+    assert "background-color:#9e9e9e;" in html
