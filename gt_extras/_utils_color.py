@@ -15,18 +15,11 @@ __all__ = ["_get_discrete_colors_from_palette"]
 
 
 def _get_discrete_colors_from_palette(
-    palette: list[str] | str | None, data: list, data_table: TblData
+    palette: list[str] | str | None,
+    data: list,
+    data_table: TblData,
 ) -> list[str]:
-    # If palette is not provided, use a default palette
-    if palette is None:
-        palette = DEFAULT_PALETTE
-
-    # Otherwise get the palette from great_tables._data_color
-    elif isinstance(palette, str):
-        palette = ALL_PALETTES.get(palette, [palette])
-
-    # Standardize values in `palette` to hexadecimal color values
-    palette = _html_color(colors=palette)
+    palette = _get_palette(palette)
 
     # Rescale the category column for the purpose of assigning colors to each dot
     domain_factor = _get_domain_factor(df=data_table, vals=data)
@@ -55,3 +48,18 @@ def _get_discrete_colors_from_palette(
     color_vals = [c for c in color_vals if c is not None]
 
     return color_vals
+
+
+def _get_palette(palette: list[str] | str | None) -> list[str]:
+    # If palette is not provided, use a default palette
+    if palette is None:
+        palette = DEFAULT_PALETTE
+
+    # Otherwise get the palette from great_tables._data_color
+    elif isinstance(palette, str):
+        palette = ALL_PALETTES.get(palette, [palette])
+
+    # Standardize values in `palette` to hexadecimal color values
+    palette = _html_color(colors=palette)
+
+    return palette
