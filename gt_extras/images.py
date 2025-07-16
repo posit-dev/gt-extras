@@ -16,7 +16,7 @@ def img_header(
     text_color: str = "black",
 ) -> Html:
     """
-    Create an HTML header with an image and a label, suitable for a column label.
+    Create an HTML header with an image and a label, for a column label.
 
     Parameters
     ----------

@@ -105,7 +105,8 @@ def fa_icon_repeat(
 
     Note
     --------
-    See `icon_svg()` in the `faicons` package for further implementation details.
+    See `icon_svg()` in the [`faicons`](https://github.com/posit-dev/py-faicons)
+    package for further implementation details.
     """
     # Throw if `a11y` is not one of the allowed values
     if a11y not in [None, "deco", "sem"]:
