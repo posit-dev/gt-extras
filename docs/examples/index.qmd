@@ -3,6 +3,26 @@ pagetitle: Examples
 notebook-links: false
 ---
 
+<style>
+.column-page .example {
+    padding: 5px;
+}
+
+iframe {
+    overflow: hidden;
+}
+
+h3 {
+    text-align: center;
+}
+
+h3 a {
+    text-decoration: none;
+    font-size: 20px;
+
+}
+</style>
+
 ## Examples
 
 
