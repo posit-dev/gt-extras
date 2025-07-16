@@ -67,12 +67,12 @@ def test_with_tooltip_underline_style():
 
 def test_with_tooltip_underline_fail():
     with pytest.raises(ValueError):
-        with_tooltip("1", "Number One", text_decoration_style="underline")
+        with_tooltip("1", "Number One", text_decoration_style="underline")  # type: ignore
 
 
 def test_with_tooltip_None_color_fail():
     with pytest.raises(ValueError):
-        with_tooltip("1", "Number One", color=None)
+        with_tooltip("1", "Number One", color=None)  # type: ignore
 
 
 def test_with_tooltip_underline_style_none():

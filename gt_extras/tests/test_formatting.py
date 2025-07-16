@@ -144,8 +144,8 @@ def test_gt_duplicate_column_polars():
     assert "num_copy" in res._tbl_data.columns
     assert "num_copy" in html
 
-    original_values = res._tbl_data.get_column("num").to_list()
-    duplicated_values = res._tbl_data.get_column("num_copy").to_list()
+    original_values = res._tbl_data.get_column("num").to_list()  # type: ignore
+    duplicated_values = res._tbl_data.get_column("num_copy").to_list()  # type: ignore
     assert original_values == duplicated_values
 
 
@@ -240,7 +240,7 @@ def test_gt_two_column_layout_save_target(two_dfs):
         NotImplementedError,
         match="At the moment, only notebook and browser display options are available.",
     ):
-        gt_two_column_layout(gt1, gt2, target="save")
+        gt_two_column_layout(gt1, gt2, target="save")  # type: ignore
 
 
 def test_gt_two_column_layout_invalid_target(two_dfs):
@@ -248,7 +248,7 @@ def test_gt_two_column_layout_invalid_target(two_dfs):
     gt1 = GT(df1)
     gt2 = GT(df2)
     with pytest.raises(Exception, match="Unknown target display"):
-        gt_two_column_layout(gt1, gt2, target="invalid")
+        gt_two_column_layout(gt1, gt2, target="invalid")  # type: ignore
 
 
 @pytest.mark.xfail(reason="Notebook target test not implemented yet")

@@ -10,7 +10,7 @@ from gt_extras._utils_column import _validate_and_get_single_column
 __all__ = ["with_hyperlink", "with_tooltip", "gt_merge_stack"]
 
 
-def with_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
+def with_hyperlink(text: str, url: str, new_tab: bool = True) -> str:
     """
     Create HTML hyperlinks for use in `GT` cells.
 
@@ -249,8 +249,8 @@ def gt_merge_stack(
         col2_val: str,
         font_size_main: int,
         font_size_secondary: int,
-        font_weight_main: str,
-        font_weight_secondary: str,
+        font_weight_main: str | int,
+        font_weight_secondary: str | int,
         color_main: str,
         color_secondary: str,
         small_caps: bool,

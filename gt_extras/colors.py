@@ -4,11 +4,12 @@ from typing import Literal
 
 from great_tables import GT, loc, style
 from great_tables._data_color.base import _add_alpha, _html_color
-from great_tables._data_color.constants import ALL_PALETTES, DEFAULT_PALETTE
 from great_tables._data_color.palettes import GradientPalette
-from great_tables._locations import resolve_cols_c
+from great_tables._locations import Loc, RowSelectExpr, resolve_cols_c
+from great_tables._styles import CellStyle
 from great_tables._tbl_data import SelectExpr, is_na
 
+from gt_extras._utils_color import _get_palette
 from gt_extras._utils_column import (
     _scale_numeric_column,
     _validate_and_get_single_column,
@@ -134,17 +135,24 @@ def gt_highlight_cols(
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
     # conditionally apply to row labels
-    locations = [loc.body(columns=columns)]
+    locations: list[Loc] = [loc.body(columns=columns)]
     if include_column_labels:
         locations.append(loc.column_labels(columns=columns))
 
+    styles: list[CellStyle] = [
+        style.fill(color=fill),
+        style.borders(color=fill),
+    ]
+    styles.append(
+        style.text(
+            weight=font_weight,  # type: ignore
+            color=font_color,
+        )
+    )
+
     res = gt
     res = res.tab_style(
-        style=[
-            style.fill(color=fill),
-            style.text(weight=font_weight, color=font_color),
-            style.borders(color=fill),
-        ],
+        style=styles,
         locations=locations,
     )
 
@@ -153,7 +161,7 @@ def gt_highlight_cols(
 
 def gt_highlight_rows(
     gt: GT,
-    rows: SelectExpr = None,
+    rows: RowSelectExpr = None,
     fill: str = "#80bcd8",
     alpha: float | None = None,
     font_weight: Literal["normal", "bold", "bolder", "lighter"] | int = "normal",
@@ -234,17 +242,24 @@ def gt_highlight_rows(
         fill = _html_color(colors=[fill], alpha=alpha)[0]
 
     # conditionally apply to row labels
-    locations = [loc.body(rows=rows)]
+    locations: list[Loc] = [loc.body(rows=rows)]
     if include_row_labels:
         locations.append(loc.stub(rows=rows))
 
+    styles: list[CellStyle] = [
+        style.fill(color=fill),
+        style.borders(color=fill),
+    ]
+    styles.append(
+        style.text(
+            weight=font_weight,  # type: ignore
+            color=font_color,
+        )
+    )
+
     res = gt
     res = res.tab_style(
-        style=[
-            style.fill(color=fill),
-            style.text(weight=font_weight, color=font_color),
-            style.borders(color=fill),
-        ],
+        style=styles,
         locations=locations,
     )
 
@@ -496,6 +511,7 @@ def gt_color_box(
         return html.strip()
 
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
+    palette = _get_palette(palette)
 
     res = gt
     for column in columns_resolved:
@@ -507,18 +523,12 @@ def gt_color_box(
 
         # Process numeric data column
         scaled_vals = _scale_numeric_column(
-            data_table, col_name, col_vals, domain, default_domain_min_zero=False
+            data_table,
+            col_name,
+            col_vals,
+            domain,
+            default_domain_min_zero=False,
         )
-
-        # If palette is not provided, use a default palette
-        if palette is None:
-            palette = DEFAULT_PALETTE
-        # Otherwise get the palette from great_tables._data_color
-        elif isinstance(palette, str):
-            palette = ALL_PALETTES.get(palette, [palette])
-
-        # Standardize values in `palette` to hexadecimal color values
-        palette = _html_color(colors=palette)
 
         # Create a color scale function from the palette
         color_scale_fn = GradientPalette(colors=palette)
@@ -526,13 +536,18 @@ def gt_color_box(
         # Call the color scale function on the scaled values to get a list of colors
         color_vals = color_scale_fn(scaled_vals)
 
+        # Coerce color values to str if None
+        color_vals = [c for c in color_vals if c is not None]
+
         # Apply gt.fmt() to each row individually, so we can access the color_value for that row
         for i in range(len(data_table)):
             color_val = color_vals[i]
 
             res = res.fmt(
                 lambda x, fill=color_val: _make_color_box(
-                    value=x, fill=fill, alpha=alpha
+                    value=x,
+                    fill=fill,
+                    alpha=alpha,
                 ),
                 columns=column,
                 rows=[i],

@@ -19,4 +19,5 @@
             "source.organizeImports": "explicit"
         },
     },
+    "python.analysis.typeCheckingMode": "standard",
 }

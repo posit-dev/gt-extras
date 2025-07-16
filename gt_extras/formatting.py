@@ -4,7 +4,7 @@ import re
 import tempfile
 import webbrowser
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals.stable.v1 as nw
 from great_tables import GT
@@ -202,6 +202,10 @@ def gt_duplicate_column(
             original_col_info = col_info
             break
 
+    if TYPE_CHECKING:
+        if original_col_info is None:
+            raise ValueError(f"Column '{original_name}' not found in boxhead.")
+
     # make the new boxhead entry
     new_col_info = ColInfo(
         var=new_col_name,
@@ -366,7 +370,7 @@ def gt_two_column_layout(
         # Extract title and subtitle class/style information
         title_pattern = (
             r'<td[^>]*class="([^"]*gt_title[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
-            + re.escape(title)
+            + re.escape(str(title))
             + r"</td>"
         )
         title_match = re.search(title_pattern, html)
@@ -379,7 +383,7 @@ def gt_two_column_layout(
 
         subtitle_pattern = (
             r'<td[^>]*class="([^"]*gt_subtitle[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
-            + re.escape(subtitle)
+            + re.escape(str(subtitle))
             + r"</td>"
         )
         subtitle_match = re.search(subtitle_pattern, html)
@@ -441,9 +445,9 @@ def gt_two_column_layout(
             """
 
         # Remove headers from the two tables
-        gt1_no_header = gt1.tab_header(title=None, subtitle=None)
+        gt1_no_header = gt1.tab_header(title=None, subtitle=None)  # type: ignore
         table_1_html = gt1_no_header.as_raw_html()
-        gt2_no_header = gt2.tab_header(title=None, subtitle=None)
+        gt2_no_header = gt2.tab_header(title=None, subtitle=None)  # type: ignore
         table_2_html = gt2_no_header.as_raw_html()
 
     else:

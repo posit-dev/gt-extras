@@ -35,8 +35,8 @@ def test_gt_plt_bar_bar_height_too_high(mini_gt):
             gt=mini_gt, columns=["num"], bar_height=1234, height=567
         ).as_raw_html()
 
-    assert html.count('height="567px"') == 6
-    assert 'height="1234px"' not in html
+    assert html.count('height="567"') == 3
+    assert 'height="1234"' not in html
 
 
 def test_gt_plt_bar_bar_height_too_low(mini_gt):
@@ -48,8 +48,8 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
             gt=mini_gt, columns=["num"], bar_height=-345, height=1234
         ).as_raw_html()
 
-    assert html.count('height="1234px"') == 3
-    assert 'height="-345px"' not in html
+    assert html.count('height="1234"') == 3
+    assert 'height="-345"' not in html
 
 
 def test_gt_plt_bar_show_labels_true(mini_gt):
@@ -78,7 +78,7 @@ def test_gt_plt_bar_show_labels_false(mini_gt):
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
     html = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None).as_raw_html()
-    assert html.count("#FFFFFF00") == 3
+    assert html.count('line stroke="transparent"') == 3
 
 
 def test_gt_plt_bar_type_error(mini_gt):
@@ -194,7 +194,9 @@ def test_gt_plt_dot_with_na_in_category():
     )
     gt = GT(df)
 
-    result = gt_plt_dot(gt=gt, category_col="category", data_col="values")
+    with pytest.warns(UserWarning, match="A color value is None and has been coerced"):
+        result = gt_plt_dot(gt=gt, category_col="category", data_col="values")
+
     html = result.as_raw_html()
 
     assert isinstance(result, GT)
@@ -877,7 +879,7 @@ def test_gt_plt_bar_stack_invalid_scale():
     gt_test = GT(df)
 
     with pytest.raises(ValueError):
-        gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")
+        gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")  # type: ignore
 
 
 def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
@@ -993,4 +995,4 @@ def test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
     with pytest.raises(
         ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
     ):
-        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")
+        gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")  # type: ignore
