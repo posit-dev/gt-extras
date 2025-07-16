@@ -1,10 +1,10 @@
 ---
-pagetitle: Examples
+title: Examples
 notebook-links: false
 ---
 
 <style>
-.column-page .example {
+.example {
     padding: 5px;
 }
 
@@ -23,7 +23,13 @@ h3 a {
 }
 </style>
 
-## Examples
+```{python}
+# | code-fold: true
+# | code-summary: "Setup"
+import polars as pl
+from great_tables import GT, html
+import gt_extras as gte
+```
 
 
 ::::: {.grid}
