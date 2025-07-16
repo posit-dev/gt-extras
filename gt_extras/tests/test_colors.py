@@ -38,14 +38,14 @@ def test_gt_data_color_by_group_multiple_singletons(DataFrame):
     assert html.count("color: #FFFFFF; background-color: #000000;") == 6
 
 
-def test_gt_data_color_by_group_multiple_groups(snapshot):
+def test_gt_data_color_by_group_multiple_groups_snap(snapshot):
     for DataFrame in [pd.DataFrame, pl.DataFrame]:
         df = DataFrame({"A": [1, 2, 2, 3, 3, 3], "B": [1, 2, 3, 4, 5, 6]})
         gt = gt_data_color_by_group(GT(df, groupname_col="A"))
         assert_rendered_body(snapshot(name="pd_and_pl"), gt)
 
 
-def test_gt_highlight_cols(snapshot, mini_gt):
+def test_gt_highlight_cols_snap(snapshot, mini_gt):
     res = gt_highlight_cols(mini_gt)
     assert_rendered_body(snapshot, gt=res)
 
@@ -84,7 +84,7 @@ def test_gt_highlight_cols_font_weight_invalid_type(mini_gt, invalid_weight):
         gt_highlight_cols(mini_gt, font_weight=invalid_weight)
 
 
-def test_gt_highlight_rows(snapshot, mini_gt):
+def test_gt_highlight_rows_snap(snapshot, mini_gt):
     res = gt_highlight_rows(mini_gt, rows=[0, 1])
     assert_rendered_body(snapshot, gt=res)
 
