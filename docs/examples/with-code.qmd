@@ -303,3 +303,97 @@ gt = (
 gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
 ```
 {{< include ./show-last.qmd >}}
+
+
+## Themes
+
+### Setup themes
+```{python}
+# | label: setup-themes
+# | echo: true
+from great_tables import GT, html
+import gt_extras as gte
+from great_tables.data import airquality
+
+# Prepare the dataset
+airquality_mini = airquality.head(10).assign(Year=1973)
+
+# Create the base table
+gt = (
+    GT(airquality_mini)
+    .tab_header(
+        title="New York Air Quality Measurements",
+        subtitle="Daily measurements in New York City (May 1-10, 1973)",
+    )
+    .tab_spanner(label="Time", columns=["Year", "Month", "Day"])
+    .tab_spanner(
+        label="Measurement",
+        columns=["Ozone", "Solar_R", "Wind", "Temp"],
+    )
+    .cols_move_to_start(columns=["Year", "Month", "Day"])
+    .cols_label(
+        Ozone=html("Ozone,<br>ppbV"),
+        Solar_R=html("Solar R.,<br>cal/m<sup>2</sup>"),
+        Wind=html("Wind,<br>mph"),
+        Temp=html("Temp,<br>&deg;F"),
+    )
+)
+
+gt
+```
+
+### gt_theme_538
+```{python}
+# | label: gt_theme_538
+gt.pipe(gte.gt_theme_538)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_espn
+```{python}
+# | label: gt_theme_espn
+gt.pipe(gte.gt_theme_espn)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_guardian
+```{python}
+# | label: gt_theme_guardian
+gt.pipe(gte.gt_theme_guardian)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_nytimes
+```{python}
+# | label: gt_theme_nytimes
+gt.pipe(gte.gt_theme_nytimes)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_excel
+```{python}
+# | label: gt_theme_excel
+gt.pipe(gte.gt_theme_excel)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_dot_matrix
+```{python}
+# | label: gt_theme_dot_matrix
+gt.pipe(gte.gt_theme_dot_matrix)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_dark
+```{python}
+# | label: gt_theme_dark
+gt.pipe(gte.gt_theme_dark)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_theme_pff
+```{python}
+# | label: gt_theme_pff
+gt.pipe(gte.gt_theme_pff)
+```
+{{< include ./show-last.qmd >}}
