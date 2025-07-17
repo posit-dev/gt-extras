@@ -60,14 +60,14 @@ def gt_data_color_by_group(
         GT(exibble, rowname_col="row", groupname_col="group")
         .cols_hide(columns=None)
         .cols_unhide("num")
-        .cols_label({"num": "color by group"})
-        .pipe(gte.gt_duplicate_column, column="num", dupe_name="color all")
+        .cols_label({"num": "Color by Group"})
+        .pipe(gte.gt_duplicate_column, column="num", dupe_name="Color All")
         .tab_source_note(md("Left: `gt_data_color_by_group`, Right: `data_color`"))
     )
 
     (
         gt
-        .data_color(columns="color all", palette="PiYG")
+        .data_color(columns="Color All", palette="PiYG")
         .pipe(gte.gt_data_color_by_group, columns=["num"], palette="PiYG")
     )
     ```

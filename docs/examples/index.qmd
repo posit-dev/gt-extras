@@ -216,4 +216,29 @@ addEventListener('resize', setTableWidths);
 [gt_theme_pff](./with-code.html#gt_theme_pff){.embed-hover-overlay}
 :::
 
+:::{.masonry-item style="--width: 274;"}
+{{< embed with-code.qmd#add_text_img >}}
+[add_text_img](./with-code.html#add_text_img){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#fa_icon_repeat >}}
+[fa_icon_repeat](./with-code.html#fa_icon_repeat){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_fa_rank_change >}}
+[gt_fa_rank_change](./with-code.html#gt_fa_rank_change){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 525;"}
+{{< embed with-code.qmd#gt_fa_rating >}}
+[gt_fa_rating](./with-code.html#gt_fa_rating){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#img_header >}}
+[img_header](./with-code.html#img_header){.embed-hover-overlay}
+:::
+
 ::::
