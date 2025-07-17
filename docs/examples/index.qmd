@@ -102,14 +102,14 @@ addEventListener('DOMContentLoaded', setTableWidths);
 addEventListener('resize', setTableWidths);
 </script>
 
-::::: {.grid}
+<!-- ::::: {.grid}
 
 :::{.g-col-lg-5 .g-col-12 .example .shrink-example}
 ### [Two Column Layout](./before-after.qmd#two-column-layout)
 {{< embed raw.qmd#two-column-layout >}}
 :::
 
-:::::
+::::: -->
 
 ::::{.masonry-container}
 
