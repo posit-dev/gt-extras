@@ -9,5 +9,4 @@ def print_pre(name, code):
 
 
 print_pre("python", code_cell)
-# print_pre("html", html)
 ```

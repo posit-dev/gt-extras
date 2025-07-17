@@ -1,0 +1,202 @@
+---
+title: Examples With Code
+jupyter: python3
+echo: false
+---
+
+## Plotting
+
+### gt_plt_bar
+```{python}
+# | label: gt_plt_bar
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[
+    9:17,
+    ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+    .cols_align("center")
+    .cols_align("left", columns="mfr")
+)
+
+gt.pipe(
+    gte.gt_plt_bar,
+    columns= ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_bar_pct
+```{python}
+# | label: gt_plt_bar_pct
+import polars as pl
+from great_tables import GT
+import gt_extras as gte
+
+df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+    pl.col("x").alias("autoscale_on"),
+    pl.col("x").alias("autoscale_off"),
+)
+
+gt = GT(df)
+
+(
+    gt.pipe(
+        gte.gt_plt_bar_pct,
+        column=["autoscale_on"],
+        autoscale=True,
+        labels=True,
+        fill="green",
+    ).pipe(
+        gte.gt_plt_bar_pct,
+        column=["autoscale_off"],
+        autoscale=False,
+        labels=True,
+    )
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_bar_stack
+```{python}
+# | label: gt_plt_bar_stack
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame({
+    "x": ["Example A", "Example B", "Example C"],
+    "col": [
+        [10, 40, 50],
+        [30, 30, 40],
+        [50, 20, 30],
+    ],
+})
+
+gt = GT(df)
+
+gt.pipe(
+    gte.gt_plt_bar_stack,
+    column="col",
+    palette=["red", "grey", "black"],
+    labels=["Group 1", "Group 2", "Group 3"],
+    width=200,
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_conf_int
+```{python}
+# | label: gt_plt_conf_int
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame({
+    'group': ['A', 'B', 'C'],
+    'mean': [5.2, 7.8, 3.4],
+    'ci_lower': [3.1, 6.1, 1.8],
+    'ci_upper': [7.3, 9.7, 5.0],
+    'ci': [5.2, 7.8, 3.4],
+})
+
+gt = GT(df)
+gt.pipe(
+    gte.gt_plt_conf_int,
+    column='ci',
+    ci_columns=['ci_lower', 'ci_upper'],
+    width=120,
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_dot
+```{python}
+# | label: gt_plt_dot
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp"]]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+)
+
+gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_dumbbell
+```{python}
+# | label: gt_plt_dumbbell
+import pandas as pd
+from great_tables import GT, html, style, loc
+from great_tables.data import sp500
+import gt_extras as gte
+
+# Trim the data to December 2008
+df = sp500[["date", "open", "close"]].copy()
+df["date"] = pd.to_datetime(df["date"], errors='coerce')
+
+dec_2008 = df[
+    (df["date"].dt.month == 12) &
+    (df["date"].dt.year == 2008)
+]
+dec_2008 = dec_2008.iloc[::-1].iloc[2:11]
+
+# Make the Great Table
+gt = (
+    GT(dec_2008)
+    .tab_source_note(html("Purple: Open<br>Green: Close"))
+    .tab_style(
+        style=style.text(align="right"),
+        locations=[loc.source_notes()]
+    )
+)
+
+gt.pipe(
+    gte.gt_plt_dumbbell,
+    col1='open',
+    col2='close',
+    label = "Open to Close ($)",
+    num_decimals=0,
+    width = 250,
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_plt_winloss
+```{python}
+# | label: gt_plt_winloss
+from great_tables import GT, md
+import gt_extras as gte
+import pandas as pd
+
+df = pd.DataFrame(
+    {
+        "Team": ["Liverpool", "Chelsea", "Man City"],
+        "10 Games": [
+            [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],
+            [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+            [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0],
+        ],
+    }
+)
+
+gt = GT(df)
+
+gt.pipe(
+    gte.gt_plt_winloss,
+    column="10 Games",
+    win_color="green",
+)
+```
+{{< include ./show-last.qmd >}}

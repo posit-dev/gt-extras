@@ -149,7 +149,3 @@ h3,
 .shrink-example .cell-output table {
     zoom: 70%;
 }
-
-.shrink-example .cell-output {
-    justify-items: left;
-}

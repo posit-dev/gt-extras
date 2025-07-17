@@ -21,16 +21,131 @@ h3 a {
     font-size: 20px;
 
 }
-</style>
 
+/* Turn off weird quarto whitespace behavior */
+.embed-hover-wrapper > p {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.embed-hover-wrapper {
+    position: relative;
+    display: block;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.embed-hover-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 2;
+    border-radius: 8px;
+}
+
+.embed-hover-wrapper:hover .embed-hover-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.masonry-container {
+  column-count: auto;
+  column-width: 350px;
+  column-gap: 20px;
+  padding: 20px;
+}
+
+.masonry-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  break-inside: avoid;
+}
+
+.shrink-more .cell-output table {
+  zoom: 60%;
+}
+
+.grow-more .cell-output table {
+  zoom: 120%;
+}
+</style>
 
 ::::: {.grid}
 
 :::{.g-col-lg-5 .g-col-12 .example .shrink-example}
-### [Two Column Layout](./cookbook/before-afer.qmd#two-column-layout)
-{{< embed cookbook/raw.qmd#two-column-layout >}}
+### [Two Column Layout](./before-afer.qmd#two-column-layout)
+{{< embed raw.qmd#two-column-layout >}}
 :::
 
 
-
 :::::
+
+
+
+::::{.masonry-container}
+
+:::{.masonry-item .shrink-more}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_bar >}}
+[gt_plt_bar<br>see the code](./with-code.html#gt_plt_bar){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_bar_pct >}}
+[gt_plt_bar_pct<br>see the code](./with-code.html#gt_plt_bar_pct){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_bar_stack >}}
+[gt_plt_bar_stack<br>see the code](./with-code.html#gt_plt_bar_stack){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_conf_int >}}
+[gt_plt_conf_int<br>see the code](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_dot >}}
+[gt_plt_dot<br>see the code](./with-code.html#gt_plt_dot){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_dumbbell >}}
+[gt_plt_dumbbell<br>see the code](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
+:::
+:::
+
+:::{.masonry-item .grow-more}
+:::{.embed-hover-wrapper}
+{{< embed with-code.qmd#gt_plt_winloss >}}
+[gt_plt_winloss<br>see the code](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
+:::
+:::
+
+::::
