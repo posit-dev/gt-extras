@@ -540,3 +540,200 @@ gt = (
 gt
 ```
 {{< include ./show-last.qmd >}}
+
+
+## Utilities
+
+### fmt_pct_extra
+```{python}
+# | label: fmt_pct_extra
+from great_tables import GT
+from great_tables.data import towny
+import gt_extras as gte
+
+towny_mini = towny[
+    [
+        "name",
+        "pop_change_1996_2001_pct",
+        "pop_change_2001_2006_pct",
+        "pop_change_2006_2011_pct",
+    ]
+].tail(10)
+
+gt = (
+    GT(towny_mini)
+    .tab_spanner(label="Population Change", columns=[1, 2, 3])
+    .cols_label(
+        pop_change_1996_2001_pct="'96-'01",
+        pop_change_2001_2006_pct="'01-'06",
+        pop_change_2006_2011_pct="'06-'11",
+    )
+)
+
+gt.pipe(
+    gte.fmt_pct_extra,
+    columns=[1, 2, 3],
+    threshold=5,
+    color="green",
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_add_divider
+```{python}
+# | label: gt_add_divider
+import pandas as pd
+from great_tables import GT
+from great_tables.data import peeps
+import gt_extras as gte
+
+peeps_mini = peeps.head(6)
+
+gt = (
+    GT(peeps_mini)
+    .cols_hide([
+        "name_family", "postcode", "country", "country_code",
+        "dob", "gender", "state_prov", "email_addr",
+    ])
+    .tab_spanner("Location", ["address", "city"])
+    .tab_spanner("Body Measurements", ["height_cm", "weight_kg"])
+)
+
+gt.pipe(
+    gte.gt_add_divider,
+    columns="name_given",
+    color="#FFB90F",
+    divider_style="double",
+    weight=8,
+).pipe(
+    gte.gt_add_divider,
+    columns="phone_number",
+    color="purple",
+    sides=["right", "left"],
+    weight=5,
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_duplicate_column
+```{python}
+# | label: gt_duplicate_column
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["mfr", "model", "year", "hp"]].head(5)
+gt = GT(gtcars_mini)
+
+# Duplicate with custom name and position
+gt.pipe(
+    gte.gt_duplicate_column,
+    column="hp",
+    after="year",
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_merge_stack
+```{python}
+# | label: gt_merge_stack
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.read_csv("../assets/teams_colors_logos.csv")
+df = (df.filter(items=["team_nick", "team_abbr", "team_conf", "team_division", "team_wordmark"]).head(8))
+
+gt = GT(df, groupname_col="team_conf", rowname_col="team_nick")
+gt = gt.fmt_image(columns="team_wordmark")
+
+
+gt.pipe(
+    gte.gt_merge_stack,
+    col1="team_nick",
+    col2="team_division",
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_two_column_layout
+```{python}
+# | label: gt_two_column_layout
+from great_tables import GT
+import gt_extras as gte
+import pandas as pd
+
+df1 = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+df2 = pd.DataFrame({"A": [7, 8, 9], "B": [10, 11, 12]})
+
+gt1 = GT(df1).tab_header(title="Joined Table")
+gt2 = GT(df2)
+
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
+```
+{{< include ./show-last.qmd >}}
+
+### with_hyperlink
+```{python}
+# | label: with_hyperlink
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "name": ["Great Tables", "Plotnine", "Quarto"],
+        "url": [
+            "https://posit-dev.github.io/great-tables/",
+            "https://plotnine.org/",
+            "https://quarto.org/",
+        ],
+        "github_stars": [2334, 4256, 4628],
+        "repo_url": [
+            "https://github.com/posit-dev/great-tables",
+            "https://github.com/has2k1/plotnine",
+            "https://github.com/quarto-dev/quarto-cli",
+        ],
+    }
+)
+
+df["Package"] = [
+    gte.with_hyperlink(name, url)
+    for name, url in zip(df["name"], df["url"])
+]
+
+df["Github Stars"] = [
+    gte.with_hyperlink(github_stars, repo_url, new_tab=False)
+    for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
+]
+
+GT(df[["Package", "Github Stars"]])
+```
+{{< include ./show-last.qmd >}}
+
+### with_tooltip
+```{python}
+# | label: with_tooltip
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "name": ["Great Tables", "Plotnine", "Quarto"],
+        "description": [
+            "Absolutely Delightful Table-making in Python",
+            "A grammar of graphics for Python",
+            "An open-source scientific and technical publishing system",
+        ],
+    }
+)
+
+df["Package"] = [
+    gte.with_tooltip(name, description, color = "none")
+    for name, description in zip(df["name"], df["description"])
+]
+
+GT(df[["Package"]])
+```
+{{< include ./show-last.qmd >}}
