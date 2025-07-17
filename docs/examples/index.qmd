@@ -31,7 +31,7 @@ h3 a {
 .masonry-container {
   column-count: auto;
   /* Effectively determines number of columns (wider = fewer cols) */
-  column-width: 10rem;
+  column-width: 11rem;
   column-gap: 1em;
 }
 
@@ -239,6 +239,41 @@ addEventListener('resize', setTableWidths);
 :::{.masonry-item}
 {{< embed with-code.qmd#img_header >}}
 [img_header](./with-code.html#img_header){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 369;"}
+{{< embed with-code.qmd#fmt_pct_extra >}}
+[fmt_pct_extra](./with-code.html#fmt_pct_extra){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 745;"}
+{{< embed with-code.qmd#gt_add_divider >}}
+[gt_add_divider](./with-code.html#gt_add_divider){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 338;"}
+{{< embed with-code.qmd#gt_duplicate_column >}}
+[gt_duplicate_column](./with-code.html#gt_duplicate_column){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_merge_stack >}}
+[gt_merge_stack](./with-code.html#gt_merge_stack){.embed-hover-overlay}
+:::
+
+<!-- :::{.masonry-item}
+{{< embed with-code.qmd#gt_two_column_layout >}}
+[gt_two_column_layout](./with-code.html#gt_two_column_layout){.embed-hover-overlay}
+::: -->
+
+:::{.masonry-item style="--width: 201;"}
+{{< embed with-code.qmd#with_hyperlink >}}
+[with_hyperlink](./with-code.html#with_hyperlink){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#with_tooltip >}}
+[with_tooltip](./with-code.html#with_tooltip){.embed-hover-overlay}
 :::
 
 ::::

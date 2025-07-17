@@ -456,6 +456,8 @@ def gt_two_column_layout(
         table_2_html = gt2.as_raw_html()
 
     # make the table html
+    # TODO: <div id="mycombinedtable" style="display: flex; justify-content: center; width: 100%;">
+
     double_table_html = f"""
     <div id="mycombinedtable" style="display: inline-block; width: auto;">
         {header_html}
