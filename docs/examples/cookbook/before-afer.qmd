@@ -3,12 +3,14 @@ title: Before and After
 jupyter: python3
 ---
 
-```{python}
-# | label: setup
-import polars as pl
-from great_tables import GT, html
-import gt_extras as gte
-```
+
+<style>
+h4 a {
+    text-decoration: none;
+    font-size: 20px;
+
+}
+</style>
 
 ::: {.callout-tip collapse="false"}
 On this page you will find on the left, basic tables created with **great-tables**, and on the right, the same tables styled with one or more **gt-extras** functions.
