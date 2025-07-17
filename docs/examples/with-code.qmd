@@ -4,6 +4,7 @@ jupyter: python3
 echo: false
 ---
 
+
 ## Plotting
 
 ### gt_plt_bar
@@ -198,5 +199,107 @@ gt.pipe(
     column="10 Games",
     win_color="green",
 )
+```
+{{< include ./show-last.qmd >}}
+
+## Coloring
+
+### gt_color_box
+```{python}
+# | label: gt_color_box
+from great_tables import GT
+from great_tables.data import islands
+import gt_extras as gte
+
+islands_mini = (
+    islands
+    .sort_values(by="size", ascending=False)
+    .head(10)
+)
+
+gt = (
+    GT(islands_mini, rowname_col="name")
+    .tab_stubhead(label="Island")
+)
+
+gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
+```
+{{< include ./show-last.qmd >}}
+
+### gt_data_color_by_group
+```{python}
+# | label: gt_data_color_by_group
+from great_tables import GT, md
+from great_tables.data import exibble
+import gt_extras as gte
+
+gt = (
+    GT(exibble, rowname_col="row", groupname_col="group")
+    .cols_hide(columns=None)
+    .cols_unhide("num")
+    .cols_label({"num": "color by group"})
+    .pipe(gte.gt_duplicate_column, column="num", dupe_name="color all")
+    .tab_source_note(md("Left: `gt_data_color_by_group`, Right: `data_color`"))
+)
+
+(
+    gt
+    .data_color(columns="color all", palette="PiYG")
+    .pipe(gte.gt_data_color_by_group, columns=["num"], palette="PiYG")
+)
+```
+{{< include ./show-last.qmd >}}
+
+### gt_highlight_cols
+```{python}
+# | label: gt_highlight_cols
+from great_tables import GT, md
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label=md("*Car*"))
+)
+
+gt.pipe(gte.gt_highlight_cols, columns="hp")
+```
+{{< include ./show-last.qmd >}}
+
+### gt_highlight_rows
+```{python}
+# | label: gt_highlight_rows
+from great_tables import GT, md
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label=md("*Car*"))
+)
+
+gt.pipe(gte.gt_highlight_rows, rows=[2, 7])
+```
+{{< include ./show-last.qmd >}}
+
+### gt_hulk_col_numeric
+```{python}
+# | label: gt_hulk_col_numeric
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[0:8, ["model", "mfr", "year", "hp", "trq", "mpg_h"]]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+)
+
+gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
 ```
 {{< include ./show-last.qmd >}}
