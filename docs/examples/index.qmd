@@ -35,8 +35,8 @@ import gt_extras as gte
 ::::: {.grid}
 
 :::{.g-col-lg-5 .g-col-12 .example .shrink-example}
-### [Two Column Layout](./cookbook/index.qmd#two-column-layout)
-{{< embed cookbook/index.qmd#two-column-layout >}}
+### [Two Column Layout](./cookbook/before-afer.qmd#two-column-layout)
+{{< embed cookbook/raw.qmd#two-column-layout >}}
 :::
 
 
