@@ -30,7 +30,8 @@ h3 a {
 
 .masonry-container {
   column-count: auto;
-  column-width: 16rem;
+  /* Effectively determines number of columns (wider = fewer cols) */
+  column-width: 10rem;
   column-gap: 1em;
 }
 
@@ -132,7 +133,7 @@ addEventListener('resize', setTableWidths);
 [gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 291.8;"}
 {{< embed with-code.qmd#gt_plt_dot >}}
 [gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
