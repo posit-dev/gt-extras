@@ -133,13 +133,14 @@ addEventListener('resize', setTableWidths);
 [gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 291.8;"}
+<!-- Override width on some of the slower rendering ones -->
+:::{.masonry-item style="--width: 292;"}
 {{< embed with-code.qmd#gt_plt_dot >}}
 [gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
 
 <!-- Override width on some of the slower rendering ones -->
-:::{.masonry-item style="--width: 359.3;"}
+:::{.masonry-item style="--width: 359;"}
 {{< embed with-code.qmd#gt_plt_dumbbell >}}
 [gt_plt_dumbbell](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
 :::
@@ -149,13 +150,13 @@ addEventListener('resize', setTableWidths);
 [gt_plt_winloss](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 209;"}
 {{< embed with-code.qmd#gt_color_box >}}
 [gt_color_box](./with-code.html#gt_color_box){.embed-hover-overlay}
 :::
 
 <!-- Override width on some of the slower rendering ones -->
-:::{.masonry-item style="--width: 321.8;"}
+:::{.masonry-item style="--width: 322;"}
 {{< embed with-code.qmd#gt_data_color_by_group >}}
 [gt_data_color_by_group](./with-code.html#gt_data_color_by_group){.embed-hover-overlay}
 :::
@@ -173,6 +174,46 @@ addEventListener('resize', setTableWidths);
 :::{.masonry-item}
 {{< embed with-code.qmd#gt_hulk_col_numeric >}}
 [gt_hulk_col_numeric](./with-code.html#gt_hulk_col_numeric){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 380;"}
+{{< embed with-code.qmd#gt_theme_538 >}}
+[gt_theme_538](./with-code.html#gt_theme_538){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 395;"}
+{{< embed with-code.qmd#gt_theme_espn >}}
+[gt_theme_espn](./with-code.html#gt_theme_espn){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 417;"}
+{{< embed with-code.qmd#gt_theme_guardian >}}
+[gt_theme_guardian](./with-code.html#gt_theme_guardian){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 334;"}
+{{< embed with-code.qmd#gt_theme_nytimes >}}
+[gt_theme_nytimes](./with-code.html#gt_theme_nytimes){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 365;"}
+{{< embed with-code.qmd#gt_theme_excel >}}
+[gt_theme_excel](./with-code.html#gt_theme_excel){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 411;"}
+{{< embed with-code.qmd#gt_theme_dot_matrix >}}
+[gt_theme_dot_matrix](./with-code.html#gt_theme_dot_matrix){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 379;"}
+{{< embed with-code.qmd#gt_theme_dark >}}
+[gt_theme_dark](./with-code.html#gt_theme_dark){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 488;"}
+{{< embed with-code.qmd#gt_theme_pff >}}
+[gt_theme_pff](./with-code.html#gt_theme_pff){.embed-hover-overlay}
 :::
 
 ::::
