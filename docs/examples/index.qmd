@@ -58,6 +58,8 @@ h3 a {
     transition: opacity 0.2s;
     z-index: 2;
     border-radius: 8px;
+    text-align: center;
+    font-size: 1em;
 }
 
 .masonry-item:hover .embed-hover-overlay {
@@ -66,7 +68,7 @@ h3 a {
 }
 
 .masonry-item .cell-output table {
-  zoom: calc(var(--zoom, 100%) * var(--dynamic-factor));
+  zoom: calc(260/var(--width) * var(--dynamic-factor));
 }
 </style>
 
@@ -76,15 +78,27 @@ function updateZoom() {
   if (!container) return;
 
   const width = container.offsetWidth;
-  console.log("ooooooo", width);
   const factor = Math.max(0.5, Math.min(1.75, width / 300));
 
   document.documentElement.style.setProperty('--dynamic-factor', factor);
-  console.log(`Container width: ${width}px, Factor: ${factor.toFixed(2)}`);
 }
 
 addEventListener('DOMContentLoaded', updateZoom);
 addEventListener('resize', updateZoom);
+
+function setTableWidths() {
+  document.querySelectorAll('.masonry-item').forEach(item => {
+    const table = item.querySelector('.cell-output table');
+    if (table) {
+      // Set the --width CSS variable on the masonry item to the rendered width
+      const tableWidth = table.offsetWidth;
+      item.style.setProperty('--width', tableWidth);
+    }
+  });
+}
+
+addEventListener('DOMContentLoaded', setTableWidths);
+addEventListener('resize', setTableWidths);
 </script>
 
 ::::: {.grid}
@@ -98,39 +112,66 @@ addEventListener('resize', updateZoom);
 
 ::::{.masonry-container}
 
-:::{.masonry-item style="--zoom: 40%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_bar >}}
-[gt_plt_bar<br>see the code](./with-code.html#gt_plt_bar){.embed-hover-overlay}
+[gt_plt_bar](./with-code.html#gt_plt_bar){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 110%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_bar_pct >}}
-[gt_plt_bar_pct<br>see the code](./with-code.html#gt_plt_bar_pct){.embed-hover-overlay}
+[gt_plt_bar_pct](./with-code.html#gt_plt_bar_pct){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 93%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_bar_stack >}}
-[gt_plt_bar_stack<br>see the code](./with-code.html#gt_plt_bar_stack){.embed-hover-overlay}
+[gt_plt_bar_stack](./with-code.html#gt_plt_bar_stack){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 73%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_conf_int >}}
-[gt_plt_conf_int<br>see the code](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
+[gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 93%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_dot >}}
-[gt_plt_dot<br>see the code](./with-code.html#gt_plt_dot){.embed-hover-overlay}
+[gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 75%;"}
+<!-- Override width on some of the slower rendering ones -->
+:::{.masonry-item style="--width: 359.3;"}
 {{< embed with-code.qmd#gt_plt_dumbbell >}}
-[gt_plt_dumbbell<br>see the code](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
+[gt_plt_dumbbell](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--zoom: 160%;"}
+:::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_winloss >}}
-[gt_plt_winloss<br>see the code](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
+[gt_plt_winloss](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_color_box >}}
+[gt_color_box](./with-code.html#gt_color_box){.embed-hover-overlay}
+:::
+
+<!-- Override width on some of the slower rendering ones -->
+:::{.masonry-item style="--width: 321.8;"}
+{{< embed with-code.qmd#gt_data_color_by_group >}}
+[gt_data_color_by_group](./with-code.html#gt_data_color_by_group){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_highlight_cols >}}
+[gt_highlight_cols](./with-code.html#gt_highlight_cols){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_highlight_rows >}}
+[gt_highlight_rows](./with-code.html#gt_highlight_rows){.embed-hover-overlay}
+:::
+
+:::{.masonry-item}
+{{< embed with-code.qmd#gt_hulk_col_numeric >}}
+[gt_hulk_col_numeric](./with-code.html#gt_hulk_col_numeric){.embed-hover-overlay}
 :::
 
 ::::
