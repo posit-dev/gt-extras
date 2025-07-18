@@ -151,6 +151,24 @@
   </tbody>
   '''
 # ---
+# name: test_gt_plt_bullet_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">A</td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0px" width="24.0px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="black" x="23.52px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/><line stroke="darkgrey" stroke-width="3.0px" x1="27.299999999999997px" y1="0" x2="27.299999999999997px" y2="30px"/></svg></div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">B</td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0px" width="36.0px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="black" x="35.28px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/><line stroke="darkgrey" stroke-width="3.0px" x1="41.699999999999996px" y1="0" x2="41.699999999999996px" y2="30px"/></svg></div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">C</td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="30"><rect x="0" y="5.0px" width="60.0px" height="20px" fill="purple"/><text dominant-baseline="central" text-anchor="end" font-size="12.0" fill="black" x="58.8px" y="15.0px"/><line stroke="black" stroke-width="3.0px" x1="0" y1="0" x2="0" y2="30px"/><line stroke="darkgrey" stroke-width="3.0px" x1="46.5px" y1="0" x2="46.5px" y2="30px"/></svg></div></td>
+    </tr>
+  </tbody>
+  '''
+# ---
 # name: test_gt_plt_conf_int_snap
   '''
   <tbody class="gt_table_body">

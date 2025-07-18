@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 from great_tables import GT, html
 from great_tables._data_color.base import (
@@ -218,7 +218,7 @@ def gt_plt_bullet(
     stroke_color: str | None = "black",
     # show_labels: bool = False, # Maybe include in later version of fn, to label target or data?
     # label_color: str = "white",
-    keep_column: bool = False,
+    keep_data_column: bool = False,
 ) -> GT:
     """
     Create bullet chart plots in `GT` cells.
@@ -260,10 +260,10 @@ def gt_plt_bullet(
         The color of the vertical axis on the left side of the chart. The default is black, but if
         `None` is passed, no stroke will be drawn.
 
-    keep_column
-        Whether to keep the original column values. If this flag is `True`, the plotted values will
-        be duplicated into a new column with the string " plot" appended to the end of the column
-        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+    keep_data_column
+        Whether to keep the original data column values. If this flag is `True`, the plotted values
+        will be duplicated into a new column with the string " plot" appended to the end of the
+        column name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
         for more details.
 
     Returns
@@ -341,6 +341,7 @@ def gt_plt_bullet(
         scaled_val: float,
         original_val: int | float,
         target_val: float,
+        original_target_val: float | int | None,
     ) -> str:
         svg = _make_bar_svg(
             scaled_val=scaled_val,
@@ -355,24 +356,26 @@ def gt_plt_bullet(
         )
 
         # this should never be reached, but is needed for the type checker
-        if svg.elements is None:
-            raise ValueError(
-                "Unreachable code: svg.elements should never be None here."
+        if TYPE_CHECKING:
+            if svg.elements is None:
+                raise ValueError(
+                    "Unreachable code: svg.elements should never be None here."
+                )
+
+        if not is_na(res._tbl_data, original_target_val):
+            _stroke_width = height / 10
+            _x_location = max(_stroke_width, width * target_val - _stroke_width / 2)
+
+            svg.elements.append(
+                Line(
+                    x1=Length(_x_location, "px"),
+                    x2=Length(_x_location, "px"),
+                    y1=0,
+                    y2=Length(height, "px"),
+                    stroke_width=Length(_stroke_width, "px"),
+                    stroke=target_color,
+                ),
             )
-
-        _stroke_width = height / 10
-        _x_location = max(_stroke_width, width * target_val - _stroke_width / 2)
-
-        svg.elements.append(
-            Line(
-                x1=Length(_x_location, "px"),
-                x2=Length(_x_location, "px"),
-                y1=0,
-                y2=Length(height, "px"),
-                stroke_width=Length(_stroke_width, "px"),
-                stroke=target_color,
-            ),
-        )
 
         return f'<div style="display: flex;">{svg.as_str()}</div>'
 
@@ -387,7 +390,12 @@ def gt_plt_bullet(
         target_column,
     )
 
-    domain = [0, max([*data_col_vals, *target_col_vals])]
+    # Only consider numeric values for scaling domain
+    domain = None
+    numeric_data_vals = [v for v in data_col_vals if isinstance(v, (int, float))]
+    numeric_target_vals = [v for v in target_col_vals if isinstance(v, (int, float))]
+    if numeric_data_vals or numeric_target_vals:
+        domain = [0, max([*numeric_data_vals, *numeric_target_vals])]
 
     scaled_data_vals = _scale_numeric_column(
         res._tbl_data,
@@ -403,7 +411,7 @@ def gt_plt_bullet(
         domain,
     )
 
-    if keep_column:
+    if keep_data_column:
         res = gt_duplicate_column(
             res,
             data_col_name,
@@ -415,11 +423,17 @@ def gt_plt_bullet(
     # Apply the scaled value for each row, so the bar is proportional
     for i, scaled_val in enumerate(scaled_data_vals):
         target_val = scaled_target_vals[i]
+        original_target_val = target_col_vals[i]
+
         res = res.fmt(
             lambda original_val,
             scaled_val=scaled_val,
-            target_val=target_val: _make_bullet_plot_svg(
-                original_val=original_val, scaled_val=scaled_val, target_val=target_val
+            target_val=target_val,
+            original_target_val=original_target_val: _make_bullet_plot_svg(
+                original_val=original_val,
+                scaled_val=scaled_val,
+                target_val=target_val,
+                original_target_val=original_target_val,
             ),
             columns=data_col_name,
             rows=[i],
