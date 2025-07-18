@@ -23,11 +23,12 @@ from gt_extras._utils_column import (
 __all__ = [
     "gt_plt_bar",
     "gt_plt_bar_pct",
-    "gt_plt_dot",
+    "gt_plt_bar_stack",
+    "gt_plt_bullet",
     "gt_plt_conf_int",
+    "gt_plt_dot",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
-    "gt_plt_bar_stack",
 ]
 
 # TODO: default font for labels?
@@ -247,6 +248,11 @@ def gt_plt_bar(
                 rows=[i],
             )
 
+    return res
+
+
+def gt_plt_bullet(gt: GT) -> GT:
+    res = gt
     return res
 
 
