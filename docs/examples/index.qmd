@@ -114,7 +114,7 @@ addEventListener('resize', setTableWidths);
 
 :::{.g-col-lg-5 .g-col-12 .example .shrink-example}
 ### [Two Column Layout](./before-after.qmd#two-column-layout)
-{{< embed raw.qmd#two-column-layout >}}
+{{< embed _raw.qmd#two-column-layout >}}
 :::
 
 ::::: -->
