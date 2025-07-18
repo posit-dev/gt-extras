@@ -105,7 +105,8 @@ def fa_icon_repeat(
 
     Note
     --------
-    See `icon_svg()` in the `faicons` package for further implementation details.
+    See `icon_svg()` in the [`faicons`](https://github.com/posit-dev/py-faicons)
+    package for further implementation details.
     """
     # Throw if `a11y` is not one of the allowed values
     if a11y not in [None, "deco", "sem"]:
@@ -141,7 +142,7 @@ def gt_fa_rating(
     max_rating: int = 5,
     name: str = "star",
     primary_color: str = "gold",
-    secondary_color: str = "gray",
+    secondary_color: str = "grey",
     height: int = 20,
 ) -> GT:
     """

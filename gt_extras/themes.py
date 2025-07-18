@@ -327,7 +327,7 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
         An existing `GT` object.
 
     color
-        A string indicating the color of the row striping, defaults to a light gray.
+        A string indicating the color of the row striping, defaults to a light grey.
         Accepts either named colors or hex colors.
 
     Returns

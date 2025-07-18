@@ -1,0 +1,12 @@
+```{python}
+# | output: asis
+# | echo: false
+code_cell = _ih[-2]
+
+
+def print_pre(name, code):
+    print(f"\n```{name}\n{code}\n```\n\n")
+
+
+print_pre("python", code_cell)
+```

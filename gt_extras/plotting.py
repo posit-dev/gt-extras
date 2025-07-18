@@ -299,7 +299,7 @@ def gt_plt_dot(
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
+    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp"]]
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
