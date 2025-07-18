@@ -144,53 +144,6 @@ def gt_plt_bar(
             category=UserWarning,
         )
 
-    # Helper function to make the individual bars
-    def _make_bar_svg(
-        scaled_val: float,
-        original_val: int | float,
-        fill: str,
-        bar_height: float,
-        height: float,
-        width: float,
-        stroke_color: str,
-        show_labels: bool,
-        label_color: str,
-    ) -> SVG:
-        text = ""
-        if show_labels:
-            text = str(original_val)
-
-        elements = [
-            Rect(
-                x=0,
-                y=Length((height - bar_height) / 2, "px"),
-                width=Length(width * scaled_val, "px"),
-                height=Length(bar_height, "px"),
-                fill=fill,
-                # onmouseover="this.style.fill= 'blue';",
-                # onmouseout=f"this.style.fill='{fill}';",
-            ),
-            Text(
-                text=text,
-                x=Length((width * scaled_val) * 0.98, "px"),
-                y=Length(height / 2, "px"),
-                fill=label_color,
-                font_size=bar_height * 0.6,
-                text_anchor="end",
-                dominant_baseline="central",
-            ),
-            Line(
-                x1=0,
-                x2=0,
-                y1=0,
-                y2=Length(height, "px"),
-                stroke_width=Length(height / 10, "px"),
-                stroke=stroke_color,
-            ),
-        ]
-
-        return SVG(width=width, height=height, elements=elements)
-
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "transparent"
@@ -252,8 +205,134 @@ def gt_plt_bar(
     return res
 
 
-def gt_plt_bullet(gt: GT) -> GT:
+def gt_plt_bullet(
+    gt: GT,
+    data_column: SelectExpr,
+    target_column: SelectExpr,
+    # target_value: int | None = None, # if this, let target_column be none?
+    fill: str = "purple",
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
+    target_color: str = "darkgrey",
+    stroke_color: str | None = "black",
+    show_labels: bool = False,
+    label_color: str = "white",
+    domain: list[int] | list[float] | None = None,
+) -> GT:
+    """
+    Note
+    --------
+    Be careful when assigning a domain, as domains that don't contain all data and target values
+    may cause unexpected behavior.
+    """
+    if bar_height > height:
+        bar_height = height
+        warnings.warn(
+            f"Bar_height must be less than or equal to the plot height. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    if bar_height < 0:
+        bar_height = 0
+        warnings.warn(
+            f"Bar_height cannot be negative. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    # Allow the user to hide the vertical stroke
+    if stroke_color is None:
+        stroke_color = "transparent"
+
+    def _make_bullet_plot_svg(
+        scaled_val: float,
+        original_val: int | float,
+        target_val: float,
+    ) -> str:
+        svg = _make_bar_svg(
+            scaled_val=scaled_val,
+            original_val=original_val,
+            fill=fill,
+            bar_height=bar_height,
+            height=height,
+            width=width,
+            stroke_color=stroke_color,
+            show_labels=False,
+            label_color=label_color,
+        )
+
+        # this should never be reached, but is needed for the type checker
+        if svg.elements is None:
+            raise ValueError(
+                "Unreachable code: svg.elements should never be None here."
+            )
+
+        _stroke_width = height / 10
+        _x_location = max(_stroke_width, width * target_val - _stroke_width / 2)
+
+        svg.elements.append(
+            Line(
+                x1=Length(_x_location, "px"),
+                x2=Length(_x_location, "px"),
+                y1=0,
+                y2=Length(height, "px"),
+                stroke_width=Length(_stroke_width, "px"),
+                stroke=target_color,
+            ),
+        )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
+
     res = gt
+
+    data_col_name, data_col_vals = _validate_and_get_single_column(
+        gt,
+        data_column,
+    )
+    target_col_name, target_col_vals = _validate_and_get_single_column(
+        gt,
+        target_column,
+    )
+
+    data_range = [0, max([*data_col_vals, *target_col_vals])]
+    if domain is None:
+        domain = data_range
+
+    if min(domain) > min(data_range) or max(domain) < max(data_range):
+        warnings.warn(
+            f"Provided domain {domain} does not cover the data range {data_range}.",
+            category=UserWarning,
+        )
+
+    scaled_data_vals = _scale_numeric_column(
+        res._tbl_data,
+        data_col_name,
+        data_col_vals,
+        domain,
+    )
+
+    scaled_target_vals = _scale_numeric_column(
+        res._tbl_data,
+        target_col_name,
+        target_col_vals,
+        domain,
+    )
+
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_data_vals):
+        target_val = scaled_target_vals[i]
+        res = res.fmt(
+            lambda original_val,
+            scaled_val=scaled_val,
+            target_val=target_val: _make_bullet_plot_svg(
+                original_val=original_val, scaled_val=scaled_val, target_val=target_val
+            ),
+            columns=data_col_name,
+            rows=[i],
+        )
+
+    res = res.cols_hide(target_col_name)
+
     return res
 
 
@@ -1767,3 +1846,54 @@ def gt_plt_bar_pct(
             rows=[i],
         )
     return res
+
+
+########### Helper functions that get reused across plots ###########
+
+
+# Helper function to make the individual bars
+def _make_bar_svg(
+    scaled_val: float,
+    original_val: int | float,
+    fill: str,
+    bar_height: float,
+    height: float,
+    width: float,
+    stroke_color: str,
+    show_labels: bool,
+    label_color: str,
+) -> SVG:
+    text = ""
+    if show_labels:
+        text = str(original_val)
+
+    elements = [
+        Rect(
+            x=0,
+            y=Length((height - bar_height) / 2, "px"),
+            width=Length(width * scaled_val, "px"),
+            height=Length(bar_height, "px"),
+            fill=fill,
+            # onmouseover="this.style.fill= 'blue';",
+            # onmouseout=f"this.style.fill='{fill}';",
+        ),
+        Text(
+            text=text,
+            x=Length((width * scaled_val) * 0.98, "px"),
+            y=Length(height / 2, "px"),
+            fill=label_color,
+            font_size=bar_height * 0.6,
+            text_anchor="end",
+            dominant_baseline="central",
+        ),
+        Line(
+            x1=0,
+            x2=0,
+            y1=0,
+            y2=Length(height, "px"),
+            stroke_width=Length(height / 10, "px"),
+            stroke=stroke_color,
+        ),
+    ]
+
+    return SVG(width=width, height=height, elements=elements)
