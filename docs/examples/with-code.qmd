@@ -458,14 +458,32 @@ GT(df)
 ### gt_fa_rank_change
 ```{python}
 # | label: gt_fa_rank_change
-import pandas as pd
 from great_tables import GT
+from great_tables.data import towny
 import gt_extras as gte
 
-df = pd.DataFrame({"name": ["A", "B", "C"], "change": [3, -2, 0]})
+mini_towny = towny.head(10)
+gt = GT(mini_towny).cols_hide(None).cols_unhide("name")
 
-gt = GT(df)
-gt = gte.gt_fa_rank_change(gt, column="change")
+columns = [
+    "pop_change_1996_2001_pct",
+    "pop_change_2001_2006_pct",
+    "pop_change_2006_2011_pct",
+]
+
+for col in columns:
+    gt = (
+        gt
+        .cols_align(columns=col, align="center")
+        .cols_unhide(col)
+        .cols_label({col: col[11:20]})
+
+        .pipe(
+            gte.gt_fa_rank_change,
+            column=col,
+            neutral_range=[-0.01, 0.01],
+        )
+    )
 
 gt
 ```
@@ -721,19 +739,20 @@ import gt_extras as gte
 df = pd.DataFrame(
     {
         "name": ["Great Tables", "Plotnine", "Quarto"],
-        "description": [
+        "Description": [
             "Absolutely Delightful Table-making in Python",
             "A grammar of graphics for Python",
             "An open-source scientific and technical publishing system",
         ],
+        "Designed for": ["Tabling", "Plotting", "Notebooking"]
     }
 )
 
 df["Package"] = [
     gte.with_tooltip(name, description, color = "none")
-    for name, description in zip(df["name"], df["description"])
+    for name, description in zip(df["name"], df["Description"])
 ]
 
-GT(df[["Package"]])
+GT(df[["Package", "Designed for"]]).tab_header("Hover for Tooltip")
 ```
 {{< include ./show-last.qmd >}}
