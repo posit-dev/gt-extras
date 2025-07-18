@@ -142,7 +142,7 @@ def gt_fa_rating(
     max_rating: int = 5,
     name: str = "star",
     primary_color: str = "gold",
-    secondary_color: str = "gray",
+    secondary_color: str = "grey",
     height: int = 20,
 ) -> GT:
     """

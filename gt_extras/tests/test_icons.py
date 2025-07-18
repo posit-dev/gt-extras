@@ -47,7 +47,7 @@ def test_gt_fa_rating_basic():
     assert "<svg" in html
     assert "out of 5" in html
     assert "fill:gold" in html
-    assert "fill:gray" in html
+    assert "fill:grey" in html
 
 
 def test_gt_fa_rating_custom_max_rating():
