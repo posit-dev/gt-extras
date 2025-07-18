@@ -98,7 +98,13 @@ h3,
 
 #navbarCollapse>ul.navbar-nav.navbar-nav-scroll.me-auto>li>a {
     font-weight: bold;
+
 }
+
+#navbarCollapse {
+    background-color: white;
+}
+
 
 #api-reference>h1 {
     margin: 0;
@@ -125,7 +131,7 @@ h3,
 .nav-link.active {
     text-decoration: underline;
     text-decoration-thickness: 2px;
-    text-decoration-color: rgba(222, 238, 250, 0.75);
+    text-decoration-color: rgba(29, 144, 232, 0.75);
     text-underline-offset: 4px;
 }
 
@@ -136,7 +142,7 @@ h3,
 }
 
 #navbarCollapse>ul.navbar-nav.navbar-nav-scroll.ms-auto>li {
-    padding-right: 5px
+    padding-right: 5px;
 }
 
 #quarto-search>div>button {
