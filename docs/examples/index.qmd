@@ -90,8 +90,11 @@ addEventListener('resize', updateZoom);
 function setTableWidths() {
     document.querySelectorAll('.masonry-item').forEach(item => {
         // Skip fixed width for gt_two_column_layout
-        if ( item.querySelector('[href*="with-code.html#gt_two_column_layout"]')) {
-            item.style.setProperty('--width', 587);
+        if (
+            item.querySelector('[href*="with-code.html#gt_two_column_layout"]') ||
+            item.querySelector('#cell-gt_two_column_layout')
+        ) {
+            item.style.setProperty('--width', 631);
             return;
         }
         const table = item.querySelector('.cell-output table');
