@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Literal, cast
+from typing import Literal
 
 from great_tables import GT, html
 from great_tables._data_color.base import (
@@ -11,7 +11,7 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Element, Length, Line, Rect, Text
+from svg import SVG, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -189,7 +189,7 @@ def gt_plt_bar(
             ),
         ]
 
-        return SVG(width=width, height=height, elements=cast(list[Element], elements))
+        return SVG(width=width, height=height, elements=elements)
 
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
