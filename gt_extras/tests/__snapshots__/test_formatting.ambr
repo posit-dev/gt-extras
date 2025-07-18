@@ -83,8 +83,9 @@
 # name: test_gt_two_column_layout_snapshot
   '''
   
-      <div id="mycombinedtable" style="display: inline-block; width: auto;">
-          
+      <div style="display: flex; justify-content: center; width: 100%;">
+          <div id="mycombinedtable" style="display: inline-block; width: auto;">
+              
           <style>
           
   #mycombinedtable div {
@@ -146,9 +147,9 @@
                   Subtitle 1
               </div>
               
-          <div style="overflow: auto; white-space: nowrap;">
-              <div style="display: inline-block; margin-right: 1em;">
-                  <div id="id1" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+              <div style="overflow: auto; white-space: nowrap;">
+                  <div style="display: inline-block; margin-right: 1em;">
+                      <div id="id1" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   <style>
   #id1 table {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -220,9 +221,9 @@
   
   </div>
           
-              </div>
-              <div style="display: inline-block;">
-                  <div id="id2" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+                  </div>
+                  <div style="display: inline-block;">
+                      <div id="id2" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   <style>
   #id2 table {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -294,6 +295,7 @@
   
   </div>
           
+                  </div>
               </div>
           </div>
       </div>
