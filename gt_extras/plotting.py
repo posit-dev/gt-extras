@@ -216,9 +216,8 @@ def gt_plt_bullet(
     width: float = 60,
     target_color: str = "darkgrey",
     stroke_color: str | None = "black",
-    show_labels: bool = False,
+    # show_labels: bool = False, # Maybe include in later version of fn, to label target or data?
     label_color: str = "white",
-    domain: list[int] | list[float] | None = None,
 ) -> GT:
     """
     Note
@@ -294,15 +293,7 @@ def gt_plt_bullet(
         target_column,
     )
 
-    data_range = [0, max([*data_col_vals, *target_col_vals])]
-    if domain is None:
-        domain = data_range
-
-    if min(domain) > min(data_range) or max(domain) < max(data_range):
-        warnings.warn(
-            f"Provided domain {domain} does not cover the data range {data_range}.",
-            category=UserWarning,
-        )
+    domain = [0, max([*data_col_vals, *target_col_vals])]
 
     scaled_data_vals = _scale_numeric_column(
         res._tbl_data,
