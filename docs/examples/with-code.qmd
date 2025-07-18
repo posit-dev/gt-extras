@@ -38,7 +38,7 @@ gt.pipe(
     columns= ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bar_pct](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct.html){title="Click for reference"}
 ```{python}
@@ -69,7 +69,7 @@ gt = GT(df)
     )
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bar_stack](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack.html){title="Click for reference"}
 
@@ -98,7 +98,7 @@ gt.pipe(
     width=200,
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_conf_int](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html){title="Click for reference"}
 ```{python}
@@ -123,7 +123,7 @@ gt.pipe(
     width=120,
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_dot](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot.html){title="Click for reference"}
 ```{python}
@@ -141,7 +141,7 @@ gt = (
 
 gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_dumbbell](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell.html){title="Click for reference"}
 ```{python}
@@ -181,7 +181,7 @@ gt.pipe(
     height=60,
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_plt_winloss](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html){title="Click for reference"}
 ```{python}
@@ -209,7 +209,7 @@ gt.pipe(
     win_color="green",
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ## Coloring
 
@@ -233,7 +233,7 @@ gt = (
 
 gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_data_color_by_group](https://posit-dev.github.io/gt-extras/reference/gt_data_color_by_group.html){title="Click for reference"}
 ```{python}
@@ -257,7 +257,7 @@ gt = (
     .pipe(gte.gt_data_color_by_group, columns=["num"], palette="PiYG")
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_highlight_cols](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols.html){title="Click for reference"}
 ```{python}
@@ -275,7 +275,7 @@ gt = (
 
 gt.pipe(gte.gt_highlight_cols, columns="hp")
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_highlight_rows](https://posit-dev.github.io/gt-extras/reference/gt_highlight_rows.html){title="Click for reference"}
 ```{python}
@@ -293,7 +293,7 @@ gt = (
 
 gt.pipe(gte.gt_highlight_rows, rows=[2, 7])
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_hulk_col_numeric](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric.html){title="Click for reference"}
 ```{python}
@@ -311,7 +311,7 @@ gt = (
 
 gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 
 ## Themes
@@ -356,56 +356,56 @@ gt
 # | label: gt_theme_538
 gt.pipe(gte.gt_theme_538)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_espn](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_espn
 gt.pipe(gte.gt_theme_espn)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_guardian](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_guardian
 gt.pipe(gte.gt_theme_guardian)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_nytimes](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_nytimes
 gt.pipe(gte.gt_theme_nytimes)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_excel](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_excel
 gt.pipe(gte.gt_theme_excel)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_dot_matrix](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_dot_matrix
 gt.pipe(gte.gt_theme_dot_matrix)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_dark](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_dark
 gt.pipe(gte.gt_theme_dark)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_theme_pff](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_pff
 gt.pipe(gte.gt_theme_pff)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ## Icons and Images
 
@@ -442,7 +442,7 @@ gt = (
 
 gt
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [fa_icon_repeat](https://posit-dev.github.io/gt-extras/reference/fa_icon_repeat.html){title="Click for reference"}
 ```{python}
@@ -462,7 +462,7 @@ df = pd.DataFrame({
 
 GT(df)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_fa_rank_change](https://posit-dev.github.io/gt-extras/reference/gt_fa_rank_change.html){title="Click for reference"}
 ```{python}
@@ -496,7 +496,7 @@ for col in columns:
 
 gt
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_fa_rating](https://posit-dev.github.io/gt-extras/reference/gt_fa_rating.html){title="Click for reference"}
 ```{python}
@@ -519,7 +519,7 @@ gt = (
 
 gt.pipe(gte.gt_fa_rating, columns="rating", name="star")
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [img_header](https://posit-dev.github.io/gt-extras/reference/img_header.html){title="Click for reference"}
 ```{python}
@@ -566,7 +566,7 @@ gt = (
 
 gt
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 
 ## Utilities
@@ -604,7 +604,7 @@ gt.pipe(
     color="green",
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_add_divider](https://posit-dev.github.io/gt-extras/reference/gt_add_divider.html){title="Click for reference"}
 ```{python}
@@ -640,7 +640,7 @@ gt.pipe(
     weight=5,
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_duplicate_column](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column.html){title="Click for reference"}
 ```{python}
@@ -668,7 +668,7 @@ gt = GT(gtcars_mini)
     )
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_merge_stack](https://posit-dev.github.io/gt-extras/reference/gt_merge_stack.html){title="Click for reference"}
 ```{python}
@@ -690,7 +690,7 @@ gt.pipe(
     col2="team_division",
 )
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [gt_two_column_layout](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout.html){title="Click for reference"}
 ```{python}
@@ -707,7 +707,7 @@ gt2 = GT(df2)
 
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [with_hyperlink](https://posit-dev.github.io/gt-extras/reference/with_hyperlink.html){title="Click for reference"}
 ```{python}
@@ -745,7 +745,7 @@ df["Github Stars"] = [
 
 GT(df[["Package", "Github Stars"]])
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ### [with_tooltip](https://posit-dev.github.io/gt-extras/reference/with_tooltip.html){title="Click for reference"}
 ```{python}
@@ -773,4 +773,4 @@ df["Package"] = [
 
 GT(df[["Package", "Designed for"]]).tab_header("Hover for Tooltip")
 ```
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
