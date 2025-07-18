@@ -5,3 +5,6 @@ reference
 _site
 _sidebar.yml
 objects.json
+
+#embedding
+*.embed.ipynb
