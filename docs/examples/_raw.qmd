@@ -37,7 +37,7 @@ islands_first_20 = (
 make_simple_table(islands_first_20)
 ```
 
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 
 
@@ -75,7 +75,7 @@ gt2 = make_color_box_table(islands_second_10)
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
 
-{{< include ./show-last.qmd >}}
+{{< include ./_show-last.qmd >}}
 
 ```{python}
 from great_tables.data import airquality
