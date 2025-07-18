@@ -266,14 +266,19 @@ from great_tables import GT, md
 from great_tables.data import gtcars
 import gt_extras as gte
 
-gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
+gtcars_mini = gtcars[["model", "year", "hp", "trq", "mpg_h"]].head(8)
 
 gt = (
     GT(gtcars_mini, rowname_col="model")
     .tab_stubhead(label=md("*Car*"))
 )
 
-gt.pipe(gte.gt_highlight_cols, columns="hp")
+(
+    gt
+    .pipe(gte.gt_highlight_cols, columns="hp")
+    .pipe(gte.gt_highlight_cols, columns="mpg_h", fill="darkorchid")
+)
+
 ```
 {{< include ./_show-last.qmd >}}
 
@@ -291,7 +296,12 @@ gt = (
     .tab_stubhead(label=md("*Car*"))
 )
 
-gt.pipe(gte.gt_highlight_rows, rows=[2, 7])
+(
+    gt
+    .pipe(gte.gt_highlight_rows, rows=2, fill="#007FFF")
+    .pipe(gte.gt_highlight_rows, rows=3, fill="chartreuse")
+    .pipe(gte.gt_highlight_rows, rows=7, fill="#FF007F")
+)
 ```
 {{< include ./_show-last.qmd >}}
 
@@ -769,7 +779,7 @@ df["Github Stars"] = [
     for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
 ]
 
-GT(df[["Package", "Github Stars"]])
+GT(df[["Package", "Github Stars"]]).tab_header("Click the Links!")
 ```
 {{< include ./_show-last.qmd >}}
 
