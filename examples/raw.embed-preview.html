@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.7.32">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+    <title>Cookbook – gt-extras</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+    </style>
+
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
+
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
+
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = '/';
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-13b6ba62a9796d27ad8750d7b7bd67dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+     <script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>  
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="../reference/_styles-quartodoc.css">
+      </head>
+
+  <body class="floating nav-fixed quarto-notebook quarto-light">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link"><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Cookbook</h6>
+
+            <a href="../examples/raw.qmd" class="btn btn-primary quarto-download-embed" download="raw.qmd">Download Source</a>
+          </div>
+
+     <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">gt-extras</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../articles/intro.html"> 
+<span class="menu-text">Intro</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../examples/index.html"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reference/index.html"> 
+<span class="menu-text">API Reference</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/posit-dev/gt-extras"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">      <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cookbook</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>   <div id="496f7ef5-8a99-4069-99b0-de1cca4100f9" class="cell markdown">
+
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="setup" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, html</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div id="698b004e" class="cell markdown">
+<section id="large-landmasses" class="level4">
+<h4 class="anchored" data-anchor-id="large-landmasses">Large Landmasses</h4>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-large-landmasses" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> islands</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_simple_table(data):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> (</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        GT(data)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        .tab_stub(rowname_col<span class="op">=</span><span class="st">"name"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        .tab_stubhead(label<span class="op">=</span><span class="st">"landmass"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        .tab_header(title<span class="op">=</span><span class="st">"Large Landmasses of the World"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gt</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>islands_first_20 <span class="op">=</span> (</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">20</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>make_simple_table(islands_first_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="large-landmasses" class="cell-output cell-output-display">
+<div id="toakbzczzb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#toakbzczzb table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#toakbzczzb thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#toakbzczzb p { margin: 0; padding: 0; }
+ #toakbzczzb .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #toakbzczzb .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #toakbzczzb .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #toakbzczzb .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #toakbzczzb .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #toakbzczzb .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #toakbzczzb .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #toakbzczzb .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #toakbzczzb .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #toakbzczzb .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #toakbzczzb .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #toakbzczzb .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #toakbzczzb .gt_spanner_row { border-bottom-style: hidden; }
+ #toakbzczzb .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #toakbzczzb .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #toakbzczzb .gt_from_md> :first-child { margin-top: 0; }
+ #toakbzczzb .gt_from_md> :last-child { margin-bottom: 0; }
+ #toakbzczzb .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #toakbzczzb .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #toakbzczzb .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #toakbzczzb .gt_row_group_first td { border-top-width: 2px; }
+ #toakbzczzb .gt_row_group_first th { border-top-width: 2px; }
+ #toakbzczzb .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #toakbzczzb .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #toakbzczzb .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #toakbzczzb .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #toakbzczzb .gt_left { text-align: left; }
+ #toakbzczzb .gt_center { text-align: center; }
+ #toakbzczzb .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #toakbzczzb .gt_font_normal { font-weight: normal; }
+ #toakbzczzb .gt_font_bold { font-weight: bold; }
+ #toakbzczzb .gt_font_italic { font-style: italic; }
+ #toakbzczzb .gt_super { font-size: 65%; }
+ #toakbzczzb .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #toakbzczzb .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="2" class="gt_heading gt_title gt_font_normal">Large Landmasses of the World</td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="landmass">landmass</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="size">size</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <th class="gt_row gt_left gt_stub">Asia</th>
+    <td class="gt_row gt_right">16988</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Africa</th>
+    <td class="gt_row gt_right">11506</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">North America</th>
+    <td class="gt_row gt_right">9390</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">South America</th>
+    <td class="gt_row gt_right">6795</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Antarctica</th>
+    <td class="gt_row gt_right">5500</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Europe</th>
+    <td class="gt_row gt_right">3745</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Australia</th>
+    <td class="gt_row gt_right">2968</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Greenland</th>
+    <td class="gt_row gt_right">840</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">New Guinea</th>
+    <td class="gt_row gt_right">306</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Borneo</th>
+    <td class="gt_row gt_right">280</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Madagascar</th>
+    <td class="gt_row gt_right">227</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Baffin</th>
+    <td class="gt_row gt_right">184</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Sumatra</th>
+    <td class="gt_row gt_right">183</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Honshu</th>
+    <td class="gt_row gt_right">89</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Britain</th>
+    <td class="gt_row gt_right">84</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Ellesmere</th>
+    <td class="gt_row gt_right">82</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Victoria</th>
+    <td class="gt_row gt_right">82</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Celebes</th>
+    <td class="gt_row gt_right">73</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">New Zealand (S)</th>
+    <td class="gt_row gt_right">58</td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Java</th>
+    <td class="gt_row gt_right">49</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+</div>
+</div></div>
+<div id="f378ef60-0e71-4449-8f10-2306b2fc84aa" class="cell markdown">
+<pre><code># | output: asis
+# | echo: false
+code_cell = _ih[-2]
+
+
+def print_pre(name, code):
+    print(f"\n```{name}\n{code}\n```\n\n")
+
+
+print_pre("python", code_cell)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> islands</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_simple_table(data):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> (</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        GT(data)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        .tab_stub(rowname_col<span class="op">=</span><span class="st">"name"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        .tab_stubhead(label<span class="op">=</span><span class="st">"landmass"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        .tab_header(title<span class="op">=</span><span class="st">"Large Landmasses of the World"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gt</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>islands_first_20 <span class="op">=</span> (</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">20</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>make_simple_table(islands_first_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e6fe3718" class="cell markdown">
+<section id="gt_two_column_layout" class="level4">
+<h4 class="anchored" data-anchor-id="gt_two_column_layout">gt_two_column_layout</h4>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-two-column-layout" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_color_box_table(data):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> make_simple_table(data)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> gt.pipe(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        gte.gt_color_box,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span><span class="st">"size"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">17000</span>],</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        palette<span class="op">=</span>[<span class="st">"lightblue"</span>, <span class="st">"darkblue"</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gt</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>islands_first_10 <span class="op">=</span> (</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>islands_second_10 <span class="op">=</span> (</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">slice</span>(<span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>gt1 <span class="op">=</span> make_color_box_table(islands_first_10)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>gt2 <span class="op">=</span> make_color_box_table(islands_second_10)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>gte.gt_two_column_layout(gt1, gt2, table_header_from<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="two-column-layout" class="cell-output cell-output-display">
+
+    <div style="display: flex; justify-content: center; width: 100%;">
+        <div id="mycombinedtable" style="display: inline-block; width: auto;">
+            
+        <style>
+        
+#mycombinedtable div {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#mycombinedtable thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#mycombinedtable p { margin: 0; padding: 0; }
+ #mycombinedtable .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #mycombinedtable .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #mycombinedtable .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #mycombinedtable .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #mycombinedtable .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #mycombinedtable .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #mycombinedtable .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #mycombinedtable .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #mycombinedtable .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #mycombinedtable .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #mycombinedtable .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #mycombinedtable .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #mycombinedtable .gt_spanner_row { border-bottom-style: hidden; }
+ #mycombinedtable .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #mycombinedtable .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #mycombinedtable .gt_from_md> :first-child { margin-top: 0; }
+ #mycombinedtable .gt_from_md> :last-child { margin-bottom: 0; }
+ #mycombinedtable .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #mycombinedtable .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #mycombinedtable .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #mycombinedtable .gt_row_group_first td { border-top-width: 2px; }
+ #mycombinedtable .gt_row_group_first th { border-top-width: 2px; }
+ #mycombinedtable .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #mycombinedtable .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #mycombinedtable .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #mycombinedtable .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #mycombinedtable .gt_left { text-align: left; }
+ #mycombinedtable .gt_center { text-align: center; }
+ #mycombinedtable .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #mycombinedtable .gt_font_normal { font-weight: normal; }
+ #mycombinedtable .gt_font_bold { font-weight: bold; }
+ #mycombinedtable .gt_font_italic { font-style: italic; }
+ #mycombinedtable .gt_super { font-size: 65%; }
+ #mycombinedtable .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #mycombinedtable .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+
+        </style>
+        
+            <div class="gt_table gt_heading gt_title gt_font_normal" style="width:100%; ">
+                Large Landmasses of the World
+            </div>
+            
+            <div style="overflow: auto; white-space: nowrap;">
+                <div style="display: inline-block; margin-right: 1em;">
+                    <div id="iocndblboi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#iocndblboi table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#iocndblboi thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#iocndblboi p { margin: 0; padding: 0; }
+ #iocndblboi .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #iocndblboi .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #iocndblboi .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #iocndblboi .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #iocndblboi .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #iocndblboi .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #iocndblboi .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #iocndblboi .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #iocndblboi .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #iocndblboi .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #iocndblboi .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #iocndblboi .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #iocndblboi .gt_spanner_row { border-bottom-style: hidden; }
+ #iocndblboi .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #iocndblboi .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #iocndblboi .gt_from_md> :first-child { margin-top: 0; }
+ #iocndblboi .gt_from_md> :last-child { margin-bottom: 0; }
+ #iocndblboi .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #iocndblboi .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #iocndblboi .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #iocndblboi .gt_row_group_first td { border-top-width: 2px; }
+ #iocndblboi .gt_row_group_first th { border-top-width: 2px; }
+ #iocndblboi .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #iocndblboi .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #iocndblboi .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #iocndblboi .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #iocndblboi .gt_left { text-align: left; }
+ #iocndblboi .gt_center { text-align: center; }
+ #iocndblboi .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #iocndblboi .gt_font_normal { font-weight: normal; }
+ #iocndblboi .gt_font_bold { font-weight: bold; }
+ #iocndblboi .gt_font_italic { font-style: italic; }
+ #iocndblboi .gt_super { font-size: 65%; }
+ #iocndblboi .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #iocndblboi .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="landmass">landmass</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="size">size</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <th class="gt_row gt_left gt_stub">Asia</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#00008b33; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#00008b; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">16988</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Africa</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#3846a833; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#3846a8; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">11506</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">North America</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#4d61b433; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#4d61b4; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">9390</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">South America</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#6882c233; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#6882c2; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">6795</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Antarctica</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#7592c933; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#7592c9; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">5500</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Europe</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#87a8d233; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#87a8d2; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">3745</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Australia</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#8fb2d633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#8fb2d6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">2968</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Greenland</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#a4cde233; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#a4cde2; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">840</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">New Guinea</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#aad4e433; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#aad4e4; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">306</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Borneo</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#aad4e533; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#aad4e5; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">280</div>
+            </div>
+        </div></td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+                </div>
+                <div style="display: inline-block;">
+                    <div id="siayxmfduu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#siayxmfduu table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#siayxmfduu thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#siayxmfduu p { margin: 0; padding: 0; }
+ #siayxmfduu .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #siayxmfduu .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #siayxmfduu .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #siayxmfduu .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #siayxmfduu .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #siayxmfduu .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #siayxmfduu .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #siayxmfduu .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #siayxmfduu .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #siayxmfduu .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #siayxmfduu .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #siayxmfduu .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #siayxmfduu .gt_spanner_row { border-bottom-style: hidden; }
+ #siayxmfduu .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #siayxmfduu .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #siayxmfduu .gt_from_md> :first-child { margin-top: 0; }
+ #siayxmfduu .gt_from_md> :last-child { margin-bottom: 0; }
+ #siayxmfduu .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #siayxmfduu .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #siayxmfduu .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #siayxmfduu .gt_row_group_first td { border-top-width: 2px; }
+ #siayxmfduu .gt_row_group_first th { border-top-width: 2px; }
+ #siayxmfduu .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #siayxmfduu .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #siayxmfduu .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #siayxmfduu .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #siayxmfduu .gt_left { text-align: left; }
+ #siayxmfduu .gt_center { text-align: center; }
+ #siayxmfduu .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #siayxmfduu .gt_font_normal { font-weight: normal; }
+ #siayxmfduu .gt_font_bold { font-weight: bold; }
+ #siayxmfduu .gt_font_italic { font-style: italic; }
+ #siayxmfduu .gt_super { font-size: 65%; }
+ #siayxmfduu .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #siayxmfduu .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="landmass">landmass</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="size">size</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <th class="gt_row gt_left gt_stub">Madagascar</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#abd5e533; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#abd5e5; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">227</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Baffin</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#abd6e533; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#abd6e5; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">184</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Sumatra</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#abd6e533; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#abd6e5; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">183</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Honshu</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">89</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Britain</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">84</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Ellesmere</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">82</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Victoria</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">82</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Celebes</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">73</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">New Zealand (S)</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#acd7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#acd7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">58</div>
+            </div>
+        </div></td>
+  </tr>
+  <tr>
+    <th class="gt_row gt_left gt_stub">Java</th>
+    <td class="gt_row gt_right"><div>
+            <div style="min-height:20px; min-width:70px;background-color:#add7e633; display:flex; border-radius:5px;align-items:center; padding:0px 7.0px;">
+                <div style="height:13.0px; width:13.0px;background-color:#add7e6; display:flex; border-radius:4px;"></div>
+                <div style="line-height:20px; margin-left: 7.0px;font-weight:normal; white-space:nowrap;">49</div>
+            </div>
+        </div></td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div></div>
+<div id="33c71565-7cce-496e-86e0-693a823d5556" class="cell markdown">
+<pre><code># | output: asis
+# | echo: false
+code_cell = _ih[-2]
+
+
+def print_pre(name, code):
+    print(f"\n```{name}\n{code}\n```\n\n")
+
+
+print_pre("python", code_cell)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_color_box_table(data):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> make_simple_table(data)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    gt <span class="op">=</span> gt.pipe(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        gte.gt_color_box,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span><span class="st">"size"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">17000</span>],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        palette<span class="op">=</span>[<span class="st">"lightblue"</span>, <span class="st">"darkblue"</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gt</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>islands_first_10 <span class="op">=</span> (</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>islands_second_10 <span class="op">=</span> (</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(islands)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">"size"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">slice</span>(<span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>gt1 <span class="op">=</span> make_color_box_table(islands_first_10)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>gt2 <span class="op">=</span> make_color_box_table(islands_second_10)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>gte.gt_two_column_layout(gt1, gt2, table_header_from<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="0ab72ace" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> airquality</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>airquality_mini <span class="op">=</span> airquality.head(<span class="dv">10</span>).assign(Year <span class="op">=</span> <span class="dv">1973</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>airquality_gt <span class="op">=</span> (</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    GT(airquality_mini)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    .tab_header(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"New York Air Quality Measurements"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span><span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">"Time"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"Year"</span>, <span class="st">"Month"</span>, <span class="st">"Day"</span>]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    .cols_move_to_start(columns<span class="op">=</span>[<span class="st">"Year"</span>, <span class="st">"Month"</span>, <span class="st">"Day"</span>])</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        Ozone <span class="op">=</span> html(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        Solar_R <span class="op">=</span> html(<span class="st">"Solar R.,&lt;br&gt;cal/m&lt;sup&gt;2&lt;/sup&gt;"</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        Wind <span class="op">=</span> html(<span class="st">"Wind,&lt;br&gt;mph"</span>),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        Temp <span class="op">=</span> html(<span class="st">"Temp,&lt;br&gt;&amp;deg;F"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>airquality_gt.tab_spanner(</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Measurement"</span>,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"Ozone"</span>, <span class="st">"Solar_R"</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>]</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="kdinlgrzma" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#kdinlgrzma table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#kdinlgrzma thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#kdinlgrzma p { margin: 0; padding: 0; }
+ #kdinlgrzma .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #kdinlgrzma .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #kdinlgrzma .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #kdinlgrzma .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #kdinlgrzma .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #kdinlgrzma .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #kdinlgrzma .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #kdinlgrzma .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #kdinlgrzma .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #kdinlgrzma .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #kdinlgrzma .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #kdinlgrzma .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #kdinlgrzma .gt_spanner_row { border-bottom-style: hidden; }
+ #kdinlgrzma .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #kdinlgrzma .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #kdinlgrzma .gt_from_md> :first-child { margin-top: 0; }
+ #kdinlgrzma .gt_from_md> :last-child { margin-bottom: 0; }
+ #kdinlgrzma .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #kdinlgrzma .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #kdinlgrzma .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #kdinlgrzma .gt_row_group_first td { border-top-width: 2px; }
+ #kdinlgrzma .gt_row_group_first th { border-top-width: 2px; }
+ #kdinlgrzma .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #kdinlgrzma .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #kdinlgrzma .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #kdinlgrzma .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #kdinlgrzma .gt_left { text-align: left; }
+ #kdinlgrzma .gt_center { text-align: center; }
+ #kdinlgrzma .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #kdinlgrzma .gt_font_normal { font-weight: normal; }
+ #kdinlgrzma .gt_font_bold { font-weight: bold; }
+ #kdinlgrzma .gt_font_italic { font-style: italic; }
+ #kdinlgrzma .gt_super { font-size: 65%; }
+ #kdinlgrzma .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #kdinlgrzma .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="7" class="gt_heading gt_title gt_font_normal">New York Air Quality Measurements</td>
+  </tr>
+  <tr class="gt_heading">
+    <td colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Daily measurements in New York City (May 1-10, 1973)</td>
+  </tr>
+<tr class="gt_col_headings gt_spanner_row">
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Time">
+    <span class="gt_column_spanner">Time</span>
+  </th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="Measurement">
+    <span class="gt_column_spanner">Measurement</span>
+  </th>
+</tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Year">Year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Month">Month</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Day">Day</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Ozone">Ozone,<br>ppbV</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Solar_R">Solar R.,<br>cal/m<sup>2</sup></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Wind">Wind,<br>mph</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Temp">Temp,<br>°F</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">41.0</td>
+    <td class="gt_row gt_right">190.0</td>
+    <td class="gt_row gt_right">7.4</td>
+    <td class="gt_row gt_right">67</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_right">36.0</td>
+    <td class="gt_row gt_right">118.0</td>
+    <td class="gt_row gt_right">8.0</td>
+    <td class="gt_row gt_right">72</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">12.0</td>
+    <td class="gt_row gt_right">149.0</td>
+    <td class="gt_row gt_right">12.6</td>
+    <td class="gt_row gt_right">74</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">18.0</td>
+    <td class="gt_row gt_right">313.0</td>
+    <td class="gt_row gt_right">11.5</td>
+    <td class="gt_row gt_right">62</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">14.3</td>
+    <td class="gt_row gt_right">56</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">28.0</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">14.9</td>
+    <td class="gt_row gt_right">66</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">7</td>
+    <td class="gt_row gt_right">23.0</td>
+    <td class="gt_row gt_right">299.0</td>
+    <td class="gt_row gt_right">8.6</td>
+    <td class="gt_row gt_right">65</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">19.0</td>
+    <td class="gt_row gt_right">99.0</td>
+    <td class="gt_row gt_right">13.8</td>
+    <td class="gt_row gt_right">59</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">9</td>
+    <td class="gt_row gt_right">8.0</td>
+    <td class="gt_row gt_right">19.0</td>
+    <td class="gt_row gt_right">20.1</td>
+    <td class="gt_row gt_right">61</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">10</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">194.0</td>
+    <td class="gt_row gt_right">8.6</td>
+    <td class="gt_row gt_right">69</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="1309ed60" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate differences for each measurement column</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>airquality_with_changes <span class="op">=</span> airquality_mini.copy()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>airquality_with_changes[<span class="st">"Ozone Change"</span>] <span class="op">=</span> airquality_mini[<span class="st">"Ozone"</span>].diff()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>airquality_with_changes[<span class="st">"Solar_R Change"</span>] <span class="op">=</span> airquality_mini[<span class="st">"Solar_R"</span>].diff()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>airquality_with_changes[<span class="st">"Wind Change"</span>] <span class="op">=</span> airquality_mini[<span class="st">"Wind"</span>].diff()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>airquality_with_changes[<span class="st">"Temp Change"</span>] <span class="op">=</span> airquality_mini[<span class="st">"Temp"</span>].diff()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the GT table with the difference data</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>airquality_gt_with_changes <span class="op">=</span> (</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    GT(airquality_with_changes)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    .tab_header(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"New York Air Quality Measurements"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span><span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">"Time"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"Year"</span>, <span class="st">"Month"</span>, <span class="st">"Day"</span>]</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    .cols_move_to_start(columns<span class="op">=</span>[<span class="st">"Year"</span>, <span class="st">"Month"</span>, <span class="st">"Day"</span>])</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        Ozone <span class="op">=</span> html(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        Solar_R <span class="op">=</span> html(<span class="st">"Solar R.,&lt;br&gt;cal/m&lt;sup&gt;2&lt;/sup&gt;"</span>),</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        Wind <span class="op">=</span> html(<span class="st">"Wind,&lt;br&gt;mph"</span>),</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        Temp <span class="op">=</span> html(<span class="st">"Temp,&lt;br&gt;&amp;deg;F"</span>),</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">"Measurement"</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"Ozone"</span>, <span class="st">"Solar_R"</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>]</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">"Change from Previous"</span>,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"Ozone Change"</span>, <span class="st">"Solar_R Change"</span>, <span class="st">"Wind Change"</span>, <span class="st">"Temp Change"</span>]</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply rank change styling to the difference columns</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_fa_rank_change, column<span class="op">=</span>[<span class="st">"Ozone Change"</span>], show_text<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_fa_rank_change, column<span class="op">=</span>[<span class="st">"Solar_R Change"</span>], show_text<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_fa_rank_change, column<span class="op">=</span>[<span class="st">"Wind Change"</span>], show_text<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    .pipe(gte.gt_fa_rank_change, column<span class="op">=</span>[<span class="st">"Temp Change"</span>], show_text<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>airquality_gt_with_changes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="bjfqrmdkqj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#bjfqrmdkqj table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#bjfqrmdkqj thead, tbody, tfoot, tr, td, th { border-style: none; }
+ tr { background-color: transparent; }
+#bjfqrmdkqj p { margin: 0; padding: 0; }
+ #bjfqrmdkqj .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #bjfqrmdkqj .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #bjfqrmdkqj .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #bjfqrmdkqj .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #bjfqrmdkqj .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #bjfqrmdkqj .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #bjfqrmdkqj .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #bjfqrmdkqj .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #bjfqrmdkqj .gt_spanner_row { border-bottom-style: hidden; }
+ #bjfqrmdkqj .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #bjfqrmdkqj .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #bjfqrmdkqj .gt_from_md> :first-child { margin-top: 0; }
+ #bjfqrmdkqj .gt_from_md> :last-child { margin-bottom: 0; }
+ #bjfqrmdkqj .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #bjfqrmdkqj .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #bjfqrmdkqj .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #bjfqrmdkqj .gt_row_group_first td { border-top-width: 2px; }
+ #bjfqrmdkqj .gt_row_group_first th { border-top-width: 2px; }
+ #bjfqrmdkqj .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #bjfqrmdkqj .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #bjfqrmdkqj .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #bjfqrmdkqj .gt_left { text-align: left; }
+ #bjfqrmdkqj .gt_center { text-align: center; }
+ #bjfqrmdkqj .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #bjfqrmdkqj .gt_font_normal { font-weight: normal; }
+ #bjfqrmdkqj .gt_font_bold { font-weight: bold; }
+ #bjfqrmdkqj .gt_font_italic { font-style: italic; }
+ #bjfqrmdkqj .gt_super { font-size: 65%; }
+ #bjfqrmdkqj .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #bjfqrmdkqj .gt_asterisk { font-size: 100%; vertical-align: 0; }
+ 
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_title gt_font_normal">New York Air Quality Measurements</td>
+  </tr>
+  <tr class="gt_heading">
+    <td colspan="11" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Daily measurements in New York City (May 1-10, 1973)</td>
+  </tr>
+<tr class="gt_col_headings gt_spanner_row">
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Time">
+    <span class="gt_column_spanner">Time</span>
+  </th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="Measurement">
+    <span class="gt_column_spanner">Measurement</span>
+  </th>
+  <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="4" scope="colgroup" id="Change-from-Previous">
+    <span class="gt_column_spanner">Change from Previous</span>
+  </th>
+</tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Year">Year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Month">Month</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Day">Day</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Ozone">Ozone,<br>ppbV</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Solar_R">Solar R.,<br>cal/m<sup>2</sup></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Wind">Wind,<br>mph</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Temp">Temp,<br>°F</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Ozone-Change">Ozone Change</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Solar_R-Change">Solar_R Change</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Wind-Change">Wind Change</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Temp-Change">Temp Change</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">41.0</td>
+    <td class="gt_row gt_right">190.0</td>
+    <td class="gt_row gt_right">7.4</td>
+    <td class="gt_row gt_right">67</td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_right">36.0</td>
+    <td class="gt_row gt_right">118.0</td>
+    <td class="gt_row gt_right">8.0</td>
+    <td class="gt_row gt_right">72</td>
+    <td class="gt_row gt_right"><div aria-label="-5.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-72.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="0.5999999999999996" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="5.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">12.0</td>
+    <td class="gt_row gt_right">149.0</td>
+    <td class="gt_row gt_right">12.6</td>
+    <td class="gt_row gt_right">74</td>
+    <td class="gt_row gt_right"><div aria-label="-24.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="31.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="4.6" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="2.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">18.0</td>
+    <td class="gt_row gt_right">313.0</td>
+    <td class="gt_row gt_right">11.5</td>
+    <td class="gt_row gt_right">62</td>
+    <td class="gt_row gt_right"><div aria-label="6.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="164.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-1.0999999999999996" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-12.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">14.3</td>
+    <td class="gt_row gt_right">56</td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><div aria-label="2.8000000000000007" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-6.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">6</td>
+    <td class="gt_row gt_right">28.0</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">14.9</td>
+    <td class="gt_row gt_right">66</td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><div aria-label="0.5999999999999996" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="10.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">7</td>
+    <td class="gt_row gt_right">23.0</td>
+    <td class="gt_row gt_right">299.0</td>
+    <td class="gt_row gt_right">8.6</td>
+    <td class="gt_row gt_right">65</td>
+    <td class="gt_row gt_right"><div aria-label="-5.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><div aria-label="-6.300000000000001" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-1.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">8</td>
+    <td class="gt_row gt_right">19.0</td>
+    <td class="gt_row gt_right">99.0</td>
+    <td class="gt_row gt_right">13.8</td>
+    <td class="gt_row gt_right">59</td>
+    <td class="gt_row gt_right"><div aria-label="-4.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-200.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="5.200000000000001" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-6.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">9</td>
+    <td class="gt_row gt_right">8.0</td>
+    <td class="gt_row gt_right">19.0</td>
+    <td class="gt_row gt_right">20.1</td>
+    <td class="gt_row gt_right">61</td>
+    <td class="gt_row gt_right"><div aria-label="-11.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-80.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="6.300000000000001" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="2.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1973</td>
+    <td class="gt_row gt_right">5</td>
+    <td class="gt_row gt_right">10</td>
+    <td class="gt_row gt_right"><na></na></td>
+    <td class="gt_row gt_right">194.0</td>
+    <td class="gt_row gt_right">8.6</td>
+    <td class="gt_row gt_right">69</td>
+    <td class="gt_row gt_right"><bold style="color:#d3d3d3;">--</bold></td>
+    <td class="gt_row gt_right"><div aria-label="175.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="-11.500000000000002" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles down" role="img" class="fa" style="fill:red;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles down</title>
+  <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z"></path></svg></div>
+            
+        </div></td>
+    <td class="gt_row gt_right"><div aria-label="8.0" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: auto;
+            align-items:center;
+            gap:1.5px;
+            color:black;
+            font-weight:bold;
+            font-size:12px;
+            min-width:12px;
+        ">
+            <div><svg viewbox="0 0 448 512" preserveaspectratio="none" aria-label="Angles up" role="img" class="fa" style="fill:green;height:13.71px;width:12px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Angles up</title>
+  <path d="M246.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 109.3 361.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160zm160 352l-160-160c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L224 301.3 361.4 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3z"></path></svg></div>
+            
+        </div></td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+        
+</div>
+</div></div>
+
+
+     </main> <!-- /main -->  <script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/posit-dev\.github\.io\/gt-extras\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>  </div> <!-- /content --> 
+  
+</body></html>
