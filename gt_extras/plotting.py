@@ -145,7 +145,7 @@ def gt_plt_bar(
         )
 
     # Helper function to make the individual bars
-    def _make_bar_html(
+    def _make_bar_svg(
         scaled_val: float,
         original_val: int | float,
         fill: str,
@@ -155,7 +155,7 @@ def gt_plt_bar(
         stroke_color: str,
         show_labels: bool,
         label_color: str,
-    ) -> str:
+    ) -> SVG:
         text = ""
         if show_labels:
             text = str(original_val)
@@ -189,15 +189,14 @@ def gt_plt_bar(
             ),
         ]
 
-        canvas = SVG(width=width, height=height, elements=cast(list[Element], elements))
-        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+        return SVG(width=width, height=height, elements=cast(list[Element], elements))
 
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "transparent"
 
     def _make_bar(scaled_val: float, original_val: int | float) -> str:
-        return _make_bar_html(
+        svg = _make_bar_svg(
             scaled_val=scaled_val,
             original_val=original_val,
             fill=fill,
@@ -208,6 +207,8 @@ def gt_plt_bar(
             show_labels=show_labels,
             label_color=label_color,
         )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
