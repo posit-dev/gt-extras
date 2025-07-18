@@ -143,7 +143,7 @@ def test_fa_icon_repeat_a11y_invalid_string():
     with pytest.raises(
         ValueError, match="A11y must be one of `None`, 'deco', or 'sem'"
     ):
-        fa_icon_repeat(a11y="invalid")
+        fa_icon_repeat(a11y="invalid")  # type: ignore
 
 
 # TODO: snapshot test
@@ -271,4 +271,4 @@ def test_gt_fa_rank_change_invalid_neutral_range():
     with pytest.raises(
         ValueError, match="neutral_range must be a single number or a list"
     ):
-        gt_fa_rank_change(gt, column="change", neutral_range="invalid").as_raw_html()
+        gt_fa_rank_change(gt, column="change", neutral_range="invalid").as_raw_html()  # type: ignore
