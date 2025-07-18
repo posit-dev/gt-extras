@@ -449,18 +449,44 @@ gt
 # | label: fa_icon_repeat
 import pandas as pd
 from great_tables import GT
+from great_tables.data import countrypops
 import gt_extras as gte
 
+countries_2020 = (
+    countrypops
+    .query("year == 2020")
+    .sort_values("population", ascending=False)
+    .iloc[[2, 5, 10, 20, 28, 38, 65, 80, 98]]
+)
+
+# Scale: 1 icon = 10 million people
+def create_population_icons(population):
+    icon_count = max(1, round(population / 10_000_000))
+
+    return gte.fa_icon_repeat(
+        name="person",
+        repeats=icon_count,
+        fill="cornflowerblue",
+    )
+
+# Prepare the data
 df = pd.DataFrame({
-    "Name": ["Alice", "Bob", "Carol"],
-    "Stars": [
-        gte.fa_icon_repeat(repeats=3, fill="gold", fill_opacity=0.66),
-        gte.fa_icon_repeat(repeats=2, stroke="red", stroke_width="3em"),
-        gte.fa_icon_repeat(name="star-half", repeats=1, fill="orange"),
-    ]
+    "Country": countries_2020["country_name"],
+    "Population": countries_2020["population"],
+    "People": [create_population_icons(pop) for pop in countries_2020["population"]],
 })
 
-GT(df)
+(
+    GT(df)
+    .tab_header(
+        title="World Population in 2020",
+        subtitle="Each person icon represents ~10 million people"
+    )
+    .fmt_number(
+        columns="Population",
+        decimals=0
+    )
+)
 ```
 {{< include ./_show-last.qmd >}}
 

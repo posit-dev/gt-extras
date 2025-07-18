@@ -229,7 +229,7 @@ addEventListener('resize', setTableWidths);
 [add_text_img](./with-code.html#add_text_img){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 657;"}
 {{< embed with-code.qmd#fa_icon_repeat >}}
 [fa_icon_repeat](./with-code.html#fa_icon_repeat){.embed-hover-overlay}
 :::
