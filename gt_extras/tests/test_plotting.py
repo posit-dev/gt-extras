@@ -7,6 +7,7 @@ from gt_extras import (
     gt_plt_bar,
     gt_plt_bar_pct,
     gt_plt_bar_stack,
+    gt_plt_bullet,
     gt_plt_conf_int,
     gt_plt_dot,
     gt_plt_dumbbell,
@@ -996,3 +997,215 @@ def test_gt_plt_bar_pct_font_style_invalid_string(mini_gt):
         ValueError, match="Font_style must be one of 'bold', 'italic', or 'normal'."
     ):
         gt_plt_bar_pct(mini_gt, column="num", font_style="invalid")  # type: ignore
+
+
+def test_gt_plt_bullet_snap(snapshot):
+    df = pd.DataFrame(
+        {"name": ["A", "B", "C"], "actual": [10, 15, 25], "target": [12, 18, 20]}
+    )
+    gt_test = GT(df)
+    res = gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_bullet_basic():
+    df = pd.DataFrame(
+        {"name": ["A", "B", "C"], "actual": [10, 15, 25], "target": [12, 18, 20]}
+    )
+    gt_test = GT(df)
+    html = gt_plt_bullet(
+        gt=gt_test, data_column="actual", target_column="target"
+    ).as_raw_html()
+
+    assert html.count("<svg") == 3
+    assert "target" not in html
+    assert "actual" in html
+
+
+def test_gt_plt_bullet_bar_height_too_high():
+    df = pd.DataFrame({"actual": [10], "target": [12]})
+    gt_test = GT(df)
+
+    with pytest.warns(
+        UserWarning,
+        match="Bar_height must be less than or equal to the plot height. Adjusting bar_height to 100.",
+    ):
+        html = gt_plt_bullet(
+            gt=gt_test,
+            data_column="actual",
+            target_column="target",
+            bar_height=1000,
+            height=100,
+        ).as_raw_html()
+
+    assert html.count('height="100"') == 1
+    assert 'height="1000"' not in html
+
+
+def test_gt_plt_bullet_bar_height_too_low():
+    df = pd.DataFrame({"actual": [10], "target": [12]})
+    gt_test = GT(df)
+
+    with pytest.warns(
+        UserWarning,
+        match="Bar_height cannot be negative. Adjusting bar_height to 0.",
+    ):
+        html = gt_plt_bullet(
+            gt=gt_test,
+            data_column="actual",
+            target_column="target",
+            bar_height=-100,
+            height=1000,
+        ).as_raw_html()
+
+    assert html.count('height="1000"') == 1
+    assert 'height="-100"' not in html
+
+
+def test_gt_plt_bullet_custom_colors():
+    df = pd.DataFrame({"actual": [10, 20], "target": [15, 25]})
+    gt_test = GT(df)
+
+    html = gt_plt_bullet(
+        gt=gt_test,
+        data_column="actual",
+        target_column="target",
+        fill="blue",
+        target_color="red",
+    ).as_raw_html()
+
+    assert html.count('fill="blue"') == 2
+    assert html.count('stroke="red"') == 2
+
+
+def test_gt_plt_bullet_no_stroke_color():
+    df = pd.DataFrame({"actual": [10], "target": [12]})
+    gt_test = GT(df)
+
+    html = gt_plt_bullet(
+        gt=gt_test, data_column="actual", target_column="target", stroke_color=None
+    ).as_raw_html()
+
+    assert 'stroke="transparent"' in html
+
+
+def test_gt_plt_bullet_keep_data_column():
+    df = pd.DataFrame({"actual": [10, 15], "target": [12, 18]})
+    gt_test = GT(df)
+
+    result = gt_plt_bullet(
+        gt=gt_test, data_column="actual", target_column="target", keep_data_column=True
+    )
+    html = result.as_raw_html()
+
+    assert ">actual plot</th>" in html
+    assert ">actual</th>" in html
+    assert html.count("<svg") == 2
+
+
+def test_gt_plt_bullet_custom_dimensions():
+    df = pd.DataFrame({"actual": [10, 18], "target": [12, 15]})
+    gt_test = GT(df)
+
+    html = gt_plt_bullet(
+        gt=gt_test, data_column="actual", target_column="target", width=200, height=50
+    ).as_raw_html()
+
+    assert html.count('width="200"') == 2
+    assert html.count('height="50"') == 2
+
+
+@pytest.mark.parametrize(
+    "actual, target",
+    [
+        ([10, None, 30], [15, 25, None]),
+        ([10, np.nan, 30], [15, 25, np.nan]),
+    ],
+)
+def test_gt_plt_bullet_with_none_and_nan_values(actual, target):
+    df = pd.DataFrame({"actual": actual, "target": target})
+    gt_test = GT(df)
+
+    result = gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+    html = result.as_raw_html()
+
+    assert isinstance(result, GT)
+    assert html.count('<line stroke="darkgrey"') == 2
+    assert html.count('fill="purple"') == 3
+    assert html.count('width="0px" height="20px" fill="purple"') == 1
+
+
+def test_gt_plt_bullet_invalid_data_column():
+    df = pd.DataFrame({"actual": [10], "target": [12]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError, match="Column 'invalid_col' not found"):
+        gt_plt_bullet(gt=gt_test, data_column="invalid_col", target_column="target")
+
+
+def test_gt_plt_bullet_invalid_target_column():
+    df = pd.DataFrame({"actual": [10], "target": [12]})
+    gt_test = GT(df)
+
+    with pytest.raises(KeyError, match="Column 'invalid_col' not found"):
+        gt_plt_bullet(gt=gt_test, data_column="actual", target_column="invalid_col")
+
+
+def test_gt_plt_bullet_multiple_data_cols():
+    df = pd.DataFrame({"actual": [10], "target": [12], "other": [5]})
+    gt_test = GT(df)
+
+    with pytest.raises(
+        ValueError, match="Expected a single column, but got multiple columns"
+    ):
+        gt_plt_bullet(
+            gt=gt_test, data_column=["actual", "other"], target_column="target"
+        )
+
+
+def test_gt_plt_bullet_multiple_target_cols():
+    df = pd.DataFrame({"actual": [10], "target": [12], "other": [5]})
+    gt_test = GT(df)
+
+    with pytest.raises(
+        ValueError, match="Expected a single column, but got multiple columns"
+    ):
+        gt_plt_bullet(
+            gt=gt_test, data_column="actual", target_column=["target", "other"]
+        )
+
+
+def test_gt_plt_bullet_non_numeric_data_col():
+    df = pd.DataFrame({"actual": ["text"], "target": [12]})
+    gt_test = GT(df)
+
+    with pytest.raises(TypeError, match="Invalid column type provided"):
+        gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+
+
+def test_gt_plt_bullet_non_numeric_target_col():
+    df = pd.DataFrame({"actual": [10], "target": ["text"]})
+    gt_test = GT(df)
+
+    with pytest.raises(TypeError, match="Invalid column type provided"):
+        gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+
+
+def test_gt_plt_bullet_scaling():
+    df = pd.DataFrame(
+        {
+            "actual": [10, 20, 30],
+            "target": [40, 15, 25],
+        }
+    )
+    gt_test = GT(df)
+
+    html = gt_plt_bullet(
+        gt=gt_test, data_column="actual", target_column="target"
+    ).as_raw_html()
+
+    assert html.count("<svg") == 3
+    assert 'x1="58.5px" y1="0" x2="58.5px" y2="30px"' in html
+    assert 'x1="21.0px" y1="0" x2="21.0px" y2="30px"' in html
+    assert 'x1="36.0px" y1="0" x2="36.0px" y2="30px"' in html

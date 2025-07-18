@@ -136,6 +136,12 @@ addEventListener('resize', setTableWidths);
 [gt_plt_bar_stack](./with-code.html#gt_plt_bar_stack){.embed-hover-overlay}
 :::
 
+<!-- Override width on some of the slower rendering ones -->
+:::{.masonry-item style="--width: 323;"}
+{{< embed with-code.qmd#gt_plt_bullet >}}
+[gt_plt_bullet](./with-code.html#gt_plt_bullet){.embed-hover-overlay}
+:::
+
 :::{.masonry-item}
 {{< embed with-code.qmd#gt_plt_conf_int >}}
 [gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
@@ -147,7 +153,6 @@ addEventListener('resize', setTableWidths);
 [gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
 
-<!-- Override width on some of the slower rendering ones -->
 :::{.masonry-item style="--width: 359;"}
 {{< embed with-code.qmd#gt_plt_dumbbell >}}
 [gt_plt_dumbbell](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}

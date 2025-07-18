@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Literal, cast
+from typing import TYPE_CHECKING, Literal
 
 from great_tables import GT, html
 from great_tables._data_color.base import (
@@ -11,7 +11,7 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Element, Length, Line, Rect, Text
+from svg import SVG, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -23,11 +23,12 @@ from gt_extras._utils_column import (
 __all__ = [
     "gt_plt_bar",
     "gt_plt_bar_pct",
-    "gt_plt_dot",
+    "gt_plt_bar_stack",
+    "gt_plt_bullet",
     "gt_plt_conf_int",
+    "gt_plt_dot",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
-    "gt_plt_bar_stack",
 ]
 
 # TODO: default font for labels?
@@ -143,60 +144,12 @@ def gt_plt_bar(
             category=UserWarning,
         )
 
-    # Helper function to make the individual bars
-    def _make_bar_html(
-        scaled_val: float,
-        original_val: int | float,
-        fill: str,
-        bar_height: float,
-        height: float,
-        width: float,
-        stroke_color: str,
-        show_labels: bool,
-        label_color: str,
-    ) -> str:
-        text = ""
-        if show_labels:
-            text = str(original_val)
-
-        elements = [
-            Rect(
-                x=0,
-                y=Length((height - bar_height) / 2, "px"),
-                width=Length(width * scaled_val, "px"),
-                height=Length(bar_height, "px"),
-                fill=fill,
-                # onmouseover="this.style.fill= 'blue';",
-                # onmouseout=f"this.style.fill='{fill}';",
-            ),
-            Text(
-                text=text,
-                x=Length((width * scaled_val) * 0.98, "px"),
-                y=Length(height / 2, "px"),
-                fill=label_color,
-                font_size=bar_height * 0.6,
-                text_anchor="end",
-                dominant_baseline="central",
-            ),
-            Line(
-                x1=0,
-                x2=0,
-                y1=0,
-                y2=Length(height, "px"),
-                stroke_width=Length(height / 10, "px"),
-                stroke=stroke_color,
-            ),
-        ]
-
-        canvas = SVG(width=width, height=height, elements=cast(list[Element], elements))
-        return f'<div style="display: flex;">{canvas.as_str()}</div>'
-
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
         stroke_color = "transparent"
 
     def _make_bar(scaled_val: float, original_val: int | float) -> str:
-        return _make_bar_html(
+        svg = _make_bar_svg(
             scaled_val=scaled_val,
             original_val=original_val,
             fill=fill,
@@ -207,6 +160,8 @@ def gt_plt_bar(
             show_labels=show_labels,
             label_color=label_color,
         )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
@@ -246,6 +201,245 @@ def gt_plt_bar(
                 columns=col_name,
                 rows=[i],
             )
+
+    return res
+
+
+def gt_plt_bullet(
+    gt: GT,
+    data_column: SelectExpr,
+    target_column: SelectExpr,
+    # target_value: int | None = None, # if this, let target_column be none?
+    fill: str = "purple",
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
+    target_color: str = "darkgrey",
+    stroke_color: str | None = "black",
+    # show_labels: bool = False, # Maybe include in later version of fn, to label target or data?
+    # label_color: str = "white",
+    keep_data_column: bool = False,
+) -> GT:
+    """
+    Create bullet chart plots in `GT` cells.
+
+    The `gt_plt_bullet()` function takes an existing `GT` object and adds bullet chart
+    visualizations to compare actual values against target values. Each bullet chart consists
+    of a horizontal bar representing the actual value and a vertical line indicating the target
+    value, making it easy to assess performance against goals or benchmarks.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    data_column
+        The column containing the actual values to be plotted as horizontal bars.
+
+    target_column
+        The column containing the target values to be displayed as vertical reference lines.
+        This column will be automatically hidden from the returned table.
+
+    fill
+        The fill color for the horizontal bars representing actual values.
+
+    bar_height
+        The height of each horizontal bar in pixels.
+
+    height
+        The height of the bullet chart plot in pixels. This allows for spacing around
+        the bar and target line.
+
+    width
+        The width of the maximum bar in pixels. Bars are scaled proportionally to this width.
+
+    target_color
+        The color of the vertical target line.
+
+    stroke_color
+        The color of the vertical axis on the left side of the chart. The default is black, but if
+        `None` is passed, no stroke will be drawn.
+
+    keep_data_column
+        Whether to keep the original data column values. If this flag is `True`, the plotted values
+        will be duplicated into a new column with the string " plot" appended to the end of the
+        column name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
+    Returns
+    -------
+    GT
+        A `GT` object with bullet chart plots added to the specified data column. The target
+        column is automatically hidden from the table.
+
+    Examples
+    --------
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    from great_tables.data import airquality
+    import gt_extras as gte
+
+    air_bullet = (
+        pl.from_pandas(airquality)
+        .with_columns(pl.col("Temp").mean().over("Month").alias("target_temp"))
+        .group_by("Month", maintain_order=True)
+        .head(2)
+        .with_columns(
+            (pl.col("Month").cast(pl.Utf8) + "/" + pl.col("Day").cast(pl.Utf8)).alias(
+                "Date"
+            )
+        )
+        .select(["Date", "Temp", "target_temp"])
+        .with_columns(pl.col(["Temp", "target_temp"]).round(1))
+    )
+
+    (
+        GT(air_bullet, rowname_col="Date")
+        .tab_header(title="Daily Temp vs Monthly Average")
+        .tab_source_note("Target line shows monthly average temperature")
+
+        ## Call gt_plt_bullet
+        .pipe(
+            gte.gt_plt_bullet,
+            data_column="Temp",
+            target_column="target_temp",
+            width=200,
+            fill="tomato",
+            target_color="darkblue",
+            keep_data_column=True,
+        )
+        .cols_move_to_end("Temp")
+        .cols_align("left", "Temp plot")
+    )
+    ```
+
+    Note
+    ----
+    Both data and target values are scaled to a common domain for consistent visualization.
+    The scaling domain is automatically determined as `[0, max(data_values, target_values)]`.
+    """
+    if bar_height > height:
+        bar_height = height
+        warnings.warn(
+            f"Bar_height must be less than or equal to the plot height. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    if bar_height < 0:
+        bar_height = 0
+        warnings.warn(
+            f"Bar_height cannot be negative. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    # Allow the user to hide the vertical stroke
+    if stroke_color is None:
+        stroke_color = "transparent"
+
+    def _make_bullet_plot_svg(
+        scaled_val: float,
+        original_val: int | float,
+        target_val: float,
+        original_target_val: float | int | None,
+    ) -> str:
+        svg = _make_bar_svg(
+            scaled_val=scaled_val,
+            original_val=original_val,
+            fill=fill,
+            bar_height=bar_height,
+            height=height,
+            width=width,
+            stroke_color=stroke_color,
+            show_labels=False,
+            label_color="black",  # placeholder
+        )
+
+        # this should never be reached, but is needed for the type checker
+        if TYPE_CHECKING:
+            if svg.elements is None:
+                raise ValueError(
+                    "Unreachable code: svg.elements should never be None here."
+                )
+
+        if not is_na(res._tbl_data, original_target_val):
+            _stroke_width = height / 10
+            _x_location = max(_stroke_width, width * target_val - _stroke_width / 2)
+
+            svg.elements.append(
+                Line(
+                    x1=Length(_x_location, "px"),
+                    x2=Length(_x_location, "px"),
+                    y1=0,
+                    y2=Length(height, "px"),
+                    stroke_width=Length(_stroke_width, "px"),
+                    stroke=target_color,
+                ),
+            )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
+
+    res = gt
+
+    data_col_name, data_col_vals = _validate_and_get_single_column(
+        gt,
+        data_column,
+    )
+    target_col_name, target_col_vals = _validate_and_get_single_column(
+        gt,
+        target_column,
+    )
+
+    # Only consider numeric values for scaling domain
+    domain = None
+    numeric_data_vals = [v for v in data_col_vals if isinstance(v, (int, float))]
+    numeric_target_vals = [v for v in target_col_vals if isinstance(v, (int, float))]
+    if numeric_data_vals or numeric_target_vals:
+        domain = [0, max([*numeric_data_vals, *numeric_target_vals])]
+
+    scaled_data_vals = _scale_numeric_column(
+        res._tbl_data,
+        data_col_name,
+        data_col_vals,
+        domain,
+    )
+
+    scaled_target_vals = _scale_numeric_column(
+        res._tbl_data,
+        target_col_name,
+        target_col_vals,
+        domain,
+    )
+
+    if keep_data_column:
+        res = gt_duplicate_column(
+            res,
+            data_col_name,
+            after=data_col_name,
+            append_text=" plot",
+        )
+        data_col_name = data_col_name + " plot"
+
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_data_vals):
+        target_val = scaled_target_vals[i]
+        original_target_val = target_col_vals[i]
+
+        res = res.fmt(
+            lambda original_val,
+            scaled_val=scaled_val,
+            target_val=target_val,
+            original_target_val=original_target_val: _make_bullet_plot_svg(
+                original_val=original_val,
+                scaled_val=scaled_val,
+                target_val=target_val,
+                original_target_val=original_target_val,
+            ),
+            columns=data_col_name,
+            rows=[i],
+        )
+
+    res = res.cols_hide(target_col_name)
 
     return res
 
@@ -1760,3 +1954,54 @@ def gt_plt_bar_pct(
             rows=[i],
         )
     return res
+
+
+########### Helper functions that get reused across plots ###########
+
+
+# Helper function to make the individual bars
+def _make_bar_svg(
+    scaled_val: float,
+    original_val: int | float,
+    fill: str,
+    bar_height: float,
+    height: float,
+    width: float,
+    stroke_color: str,
+    show_labels: bool,
+    label_color: str | None,
+) -> SVG:
+    text = ""
+    if show_labels:
+        text = str(original_val)
+
+    elements = [
+        Rect(
+            x=0,
+            y=Length((height - bar_height) / 2, "px"),
+            width=Length(width * scaled_val, "px"),
+            height=Length(bar_height, "px"),
+            fill=fill,
+            # onmouseover="this.style.fill= 'blue';",
+            # onmouseout=f"this.style.fill='{fill}';",
+        ),
+        Text(
+            text=text,
+            x=Length((width * scaled_val) * 0.98, "px"),
+            y=Length(height / 2, "px"),
+            fill=label_color,
+            font_size=bar_height * 0.6,
+            text_anchor="end",
+            dominant_baseline="central",
+        ),
+        Line(
+            x1=0,
+            x2=0,
+            y1=0,
+            y2=Length(height, "px"),
+            stroke_width=Length(height / 10, "px"),
+            stroke=stroke_color,
+        ),
+    ]
+
+    return SVG(width=width, height=height, elements=elements)
