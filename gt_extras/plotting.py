@@ -217,13 +217,107 @@ def gt_plt_bullet(
     target_color: str = "darkgrey",
     stroke_color: str | None = "black",
     # show_labels: bool = False, # Maybe include in later version of fn, to label target or data?
-    label_color: str = "white",
+    # label_color: str = "white",
+    keep_column: bool = False,
 ) -> GT:
     """
-    Note
+    Create bullet chart plots in `GT` cells.
+
+    The `gt_plt_bullet()` function takes an existing `GT` object and adds bullet chart
+    visualizations to compare actual values against target values. Each bullet chart consists
+    of a horizontal bar representing the actual value and a vertical line indicating the target
+    value, making it easy to assess performance against goals or benchmarks.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    data_column
+        The column containing the actual values to be plotted as horizontal bars.
+
+    target_column
+        The column containing the target values to be displayed as vertical reference lines.
+        This column will be automatically hidden from the returned table.
+
+    fill
+        The fill color for the horizontal bars representing actual values.
+
+    bar_height
+        The height of each horizontal bar in pixels.
+
+    height
+        The height of the bullet chart plot in pixels. This allows for spacing around
+        the bar and target line.
+
+    width
+        The width of the maximum bar in pixels. Bars are scaled proportionally to this width.
+
+    target_color
+        The color of the vertical target line.
+
+    stroke_color
+        The color of the vertical axis on the left side of the chart. The default is black, but if
+        `None` is passed, no stroke will be drawn.
+
+    keep_column
+        Whether to keep the original column values. If this flag is `True`, the plotted values will
+        be duplicated into a new column with the string " plot" appended to the end of the column
+        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
+    Returns
+    -------
+    GT
+        A `GT` object with bullet chart plots added to the specified data column. The target
+        column is automatically hidden from the table.
+
+    Examples
     --------
-    Be careful when assigning a domain, as domains that don't contain all data and target values
-    may cause unexpected behavior.
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    from great_tables.data import airquality
+    import gt_extras as gte
+
+    air_bullet = (
+        pl.from_pandas(airquality)
+        .with_columns(pl.col("Temp").mean().over("Month").alias("target_temp"))
+        .group_by("Month", maintain_order=True)
+        .head(2)
+        .with_columns(
+            (pl.col("Month").cast(pl.Utf8) + "/" + pl.col("Day").cast(pl.Utf8)).alias(
+                "Date"
+            )
+        )
+        .select(["Date", "Temp", "target_temp"])
+        .with_columns(pl.col(["Temp", "target_temp"]).round(1))
+    )
+
+    (
+        GT(air_bullet, rowname_col="Date")
+        .tab_header(title="Daily Temp vs Monthly Average")
+        .tab_source_note("Target line shows monthly average temperature")
+
+        ## Call gt_plt_bullet
+        .pipe(
+            gte.gt_plt_bullet,
+            data_column="Temp",
+            target_column="target_temp",
+            width=200,
+            fill="tomato",
+            target_color="darkblue",
+            keep_column=True,
+        )
+        .cols_move_to_end("Temp")
+        .cols_align("left", "Temp plot")
+    )
+    ```
+
+    Note
+    ----
+    Both data and target values are scaled to a common domain for consistent visualization.
+    The scaling domain is automatically determined as `[0, max(data_values, target_values)]`.
     """
     if bar_height > height:
         bar_height = height
@@ -257,7 +351,7 @@ def gt_plt_bullet(
             width=width,
             stroke_color=stroke_color,
             show_labels=False,
-            label_color=label_color,
+            label_color="black",  # placeholder
         )
 
         # this should never be reached, but is needed for the type checker
@@ -308,6 +402,15 @@ def gt_plt_bullet(
         target_col_vals,
         domain,
     )
+
+    if keep_column:
+        res = gt_duplicate_column(
+            res,
+            data_col_name,
+            after=data_col_name,
+            append_text=" plot",
+        )
+        data_col_name = data_col_name + " plot"
 
     # Apply the scaled value for each row, so the bar is proportional
     for i, scaled_val in enumerate(scaled_data_vals):
@@ -1852,7 +1955,7 @@ def _make_bar_svg(
     width: float,
     stroke_color: str,
     show_labels: bool,
-    label_color: str,
+    label_color: str | None,
 ) -> SVG:
     text = ""
     if show_labels:

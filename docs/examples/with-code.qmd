@@ -100,6 +100,51 @@ gt.pipe(
 ```
 {{< include ./_show-last.qmd >}}
 
+### [gt_plt_bullet](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet.html){title="Click for reference"}
+
+```{python}
+# | label: gt_plt_bullet
+import polars as pl
+from great_tables import GT
+from great_tables.data import airquality
+import gt_extras as gte
+
+air_bullet = (
+    pl.from_pandas(airquality)
+    .with_columns(pl.col("Temp").mean().over("Month").alias("target_temp"))
+    .group_by("Month", maintain_order=True)
+    .head(2)
+    .with_columns(
+        (pl.col("Month").cast(pl.Utf8) + "/" + pl.col("Day").cast(pl.Utf8)).alias(
+            "Date"
+        )
+    )
+    .select(["Date", "Temp", "target_temp"])
+    .with_columns(pl.col(["Temp", "target_temp"]).round(1))
+)
+
+(
+    GT(air_bullet, rowname_col="Date")
+    .tab_header(title="Daily Temp vs Monthly Average")
+    .tab_source_note("Target line shows monthly average temperature")
+
+    ## Call gt_plt_bullet
+    .pipe(
+        gte.gt_plt_bullet,
+        data_column="Temp",
+        target_column="target_temp",
+        width=200,
+        fill="tomato",
+        target_color="darkblue",
+        keep_column=True,
+    )
+    .cols_move_to_end("Temp")
+    .cols_align("left", "Temp plot")
+)
+```
+{{< include ./_show-last.qmd >}}
+
+
 ### [gt_plt_conf_int](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html){title="Click for reference"}
 ```{python}
 # | label: gt_plt_conf_int
