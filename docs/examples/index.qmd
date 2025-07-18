@@ -88,14 +88,19 @@ addEventListener('DOMContentLoaded', updateZoom);
 addEventListener('resize', updateZoom);
 
 function setTableWidths() {
-  document.querySelectorAll('.masonry-item').forEach(item => {
-    const table = item.querySelector('.cell-output table');
-    if (table) {
-      // Set the --width CSS variable on the masonry item to the rendered width
-      const tableWidth = table.offsetWidth;
-      item.style.setProperty('--width', tableWidth);
-    }
-  });
+    document.querySelectorAll('.masonry-item').forEach(item => {
+        // Skip fixed width for gt_two_column_layout
+        if ( item.querySelector('[href*="with-code.html#gt_two_column_layout"]')) {
+            item.style.setProperty('--width', 587);
+            return;
+        }
+        const table = item.querySelector('.cell-output table');
+        if (table) {
+            // Set the --width CSS variable on the masonry item to the rendered width
+            const tableWidth = table.offsetWidth;
+            item.style.setProperty('--width', tableWidth);
+        }
+    });
 }
 
 addEventListener('DOMContentLoaded', setTableWidths);
@@ -261,10 +266,10 @@ addEventListener('resize', setTableWidths);
 [gt_merge_stack](./with-code.html#gt_merge_stack){.embed-hover-overlay}
 :::
 
-<!-- :::{.masonry-item}
+:::{.masonry-item style="padding-top: 15px;"}
 {{< embed with-code.qmd#gt_two_column_layout >}}
 [gt_two_column_layout](./with-code.html#gt_two_column_layout){.embed-hover-overlay}
-::: -->
+:::
 
 :::{.masonry-item style="--width: 201;"}
 {{< embed with-code.qmd#with_hyperlink >}}

@@ -169,7 +169,8 @@ gt.pipe(
     col2='close',
     label = "Open to Close ($)",
     num_decimals=0,
-    width = 250,
+    width=300,
+    height=60,
 )
 ```
 {{< include ./show-last.qmd >}}
@@ -643,11 +644,20 @@ import gt_extras as gte
 gtcars_mini = gtcars[["mfr", "model", "year", "hp"]].head(5)
 gt = GT(gtcars_mini)
 
-# Duplicate with custom name and position
-gt.pipe(
-    gte.gt_duplicate_column,
-    column="hp",
-    after="year",
+(
+    gt.pipe(
+        gte.gt_duplicate_column,
+        column="hp",
+        after="year",
+    ).pipe(
+        gte.gt_highlight_cols,
+        ["hp", "hp_dupe"],
+        fill="tan",
+    ).pipe(
+        gte.gt_add_divider,
+        columns=["hp_dupe"],
+        include_labels=False,
+    )
 )
 ```
 {{< include ./show-last.qmd >}}
@@ -679,10 +689,10 @@ gt.pipe(
 # | label: gt_two_column_layout
 from great_tables import GT
 import gt_extras as gte
-import pandas as pd
+from great_tables.data import peeps
 
-df1 = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
-df2 = pd.DataFrame({"A": [7, 8, 9], "B": [10, 11, 12]})
+df1 = peeps.loc[0:5, ["name_given", "address"]]
+df2 = peeps.loc[6:11, ["name_given", "address"]]
 
 gt1 = GT(df1).tab_header(title="Joined Table")
 gt2 = GT(df2)

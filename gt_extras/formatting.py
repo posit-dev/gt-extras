@@ -455,18 +455,17 @@ def gt_two_column_layout(
         table_1_html = gt1.as_raw_html()
         table_2_html = gt2.as_raw_html()
 
-    # make the table html
-    # TODO: <div id="mycombinedtable" style="display: flex; justify-content: center; width: 100%;">
-
     double_table_html = f"""
-    <div id="mycombinedtable" style="display: inline-block; width: auto;">
-        {header_html}
-        <div style="overflow: auto; white-space: nowrap;">
-            <div style="display: inline-block; margin-right: 1em;">
-                {table_1_html}
-            </div>
-            <div style="display: inline-block;">
-                {table_2_html}
+    <div style="display: flex; justify-content: center; width: 100%;">
+        <div id="mycombinedtable" style="display: inline-block; width: auto;">
+            {header_html}
+            <div style="overflow: auto; white-space: nowrap;">
+                <div style="display: inline-block; margin-right: 1em;">
+                    {table_1_html}
+                </div>
+                <div style="display: inline-block;">
+                    {table_2_html}
+                </div>
             </div>
         </div>
     </div>
