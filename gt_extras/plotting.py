@@ -307,7 +307,7 @@ def gt_plt_bullet(
             width=200,
             fill="tomato",
             target_color="darkblue",
-            keep_column=True,
+            keep_data_column=True,
         )
         .cols_move_to_end("Temp")
         .cols_align("left", "Temp plot")

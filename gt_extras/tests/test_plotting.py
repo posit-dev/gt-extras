@@ -1090,7 +1090,7 @@ def test_gt_plt_bullet_no_stroke_color():
     assert 'stroke="transparent"' in html
 
 
-def test_gt_plt_bullet_keep_column():
+def test_gt_plt_bullet_keep_data_column():
     df = pd.DataFrame({"actual": [10, 15], "target": [12, 18]})
     gt_test = GT(df)
 
