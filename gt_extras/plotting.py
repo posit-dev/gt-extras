@@ -1341,7 +1341,7 @@ def gt_plt_winloss(
         spacing: float,
     ) -> str:
         if len(values) == 0:
-            # Standardize the size of the empty div for missing or invalid data
+            # TODO: do this in other functions, standardize the size of the empty div
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         available_width = width - (max_length) * spacing
