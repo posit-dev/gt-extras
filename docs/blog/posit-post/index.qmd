@@ -7,23 +7,35 @@ freeze: true
 jupyter: python3
 ---
 
+Final image at top
+
+<!-- img -->
+
+... Prelude, intro, etc
+
+## Setup
+
+First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize.
+
+The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish.
+
+<a href="https://github.com/posit-dev/gt_extras/blob/main/docs/examples/sports-earnings/index.ipynb" target="_blank">View notebook ⬀</a>
 
 ```{python}
-from great_tables import GT, md
-import gt_extras as gte
+# | echo: False
+# | output: False
 import polars as pl
 import statistics
 
-# Load the NFL data and team info
 df = pl.read_csv("../../assets/games.csv")
-teams_info = pl.read_csv("../../assets/teams_colors_logos.csv")
 season_2016 = df.filter((pl.col("season") == 2016) & (pl.col("game_type") == "REG"))
 
+season_2016
 
-def get_team_stats(games_df):
+def get_team_stats(season_df):
     results = {}
 
-    for row in games_df.iter_rows(named=True):
+    for row in season_df.iter_rows(named=True):
         away_team = row["away_team"]
         home_team = row["home_team"]
         away_score = row["away_score"]
@@ -65,7 +77,6 @@ def get_team_stats(games_df):
         results[home_team]["points_against"].append(away_score)
 
     return results
-
 
 team_stats = get_team_stats(season_2016)
 
@@ -109,6 +120,8 @@ for team, stats in team_stats.items():
 
 nfl_df = pl.DataFrame(team_data, strict=False)
 
+teams_info = pl.read_csv("../../assets/teams_colors_logos.csv")
+
 # Merge with team information
 nfl_df = nfl_df.join(
     teams_info.select(
@@ -130,106 +143,135 @@ nfl_df = nfl_df.sort(
     descending=[False, True, True],
 )
 
+nfl_df.filter(pl.col("Team") == "NYG")
+```
 
-def make_table(nfl_df_polars) -> GT:
-    gt = (
-        GT(nfl_df_polars, rowname_col="Team", groupname_col="team_division")
-        .tab_header(
-            title="2016 NFL Season at a Glance",
-            subtitle="Super Bowl 50: Denver Broncos def. Carolina Panthers"
+## Making a GT
+
+```{python}
+from great_tables import GT, md
+import gt_extras as gte
+
+gt = (
+    GT(nfl_df, rowname_col="Team", groupname_col="team_division")
+    .tab_header(
+        title="2016 NFL Season at a Glance",
+        subtitle="Super Bowl 50: Denver Broncos def. Carolina Panthers",
+    )
+    .tab_source_note(
+        md(
+            '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
         )
-        .tab_source_note(
-            md(
-                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
-            )
-        )
-        .tab_stubhead(label="Team")
-        # Add spanners to organize columns
-        .tab_spanner(label="Scoring", columns=["Avg PF", "Avg PA", "Point Diff"])
-        .tab_spanner(label="Season Trends", columns=["Games", "Streak"])
-        # Format numbers
-        .fmt_number(columns="Point Diff", decimals=1)
-        # Hide columns we don't need to display
-        .cols_hide(["Wins", "team_conf", "team_name"])
-        .cols_align(align="center", columns=["Avg PF", "Avg PA", "Games"])
-        .fmt_image("team_logo_espn")
-        .cols_move("team_logo_espn", after="Team")
-        .cols_label({"team_logo_espn": ""})
+    )
+    .tab_stubhead(label="Team")
+    # Add spanners to organize columns
+    .tab_spanner(label="Scoring", columns=["Avg PF", "Avg PA", "Point Diff"])
+    .tab_spanner(label="Season Trends", columns=["Games", "Streak"])
+    # Format numbers
+    .fmt_number(columns="Point Diff", decimals=1)
+    # Hide columns we don't need to display
+    .cols_hide(["Wins", "team_conf", "team_name"])
+    .cols_align(align="center", columns=["Avg PF", "Avg PA", "Games"])
+    .fmt_image("team_logo_espn")
+    .cols_move("team_logo_espn", after="Team")
+    .cols_label({"team_logo_espn": ""})
+)
+
+```
+
+
+## GT Extras
+
+### Dumbbell Plots
+
+```{python}
+gt = gt.pipe(
+    gte.gt_plt_dumbbell,
+    col1="Avg PF",
+    col2="Avg PA",
+    col1_color="green",
+    col2_color="red",
+    width=320,
+    height=40,
+    num_decimals=0,
+    label="Points For vs Points Against",
+    font_size=14,
+)
+```
+```{python}
+
+# Apply gt_extras functions
+gt = (
+    gt.pipe(
+        gte.gt_highlight_cols,
+        columns="Team",
+        fill="lightgray",
     )
 
-    # Apply gt_extras functions
-    gt = (
-        gt.pipe(
-            gte.gt_highlight_cols,
-            columns="Team",
-            fill="lightgray",
-        )
-
-        .pipe(
-            gte.gt_highlight_rows,
-            rows="DEN",
-            fill="gold",
-            alpha=0.3
-        )
-
-        .pipe(
-            gte.gt_highlight_rows,
-            rows=["CAR"],
-            fill="silver",
-            alpha=0.3
-        )
-        # Dumbbell plot for points for vs points against
-        .pipe(
-            gte.gt_plt_dumbbell,
-            col1="Avg PF",
-            col2="Avg PA",
-            col1_color="green",
-            col2_color="red",
-            width=320,
-            height=40,
-            num_decimals=0,
-            label="Points For vs Points Against",
-        )
-        .pipe(
-            gte.gt_color_box,
-            columns="Point Diff",
-            palette=["green", "yellow", "red"],
-            domain=[12, -12],
-        )
-        .pipe(
-            gte.gt_add_divider,
-            columns="Point Diff",
-            color="darkblue",
-            weight=3,
-        )
-        # Win/Loss visualization
-        .pipe(
-            gte.gt_plt_winloss,
-            column="Games",
-            win_color="blue",
-            loss_color="orange",
-            tie_color="gray",
-            height=40,
-            width=120,
-        )
-        .pipe(
-            gte.gt_fa_rank_change,
-            column="Streak",
-            icon_type="turn",
-            color_up="blue",
-            color_down="orange",
-        )
-        # 8. Apply a theme
-        .pipe(gte.gt_theme_538)
+    .pipe(
+        gte.gt_highlight_rows,
+        rows="DEN",
+        fill="gold",
+        alpha=0.3
     )
 
-    return gt
+    .pipe(
+        gte.gt_highlight_rows,
+        rows=["CAR"],
+        fill="silver",
+        alpha=0.3
+    )
 
+    .pipe(
+        gte.gt_color_box,
+        columns="Point Diff",
+        palette=["green", "yellow", "red"],
+        domain=[12, -12],
+    )
+    .pipe(
+        gte.gt_add_divider,
+        columns="Point Diff",
+        color="darkblue",
+        weight=3,
+    )
+    # Win/Loss visualization
+    .pipe(
+        gte.gt_plt_winloss,
+        column="Games",
+        win_color="blue",
+        loss_color="orange",
+        tie_color="gray",
+        height=40,
+        width=120,
+    )
+    .pipe(
+        gte.gt_fa_rank_change,
+        column="Streak",
+        icon_type="turn",
+        color_up="blue",
+        color_down="orange",
+        size=14,
+    )
+    # 8. Apply a theme
+    .pipe(gte.gt_theme_538)
+)
+```
+
+### Two-column layout
+
+```{python}
+#| code-fold: true
+#| code-summary: Show the Code
+def make_table(nfl_df) -> GT:
+    return GT(nfl_df)
+
+```
+
+```{python}
 
 gt1 = make_table(nfl_df.head(16))
 gt2 = make_table(nfl_df.slice(16, 16))
 
-# gt1.show("browser")
-
-gte.gt_two_column_layout(gt1, gt2, table_header_from=1, target="browser")
+gt1
+# gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
