@@ -1340,8 +1340,8 @@ def gt_plt_winloss(
         shape: Literal["pill", "square"],
         spacing: float,
     ) -> str:
-        if not values:
-            # TODO: do this in other functions, standardize the size of the empty div``
+        if len(values) == 0:
+            # Standardize the size of the empty div for missing or invalid data
             return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
 
         available_width = width - (max_length) * spacing
