@@ -6,3 +6,217 @@ date: 2025-07-21
 freeze: true
 jupyter: python3
 ---
+
+
+```{python}
+from great_tables import GT, md, html, style, loc
+import gt_extras as gte
+import pandas as pd
+from pandas import DataFrame
+import numpy as np
+
+# Load the NFL data and team info
+df = pd.read_csv("../../assets/games.csv")
+teams_info = pd.read_csv("../../assets/teams_colors_logos.csv")
+season_2016 = df[(df["season"] == 2016) & (df["game_type"] == "REG")].copy()
+
+
+def get_comprehensive_team_stats(games_df):
+    results = {}
+
+    for _, game in games_df.iterrows():
+        away_team = game["away_team"]
+        home_team = game["home_team"]
+        away_score = game["away_score"]
+        home_score = game["home_score"]
+        total_points = game["total"]
+
+        # Initialize team records
+        for team in [away_team, home_team]:
+            if team not in results:
+                results[team] = {
+                    "games": [],
+                    "points_for": [],
+                    "points_against": [],
+                    "total_points": [],
+                    "wins": 0,
+                    "losses": 0,
+                    "ties": 0,
+                }
+
+        # Record game results
+        if away_score > home_score:
+            results[away_team]["games"].append(1)  # Win
+            results[home_team]["games"].append(0)  # Loss
+            results[away_team]["wins"] += 1
+            results[home_team]["losses"] += 1
+        elif home_score > away_score:
+            results[home_team]["games"].append(1)  # Win
+            results[away_team]["games"].append(0)  # Loss
+            results[home_team]["wins"] += 1
+            results[away_team]["losses"] += 1
+        else:
+            results[away_team]["games"].append(0.5)  # Tie
+            results[home_team]["games"].append(0.5)  # Tie
+            results[away_team]["ties"] += 1
+            results[home_team]["ties"] += 1
+
+        # Record scoring data
+        results[away_team]["points_for"].append(away_score)
+        results[away_team]["points_against"].append(home_score)
+        results[home_team]["points_for"].append(home_score)
+        results[home_team]["points_against"].append(away_score)
+
+        results[away_team]["total_points"].append(total_points)
+        results[home_team]["total_points"].append(total_points)
+
+    return results
+
+
+team_stats = get_comprehensive_team_stats(season_2016)
+
+# Create comprehensive dataframe
+team_data = []
+for team, stats in team_stats.items():
+    games_played = len(stats["games"])
+    win_pct = (
+        (stats["wins"] + 0.5 * stats["ties"]) / games_played if games_played > 0 else 0
+    )
+    avg_points_for = np.mean(stats["points_for"]) if stats["points_for"] else 0
+    avg_points_against = (
+        np.mean(stats["points_against"]) if stats["points_against"] else 0
+    )
+    point_diff = round(avg_points_for - avg_points_against, 1)
+    avg_total = np.mean(stats["total_points"]) if stats["total_points"] else 0
+
+    # Calculate streak
+    games = stats["games"]
+    if not games:
+        streak = "N/A"
+    else:
+        most_recent = games[-1]
+        streak_count = 1
+
+        # Count consecutive games of same result
+        for i in range(len(games) - 2, -1, -1):
+            if games[i] == most_recent:
+                streak_count += 1
+            else:
+                break
+
+        if most_recent == 1:
+            streak = streak_count
+        elif most_recent == 0:
+            streak = -streak_count
+        else:  # tie
+            streak = 0
+
+    team_data.append(
+        {
+            "Team": team,
+            "Record": f"{stats['wins']}-{stats['losses']}-{stats['ties']}",
+            "Win %": win_pct,
+            "Avg PF": avg_points_for,
+            "Avg PA": avg_points_against,
+            "Point Diff": point_diff,
+            "Avg Total": avg_total,
+            "Games": stats["games"][:16],
+            "Streak": streak,
+        }
+    )
+
+nfl_df = pd.DataFrame(team_data)
+
+
+# Merge with team information
+nfl_df = nfl_df.merge(
+    teams_info[["team_abbr", "team_division", "team_conf", "team_name", "team_color"]],
+    left_on="Team",
+    right_on="team_abbr",
+    how="left",
+)
+
+# Sort by division and win percentage
+nfl_df = nfl_df.sort_values(
+    ["team_division", "Win %", "Point Diff"], ascending=[True, False, False]
+).reset_index(drop=True)
+
+def make_table(nfl_df: DataFrame) -> GT:
+    # Create the comprehensive GT table
+    gt = (
+        GT(nfl_df, rowname_col="Team", groupname_col="team_division")
+        .tab_header(
+            title="2016 NFL Season Analysis",
+            subtitle="Comprehensive team statistics with multiple visualizations",
+        )
+        .tab_source_note(
+            md(
+                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+            )
+        )
+        .tab_stubhead(label="Team")
+        # Add spanners to organize columns
+        .tab_spanner(label="Basic Stats", columns=["Record", "Win %"])
+        .tab_spanner(label="Scoring", columns=["Avg PF", "Avg PA", "Point Diff"])
+        .tab_spanner(label="Season Trends", columns=["Games", "Streak"])
+        # Format numbers
+        .fmt_percent(columns="Win %", decimals=1)
+        .fmt_number(columns=["Avg PF", "Avg PA", "Point Diff", "Avg Total"], decimals=1)
+        # Hide columns we don't need to display
+        .cols_hide(["team_abbr", "team_conf", "team_name", "team_color", "Avg Total"])
+        .cols_align(align="center", columns=["Avg PF", "Avg PA", "Games"])
+    )
+
+    # Apply gt_extras functions
+    gt = (
+        gt
+        # Dumbbell plot for points for vs points against
+        .pipe(
+            gte.gt_plt_dumbbell,
+            col1="Avg PF",
+            col2="Avg PA",
+            col1_color="green",
+            col2_color="red",
+            width=320,
+            height=40,
+            num_decimals=0,
+            label="Points For vs Points Against",
+        )
+        # Color coding for win percentage
+        .pipe(gte.gt_hulk_col_numeric, columns="Win %", palette=["red", "yellow", "green"])
+        .pipe(gte.gt_color_box, columns="Point Diff", palette=["red", "yellow", "green"])
+        .pipe(
+            gte.gt_add_divider,
+            columns="Point Diff",
+            color="darkblue",
+            weight=3,
+        )
+        # Win/Loss visualization
+        .pipe(
+            gte.gt_plt_winloss,
+            column="Games",
+            win_color="blue",
+            loss_color="orange",
+            tie_color="gray",
+            height=40,
+            width=120,
+        )
+        # Trend arrows (now based on actual recent performance)
+        .pipe(
+            gte.gt_fa_rank_change,
+            column="Streak",
+            icon_type="turn",
+            color_up="blue",
+            color_down="orange",
+        )
+        # 8. Apply a theme
+        .pipe(gte.gt_theme_espn)
+    )
+
+    return gt
+
+gt1 = make_table(nfl_df.head(16))
+gt2 = make_table(nfl_df.iloc[16:32].reset_index(drop=True))
+
+gte.gt_two_column_layout(gt1, gt2, target="browser", table_header_from=1)
+```
