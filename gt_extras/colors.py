@@ -25,7 +25,9 @@ __all__ = [
 
 
 def gt_data_color_by_group(
-    gt: GT, columns: SelectExpr = None, palette: str | list[str] | None = None
+    gt: GT,
+    columns: SelectExpr = None,
+    palette: str | list[str] | None = None,
 ) -> GT:
     """
     Perform data cell colorization by group.
@@ -45,7 +47,7 @@ def gt_data_color_by_group(
 
     palette
         The color palette to use.
-        This should be a list of colors (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer
+        This should be a list of colors (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`). A ColorBrewer
         palette could also be used, just supply the name (reference available in the *Color palette
         access from ColorBrewer* section). If `None`, then a default palette will be used.
 
@@ -106,7 +108,7 @@ def gt_highlight_cols(
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
-        (light blue) will be used as a default.
+        will be used as a default.
 
     alpha
         A float `[0, 1]` for the alpha transparency value for the color as single value in the
@@ -121,7 +123,7 @@ def gt_highlight_cols(
 
     font_color
         A string indicating the text color. If nothing is provided, then `"#000000"`
-        (black) will be used as a default.
+        will be used as a default.
 
     include_column_labels
         Whether to also highlight column labels of the assigned columns.
@@ -213,7 +215,7 @@ def gt_highlight_rows(
 
     fill
         A string indicating the fill color. If nothing is provided, then `"#80bcd8"`
-        (light blue) will be used as a default.
+        will be used as a default.
 
     alpha
         A float `[0, 1]` for the alpha transparency value for the color as single value in the
@@ -228,7 +230,7 @@ def gt_highlight_rows(
 
     font_color
         A string indicating the text color. If nothing is provided, then `"#000000"`
-        (black) will be used as a default.
+        will be used as a default.
 
     include_row_labels
         Whether to also highlight row labels of the assigned rows.
@@ -447,7 +449,7 @@ def gt_color_box(
 
     palette
         The color palette to use. This should be a list of colors
-        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`). A ColorBrewer palette could also be used,
         just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color)
         for additional reference). If `None`, then a default palette will be used.
 

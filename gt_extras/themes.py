@@ -422,7 +422,7 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
         An existing `GT` object.
 
     color
-        A string indicating the color of the row striping, defaults to a light green.
+        A string indicating the color of the row striping, defaults to `"#b5dbb6"`.
         Accepts either named colors or hex colors.
 
     Returns

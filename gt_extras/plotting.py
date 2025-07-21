@@ -477,7 +477,7 @@ def gt_plt_dot(
 
     palette
         The color palette to use. This should be a list of colors
-        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
+        (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`). A ColorBrewer palette could also be used,
         just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color) for additional reference).
         If `None`, then a default palette will be used.
 
@@ -1468,7 +1468,7 @@ def gt_plt_bar_stack(
 
     palette
         The color palette to use for the bars. This can be a list of colors
-        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`) or a named palette (e.g., `"viridis"`).
+        (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`) or a named palette (e.g., `"viridis"`).
         If `None`, a default palette will be used.
 
     font_size
@@ -1738,7 +1738,7 @@ def gt_plt_bar_pct(
         The fill color for the bars.
 
     background
-        The background filling color for the bars. Defaults to `#e1e1e1` (a light grey).
+        The background filling color for the bars. Defaults to `#e1e1e1`.
 
     autoscale
         Indicates whether the function should automatically scale the values.
