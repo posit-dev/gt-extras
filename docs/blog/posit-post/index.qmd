@@ -1,5 +1,5 @@
 ---
-title: "A dev Approach to gt-extras"
+title: "How To Use gt-extras to Make Beautiful Tables"
 html-table-processing: none
 author: Jules Walzer-Goldfeld
 date: 2025-07-21
