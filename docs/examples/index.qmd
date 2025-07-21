@@ -249,7 +249,7 @@ addEventListener('resize', setTableWidths);
 [gt_fa_rating](./with-code.html#gt_fa_rating){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 355;"}
 {{< embed with-code.qmd#img_header >}}
 [img_header](./with-code.html#img_header){.embed-hover-overlay}
 :::
