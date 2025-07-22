@@ -32,7 +32,7 @@ First we load our dataset. I've chosen [NFL season data](https://github.com/nflv
 
 The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football stats and the other team metadata. Take a look here.
 
-<a href="https://github.com/posit-dev/gt_extras/blob/main/docs/examples/sports-earnings/index.ipynb" target="_blank">View notebook ⬀</a>
+<a href="https://github.com/posit-dev/gt-extras/blob/main/docs/examples/nfl-season/index.ipynb" target="_blank">View notebook ⬀</a>
 
 ```{python}
 # | echo: False
