@@ -2,154 +2,154 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols.html</loc>
-    <lastmod>2025-07-22T21:07:46.830Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.545Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell.html</loc>
-    <lastmod>2025-07-22T21:07:46.824Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.538Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html</loc>
-    <lastmod>2025-07-22T21:07:46.820Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.535Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html</loc>
-    <lastmod>2025-07-22T21:07:46.825Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.540Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_highlight_rows.html</loc>
-    <lastmod>2025-07-22T21:07:46.832Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.547Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/fmt_pct_extra.html</loc>
-    <lastmod>2025-07-22T21:07:46.849Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.567Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/fa_icon_repeat.html</loc>
-    <lastmod>2025-07-22T21:07:46.844Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.562Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_dot.html</loc>
-    <lastmod>2025-07-22T21:07:46.822Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.536Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/index.html</loc>
-    <lastmod>2025-07-22T21:07:46.801Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.516Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes.html</loc>
-    <lastmod>2025-07-22T21:07:46.839Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.554Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout.html</loc>
-    <lastmod>2025-07-22T21:07:46.857Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.575Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/img_header.html</loc>
-    <lastmod>2025-07-22T21:07:46.848Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.566Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_bar.html</loc>
-    <lastmod>2025-07-22T21:07:46.812Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.527Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet.html</loc>
-    <lastmod>2025-07-22T21:07:46.818Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.533Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column.html</loc>
-    <lastmod>2025-07-22T21:07:46.853Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.571Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_color_box.html</loc>
-    <lastmod>2025-07-22T21:07:46.827Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.542Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack.html</loc>
-    <lastmod>2025-07-22T21:07:46.817Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.531Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/get-started/index.html</loc>
-    <lastmod>2025-07-22T21:07:09.907Z</lastmod>
+    <lastmod>2025-07-22T21:10:13.186Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/articles/intro.html</loc>
-    <lastmod>2025-07-22T21:07:09.893Z</lastmod>
+    <lastmod>2025-07-22T21:10:13.173Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/examples/index.html</loc>
-    <lastmod>2025-07-22T21:07:09.904Z</lastmod>
+    <lastmod>2025-07-22T21:10:13.184Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/examples/with-code.html</loc>
-    <lastmod>2025-07-22T21:07:09.907Z</lastmod>
+    <lastmod>2025-07-22T21:10:13.186Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian.html</loc>
-    <lastmod>2025-07-22T21:07:46.838Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.553Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct.html</loc>
-    <lastmod>2025-07-22T21:07:46.815Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.529Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_excel.html</loc>
-    <lastmod>2025-07-22T21:07:46.838Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.552Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_merge_stack.html</loc>
-    <lastmod>2025-07-22T21:07:46.855Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.573Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_538.html</loc>
-    <lastmod>2025-07-22T21:07:46.834Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.549Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/with_tooltip.html</loc>
-    <lastmod>2025-07-22T21:07:46.859Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.577Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix.html</loc>
-    <lastmod>2025-07-22T21:07:46.836Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.551Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_data_color_by_group.html</loc>
-    <lastmod>2025-07-22T21:07:46.828Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.543Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_fa_rank_change.html</loc>
-    <lastmod>2025-07-22T21:07:46.846Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.564Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric.html</loc>
-    <lastmod>2025-07-22T21:07:46.834Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.549Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/add_text_img.html</loc>
-    <lastmod>2025-07-22T21:07:46.841Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.558Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_dark.html</loc>
-    <lastmod>2025-07-22T21:07:46.835Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.550Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_fa_rating.html</loc>
-    <lastmod>2025-07-22T21:07:46.847Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.565Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_pff.html</loc>
-    <lastmod>2025-07-22T21:07:46.840Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.556Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/with_hyperlink.html</loc>
-    <lastmod>2025-07-22T21:07:46.857Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.576Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_theme_espn.html</loc>
-    <lastmod>2025-07-22T21:07:46.837Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.552Z</lastmod>
   </url>
   <url>
     <loc>https://posit-dev.github.io/gt-extras/reference/gt_add_divider.html</loc>
-    <lastmod>2025-07-22T21:07:46.852Z</lastmod>
+    <lastmod>2025-07-22T21:10:29.570Z</lastmod>
   </url>
 </urlset>
