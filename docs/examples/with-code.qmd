@@ -386,8 +386,8 @@ airquality_mini = airquality.head(10).assign(Year=1973)
 gt = (
     GT(airquality_mini)
     .tab_header(
-        title="New York Air Quality Measurements",
-        subtitle="Daily measurements in New York City (May 1-10, 1973)",
+        title="Default Theme",
+        subtitle="New York Air Quality Measurements",
     )
     .tab_spanner(label="Time", columns=["Year", "Month", "Day"])
     .tab_spanner(
@@ -409,6 +409,8 @@ gt
 ### [gt_theme_538](https://posit-dev.github.io/gt-extras/reference/gt_theme_538.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_538
+gt = gt.tab_header(title="FiveThirtyEight Theme")
+
 gt.pipe(gte.gt_theme_538)
 ```
 {{< include ./_show-last.qmd >}}
@@ -416,6 +418,8 @@ gt.pipe(gte.gt_theme_538)
 ### [gt_theme_espn](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_espn
+gt = gt.tab_header(title="ESPN Theme")
+
 gt.pipe(gte.gt_theme_espn)
 ```
 {{< include ./_show-last.qmd >}}
@@ -423,6 +427,8 @@ gt.pipe(gte.gt_theme_espn)
 ### [gt_theme_guardian](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_guardian
+gt = gt.tab_header(title="Guardian Theme")
+
 gt.pipe(gte.gt_theme_guardian)
 ```
 {{< include ./_show-last.qmd >}}
@@ -430,6 +436,8 @@ gt.pipe(gte.gt_theme_guardian)
 ### [gt_theme_nytimes](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_nytimes
+gt = gt.tab_header(title="NYTimes Theme")
+
 gt.pipe(gte.gt_theme_nytimes)
 ```
 {{< include ./_show-last.qmd >}}
@@ -437,6 +445,8 @@ gt.pipe(gte.gt_theme_nytimes)
 ### [gt_theme_excel](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_excel
+gt = gt.tab_header(title="Excel Theme")
+
 gt.pipe(gte.gt_theme_excel)
 ```
 {{< include ./_show-last.qmd >}}
@@ -444,6 +454,8 @@ gt.pipe(gte.gt_theme_excel)
 ### [gt_theme_dot_matrix](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_dot_matrix
+gt = gt.tab_header(title="Dot Matrix Theme")
+
 gt.pipe(gte.gt_theme_dot_matrix)
 ```
 {{< include ./_show-last.qmd >}}
@@ -451,6 +463,8 @@ gt.pipe(gte.gt_theme_dot_matrix)
 ### [gt_theme_dark](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_dark
+gt = gt.tab_header(title="Dark Theme")
+
 gt.pipe(gte.gt_theme_dark)
 ```
 {{< include ./_show-last.qmd >}}
@@ -458,6 +472,8 @@ gt.pipe(gte.gt_theme_dark)
 ### [gt_theme_pff](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff.html){title="Click for reference"}
 ```{python}
 # | label: gt_theme_pff
+gt = gt.tab_header(title="PFF Theme")
+
 gt.pipe(gte.gt_theme_pff)
 ```
 {{< include ./_show-last.qmd >}}
