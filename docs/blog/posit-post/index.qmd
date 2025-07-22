@@ -2,22 +2,33 @@
 title: "How To Use gt-extras to Make Beautiful Tables"
 html-table-processing: none
 author: Jules Walzer-Goldfeld
-date: 2025-07-21
+date: 2025-07-22
 freeze: true
 jupyter: python3
 toc-expand: 2
-
 ---
 
-Final image at top
+![](../../examples/nfl-season/2011-nfl-season.png){width=700 fig-align="center"}
 
-<!-- img -->
+## What is gt-extras?
 
-... Prelude, intro, etc
+You've just finished analyzing your data, crafted the perfect summary table, but now what? The numbers tell an important story, but they're lost in a sea of black text on white background.
+
+That's where [**gt-extras**](https://posit-dev.github.io/gt-extras/) comes in. While [**Great Tables**](https://posit-dev.github.io/great-tables/) gives you the foundation for beautiful, publication-ready tables in Python, **gt-extras** comes with specialized plotting functions, color schemes, themes, and visual enhancements that take your tables one step further.
+
+In this post, we'll walk through building a comprehensive NFL season analysis that showcases the power of combining multiple **gt-extras** functions. You'll learn how to:
+
+- Transform raw game outcomes into visual sparklines
+- Use color coding to highlight performance patterns
+- Create comparative visualizations for related metrics
+- Apply professional themes for publication-ready results
+- Combine multiple tables into space-efficient layouts
+
+Let's dive in!
 
 ## Setup
 
-First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets with a dash of creativity (or with [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
+First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets as long as you've got a dash of creativity (or [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
 
 The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football stats and the other team metadata. Take a glimpse here.
 
@@ -151,13 +162,13 @@ nfl_df.glimpse()
 
 ## Making a GT
 
-Let's start without any styling, and see what our starting point is. You'll notice the table is rather tall, so for now I'm going to take the first four rows. Eventually we'll go back to the original dataframe.
+Let's start without any styling, and see what our starting point is. You'll notice each row is rather tall, so for now I'm going to take the first two rows. Eventually we'll go back to the original dataframe.
 
 ```{python}
 from great_tables import GT, md
 import gt_extras as gte
 
-df_head = nfl_df.head(4)
+df_head = nfl_df.head(2)
 
 gt = GT(df_head, rowname_col="Team", groupname_col="team_division")
 
@@ -216,7 +227,7 @@ I'm going isolate each `gt-extras` component into its own function, for the sake
   - `gt.pipe(gte.gt_plt_winloss, column="Games")`
 
 
-There isn't necessarily a "correct" way to apply the gt-extras functionality, but I prefer option 2. Towards the end, the theming code block is a good example of why I like `GT.pipe()`.
+There isn't necessarily a "correct" way to apply the gt-extras functionality, but I prefer option 2. Towards the end, the [theming code block](#theming-and-more) is a good example of why I like `GT.pipe()`.
 :::
 
 
@@ -282,6 +293,7 @@ gt = add_dumbbell(gt)
 gte.gt_highlight_cols(gt, "Avg PF", include_column_labels=True)
 ```
 
+The [`gt_plt_dumbbell()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell) function creates a great comparative visualization for two related metrics. Here, it beautifully shows the relationship between points scored (green) and points allowed (red) for each team. You can instantly see which teams have strong offenses, strong defenses, or both!
 
 ### Color Box
 
@@ -299,6 +311,10 @@ gt = add_color_box(gt)
 gte.gt_highlight_cols(gt, "Point Diff", include_column_labels=True)
 
 ```
+
+The [`gt_color_box()`](https://posit-dev.github.io/gt-extras/reference/gt_color_box) function provides an immediate visual indicator of performance through color coding. The gradient from green (positive) to red (negative) makes it easy to spot the strongest and weakest teams at a glance without having to parse the dumbbells.
+
+At this point, you may have noticed just how much room we have to customize when calling the **gt-extras** functions. Aspects such as coloring, width, height, font size, among many others, are commonly availiable no matter which graphic you are adding to your table. For example, I've taken advantage of the coloring to emphasize the grouping of the two sections of the table.
 
 ### Theming and More
 
@@ -320,12 +336,13 @@ def add_extra_styles(gt: GT) -> GT:
 add_extra_styles(gt)
 ```
 
-### Two-column layout
+For the first time, we're seeing multiple **gt-extras** styling functions working together. We're highlighting the Super Bowl teams (Giants in gold, Patriots in silver), adding visual dividers for better organization, and applying the clean FiveThirtyEight theme. The result is a polished, publication-ready table that tells the story of the 2011 NFL season.
 
-The last thing still bothering me is that we can't fit all 32 teams into one table. Fortunately, we can take advantage of the [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout) extras function. This will allow us to split into two tables of half-height each, which is a much nicer shape to view on a screen or in an article.
+### Two-Column Layout
+
+The last detail bothering me is that we can't fit all 32 teams into one table. Fortunately, we can take advantage of the [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout) function. This allows us to split into two tables of half-height each, which is a much nicer shape to view on a screen or in an article.
 
 ```{python}
-# First we make a composite function that creates the table with all the extras
 def make_gt(df) -> GT:
     gt = make_initial_gt(df)
     gt = add_winloss(gt)
@@ -336,19 +353,19 @@ def make_gt(df) -> GT:
     return gt
 
 
-gt1 = make_gt(nfl_df.head(16))
-gt2 = make_gt(nfl_df.slice(16, 16))
-
-gt1
+make_gt(nfl_df.head(20))
 ```
 
-That was the first half of the table. Here's the combined final table!
+That was barely more than first half of the table. It is just a little tall, and imagine it with all 32 teams...
+
+Instead let's call [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout) for the combined final table!
 
 ```{python}
 # | output: False
+gt1 = make_gt(nfl_df.head(16))
+gt2 = make_gt(nfl_df.slice(16, 16))
 
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
-
 ```
 
-<!-- Show image here -->
+![](../../examples/nfl-season/2011-nfl-season.png){fig-align="center"}
