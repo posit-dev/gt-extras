@@ -8,7 +8,7 @@ jupyter: python3
 toc-expand: 2
 ---
 
-![](../../examples/nfl-season/2011-nfl-season.png){width=700 fig-align="center"}
+![](../../examples/nfl-season/2011-nfl-season.png){width=750 fig-align="center"}
 
 ## What is gt-extras?
 
@@ -35,7 +35,8 @@ The cleaning and setup of the data is not my focus in this post, so I will leave
 <a href="https://github.com/posit-dev/gt-extras/blob/main/docs/examples/nfl-season/index.ipynb" target="_blank">View notebook ⬀</a>
 
 ```{python}
-# | echo: False
+# | code-fold: True
+# | code-summary: Show the notebook code
 # | output: False
 import polars as pl
 import statistics
@@ -159,6 +160,10 @@ nfl_df = nfl_df.sort(
 ```{python}
 nfl_df.glimpse()
 ```
+
+With a little bit of patience, *that* (above) will turn into *this* (below).
+
+![](../../examples/nfl-season/2011-nfl-season.png){width=600 fig-align="center"}
 
 ## Making a GT
 
