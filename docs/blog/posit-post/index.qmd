@@ -24,7 +24,7 @@ In this post, we'll walk through building a comprehensive NFL season analysis th
 - Apply professional themes for publication-ready results
 - Combine multiple tables into space-efficient layouts
 
-Here is what we're making:
+Here’s what we’ll build:
 
 ```{python}
 # | code-fold: True
@@ -40,7 +40,7 @@ def make_gt(df) -> GT:
     return (
         GT(df, rowname_col="Team", groupname_col="team_division")
         .tab_header(
-            title="2016 NFL Season at a Glance",
+            title="2011 NFL Season at a Glance",
             subtitle="Super Bowl XLVI: New York Giants def. New England Patriots",
         )
         .tab_source_note(
@@ -110,9 +110,9 @@ gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 
 ## Setup
 
-First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets as long as you've got a dash of creativity (or [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
+First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) from 2011 (courtesy of Lee Sharpe) because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets as long as you've got a dash of creativity (or [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
 
-The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football statistics and the other team metadata.
+Data cleaning and setup aren’t the focus of this post, so I’ve left the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football statistics and the other team metadata.
 
 <a href="https://github.com/posit-dev/gt-extras/blob/main/docs/examples/nfl-season/index.ipynb" target="_blank">View notebook ⬀</a>
 
@@ -131,7 +131,7 @@ nfl_df.glimpse()
 
 ## Making a GT
 
-Let's start without any styling, and see what our starting point is. You'll notice each row is rather tall, so for now I'm going to take the first two rows. Eventually we'll go back to the original dataframe.
+Let's start without any styling and see what our starting point is. You'll notice each row is rather tall, so for now I'm going to take the first two rows. Eventually we'll go back to the original dataframe.
 
 ```{python}
 from great_tables import GT, md
@@ -186,7 +186,7 @@ After some `GT` styling, the table starts to look a little bit nicer. Let's see 
 ## GT Extras
 
 ::: {.callout-note collapse="false"}
-I'm going to isolate each **gt-extras** component into its own function, for the sake of the two-column finale. For now, it's be sufficient to call each tool independently.
+I'm going to isolate each **gt-extras** component into its own function, for the sake of the two-column finale. For now, it's sufficient to call each tool independently.
 
 
 - Option 1: Call the function directly
@@ -291,7 +291,7 @@ At this point, you may have noticed just how much room we have to customize when
 def add_extra_styles(gt: GT) -> GT:
     return (
         gt.tab_header(
-            title="2016 NFL Season at a Glance",
+            title="2011 NFL Season at a Glance",
             subtitle="Super Bowl XLVI: New York Giants def. New England Patriots",
         )
         .pipe(gte.gt_highlight_cols, columns="Team", fill="lightgray")
@@ -325,9 +325,9 @@ def make_gt(df) -> GT:
 make_gt(nfl_df.head(20))
 ```
 
-That was barely more than first half of the table. It's already a bit tall, and imagine it with all 32 teams...
+That was barely more than the first half of the table. It's already a bit tall, and imagine displaying all 32 teams...
 
-Instead let's use [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout) for the combined final table!
+Instead, let's use [`gt_two_column_layout()`](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout) for the combined final table!
 
 ```{python}
 # | output: False
@@ -338,3 +338,12 @@ gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
 
 ![](../../assets/2011-nfl-season.png){fig-align="center"}
+
+## Wrapping Up
+
+With just a few lines of code, [**gt-extras**](https://posit-dev.github.io/gt-extras/) transforms ordinary tables into compelling visual summaries. Whatever your dataset, these tools help you tell a clearer, more engaging story. Try combining different components and themes to fit your own data and audience!
+
+Let us know how you're using [**gt-extras**](https://posit-dev.github.io/gt-extras/):
+
+- [GitHub Discussions](https://github.com/posit-dev/gt-extras/discussions)
+- [GitHub Issues](https://github.com/posit-dev/gt-extras/issues)
