@@ -2,13 +2,13 @@
 title: "How To Use gt-extras to Make Beautiful Tables"
 html-table-processing: none
 author: Jules Walzer-Goldfeld
-date: 2025-07-22
+date: 2025-07-23
 freeze: true
 jupyter: python3
 toc-expand: 2
 ---
 
-![](../../assets/2011-nfl-season.png){width=750 fig-align="center"}
+![](../../assets/2011-nfl-season.png){width=800 fig-align="center"}
 
 ## What is gt-extras?
 
@@ -31,10 +31,79 @@ Here is what we're making:
 # | code-summary: Show the code
 # | output: False
 import polars as pl
+from great_tables import GT, md
+import gt_extras as gte
 
 nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
 
+def make_gt(df) -> GT:
+    return (
+        GT(df, rowname_col="Team", groupname_col="team_division")
+        .tab_header(
+            title="2016 NFL Season at a Glance",
+            subtitle="Super Bowl XLVI: New York Giants def. New England Patriots",
+        )
+        .tab_source_note(
+            md(
+                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+            )
+        )
+        .tab_stubhead(label="Team")
+        .tab_spanner(label="Scoring", columns=["Avg PF", "Avg PA", "Point Diff"])
+        .tab_spanner(label="Season Trends", columns=["Games", "Streak"])
+        .fmt_number(columns="Point Diff", decimals=1)
+        .fmt_image("team_logo_espn")
+        .cols_hide(["Wins", "team_conf", "team_name"])
+        .cols_align(align="center", columns=["Avg PF", "Avg PA", "Games"])
+        .cols_move("team_logo_espn", after="Team")
+        .cols_label({"team_logo_espn": ""})
+        .pipe(
+            gte.gt_plt_winloss,
+            column="Games",
+            win_color="blue",
+            loss_color="orange",
+            tie_color="gray",
+            height=40,
+            width=120,
+        )
+        .pipe(
+            gte.gt_fa_rank_change,
+            column="Streak",
+            icon_type="turn",
+            color_up="blue",
+            color_down="orange",
+            size=14,
+        )
+        .pipe(
+            gte.gt_plt_dumbbell,
+            col1="Avg PF",
+            col2="Avg PA",
+            col1_color="green",
+            col2_color="red",
+            width=300,
+            height=40,
+            num_decimals=0,
+            label="Points For vs Points Against",
+            font_size=12,
+        )
+        .pipe(
+            gte.gt_color_box,
+            columns="Point Diff",
+            palette=["green", "yellow", "red"],
+            domain=[14, -14]
+        )
+        .pipe(gte.gt_highlight_cols, columns="Team", fill="lightgray")
+        .pipe(gte.gt_highlight_rows, rows="NYG", fill="gold", alpha=0.3)
+        .pipe(gte.gt_highlight_rows, rows="NE", fill="silver", alpha=0.3)
+        .pipe(gte.gt_add_divider, columns="Point Diff", color="darkblue", weight=3)
+        .pipe(gte.gt_theme_538)
+    )
 
+
+gt1 = make_gt(nfl_df.head(16))
+gt2 = make_gt(nfl_df.slice(16, 16))
+
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
 
 ![](../../assets/2011-nfl-season.png){width=600 fig-align="center"}
@@ -43,18 +112,20 @@ nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
 
 First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets as long as you've got a dash of creativity (or [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
 
-The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football stats and the other team metadata.
+The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football statistics and the other team metadata.
 
 <a href="https://github.com/posit-dev/gt-extras/blob/main/docs/examples/nfl-season/index.ipynb" target="_blank">View notebook ⬀</a>
 
 ```{python}
+# | warning: False
 import polars as pl
 import requests
 import io
 
-response = requests.get("https://raw.githubusercontent.com/posit-dev/gt-extras/main/docs/examples/nfl-season/nfl_2011_stats.json")
-
+url = "https://raw.githubusercontent.com/posit-dev/gt-extras/main/docs/examples/nfl-season/nfl_2011_stats.json"
+response = requests.get(url)
 nfl_df = pl.read_json(io.StringIO(response.text))
+
 nfl_df.glimpse()
 ```
 
@@ -110,22 +181,22 @@ gt = make_initial_gt(df_head)
 gt
 ```
 
-After some `GT` styling, the table starts to look a little bit nicer. Let's see what `gt-extras` can do!
+After some `GT` styling, the table starts to look a little bit nicer. Let's see what **gt-extras** can do!
 
 ## GT Extras
 
 ::: {.callout-note collapse="false"}
-I'm going to isolate each `gt-extras` component into its own function, for the sake of the two-column finale. For now, it's be sufficient to call each tool independently.
+I'm going to isolate each **gt-extras** component into its own function, for the sake of the two-column finale. For now, it's be sufficient to call each tool independently.
 
 
-- Option 1: Call the gt-extras function directly
+- Option 1: Call the function directly
   - `gte.gt_plt_winloss(gt, column="Games")`
 
 - Option 2: Call [`GT.pipe()`](https://posit-dev.github.io/great-tables/reference/GT.pipe) which allows for method chaining
   - `gt.pipe(gte.gt_plt_winloss, column="Games")`
 
 
-There isn't necessarily a "correct" way to apply the gt-extras functionality, but I prefer option 2. Towards the end, the [theming code block](#theming-and-more) is a good example of why I like `GT.pipe()`.
+There isn't necessarily a "correct" way to apply the **gt-extras** functionality, but I prefer option 2. Towards the end, the [theming code block](#theming-and-more) is a good example of why I like `GT.pipe()`.
 :::
 
 
