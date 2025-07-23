@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import narwhals.stable.v1 as nw
-import polars as pl
 from faicons import icon_svg
 from great_tables import GT, loc, style
-from narwhals.stable.v1.typing import IntoDataFrame
+from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
 
 from gt_extras.themes import gt_theme_espn
 
@@ -12,15 +11,20 @@ __all__ = ["gt_plt_summary"]
 
 
 def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
-    gt = _create_summary_table(df=df)
+    summary_df = _create_summary_df(df)
 
     nw_df = nw.from_native(df, eager_only=True)
-    dim_df = nw_df.shape  # (n_rows, n_cols)
+    dim_df = nw_df.shape
 
-    # TODO: also fix for no polars
-    numeric_cols = pl.col("Type") == "numeric"
+    nw_summary_df = nw.from_native(summary_df, eager_only=True)
+    numeric_cols = [
+        i
+        for i, t in enumerate(nw_summary_df.get_column("Type").to_list())
+        if t == "numeric"
+    ]
 
     if title is None:
+        # TODO: check that this gets name?
         _title = getattr(df, "__name__", "Summary Table")
     else:
         _title = title
@@ -28,7 +32,8 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     subtitle = f"{dim_df[0]} rows x {dim_df[1]} cols"
 
     gt = (
-        gt.tab_header(title=_title, subtitle=subtitle)
+        GT(summary_df)
+        .tab_header(title=_title, subtitle=subtitle)
         # handle missing
         .sub_missing(columns=["Mean", "Median", "SD"])
         # Add visuals
@@ -51,10 +56,18 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 ############### Helpers for gt_plt_summary ###############
 
 
-def _create_summary_table(df: IntoDataFrame) -> GT:
+def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
     nw_df = nw.from_native(df, eager_only=True)
 
-    summary_data = []
+    summary_data = {
+        "Type": [],
+        "Column": [],
+        "Values": [],
+        "Missing": [],
+        "Mean": [],
+        "Median": [],
+        "SD": [],
+    }
 
     for col_name in nw_df.columns:
         col = nw_df.get_column(col_name)
@@ -81,22 +94,17 @@ def _create_summary_table(df: IntoDataFrame) -> GT:
         else:
             col_type = "other"
 
-        summary_data.append(
-            {
-                "Type": col_type,
-                "Column": col_name,
-                "Values": col.to_list(),
-                "Missing": col.null_count() / col.count(),
-                "Mean": mean_val,
-                "Median": median_val,
-                "SD": std_val,
-            }
-        )
+        summary_data["Type"].append(col_type)
+        summary_data["Column"].append(col_name)
+        summary_data["Values"].append(col.to_list())
+        summary_data["Missing"].append(col.null_count() / col.count())
+        summary_data["Mean"].append(mean_val)
+        summary_data["Median"].append(median_val)
+        summary_data["SD"].append(std_val)
 
-    ## TODO: Avoid polars?
-    summary_nw_df = pl.DataFrame(summary_data)
+    summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
 
-    return GT(summary_nw_df)
+    return summary_nw_df.to_native()
 
 
 def _make_icon_html(dtype: str) -> str:
