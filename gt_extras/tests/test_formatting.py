@@ -247,7 +247,7 @@ def test_gt_two_column_layout_no_(two_dfs):
     gt2 = GT(df2).tab_header(title="Table 2", subtitle="2nd Table")
 
     # Create combined layout using table 1's header
-    result = gt_two_column_layout(gt1, gt2, table_header_from=1, target="browser")
+    result = gt_two_column_layout(gt1, gt2, table_header_from=1)
 
     # Get the HTML output
     html = str(result)
