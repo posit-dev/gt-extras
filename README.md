@@ -13,7 +13,7 @@
 <!-- [![Codecov](https://codecov.io/gh/posit-dev/gt-extras/branch/main/graph/badge.svg)](https://codecov.io/gh/posit-dev/gt-extras) -->
 
 <div align="center">
-<img src="https://github.com/posit-dev/gt-extras/assets/2011-nfl-season.png" width="600px">
+<img src="https://posit-dev.github.io/gt-extras/assets/2011-nfl-season.png" width="600px">
 </div>
 
 > ⚠️ **gt-extras is currently in development, expect breaking changes.**
