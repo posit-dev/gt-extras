@@ -32,7 +32,7 @@ Here is what we're making:
 # | output: False
 import polars as pl
 
-nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
+nfl_df = pl.read_json("../../../examples/nfl-season/nfl_2011_stats.json")
 
 
 ```
@@ -49,9 +49,12 @@ The cleaning and setup of the data is not my focus in this post, so I will leave
 
 ```{python}
 import polars as pl
+import requests
+import io
 
-# TODO: raw link
-nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
+response = requests.get("https://raw.githubusercontent.com/posit-dev/gt-extras/main/docs/examples/nfl-season/nfl_2011_stats.json")
+
+nfl_df = pl.read_json(io.StringIO(response.text))
 nfl_df.glimpse()
 ```
 
