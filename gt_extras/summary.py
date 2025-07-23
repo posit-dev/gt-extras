@@ -20,7 +20,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     numeric_cols = [
         i
         for i, t in enumerate(nw_summary_df.get_column("Type").to_list())
-        if t == "numeric"
+        if t in ("numeric", "boolean")
     ]
 
     if title is None:
@@ -75,35 +75,41 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         mean_val = None
         median_val = None
         std_val = None
+        values = None
 
         if col.dtype.is_numeric():
             col_type = "numeric"
             mean_val = col.mean()
             median_val = col.median()
             std_val = col.std()
+            values = col.to_list()
+
         elif col.dtype == nw.String:
             col_type = "string"
+            values = col.to_list()
 
         elif col.dtype == nw.Boolean:
             col_type = "boolean"
             mean_val = col.mean()  # Proportion of True values
+            values = col.to_list()
 
         elif col.dtype == nw.Datetime:
             col_type = "datetime"
             std_val = None
+            values = col.to_list()
+
         else:
             col_type = "other"
 
         summary_data["Type"].append(col_type)
         summary_data["Column"].append(col_name)
-        summary_data["Values"].append(col.to_list())
+        summary_data["Values"].append(values)
         summary_data["Missing"].append(col.null_count() / col.count())
         summary_data["Mean"].append(mean_val)
         summary_data["Median"].append(median_val)
         summary_data["SD"].append(std_val)
 
     summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
-
     return summary_nw_df.to_native()
 
 
@@ -117,9 +123,12 @@ def _make_icon_html(dtype: str) -> str:
     elif dtype == "datetime":
         fa_name = "clock"
         color = "#73a657"
+    elif dtype == "boolean":
+        fa_name = "check"
+        color = "black"
     else:
         fa_name = "question"
-        color = "black"
+        color = "red"
 
     icon = icon_svg(name=fa_name, fill=color, width=f"{20}px", a11y="sem")
 
