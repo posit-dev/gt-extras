@@ -8,7 +8,7 @@ jupyter: python3
 toc-expand: 2
 ---
 
-![](../../examples/nfl-season/2011-nfl-season.png){width=750 fig-align="center"}
+![](../../assets/2011-nfl-season.png){width=750 fig-align="center"}
 
 ## What is gt-extras?
 
@@ -37,7 +37,7 @@ nfl_df = pl.read_json("../../../examples/nfl-season/nfl_2011_stats.json")
 
 ```
 
-![](../../examples/nfl-season/2011-nfl-season.png){width=600 fig-align="center"}
+![](../../assets/2011-nfl-season.png){width=600 fig-align="center"}
 
 ## Setup
 
@@ -266,4 +266,4 @@ gt2 = make_gt(nfl_df.slice(16, 16))
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
 
-![](../../examples/nfl-season/2011-nfl-season.png){fig-align="center"}
+![](../../assets/2011-nfl-season.png){fig-align="center"}
