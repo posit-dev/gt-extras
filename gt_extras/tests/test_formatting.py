@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import polars as pl
 import pytest
-from great_tables import GT
+from great_tables import GT, google_font, loc, style
 
 from gt_extras.formatting import (
     GTCombinedLayout,
@@ -224,6 +224,36 @@ def test_gt_two_column_layout_no_headers(two_dfs):
 
     assert "Header" not in html
     assert "Subtitle" not in html
+
+
+def test_gt_two_column_layout_no_(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1)
+    gt2 = GT(df2)
+
+    gt1 = (
+        GT(df1)
+        .tab_header(title="Table 1", subtitle="1st Table")
+        .tab_style(
+            style=style.text(font=google_font("Chivo"), weight="bold"),
+            locations=loc.title(),
+        )
+        .tab_style(
+            style=style.text(font=google_font("Chivo")),
+            locations=loc.subtitle(),
+        )
+    )
+
+    gt2 = GT(df2).tab_header(title="Table 2", subtitle="2nd Table")
+
+    # Create combined layout using table 1's header
+    result = gt_two_column_layout(gt1, gt2, table_header_from=1)
+
+    # Get the HTML output
+    html = str(result)
+
+    assert "width:100%; font-family: Chivo;" in html
+    assert "width:100%; font-family: Chivo;font-weight: bold;" in html
 
 
 def test_gt_combined_layout_repr_html():
