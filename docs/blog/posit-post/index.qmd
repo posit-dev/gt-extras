@@ -343,7 +343,7 @@ gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 
 With just a few lines of code, [**gt-extras**](https://posit-dev.github.io/gt-extras/) transforms ordinary tables into compelling visual summaries. Whatever your dataset, these tools help you tell a clearer, more engaging story. Try combining different components and themes to fit your own data and audience!
 
-Let us know how you're using [**gt-extras**](https://posit-dev.github.io/gt-extras/):
+Let us know how you're using [**gt-extras**](https://posit-dev.github.io/gt-extras/), or help us improve it:
 
 - [GitHub Discussions](https://github.com/posit-dev/gt-extras/discussions)
 - [GitHub Issues](https://github.com/posit-dev/gt-extras/issues)
