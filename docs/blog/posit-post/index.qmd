@@ -32,7 +32,7 @@ Here is what we're making:
 # | output: False
 import polars as pl
 
-nfl_df = pl.read_json("../../../examples/nfl-season/nfl_2011_stats.json")
+nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
 
 
 ```
