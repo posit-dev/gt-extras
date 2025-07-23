@@ -24,146 +24,36 @@ In this post, we'll walk through building a comprehensive NFL season analysis th
 - Apply professional themes for publication-ready results
 - Combine multiple tables into space-efficient layouts
 
-Let's dive in!
+Here is what we're making:
+
+```{python}
+# | code-fold: True
+# | code-summary: Show the code
+# | output: False
+import polars as pl
+
+nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
+
+
+```
+
+![](../../examples/nfl-season/2011-nfl-season.png){width=600 fig-align="center"}
 
 ## Setup
 
 First we load our dataset. I've chosen [NFL season data](https://github.com/nflverse/nfldata) (courtesy of Lee Sharpe) from 2016 because it's ripe with opportunity to visualize. I hope you'll find this is true for all datasets as long as you've got a dash of creativity (or [**gt-extras**](https://posit-dev.github.io/gt-extras/))!
 
-The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football stats and the other team metadata. Take a look here.
+The cleaning and setup of the data is not my focus in this post, so I will leave the code in a notebook for you to inspect if you wish. In the notebook, we join two datasets, one that gives us 2011 football stats and the other team metadata.
 
 <a href="https://github.com/posit-dev/gt-extras/blob/main/docs/examples/nfl-season/index.ipynb" target="_blank">View notebook ⬀</a>
 
 ```{python}
-# | code-fold: True
-# | code-summary: Show the notebook code
-# | output: False
 import polars as pl
-import statistics
 
-df = pl.read_csv("../../assets/games.csv")
-season_2011 = df.filter((pl.col("season") == 2011) & (pl.col("game_type") == "REG"))
-
-def get_team_stats(season_df):
-    results = {}
-
-    for row in season_df.iter_rows(named=True):
-        away_team = row["away_team"]
-        home_team = row["home_team"]
-        away_score = row["away_score"]
-        home_score = row["home_score"]
-
-        # Initialize team records
-        for team in [away_team, home_team]:
-            if team not in results:
-                results[team] = {
-                    "games": [],
-                    "points_for": [],
-                    "points_against": [],
-                    "wins": 0,
-                    "losses": 0,
-                    "ties": 0,
-                }
-
-        # Record game results
-        if away_score > home_score:
-            results[away_team]["games"].append(1)  # Win
-            results[home_team]["games"].append(0)  # Loss
-            results[away_team]["wins"] += 1
-            results[home_team]["losses"] += 1
-        elif home_score > away_score:
-            results[home_team]["games"].append(1)  # Win
-            results[away_team]["games"].append(0)  # Loss
-            results[home_team]["wins"] += 1
-            results[away_team]["losses"] += 1
-        else:
-            results[away_team]["games"].append(0.5)  # Tie
-            results[home_team]["games"].append(0.5)  # Tie
-            results[away_team]["ties"] += 1
-            results[home_team]["ties"] += 1
-
-        # Record scoring data
-        results[away_team]["points_for"].append(away_score)
-        results[away_team]["points_against"].append(home_score)
-        results[home_team]["points_for"].append(home_score)
-        results[home_team]["points_against"].append(away_score)
-
-    return results
-
-team_stats = get_team_stats(season_2011)
-
-team_data = []
-for team, stats in team_stats.items():
-    avg_points_for = statistics.mean(stats["points_for"])
-    avg_points_against = statistics.mean(stats["points_against"])
-    point_diff = round(avg_points_for - avg_points_against, 1)
-
-    # Calculate streak
-    games = stats["games"]
-    most_recent = games[-1]
-    streak_count = 1
-
-    # Count consecutive games of same result
-    for i in range(len(games) - 2, -1, -1):
-        if games[i] == most_recent:
-            streak_count += 1
-        else:
-            break
-
-    if most_recent == 1:
-        streak = streak_count
-    elif most_recent == 0:
-        streak = -streak_count
-    else:  # tie
-        streak = 0
-
-    team_data.append(
-        {
-            "Team": team,
-            "Record": f"{stats['wins']}-{stats['losses']}-{stats['ties']}",
-            "Wins": stats["wins"],
-            "Avg PF": avg_points_for,
-            "Avg PA": avg_points_against,
-            "Point Diff": point_diff,
-            "Games": list(stats["games"][:16]),
-            "Streak": streak,
-        }
-    )
-
-nfl_df = pl.DataFrame(team_data, strict=False)
-
-teams_info = pl.read_csv("../../assets/teams_colors_logos.csv")
-
-# Merge with team information
-nfl_df = nfl_df.join(
-    teams_info.select(
-        [
-            "team_abbr",
-            "team_division",
-            "team_conf",
-            "team_name",
-            "team_logo_espn",
-        ]
-    ),
-    left_on="Team",
-    right_on="team_abbr",
-    how="left",
-)
-
-nfl_df = nfl_df.sort(
-    by=["team_division", "Wins", "Point Diff"],
-    descending=[False, True, True],
-)
-```
-
-
-```{python}
+# TODO: raw link
+nfl_df = pl.read_json("../../examples/nfl-season/nfl_2011_stats.json")
 nfl_df.glimpse()
 ```
-
-With a little bit of patience, *that* (above) will turn into *this* (below).
-
-![](../../examples/nfl-season/2011-nfl-season.png){width=600 fig-align="center"}
 
 ## Making a GT
 
