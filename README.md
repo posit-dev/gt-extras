@@ -12,6 +12,9 @@
 
 <!-- [![Codecov](https://codecov.io/gh/posit-dev/gt-extras/branch/main/graph/badge.svg)](https://codecov.io/gh/posit-dev/gt-extras) -->
 
+<div align="center">
+<img src="https://github.com/posit-dev/gt-extras/assets/2011-nfl-season.png" width="600px">
+</div>
 
 > ⚠️ **gt-extras is currently in development, expect breaking changes.**
 
@@ -53,7 +56,6 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 )
 ```
 
-<!-- TODO here!!! -->
 <div align="center">
 <img src="https://posit-dev.github.io/gt-extras/assets/composite_car_example.png" width="800px">
 </div>
