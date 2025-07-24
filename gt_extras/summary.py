@@ -188,21 +188,26 @@ def _plot_categorical(data: list[str]) -> str:
 
 
 def _plot_numeric(data: list[float] | list[int]) -> str:
-    # Calculate binwidth using Freedman-Diaconis rule
-    quantiles = statistics.quantiles(data, method="inclusive")
-    q25, _, q75 = quantiles
-    iqr = q75 - q25
-    bw = 2 * iqr / (len(data) ** (1 / 3))
-
-    if bw <= 0:
-        bw = (max(data) - min(data)) / 3  # Fallback
-
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
 
     if data_range == 0:
-        # TODO: handle special case
-        pass
+        data_min -= 1.5
+        data_max += 1.5
+        data_range = 3
+
+    # after cleaning in _make_summary_plot, we know len(data) > 1
+    if len(data) == 1:
+        bw = 1
+    # Calculate binwidth using Freedman-Diaconis rule
+    else:
+        quantiles = statistics.quantiles(data, method="inclusive")
+        q25, _, q75 = quantiles
+        iqr = q75 - q25
+        bw = 2 * iqr / (len(data) ** (1 / 3))
+
+    if bw <= 0:
+        bw = data_range / 3  # Fallback
 
     n_bins = max(1, int(math.ceil(data_range / bw)))
     bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
