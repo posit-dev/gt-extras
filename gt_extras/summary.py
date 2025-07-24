@@ -8,7 +8,7 @@ from faicons import icon_svg
 from great_tables import GT, loc, style
 from great_tables._tbl_data import is_na
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
-from svg import SVG, Element, Line, Rect, Text
+from svg import SVG, Element, G, Line, Rect, Style, Text
 
 from gt_extras.themes import gt_theme_espn
 
@@ -190,7 +190,7 @@ def _plot_categorical(data: list[str]) -> str:
 def _plot_numeric(data: list[float] | list[int]) -> str:
     # Calculate binwidth using Freedman-Diaconis rule
     quantiles = statistics.quantiles(data, method="inclusive")
-    q25, median, q75 = quantiles
+    q25, _, q75 = quantiles
     iqr = q75 - q25
     bw = 2 * iqr / (len(data) ** (1 / 3))
 
@@ -205,9 +205,7 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
         pass
 
     n_bins = max(1, int(math.ceil(data_range / bw)))
-
-    # Do we need bin edges?
-    # bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
+    bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
 
     counts = [0.0] * n_bins
     for x in data:
@@ -221,16 +219,18 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
 
     max_count = max(counts)
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
-    normalized_median = (median - data_min) / data_range
+    normalized_mean = (statistics.mean(data) - data_min) / data_range
 
     svg = _make_histogram_svg(
         width_px=180,  # TODO choose how to assign
         height_px=40,
-        median=normalized_median,
+        fill="#f18e2c",
+        mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
-        counts=normalized_counts,
-        fill="#f18e2c",
+        normalized_counts=normalized_counts,
+        counts=counts,
+        bin_edges=bin_edges,
     )
 
     return svg.as_str()
@@ -239,13 +239,15 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
 def _make_histogram_svg(
     width_px: float,
     height_px: float,
-    median: float,  # Relative to min and max in range
+    fill: str,
+    mean: float,  # Relative to min and max in range
     data_min: str,
     data_max: str,
+    normalized_counts: list[float],
     counts: list[float],
-    fill: str,
+    bin_edges: list[float],
 ) -> SVG:
-    count = len(counts)
+    count = len(normalized_counts)
     max_bar_height_px = height_px * 0.8  # can change
     plot_width_px = width_px * 0.95
 
@@ -256,9 +258,27 @@ def _make_histogram_svg(
     x_loc = (width_px - plot_width_px) / 2
 
     line_stroke_width = max_bar_height_px / 30  # ensure never less than 1
-    median_px = median * plot_width_px + x_loc
+    mean_px = mean * plot_width_px + x_loc
+
+    font_size_px = height_px / 5
 
     elements: list[Element] = [
+        Style(
+            text=f"""
+    .bar-group:hover .bar-rect {{
+        stroke: white;
+        stroke-width: {line_stroke_width};
+        fill-opacity: 0.7;
+    }}
+    .tooltip {{
+        opacity: 0;
+        transition: opacity 0.2s;
+    }}
+    .bar-group:hover .tooltip {{
+        opacity: 0.8;
+    }}
+    """
+        ),
         # Bottom line
         Line(
             x1=0,
@@ -270,8 +290,8 @@ def _make_histogram_svg(
         ),
         # Median line
         Line(
-            x1=median_px,
-            x2=median_px,
+            x1=mean_px,
+            x2=mean_px,
             y1=y_loc - line_stroke_width / 2,
             y2=y_loc - max_bar_height_px - line_stroke_width / 2,
             stroke="black",
@@ -290,22 +310,60 @@ def _make_histogram_svg(
             x=width_px - (x_loc + bin_width_px / 2),
             y=height_px,
             text_anchor="middle",
-            font_size=height_px / 5,
+            font_size=font_size_px,
             dominant_baseline="text-top",
         ),
     ]
 
-    for val in counts:
-        bar_height = val / 1 * max_bar_height_px
+    # tooltip_width = bin_width_px / 2
+
+    for i, (count, normalized_count) in enumerate(zip(counts, normalized_counts)):
+        bar_height = normalized_count / 1 * max_bar_height_px
+        y_loc_bar = y_loc - bar_height - line_stroke_width / 2
+
         bar = Rect(
-            y=y_loc - bar_height - line_stroke_width / 2,
+            class_=["bar-rect"],
+            y=y_loc_bar,
             x=x_loc + gap / 2,
             width=bin_width_px - gap,
             height=bar_height,
             fill=fill,
         )
-        # elements = [bar] + elements
-        elements.insert(0, bar)
+
+        left_edge = f"{bin_edges[i]:.2f}".rstrip("0").rstrip(".")
+        right_edge = f"{bin_edges[i + 1]:.2f}".rstrip("0").rstrip(".")
+
+        row_label = "row" if count == 1 else "rows"
+
+        tooltip = G(
+            class_=["tooltip"],
+            elements=[
+                Text(
+                    text=f"{count:.0f} {row_label}",
+                    x=x_loc + bin_width_px / 2,
+                    y=font_size_px * 0.25,
+                    fill="black",
+                    font_size=font_size_px,
+                    dominant_baseline="hanging",
+                    text_anchor="middle",
+                    font_weight="bold",
+                ),
+                Text(
+                    text=f"[{left_edge} to {right_edge}]",
+                    x=x_loc + bin_width_px / 2,
+                    y=font_size_px * 1.5,
+                    fill="black",
+                    font_size=font_size_px,
+                    dominant_baseline="hanging",
+                    text_anchor="middle",
+                    font_weight="bold",
+                ),
+            ],
+        )
+
+        # Group bar and tooltip together
+        group = G(class_=["bar-group"], elements=[bar, tooltip])
+        elements.insert(0, group)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
