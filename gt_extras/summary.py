@@ -262,22 +262,28 @@ def _make_histogram_svg(
 
     font_size_px = height_px / 5
 
-    elements: list[Element] = [
-        Style(
-            text=f"""
-    .bar-group:hover .bar-rect {{
-        stroke: white;
-        stroke-width: {line_stroke_width};
-        fill-opacity: 0.7;
-    }}
+    hover_css = f"""
     .tooltip {{
         opacity: 0;
         transition: opacity 0.2s;
+        pointer-events: none;
     }}
-    .bar-group:hover .tooltip {{
-        opacity: 0.8;
+    .bar-rect:hover {{
+        stroke: white;
+        stroke-width: {line_stroke_width};
+        fill-opacity: 0.8;
     }}
     """
+
+    # Add hover rules for each bar-tooltip pair
+    for i in range(len(counts)):
+        hover_css += f"#hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
+        hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
+        hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{ stroke: white; stroke-width: 2; fill-opacity: 0.8; }}\n"
+
+    elements: list[Element] = [
+        Style(
+            text=hover_css,
         ),
         # Bottom line
         Line(
@@ -322,6 +328,7 @@ def _make_histogram_svg(
         y_loc_bar = y_loc - bar_height - line_stroke_width / 2
 
         bar = Rect(
+            id=f"bar-{i}",
             class_=["bar-rect"],
             y=y_loc_bar,
             x=x_loc + gap / 2,
@@ -334,13 +341,19 @@ def _make_histogram_svg(
         right_edge = f"{bin_edges[i + 1]:.2f}".rstrip("0").rstrip(".")
 
         row_label = "row" if count == 1 else "rows"
+        min_width_tooltip = 30
+        x_loc_tooltip = min(
+            max((x_loc + bin_width_px / 2), min_width_tooltip),
+            width_px - min_width_tooltip,
+        )
 
         tooltip = G(
+            id=f"tooltip-{i}",
             class_=["tooltip"],
             elements=[
                 Text(
                     text=f"{count:.0f} {row_label}",
-                    x=x_loc + bin_width_px / 2,
+                    x=x_loc_tooltip,
                     y=font_size_px * 0.25,
                     fill="black",
                     font_size=font_size_px,
@@ -350,7 +363,7 @@ def _make_histogram_svg(
                 ),
                 Text(
                     text=f"[{left_edge} to {right_edge}]",
-                    x=x_loc + bin_width_px / 2,
+                    x=x_loc_tooltip,
                     y=font_size_px * 1.5,
                     fill="black",
                     font_size=font_size_px,
@@ -361,9 +374,22 @@ def _make_histogram_svg(
             ],
         )
 
-        # Group bar and tooltip together
-        group = G(class_=["bar-group"], elements=[bar, tooltip])
-        elements.insert(0, group)
+        # Add invisible hover area that covers bar + tooltip space
+        hover_area = Rect(
+            id=f"hover-area-{i}",
+            class_=["hover-area"],
+            x=x_loc + gap / 2,
+            y=0,
+            width=bin_width_px - gap,
+            height=y_loc_bar,
+            fill="transparent",
+            stroke="transparent",
+        )
+
+        # Insert bars at beginning, tooltips at end
+        elements.insert(0, bar)
+        elements.insert(0, hover_area)
+        elements.append(tooltip)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
@@ -371,3 +397,6 @@ def _make_histogram_svg(
 
 def _plot_datetime(data: list) -> str:
     raise NotImplementedError
+
+
+# TODO: if interactive mode
