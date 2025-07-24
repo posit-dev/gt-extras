@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import statistics
 
 import narwhals.stable.v1 as nw
@@ -51,6 +52,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         )
         # add style
         .pipe(gt_theme_espn)
+        .cols_align(align="center", columns="Values")
     )
 
     for i, vals in enumerate(nw_summary_df.get_column("Values")):
@@ -64,7 +66,6 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
             columns="Values",
             rows=i,
         )
-
     return gt
 
 
@@ -186,40 +187,75 @@ def _plot_categorical(data: list[str]) -> str:
     raise NotImplementedError
 
 
-def _plot_numeric(data: list[float]) -> str:
+def _plot_numeric(data: list[float] | list[int]) -> str:
     # Calculate binwidth using Freedman-Diaconis rule
-    quantiles = statistics.quantiles(data)
-    q25, q75 = quantiles[0], quantiles[2]
+    quantiles = statistics.quantiles(data, method="inclusive")
+    q25, median, q75 = quantiles
     iqr = q75 - q25
     bw = 2 * iqr / (len(data) ** (1 / 3))
 
     if bw <= 0:
-        bw = (max(data) - min(data)) / 30  # Fallback
+        bw = (max(data) - min(data)) / 3  # Fallback
 
-    # data_range = [min(data), max(data)]
+    data_min, data_max = min(data), max(data)
+    data_range = data_max - data_min
 
-    return "WIP"
+    if data_range == 0:
+        # TODO: handle special case
+        pass
+
+    n_bins = max(1, int(math.ceil(data_range / bw)))
+
+    # Do we need bin edges?
+    # bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
+
+    counts = [0.0] * n_bins
+    for x in data:
+        # Handle edge case where x == data_max
+        if x == data_max:
+            counts[-1] += 1
+        else:
+            # Find the bin index for x
+            bin_idx = int((x - data_min) / data_range * n_bins)
+            counts[bin_idx] += 1
+
+    max_count = max(counts)
+    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
+    normalized_median = (median - data_min) / data_range
+
+    svg = _make_histogram_svg(
+        width_px=180,  # TODO choose how to assign
+        height_px=40,
+        median=normalized_median,
+        counts=normalized_counts,
+        fill="#f18e2c",
+    )
+
+    return svg.as_str()
 
 
 def _make_histogram_svg(
     width_px: float,
     height_px: float,
-    data: list[float],
+    median: float,  # Relative to min and max in range
+    counts: list[float],
     fill: str,
 ) -> SVG:
-    count = len(data)
+    count = len(counts)
     max_bar_height_px = height_px * 0.9  # can change
     plot_width_px = width_px * 0.9
 
     gap = (plot_width_px / count) * 0.1  # set max and min as well
     bin_width_px = plot_width_px / (count)
-    y_loc = height_px / 2 + max_bar_height_px / 2
 
-    print("b", bin_width_px, y_loc, gap, count)
+    y_loc = height_px / 2 + max_bar_height_px / 2
+    x_loc = width_px / 2 - plot_width_px / 2
 
     line_stroke_width = max_bar_height_px / 30  # ensure never less than 1
+    median_px = median * plot_width_px + x_loc
 
     elements: list[Element] = [
+        # Bottom line
         Line(
             x1=0,
             x2=width_px,
@@ -227,11 +263,19 @@ def _make_histogram_svg(
             y2=y_loc,
             stroke="black",
             stroke_width=line_stroke_width,
-        )
+        ),
+        # Median line
+        Line(
+            x1=median_px,
+            x2=median_px,
+            y1=y_loc - line_stroke_width / 2,
+            y2=y_loc - max_bar_height_px - line_stroke_width / 2,
+            stroke="black",
+            stroke_width=line_stroke_width,
+        ),
     ]
-    x_loc = (width_px - plot_width_px) / 2
 
-    for val in data:
+    for val in counts:
         bar_height = val / 1 * max_bar_height_px
         bar = Rect(
             y=y_loc - bar_height - line_stroke_width / 2,
@@ -240,7 +284,8 @@ def _make_histogram_svg(
             height=bar_height,
             fill=fill,
         )
-        elements.append(bar)
+        # elements = [bar] + elements
+        elements.insert(0, bar)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
