@@ -8,7 +8,7 @@ from faicons import icon_svg
 from great_tables import GT, loc, style
 from great_tables._tbl_data import is_na
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
-from svg import SVG, Element, Line, Rect
+from svg import SVG, Element, Line, Rect, Text
 
 from gt_extras.themes import gt_theme_espn
 
@@ -227,6 +227,8 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
         width_px=180,  # TODO choose how to assign
         height_px=40,
         median=normalized_median,
+        data_max=str(round(data_max, 2)),
+        data_min=str(round(data_min, 2)),
         counts=normalized_counts,
         fill="#f18e2c",
     )
@@ -238,18 +240,20 @@ def _make_histogram_svg(
     width_px: float,
     height_px: float,
     median: float,  # Relative to min and max in range
+    data_min: str,
+    data_max: str,
     counts: list[float],
     fill: str,
 ) -> SVG:
     count = len(counts)
-    max_bar_height_px = height_px * 0.9  # can change
-    plot_width_px = width_px * 0.9
+    max_bar_height_px = height_px * 0.8  # can change
+    plot_width_px = width_px * 0.95
 
     gap = (plot_width_px / count) * 0.1  # set max and min as well
     bin_width_px = plot_width_px / (count)
 
-    y_loc = height_px / 2 + max_bar_height_px / 2
-    x_loc = width_px / 2 - plot_width_px / 2
+    y_loc = max_bar_height_px
+    x_loc = (width_px - plot_width_px) / 2
 
     line_stroke_width = max_bar_height_px / 30  # ensure never less than 1
     median_px = median * plot_width_px + x_loc
@@ -272,6 +276,22 @@ def _make_histogram_svg(
             y2=y_loc - max_bar_height_px - line_stroke_width / 2,
             stroke="black",
             stroke_width=line_stroke_width,
+        ),
+        Text(
+            text=data_min,
+            x=x_loc + bin_width_px / 2,
+            y=height_px,
+            text_anchor="middle",
+            font_size=height_px / 5,
+            dominant_baseline="text-top",
+        ),
+        Text(
+            text=data_max,
+            x=width_px - (x_loc + bin_width_px / 2),
+            y=height_px,
+            text_anchor="middle",
+            font_size=height_px / 5,
+            dominant_baseline="text-top",
         ),
     ]
 
