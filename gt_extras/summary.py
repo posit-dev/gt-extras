@@ -153,21 +153,19 @@ def _make_icon_html(dtype: str) -> str:
 
 
 def _make_summary_plot(
-    gt: GT,
+    gt: GT,  # TODO: don't pass gt
     data: list,
     col_type: str,
 ) -> str:
     total = len(data)
-    missing = (
-        sum(1 for x in data if is_na(gt._tbl_data, x)) / total if total > 0 else 1.0
-    )
+    if total == 0:
+        return "<div></div>"
 
-    # If mostly missing, return empty div
+    missing = sum(1 for x in data if is_na(gt._tbl_data, x)) / total
     if missing >= 0.99:
         return "<div></div>"
 
     clean_data = [x for x in data if not is_na(gt._tbl_data, x)]
-
     if not clean_data:
         return "<div></div>"
 
@@ -227,10 +225,10 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
     normalized_mean = (statistics.mean(data) - data_min) / data_range
 
     svg = _make_histogram_svg(
-        width_px=180,  # TODO choose how to assign
+        width_px=180,  # TODO choose how to assign dimensions
         height_px=40,
         fill="#f18e2c",
-        mean=normalized_mean,
+        normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
         normalized_counts=normalized_counts,
@@ -245,25 +243,26 @@ def _make_histogram_svg(
     width_px: float,
     height_px: float,
     fill: str,
-    mean: float,  # Relative to min and max in range
+    normalized_mean: float,  # Relative to min and max in range
     data_min: str,
     data_max: str,
     normalized_counts: list[float],
     counts: list[float],
     bin_edges: list[float],
 ) -> SVG:
-    count = len(normalized_counts)
+    len_counts = len(normalized_counts)
     max_bar_height_px = height_px * 0.8  # can change
     plot_width_px = width_px * 0.95
 
-    gap = (plot_width_px / count) * 0.1  # set max and min as well
-    bin_width_px = plot_width_px / (count)
+    gap = (plot_width_px / len_counts) * 0.1
+    gap = max(min(gap, 10), 0.5)  # restrict to [1, 10]
+    bin_width_px = plot_width_px / (len_counts)
 
     y_loc = max_bar_height_px
     x_loc = (width_px - plot_width_px) / 2
 
-    line_stroke_width = max_bar_height_px / 30  # ensure never less than 1
-    mean_px = mean * plot_width_px + x_loc
+    line_stroke_width = max_bar_height_px / 30
+    mean_px = normalized_mean * plot_width_px + x_loc
 
     font_size_px = height_px / 5
 
@@ -280,7 +279,8 @@ def _make_histogram_svg(
     }}
     """
 
-    # Add hover rules for each bar-tooltip pair
+    # This is here so the layering works in the svg,
+    # otherwise the tooltips are hidden by the adjacent bars
     for i in range(len(counts)):
         hover_css += f"#hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
         hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
@@ -326,8 +326,7 @@ def _make_histogram_svg(
         ),
     ]
 
-    # tooltip_width = bin_width_px / 2
-
+    # Make each bar, with an accompanying tooltup
     for i, (count, normalized_count) in enumerate(zip(counts, normalized_counts)):
         bar_height = normalized_count / 1 * max_bar_height_px
         y_loc_bar = y_loc - bar_height - line_stroke_width / 2
@@ -404,4 +403,4 @@ def _plot_datetime(data: list) -> str:
     raise NotImplementedError
 
 
-# TODO: if interactive mode
+# TODO: only do hover if interactive mode?
