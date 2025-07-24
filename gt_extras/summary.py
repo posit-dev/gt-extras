@@ -16,6 +16,41 @@ __all__ = ["gt_plt_summary"]
 
 
 def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
+    """
+    Examples
+    --------
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+    import random
+    from statistics import NormalDist
+
+    n = 100
+    random.seed(23)
+
+    uniform = [random.uniform(0, 10) for _ in range(n)]
+    for i in range(2, 10):
+        uniform[i] = None
+
+    normal = [random.gauss(5, 2) for _ in range(n)]
+    normal[4] = None
+    normal[10] = None
+
+    single_tailed = [random.expovariate(1/2) for _ in range(n)]
+
+    bimodal = [random.gauss(2, 0.5) for _ in range(n // 2)] + [random.gauss(8, 0.5) for _ in range(n - n // 2)]
+
+    df = pl.DataFrame({
+        "uniform": uniform,
+        "normal": normal,
+        "single_tailed": single_tailed,
+        "bimodal": bimodal,
+    })
+
+    gte.gt_plt_summary(df)
+    ```
+    """
     summary_df = _create_summary_df(df)
 
     nw_df = nw.from_native(df, eager_only=True)
