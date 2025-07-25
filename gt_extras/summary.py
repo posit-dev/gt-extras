@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import narwhals.stable.v1 as nw
 from faicons import icon_svg
 from great_tables import GT, loc, style
+from great_tables._helpers import random_id
 from great_tables._tbl_data import is_na
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
 from svg import SVG, Element, G, Line, Rect, Style, Text
@@ -319,19 +320,15 @@ def _make_categories_bar_svg(
     max_opacity = 1.0
     min_opacity = 0.2
 
-    hover_css = """
-    .category-tooltip {
-        opacity: 0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-    }
-    .visual-bar:hover {
-        opacity: 0.4;
-    }
-    """
+    plot_id = random_id(10)
 
-    for i in range(len(proportions)):
-        hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
+    hover_css = _generate_hover_css(
+        num_elements=len(proportions),
+        bar_highlight_style="opacity: 0.4;",
+        tooltip_class="category-tooltip",
+        use_hover_areas=False,
+        plot_id=plot_id,
+    )
 
     elements: list[Element] = [Style(text=hover_css)]
 
@@ -347,9 +344,13 @@ def _make_categories_bar_svg(
                 i / (len(proportions) - 1)
             )
 
+        # Use plot_id in element IDs and classes
+        bar_id = f"{plot_id}-bar-{i}" if plot_id else f"bar-{i}"
+        visual_bar_class = f"{plot_id}-visual-bar" if plot_id else "visual-bar"
+
         visual_bar = Rect(
-            id=f"bar-{i}",
-            class_=["visual-bar"],
+            id=bar_id,
+            class_=[visual_bar_class],
             x=x_loc,
             y=y_offset,
             width=section_width,
@@ -378,9 +379,13 @@ def _make_categories_bar_svg(
             margin=5,
         )
 
+        # Use plot_id in tooltip ID and class
+        tooltip_id = f"{plot_id}-tooltip-{i}"
+        tooltip_class = f"{plot_id}-category-tooltip"
+
         tooltip = G(
-            id=f"tooltip-{i}",
-            class_=["category-tooltip"],
+            id=tooltip_id,
+            class_=[tooltip_class],
             elements=[
                 Text(
                     text=text_top,
@@ -406,8 +411,6 @@ def _make_categories_bar_svg(
         )
         elements.append(tooltip)
         x_loc += section_width
-
-    # for data in section_data:
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
@@ -524,7 +527,7 @@ def _make_histogram_svg(
     width_px: float,
     height_px: float,
     fill: str,
-    normalized_mean: float,  # Relative to min and max in range
+    normalized_mean: float,
     data_min: str,
     data_max: str,
     counts: list[float],
@@ -549,27 +552,18 @@ def _make_histogram_svg(
 
     font_size_px = height_px * FONT_SIZE_RATIO
 
-    # Define bar highlight style as a variable for reuse
     bar_highlight_style = (
         f"stroke: white; stroke-width: {line_stroke_width}; fill-opacity: 0.6;"
     )
+    plot_id = random_id(10)
 
-    hover_css = f"""
-    .tooltip {{
-        opacity: 0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-    }}
-    .bar-rect:hover {{
-        {bar_highlight_style}
-    }}
-    """
-
-    # This is here so the layering works in the svg,
-    # otherwise the tooltips are hidden by the adjacent bars
-    for i in range(len(counts)):
-        hover_css += f"#bar-{i}:hover ~ #tooltip-{i}, #hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
-        hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{{bar_highlight_style}}} "
+    hover_css = _generate_hover_css(
+        num_elements=len(counts),
+        bar_highlight_style=bar_highlight_style,
+        tooltip_class="tooltip",
+        use_hover_areas=True,
+        plot_id=plot_id,
+    )
 
     # Calculate text positioning to avoid overflow
     min_text_width = len(data_min) * font_size_px * 0.6
@@ -627,14 +621,18 @@ def _make_histogram_svg(
         ),
     ]
 
-    # Make each bar, with an accompanying tooltup
+    # Make each bar, with an accompanying tooltip
     for i, (count, normalized_count) in enumerate(zip(counts, normalized_counts)):
         bar_height = normalized_count / 1 * max_bar_height_px
         y_loc_bar = y_loc - bar_height - line_stroke_width / 2
 
+        # Use plot_id in element IDs and classes
+        bar_id = f"{plot_id}-bar-{i}"
+        bar_class = f"{plot_id}-bar-rect"
+
         bar = Rect(
-            id=f"bar-{i}",
-            class_=["bar-rect"],
+            id=bar_id,
+            class_=[bar_class],
             y=y_loc_bar,
             x=x_loc + gap / 2,
             width=bin_width_px - gap,
@@ -661,9 +659,14 @@ def _make_histogram_svg(
             svg_width=width_px,
         )
 
+        tooltip_id = f"{plot_id}-tooltip-{i}"
+        tooltip_class = f"{plot_id}-tooltip"
+        hover_area_id = f"{plot_id}-hover-area-{i}"
+        hover_area_class = f"{plot_id}-hover-area"
+
         tooltip = G(
-            id=f"tooltip-{i}",
-            class_=["tooltip"],
+            id=tooltip_id,
+            class_=[tooltip_class],
             elements=[
                 Text(
                     text=text_top,
@@ -690,8 +693,8 @@ def _make_histogram_svg(
 
         # Add invisible hover area that covers bar + tooltip space
         hover_area = Rect(
-            id=f"hover-area-{i}",
-            class_=["hover-area"],
+            id=hover_area_id,
+            class_=[hover_area_class],
             x=x_loc + gap / 2,
             y=0,
             width=bin_width_px - gap,
@@ -707,6 +710,50 @@ def _make_histogram_svg(
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
+
+
+def _generate_hover_css(
+    num_elements: int,
+    bar_highlight_style: str,
+    tooltip_class: str = "tooltip",
+    use_hover_areas: bool = False,
+    plot_id: str = "",
+) -> str:
+    """Generate CSS for hover effects with unique plot ID."""
+    tooltip_class_id = f"{plot_id}-{tooltip_class}"
+    bar_class_id = f"{plot_id}-bar-rect"
+    visual_bar_class_id = f"{plot_id}-visual-bar"
+
+    base_css = f"""
+    .{tooltip_class_id} {{
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+    }}
+    .{bar_class_id}:hover, .{visual_bar_class_id}:hover {{
+        {bar_highlight_style}
+    }}
+    """
+
+    hover_rules = []
+    for i in range(num_elements):
+        bar_id = f"{plot_id}-bar-{i}" if plot_id else f"bar-{i}"
+        tooltip_id = f"{plot_id}-tooltip-{i}" if plot_id else f"tooltip-{i}"
+
+        hover_rules.append(f"#{bar_id}:hover ~ #{tooltip_id} {{ opacity: 1; }}")
+
+        if use_hover_areas:
+            hover_area_id = (
+                f"{plot_id}-hover-area-{i}" if plot_id else f"hover-area-{i}"
+            )
+            hover_rules.append(
+                f"#{hover_area_id}:hover ~ #{tooltip_id} {{ opacity: 1; }}"
+            )
+            hover_rules.append(
+                f"#{hover_area_id}:hover ~ #{bar_id} {{ {bar_highlight_style} }}"
+            )
+
+    return base_css + "\n".join(hover_rules)
 
 
 def _calculate_text_position(
