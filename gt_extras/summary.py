@@ -276,6 +276,66 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
     return svg.as_str()
 
 
+def _plot_datetime(
+    dates: list[datetime],
+) -> str:
+    date_timestamps = [x.timestamp() for x in dates]
+    data_min, data_max = min(date_timestamps), max(date_timestamps)
+    data_range = data_max - data_min
+
+    if data_range == timedelta(0):
+        data_min -= timedelta(days=1.5).total_seconds()
+        data_max += timedelta(days=1.5).total_seconds()
+        data_range = data_max - data_min
+
+    # after cleaning in _make_summary_plot, we know len(data) > 1
+    if len(date_timestamps) == 1:
+        bw = timedelta(days=1).total_seconds()
+    # Calculate binwidth using Freedman-Diaconis rule
+    else:
+        quantiles = statistics.quantiles(date_timestamps, method="inclusive")
+        # q25 = datetime.fromtimestamp(quantiles[0])
+        # q75 = datetime.fromtimestamp(quantiles[2])
+        q25, _, q75 = quantiles
+        iqr = q75 - q25
+        bw = 2 * iqr / (len(date_timestamps) ** (1 / 3))
+
+    if bw <= 0:
+        bw = data_range / 3  # Fallback
+
+    n_bins = max(1, int(math.ceil(data_range / bw)))
+    bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
+    bin_edges = [str(datetime.fromtimestamp(edge).date()) for edge in bin_edges]
+    print(bin_edges)
+
+    counts = [0.0] * n_bins
+    for x in date_timestamps:
+        # Handle edge case where x == data_max
+        if x == data_max:
+            counts[-1] += 1
+        else:
+            bin_idx = int((x - data_min) / data_range * n_bins)
+            counts[bin_idx] += 1
+
+    max_count = max(counts)
+    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
+    normalized_mean = (statistics.mean(date_timestamps) - data_min) / data_range
+
+    svg = _make_histogram_svg(
+        width_px=180,  # TODO choose how to assign dimensions
+        height_px=40,
+        fill="#73a657",
+        normalized_mean=normalized_mean,
+        data_max=str(datetime.fromtimestamp(data_max).date()),
+        data_min=str(datetime.fromtimestamp(data_min).date()),
+        normalized_counts=normalized_counts,
+        counts=counts,
+        bin_edges=bin_edges,  # TODO: this is a lot wider than the other call, will need better handling in _make_histogram_svg
+    )
+
+    return svg.as_str()
+
+
 def _make_histogram_svg(
     width_px: float,
     height_px: float,
@@ -434,63 +494,3 @@ def _make_histogram_svg(
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
-
-
-def _plot_datetime(
-    dates: list[datetime],
-) -> str:
-    date_timestamps = [x.timestamp() for x in dates]
-    data_min, data_max = min(date_timestamps), max(date_timestamps)
-    data_range = data_max - data_min
-
-    if data_range == timedelta(0):
-        data_min -= timedelta(days=1.5).total_seconds()
-        data_max += timedelta(days=1.5).total_seconds()
-        data_range = data_max - data_min
-
-    # after cleaning in _make_summary_plot, we know len(data) > 1
-    if len(date_timestamps) == 1:
-        bw = timedelta(days=1).total_seconds()
-    # Calculate binwidth using Freedman-Diaconis rule
-    else:
-        quantiles = statistics.quantiles(date_timestamps, method="inclusive")
-        # q25 = datetime.fromtimestamp(quantiles[0])
-        # q75 = datetime.fromtimestamp(quantiles[2])
-        q25, _, q75 = quantiles
-        iqr = q75 - q25
-        bw = 2 * iqr / (len(date_timestamps) ** (1 / 3))
-
-    if bw <= 0:
-        bw = data_range / 3  # Fallback
-
-    n_bins = max(1, int(math.ceil(data_range / bw)))
-    bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
-    bin_edges = [str(datetime.fromtimestamp(edge).date()) for edge in bin_edges]
-    print(bin_edges)
-
-    counts = [0.0] * n_bins
-    for x in date_timestamps:
-        # Handle edge case where x == data_max
-        if x == data_max:
-            counts[-1] += 1
-        else:
-            bin_idx = int((x - data_min) / data_range * n_bins)
-            counts[bin_idx] += 1
-
-    max_count = max(counts)
-    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
-    normalized_mean = (statistics.mean(date_timestamps) - data_min) / data_range
-
-    svg = _make_histogram_svg(
-        width_px=180,  # TODO choose how to assign dimensions
-        height_px=40,
-        fill="#73a657",
-        normalized_mean=normalized_mean,
-        data_max=str(datetime.fromtimestamp(data_max).date()),
-        data_min=str(datetime.fromtimestamp(data_min).date()),
-        normalized_counts=normalized_counts,
-        counts=counts,
-        bin_edges=bin_edges,  # TODO: this is a lot wider than the other call, will need better handling in _make_histogram_svg
-    )
-
-    return svg.as_str()
