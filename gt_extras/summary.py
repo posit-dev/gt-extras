@@ -269,26 +269,26 @@ def _make_categories_bar_svg(
     max_opacity = 1.0
     min_opacity = 0.2
 
-    elements: list[Element] = [
-        Style(
-            text="""
-            .category-section:hover {
-                opacity: 0.4;
-            }
-            .category-tooltip {
-                opacity: 0;
-                transition: opacity 0.2s;
-                pointer-events: none;
-            }
-            .category-section:hover + .category-tooltip {
-                opacity: 1;
-            }
-            """
-        )
-    ]
+    hover_css = """
+    .category-tooltip {
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+    }
+    .visual-bar:hover {
+        opacity: 0.4;
+    }
+    """
+
+    for i in range(len(proportions)):
+        hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
+
+    elements: list[Element] = [Style(text=hover_css)]
 
     current_x = x_offset
     font_size_px = height_px / 5
+
+    section_data = []
 
     for i, (proportion, category, count) in enumerate(
         zip(proportions, categories, counts)
@@ -302,50 +302,95 @@ def _make_categories_bar_svg(
                 i / (len(proportions) - 1)
             )
 
-        section = Rect(
-            id=f"category-{i}",
-            class_=["category-section"],
-            x=current_x,
-            y=y_offset,
-            width=section_width,
-            height=plot_height_px,
-            fill=fill,
-            fill_opacity=opacity,
-            stroke="transparent",
+        section_data.append(
+            {
+                "index": i,
+                "x": current_x,
+                "width": section_width,
+                "opacity": opacity,
+                "category": category,
+                "count": count,
+            }
         )
 
-        tooltip_x = current_x + section_width / 2
+        current_x += section_width
+
+    for data in section_data:
+        # hover_area = Rect(
+        #     id=f"hover-area-{data['index']}",
+        #     class_=["hover-area"],
+        #     x=data["x"],
+        #     y=y_offset,
+        #     width=data["width"],
+        #     height=plot_height_px,
+        #     fill="transparent",
+        #     stroke="transparent",
+        # )
+        visual_bar = Rect(
+            id=f"bar-{data['index']}",
+            class_=["visual-bar"],
+            x=data["x"],
+            y=y_offset,
+            width=data["width"],
+            height=plot_height_px,
+            fill=fill,
+            fill_opacity=data["opacity"],
+            stroke="transparent",
+        )
+        # elements.append(hover_area)
+
+        elements.append(visual_bar)
+
+    for data in section_data:
+        section_center_x = data["x"] + data["width"] / 2
+
+        # Estimate text width (rough approximation)
+        max_text_width = max(
+            len(f"{data['count']} rows") * font_size_px * 0.6,
+            len(f'"{data["category"]}"') * font_size_px * 0.6,
+        )
+
+        # Adjust tooltip x position based on proximity to edges
+        if section_center_x - max_text_width / 2 < 0:
+            # Too close to left edge - align to left
+            tooltip_x = max_text_width / 2
+            text_anchor = "middle"
+        elif section_center_x + max_text_width / 2 > width_px:
+            # Too close to right edge - align to right
+            tooltip_x = width_px - max_text_width / 2
+            text_anchor = "middle"
+        else:
+            # Safe to center
+            tooltip_x = section_center_x
+            text_anchor = "middle"
+
         tooltip = G(
-            id=f"category-tooltip-{i}",
+            id=f"tooltip-{data['index']}",
             class_=["category-tooltip"],
             elements=[
                 Text(
-                    text=f"{count} rows",
+                    text=f"{data['count']} rows",
                     x=tooltip_x,
                     y=font_size_px * 1.25,
                     fill="black",
                     font_size=font_size_px,
                     dominant_baseline="hanging",
-                    text_anchor="middle",
+                    text_anchor=text_anchor,
                     font_weight="bold",
                 ),
                 Text(
-                    text=f'"{category}"',
+                    text=f'"{data["category"]}"',
                     x=tooltip_x,
                     y=font_size_px * 2.5,
                     fill="black",
                     font_size=font_size_px,
                     dominant_baseline="hanging",
-                    text_anchor="middle",
+                    text_anchor=text_anchor,
                     font_weight="bold",
                 ),
             ],
         )
-
-        elements.append(section)
         elements.append(tooltip)
-
-        current_x += section_width
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
@@ -503,9 +548,8 @@ def _make_histogram_svg(
     # This is here so the layering works in the svg,
     # otherwise the tooltips are hidden by the adjacent bars
     for i in range(len(counts)):
-        hover_css += f"#hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
         hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
-        hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{ stroke: white; stroke-width: 2; fill-opacity: 0.8; }}\n"
+        # hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{ stroke: white; stroke-width: 2; fill-opacity: 0.8; }}\n"
 
     elements: list[Element] = [
         Style(
