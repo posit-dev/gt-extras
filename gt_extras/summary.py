@@ -88,7 +88,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         )
         # add style
         .pipe(gt_theme_espn)
-        .cols_align(align="center", columns="Values")
+        .cols_align(align="center", columns="Plot Overview")
     )
 
     for i, col_name in enumerate(nw_summary_df.get_column("Column")):
