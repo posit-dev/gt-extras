@@ -62,7 +62,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         i
         for i, t in enumerate(nw_summary_df.get_column("Type").to_list())
         if t in ("numeric", "boolean")
-    ]
+    ]  # TODO: only assign boolean to mean
 
     if title is None:
         # TODO: check that this gets name?
@@ -91,7 +91,8 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         .cols_align(align="center", columns="Values")
     )
 
-    for i, vals in enumerate(nw_summary_df.get_column("Values")):
+    for i, col_name in enumerate(nw_summary_df.get_column("Column")):
+        vals = nw.from_native(df, eager_only=True).get_column(col_name).to_list()
         col_type = nw_summary_df.item(row=i, column="Type")
         gt = gt.fmt(
             lambda _, vals=vals, col_type=col_type: _make_summary_plot(
@@ -99,7 +100,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
                 data=vals,
                 col_type=col_type,
             ),
-            columns="Values",
+            columns="Plot Overview",
             rows=i,
         )
     return gt
@@ -114,7 +115,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
     summary_data = {
         "Type": [],
         "Column": [],
-        "Values": [],
+        "Plot Overview": [],
         "Missing": [],
         "Mean": [],
         "Median": [],
@@ -127,35 +128,30 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         mean_val = None
         median_val = None
         std_val = None
-        values = None
 
         if col.dtype.is_numeric():
             col_type = "numeric"
             mean_val = col.mean()
             median_val = col.median()
             std_val = col.std()
-            values = col.to_list()
 
         elif col.dtype == nw.String:
             col_type = "string"
-            values = col.to_list()
 
         elif col.dtype == nw.Boolean:
             col_type = "boolean"
             mean_val = col.mean()  # Proportion of True values
-            values = col.to_list()
 
         elif col.dtype == nw.Datetime:
             col_type = "datetime"
             std_val = None
-            values = col.to_list()
 
         else:
             col_type = "other"
 
         summary_data["Type"].append(col_type)
         summary_data["Column"].append(col_name)
-        summary_data["Values"].append(values)  # Is there a way to pass the nw series?
+        summary_data["Plot Overview"].append(None)
         summary_data["Missing"].append(col.null_count() / col.count())
         summary_data["Mean"].append(mean_val)
         summary_data["Median"].append(median_val)
@@ -257,8 +253,6 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
             bin_idx = int((x - data_min) / data_range * n_bins)
             counts[bin_idx] += 1
 
-    max_count = max(counts)
-    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
     normalized_mean = (statistics.mean(data) - data_min) / data_range
 
     svg = _make_histogram_svg(
@@ -268,7 +262,6 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
-        normalized_counts=normalized_counts,
         counts=counts,
         bin_edges=bin_edges,
     )
@@ -283,7 +276,7 @@ def _plot_datetime(
     data_min, data_max = min(date_timestamps), max(date_timestamps)
     data_range = data_max - data_min
 
-    if data_range == timedelta(0):
+    if data_range == 0:
         data_min -= timedelta(days=1.5).total_seconds()
         data_max += timedelta(days=1.5).total_seconds()
         data_range = data_max - data_min
@@ -306,7 +299,6 @@ def _plot_datetime(
     n_bins = max(1, int(math.ceil(data_range / bw)))
     bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
     bin_edges = [str(datetime.fromtimestamp(edge).date()) for edge in bin_edges]
-    print(bin_edges)
 
     counts = [0.0] * n_bins
     for x in date_timestamps:
@@ -317,8 +309,6 @@ def _plot_datetime(
             bin_idx = int((x - data_min) / data_range * n_bins)
             counts[bin_idx] += 1
 
-    max_count = max(counts)
-    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
     normalized_mean = (statistics.mean(date_timestamps) - data_min) / data_range
 
     svg = _make_histogram_svg(
@@ -328,7 +318,6 @@ def _plot_datetime(
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max).date()),
         data_min=str(datetime.fromtimestamp(data_min).date()),
-        normalized_counts=normalized_counts,
         counts=counts,
         bin_edges=bin_edges,  # TODO: this is a lot wider than the other call, will need better handling in _make_histogram_svg
     )
@@ -343,10 +332,12 @@ def _make_histogram_svg(
     normalized_mean: float,  # Relative to min and max in range
     data_min: str,
     data_max: str,
-    normalized_counts: list[float],
     counts: list[float],
     bin_edges: list[str],
 ) -> SVG:
+    max_count = max(counts)
+    normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
+
     len_counts = len(normalized_counts)
     max_bar_height_px = height_px * 0.8  # can change
     plot_width_px = width_px * 0.95
