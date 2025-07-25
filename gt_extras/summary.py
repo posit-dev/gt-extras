@@ -316,16 +316,6 @@ def _make_categories_bar_svg(
         current_x += section_width
 
     for data in section_data:
-        # hover_area = Rect(
-        #     id=f"hover-area-{data['index']}",
-        #     class_=["hover-area"],
-        #     x=data["x"],
-        #     y=y_offset,
-        #     width=data["width"],
-        #     height=plot_height_px,
-        #     fill="transparent",
-        #     stroke="transparent",
-        # )
         visual_bar = Rect(
             id=f"bar-{data['index']}",
             class_=["visual-bar"],
@@ -337,14 +327,13 @@ def _make_categories_bar_svg(
             fill_opacity=data["opacity"],
             stroke="transparent",
         )
-        # elements.append(hover_area)
 
         elements.append(visual_bar)
 
     for data in section_data:
         section_center_x = data["x"] + data["width"] / 2
 
-        # Estimate text width (rough approximation)
+        # Estimate text width
         max_text_width = max(
             len(f"{data['count']} rows") * font_size_px * 0.6,
             len(f'"{data["category"]}"') * font_size_px * 0.6,
@@ -352,17 +341,11 @@ def _make_categories_bar_svg(
 
         # Adjust tooltip x position based on proximity to edges
         if section_center_x - max_text_width / 2 < 0:
-            # Too close to left edge - align to left
             tooltip_x = max_text_width / 2
-            text_anchor = "middle"
         elif section_center_x + max_text_width / 2 > width_px:
-            # Too close to right edge - align to right
             tooltip_x = width_px - max_text_width / 2
-            text_anchor = "middle"
         else:
-            # Safe to center
             tooltip_x = section_center_x
-            text_anchor = "middle"
 
         tooltip = G(
             id=f"tooltip-{data['index']}",
@@ -375,7 +358,7 @@ def _make_categories_bar_svg(
                     fill="black",
                     font_size=font_size_px,
                     dominant_baseline="hanging",
-                    text_anchor=text_anchor,
+                    text_anchor="middle",
                     font_weight="bold",
                 ),
                 Text(
@@ -385,7 +368,7 @@ def _make_categories_bar_svg(
                     fill="black",
                     font_size=font_size_px,
                     dominant_baseline="hanging",
-                    text_anchor=text_anchor,
+                    text_anchor="middle",
                     font_weight="bold",
                 ),
             ],
