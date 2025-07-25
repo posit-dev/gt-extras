@@ -54,6 +54,30 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     import polars as pl
     from great_tables import GT
     import gt_extras as gte
+    from datetime import datetime
+
+    df = pl.DataFrame({
+        "Date": [
+            datetime(2024, 1, 1),
+            datetime(2024, 1, 2),
+            datetime(2024, 1, 7),
+            datetime(2024, 1, 8),
+            datetime(2024, 1, 13),
+            datetime(2024, 1, 16),
+            datetime(2024, 1, 20),
+            datetime(2024, 1, 22),
+            datetime(2024, 2, 1),
+        ] * 5,
+        "Value": [10, 15, 20, None, 25, 18, 22, 30, 40] * 5,
+        "Category": ["A", "B", "C", "A", "B", "C", "D", None, None] * 5,
+        "Boolean": [True, False, True] * 15,
+        "Status": ["Active", "Inactive", None] * 15,
+    })
+
+    gte.gt_plt_summary(df)
+    ```
+    And an example with some satisfying numeric data:
+    ```{python}
     import random
 
     n = 100
@@ -80,14 +104,6 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
     gte.gt_plt_summary(df)
     ```
-
-    Note
-    ----
-    The plot types are automatically determined based on column data types:
-    - Numeric columns: Histograms with mean line
-    - String columns: Horizontal categorical bar charts
-    - Datetime columns: Histograms with temporal binning
-    - Boolean columns: Treated as numeric (showing proportion of `True` values)
     """
     summary_df = _create_summary_df(df)
 
