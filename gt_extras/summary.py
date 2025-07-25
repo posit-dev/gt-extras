@@ -266,6 +266,9 @@ def _make_categories_bar_svg(
     x_offset = (width_px - plot_width_px) / 2
     y_offset = (height_px - plot_height_px) / 2
 
+    current_x = x_offset
+    font_size_px = height_px / 5
+
     max_opacity = 1.0
     min_opacity = 0.2
 
@@ -285,11 +288,6 @@ def _make_categories_bar_svg(
 
     elements: list[Element] = [Style(text=hover_css)]
 
-    current_x = x_offset
-    font_size_px = height_px / 5
-
-    section_data = []
-
     for i, (proportion, category, count) in enumerate(
         zip(proportions, categories, counts)
     ):
@@ -302,41 +300,28 @@ def _make_categories_bar_svg(
                 i / (len(proportions) - 1)
             )
 
-        section_data.append(
-            {
-                "index": i,
-                "x": current_x,
-                "width": section_width,
-                "opacity": opacity,
-                "category": category,
-                "count": count,
-            }
-        )
-
-        current_x += section_width
-
-    for data in section_data:
         visual_bar = Rect(
-            id=f"bar-{data['index']}",
+            id=f"bar-{i}",
             class_=["visual-bar"],
-            x=data["x"],
+            x=current_x,
             y=y_offset,
-            width=data["width"],
+            width=section_width,
             height=plot_height_px,
             fill=fill,
-            fill_opacity=data["opacity"],
+            fill_opacity=opacity,
             stroke="transparent",
         )
+        elements.insert(1, visual_bar)
 
-        elements.append(visual_bar)
+        section_center_x = current_x + section_width / 2
 
-    for data in section_data:
-        section_center_x = data["x"] + data["width"] / 2
+        text_top = f"{count} rows"
+        text_bottom = f'"{category}"'
 
         # Estimate text width
         max_text_width = max(
-            len(f"{data['count']} rows") * font_size_px * 0.6,
-            len(f'"{data["category"]}"') * font_size_px * 0.6,
+            len(text_top) * font_size_px * 0.6,
+            len(text_bottom) * font_size_px * 0.6,
         )
 
         # Adjust tooltip x position based on proximity to edges
@@ -348,11 +333,11 @@ def _make_categories_bar_svg(
             tooltip_x = section_center_x
 
         tooltip = G(
-            id=f"tooltip-{data['index']}",
+            id=f"tooltip-{i}",
             class_=["category-tooltip"],
             elements=[
                 Text(
-                    text=f"{data['count']} rows",
+                    text=text_top,
                     x=tooltip_x,
                     y=font_size_px * 1.25,
                     fill="black",
@@ -362,7 +347,7 @@ def _make_categories_bar_svg(
                     font_weight="bold",
                 ),
                 Text(
-                    text=f'"{data["category"]}"',
+                    text=text_bottom,
                     x=tooltip_x,
                     y=font_size_px * 2.5,
                     fill="black",
@@ -374,6 +359,9 @@ def _make_categories_bar_svg(
             ],
         )
         elements.append(tooltip)
+        current_x += section_width
+
+    # for data in section_data:
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
@@ -500,8 +488,8 @@ def _make_histogram_svg(
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
 
     len_counts = len(normalized_counts)
-    max_bar_height_px = height_px * 0.8  # can change
     plot_width_px = width_px * 0.95
+    max_bar_height_px = height_px * 0.8  # can change
 
     gap = (plot_width_px / len_counts) * 0.1
     gap = max(min(gap, 10), 0.5)  # restrict to [1, 10]
@@ -515,6 +503,11 @@ def _make_histogram_svg(
 
     font_size_px = height_px / 5
 
+    # Define bar highlight style as a variable for reuse
+    bar_highlight_style = (
+        f"stroke: white; stroke-width: {line_stroke_width}; fill-opacity: 0.6;"
+    )
+
     hover_css = f"""
     .tooltip {{
         opacity: 0;
@@ -522,17 +515,15 @@ def _make_histogram_svg(
         pointer-events: none;
     }}
     .bar-rect:hover {{
-        stroke: white;
-        stroke-width: {line_stroke_width};
-        fill-opacity: 0.8;
+        {bar_highlight_style}
     }}
     """
 
     # This is here so the layering works in the svg,
     # otherwise the tooltips are hidden by the adjacent bars
     for i in range(len(counts)):
-        hover_css += f"#bar-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
-        # hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{ stroke: white; stroke-width: 2; fill-opacity: 0.8; }}\n"
+        hover_css += f"#bar-{i}:hover ~ #tooltip-{i}, #hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
+        hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{{bar_highlight_style}}} "
 
     elements: list[Element] = [
         Style(
@@ -593,11 +584,22 @@ def _make_histogram_svg(
         right_edge = bin_edges[i + 1]
 
         row_label = "row" if count == 1 else "rows"
-        min_width_tooltip = 30
-        x_loc_tooltip = min(
-            max((x_loc + bin_width_px / 2), min_width_tooltip),
-            width_px - min_width_tooltip,
+        text_top = f"{count:.0f} {row_label}"
+        text_bottom = f"[{left_edge} to {right_edge}]"
+
+        # Estimate text width
+        max_text_width = max(
+            len(text_top) * font_size_px * 0.55,
+            len(text_bottom) * font_size_px * 0.5,
         )
+
+        # Adjust tooltip x position based on proximity to edges
+        if (x_loc + bin_width_px / 2) - max_text_width / 2 < 0:
+            x_loc_tooltip = max_text_width / 2
+        elif (x_loc + bin_width_px / 2) + max_text_width / 2 > width_px:
+            x_loc_tooltip = width_px - max_text_width / 2
+        else:
+            x_loc_tooltip = x_loc + bin_width_px / 2
 
         # TODO: this is too wide when in the dates case
         tooltip = G(
@@ -605,7 +607,7 @@ def _make_histogram_svg(
             class_=["tooltip"],
             elements=[
                 Text(
-                    text=f"{count:.0f} {row_label}",
+                    text=text_top,
                     x=x_loc_tooltip,
                     y=font_size_px * 0.25,
                     fill="black",
@@ -615,7 +617,7 @@ def _make_histogram_svg(
                     font_weight="bold",
                 ),
                 Text(
-                    text=f"[{left_edge} to {right_edge}]",
+                    text=text_bottom,
                     x=x_loc_tooltip,
                     y=font_size_px * 1.5,
                     fill="black",
