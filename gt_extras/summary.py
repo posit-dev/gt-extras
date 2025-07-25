@@ -22,6 +22,11 @@ COLOR_MAPPING = {
     "boolean": "#A65773",
     "other": "black",
 }
+DEFAULT_WIDTH_PX = 180  # TODO choose how to assign dimensions
+DEFAULT_HEIGHT_PX = 40
+PLOT_WIDTH_RATIO = 0.95
+PLOT_HEIGHT_RATIO = 0.8
+FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
 def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
@@ -281,8 +286,8 @@ def _plot_categorical(data: list[str]) -> str:
     proportions = [count / total_count for count in counts]
 
     svg = _make_categories_bar_svg(
-        width_px=180,
-        height_px=40,
+        width_px=DEFAULT_WIDTH_PX,
+        height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["string"],
         proportions=proportions,
         categories=[
@@ -302,14 +307,14 @@ def _make_categories_bar_svg(
     categories: list[str],
     counts: list[int],
 ) -> SVG:
-    plot_width_px = width_px * 0.95
-    plot_height_px = height_px * 0.8
+    plot_width_px = width_px * PLOT_WIDTH_RATIO
+    plot_height_px = height_px * PLOT_HEIGHT_RATIO
 
     x_offset = (width_px - plot_width_px) / 2
     y_offset = (height_px - plot_height_px) / 2
 
-    current_x = x_offset
-    font_size_px = height_px / 5
+    x_loc = x_offset
+    font_size_px = height_px * FONT_SIZE_RATIO
 
     max_opacity = 1.0
     min_opacity = 0.2
@@ -345,7 +350,7 @@ def _make_categories_bar_svg(
         visual_bar = Rect(
             id=f"bar-{i}",
             class_=["visual-bar"],
-            x=current_x,
+            x=x_loc,
             y=y_offset,
             width=section_width,
             height=plot_height_px,
@@ -355,7 +360,7 @@ def _make_categories_bar_svg(
         )
         elements.insert(1, visual_bar)
 
-        section_center_x = current_x + section_width / 2
+        section_center_x = x_loc + section_width / 2
 
         text_top = f"{count} rows"
         text_bottom = f'"{category}"'
@@ -366,13 +371,12 @@ def _make_categories_bar_svg(
             len(text_bottom) * font_size_px * 0.6,
         )
 
-        # Adjust tooltip x position based on proximity to edges
-        if section_center_x - max_text_width / 2 < 0:
-            tooltip_x = max_text_width / 2
-        elif section_center_x + max_text_width / 2 > width_px:
-            tooltip_x = width_px - max_text_width / 2
-        else:
-            tooltip_x = section_center_x
+        tooltip_x = _calculate_text_position(
+            center_x=section_center_x,
+            text_width=max_text_width,
+            svg_width=width_px,
+            margin=5,
+        )
 
         tooltip = G(
             id=f"tooltip-{i}",
@@ -401,7 +405,7 @@ def _make_categories_bar_svg(
             ],
         )
         elements.append(tooltip)
-        current_x += section_width
+        x_loc += section_width
 
     # for data in section_data:
 
@@ -447,8 +451,8 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
     normalized_mean = (statistics.mean(data) - data_min) / data_range
 
     svg = _make_histogram_svg(
-        width_px=180,  # TODO choose how to assign dimensions
-        height_px=40,
+        width_px=DEFAULT_WIDTH_PX,
+        height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["numeric"],
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
@@ -503,14 +507,14 @@ def _plot_datetime(
     normalized_mean = (statistics.mean(date_timestamps) - data_min) / data_range
 
     svg = _make_histogram_svg(
-        width_px=180,  # TODO choose how to assign dimensions
-        height_px=40,
+        width_px=DEFAULT_WIDTH_PX,
+        height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["datetime"],
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max).date()),
         data_min=str(datetime.fromtimestamp(data_min).date()),
         counts=counts,
-        bin_edges=bin_edges,  # TODO: this is a lot wider than the other call, will need better handling in _make_histogram_svg
+        bin_edges=bin_edges,
     )
 
     return svg.as_str()
@@ -530,8 +534,8 @@ def _make_histogram_svg(
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
 
     len_counts = len(normalized_counts)
-    plot_width_px = width_px * 0.95
-    max_bar_height_px = height_px * 0.8  # can change
+    plot_width_px = width_px * PLOT_WIDTH_RATIO
+    max_bar_height_px = height_px * PLOT_HEIGHT_RATIO
 
     gap = (plot_width_px / len_counts) * 0.1
     gap = max(min(gap, 10), 0.5)  # restrict to [1, 10]
@@ -543,7 +547,7 @@ def _make_histogram_svg(
     line_stroke_width = max_bar_height_px / 30
     mean_px = normalized_mean * plot_width_px + x_loc
 
-    font_size_px = height_px / 5
+    font_size_px = height_px * FONT_SIZE_RATIO
 
     # Define bar highlight style as a variable for reuse
     bar_highlight_style = (
@@ -571,17 +575,17 @@ def _make_histogram_svg(
     min_text_width = len(data_min) * font_size_px * 0.6
     max_text_width = len(data_max) * font_size_px * 0.6
 
-    min_text_x = x_loc + bin_width_px / 2
-    if min_text_x - min_text_width / 2 < 0:
-        min_text_x = min_text_width / 2
-    elif min_text_x + min_text_width / 2 > width_px:
-        min_text_x = width_px - min_text_width / 2
+    min_text_x = _calculate_text_position(
+        center_x=x_loc + bin_width_px / 2,
+        text_width=min_text_width,
+        svg_width=width_px,
+    )
 
-    max_text_x = width_px - (x_loc + bin_width_px / 2)
-    if max_text_x - max_text_width / 2 < 0:
-        max_text_x = max_text_width / 2
-    elif max_text_x + max_text_width / 2 > width_px:
-        max_text_x = width_px - max_text_width / 2
+    max_text_x = _calculate_text_position(
+        center_x=width_px - (x_loc + bin_width_px / 2),
+        text_width=max_text_width,
+        svg_width=width_px,
+    )
 
     elements: list[Element] = [
         Style(
@@ -651,15 +655,12 @@ def _make_histogram_svg(
             len(text_bottom) * font_size_px * 0.5,
         )
 
-        # Adjust tooltip x position based on proximity to edges
-        if (x_loc + bin_width_px / 2) - max_text_width / 2 < 0:
-            x_loc_tooltip = max_text_width / 2
-        elif (x_loc + bin_width_px / 2) + max_text_width / 2 > width_px:
-            x_loc_tooltip = width_px - max_text_width / 2
-        else:
-            x_loc_tooltip = x_loc + bin_width_px / 2
+        x_loc_tooltip = _calculate_text_position(
+            center_x=x_loc + bin_width_px / 2,
+            text_width=max_text_width,
+            svg_width=width_px,
+        )
 
-        # TODO: this is too wide when in the dates case
         tooltip = G(
             id=f"tooltip-{i}",
             class_=["tooltip"],
@@ -706,6 +707,21 @@ def _make_histogram_svg(
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
+
+
+def _calculate_text_position(
+    center_x: float,
+    text_width: float,
+    svg_width: float,
+    margin: float = 0,
+) -> float:
+    """Calculate text position to avoid overflow."""
+    if center_x - text_width / 2 < margin:
+        return text_width / 2 + margin
+    elif center_x + text_width / 2 > svg_width - margin:
+        return svg_width - text_width / 2 - margin
+    else:
+        return center_x
 
 
 # def _make_dot_plot_svg(
