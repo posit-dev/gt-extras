@@ -21,6 +21,7 @@ from .plotting import (
     gt_plt_winloss,
 )
 from .styling import gt_add_divider
+from .summary import gt_plt_summary
 from .themes import (
     gt_theme_538,
     gt_theme_dark,
@@ -66,4 +67,5 @@ __all__ = [
     "add_text_img",
     "img_header",
     "gt_add_divider",
+    "gt_plt_summary",
 ]
