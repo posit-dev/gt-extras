@@ -525,6 +525,22 @@ def _make_histogram_svg(
         hover_css += f"#bar-{i}:hover ~ #tooltip-{i}, #hover-area-{i}:hover ~ #tooltip-{i} {{ opacity: 1; }}\n"
         hover_css += f"#hover-area-{i}:hover ~ #bar-{i} {{{bar_highlight_style}}} "
 
+    # Calculate text positioning to avoid overflow
+    min_text_width = len(data_min) * font_size_px * 0.6
+    max_text_width = len(data_max) * font_size_px * 0.6
+
+    min_text_x = x_loc + bin_width_px / 2
+    if min_text_x - min_text_width / 2 < 0:
+        min_text_x = min_text_width / 2
+    elif min_text_x + min_text_width / 2 > width_px:
+        min_text_x = width_px - min_text_width / 2
+
+    max_text_x = width_px - (x_loc + bin_width_px / 2)
+    if max_text_x - max_text_width / 2 < 0:
+        max_text_x = max_text_width / 2
+    elif max_text_x + max_text_width / 2 > width_px:
+        max_text_x = width_px - max_text_width / 2
+
     elements: list[Element] = [
         Style(
             text=hover_css,
@@ -549,15 +565,15 @@ def _make_histogram_svg(
         ),
         Text(
             text=data_min,
-            x=x_loc + bin_width_px / 2,
+            x=min_text_x,
             y=height_px,
             text_anchor="middle",
-            font_size=height_px / 5,
+            font_size=font_size_px,
             dominant_baseline="text-top",
         ),
         Text(
             text=data_max,
-            x=width_px - (x_loc + bin_width_px / 2),
+            x=max_text_x,
             y=height_px,
             text_anchor="middle",
             font_size=font_size_px,
