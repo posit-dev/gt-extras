@@ -26,6 +26,28 @@ COLOR_MAPPING = {
 
 def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     """
+    Create a comprehensive data summary table with visualizations.
+
+    The `gt_plt_summary()` function takes a DataFrame and generates a summary table showing key
+    statistics and visual representations for each column. Each row displays the column type,
+    missing data percentage, descriptive statistics (mean, median, standard deviation), and a
+    small plot overview appropriate for the data type (histograms for numeric and datetime and
+    a categorical bar chart for strings).
+
+    Parameters
+    ----------
+    df
+        A DataFrame to summarize. Can be any DataFrame type that you would pass into a `GT`.
+
+    title
+        Optional title for the summary table. If `None`, defaults to "Summary Table".
+
+    Returns
+    -------
+    GT
+        A `GT` object containing the summary table with columns for Type, Column name,
+        Plot Overview, Missing percentage, Mean, Median, and Standard Deviation.
+
     Examples
     --------
     ```{python}
@@ -33,7 +55,6 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     from great_tables import GT
     import gt_extras as gte
     import random
-    from statistics import NormalDist
 
     n = 100
     random.seed(23)
@@ -59,6 +80,14 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
     gte.gt_plt_summary(df)
     ```
+
+    Note
+    ----
+    The plot types are automatically determined based on column data types:
+    - Numeric columns: Histograms with mean line
+    - String columns: Horizontal categorical bar charts
+    - Datetime columns: Histograms with temporal binning
+    - Boolean columns: Treated as numeric (showing proportion of `True` values)
     """
     summary_df = _create_summary_df(df)
 
@@ -73,16 +102,13 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     ]  # TODO: only assign boolean to mean
 
     if title is None:
-        # TODO: check that this gets name?
-        _title = getattr(df, "__name__", "Summary Table")
-    else:
-        _title = title
+        title = "Summary Table"
 
     subtitle = f"{dim_df[0]} rows x {dim_df[1]} cols"
 
     gt = (
         GT(summary_df)
-        .tab_header(title=_title, subtitle=subtitle)
+        .tab_header(title=title, subtitle=subtitle)
         # handle missing
         .sub_missing(columns=["Mean", "Median", "SD"])
         # Add visuals
@@ -160,7 +186,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         summary_data["Type"].append(col_type)
         summary_data["Column"].append(col_name)
         summary_data["Plot Overview"].append(None)
-        summary_data["Missing"].append(col.null_count() / col.count())
+        summary_data["Missing"].append(col.null_count() / len(col))
         summary_data["Mean"].append(mean_val)
         summary_data["Median"].append(median_val)
         summary_data["SD"].append(std_val)
