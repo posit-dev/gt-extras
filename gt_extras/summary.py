@@ -485,3 +485,100 @@ def _make_histogram_svg(
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
+
+
+# def _make_dot_plot_svg(
+#     width_px: float,
+#     height_px: float,
+#     fill: str,
+#     data_min: float,
+#     data_max: float,
+#     data_range: float,
+#     bins: list[list[float]],
+# ) -> SVG:
+#     plot_width_px = width_px * 0.95
+#     x_offset = (width_px - plot_width_px) / 2
+
+#     # Calculate dot size and max vertical stacks
+#     max_stack_height = max(len(bin_dates) for bin_dates in bins) if bins else 1
+#     max_vertical_stacks = int(height_px / 8)
+
+#     dot_radius = min(height_px / (min(max_stack_height, max_vertical_stacks) * 2.5), 3)
+#     baseline_y = height_px - dot_radius * 2
+
+#     elements: list[Element] = [
+#         Line(
+#             x1=x_offset,
+#             x2=x_offset + plot_width_px,
+#             y1=baseline_y,
+#             y2=baseline_y,
+#             stroke="black",
+#             stroke_width=1,
+#         ),
+#         Text(
+#             text=str(datetime.fromtimestamp(data_min).date()),
+#             x=x_offset,
+#             y=height_px,
+#             text_anchor="start",
+#             font_size=height_px / 6,
+#             dominant_baseline="text-top",
+#         ),
+#         Text(
+#             text=str(datetime.fromtimestamp(data_max).date()),
+#             x=x_offset + plot_width_px,
+#             y=height_px,
+#             text_anchor="end",
+#             font_size=height_px / 6,
+#             dominant_baseline="text-top",
+#         ),
+#     ]
+
+#     for bin_idx, bin_dates in enumerate(bins):
+#         if not bin_dates:
+#             continue
+
+#         bin_center = data_min + (bin_idx + 0.5) * data_range / len(bins)
+#         bin_x_center = x_offset + ((bin_center - data_min) / data_range) * plot_width_px
+#         bin_width = plot_width_px / len(bins) * 0.8  # Use 80% of bin width for dots
+
+#         num_dots = len(bin_dates)
+
+#         if num_dots <= max_vertical_stacks:
+#             for stack_idx, _ in enumerate(bin_dates):
+#                 y_pos = baseline_y - (stack_idx + 1) * dot_radius * 2
+
+#                 circle = Circle(
+#                     cx=bin_x_center,
+#                     cy=y_pos,
+#                     r=dot_radius,
+#                     fill=fill,
+#                     opacity=0.7,
+#                 )
+#                 elements.append(circle)
+#         else:
+#             # Use both vertical stacking and horizontal spreading
+#             cols_needed = math.ceil(num_dots / max_vertical_stacks)
+#             col_spacing = bin_width / (cols_needed + 1) if cols_needed > 1 else 0
+
+#             for dot_idx, _ in enumerate(bin_dates):
+#                 col = dot_idx // max_vertical_stacks
+#                 row = dot_idx % max_vertical_stacks
+
+#                 if cols_needed == 1:
+#                     x_pos = bin_x_center
+#                 else:
+#                     x_pos = bin_x_center - bin_width / 2 + (col + 1) * col_spacing
+
+#                 # Calculate y position (stack vertically within column)
+#                 y_pos = baseline_y - (row + 1) * dot_radius * 2
+
+#                 circle = Circle(
+#                     cx=x_pos,
+#                     cy=y_pos,
+#                     r=dot_radius,  # TODO adjust radius
+#                     fill=fill,
+#                     opacity=0.3,  # TODO: adjust opacity
+#                 )
+#                 elements.append(circle)
+
+#     return SVG(height=height_px, width=width_px, elements=elements)
