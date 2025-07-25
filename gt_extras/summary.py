@@ -15,6 +15,14 @@ from gt_extras.themes import gt_theme_espn
 
 __all__ = ["gt_plt_summary"]
 
+COLOR_MAPPING = {
+    "string": "#4e79a7",
+    "numeric": "#f18e2c",
+    "datetime": "#73a657",
+    "boolean": "#A65773",
+    "other": "black",
+}
+
 
 def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     """
@@ -164,19 +172,19 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
 def _make_icon_html(dtype: str) -> str:
     if dtype == "string":
         fa_name = "list"
-        color = "#4e79a7"
+        color = COLOR_MAPPING["string"]
     elif dtype == "numeric":
         fa_name = "signal"
-        color = "#f18e2c"
+        color = COLOR_MAPPING["numeric"]
     elif dtype == "datetime":
         fa_name = "clock"
-        color = "#73a657"
+        color = COLOR_MAPPING["datetime"]
     elif dtype == "boolean":
         fa_name = "check"
-        color = "black"
+        color = COLOR_MAPPING["boolean"]
     else:
         fa_name = "question"
-        color = "red"
+        color = COLOR_MAPPING["other"]
 
     icon = icon_svg(name=fa_name, fill=color, width=f"{20}px", a11y="sem")
 
@@ -203,8 +211,7 @@ def _make_summary_plot(
 
     # TODO: add boolean
     if col_type == "string":
-        return "<div></div>"
-        # return _plot_categorical(clean_data)
+        return _plot_categorical(clean_data)
     elif col_type == "numeric":
         return _plot_numeric(clean_data)
     elif col_type == "datetime":
@@ -214,7 +221,133 @@ def _make_summary_plot(
 
 
 def _plot_categorical(data: list[str]) -> str:
-    raise NotImplementedError
+    category_counts = {}
+    for item in data:
+        if item in category_counts:
+            category_counts[item] += 1
+        else:
+            category_counts[item] = 1
+
+    # Sort by count (descending order)
+    sorted_categories = sorted(
+        category_counts.items(), key=lambda x: x[1], reverse=True
+    )
+
+    # Extract counts and calculate proportions
+    counts = [count for _, count in sorted_categories]
+    total_count = sum(counts)
+    proportions = [count / total_count for count in counts]
+
+    svg = _make_categories_bar_svg(
+        width_px=180,
+        height_px=40,
+        fill=COLOR_MAPPING["string"],
+        proportions=proportions,
+        categories=[
+            category for category, _ in sorted_categories
+        ],  # maybe leave combined with counts?
+        counts=counts,
+    )
+
+    return svg.as_str()
+
+
+def _make_categories_bar_svg(
+    width_px: float,
+    height_px: float,
+    fill: str,
+    proportions: list[float],
+    categories: list[str],
+    counts: list[int],
+) -> SVG:
+    plot_width_px = width_px * 0.95
+    plot_height_px = height_px * 0.8
+
+    x_offset = (width_px - plot_width_px) / 2
+    y_offset = (height_px - plot_height_px) / 2
+
+    max_opacity = 1.0
+    min_opacity = 0.2
+
+    elements: list[Element] = [
+        Style(
+            text="""
+            .category-section:hover {
+                opacity: 0.4;
+            }
+            .category-tooltip {
+                opacity: 0;
+                transition: opacity 0.2s;
+                pointer-events: none;
+            }
+            .category-section:hover + .category-tooltip {
+                opacity: 1;
+            }
+            """
+        )
+    ]
+
+    current_x = x_offset
+    font_size_px = height_px / 5
+
+    for i, (proportion, category, count) in enumerate(
+        zip(proportions, categories, counts)
+    ):
+        section_width = proportion * plot_width_px
+
+        if len(proportions) == 1:
+            opacity = max_opacity
+        else:
+            opacity = max_opacity - (max_opacity - min_opacity) * (
+                i / (len(proportions) - 1)
+            )
+
+        section = Rect(
+            id=f"category-{i}",
+            class_=["category-section"],
+            x=current_x,
+            y=y_offset,
+            width=section_width,
+            height=plot_height_px,
+            fill=fill,
+            fill_opacity=opacity,
+            stroke="transparent",
+        )
+
+        tooltip_x = current_x + section_width / 2
+        tooltip = G(
+            id=f"category-tooltip-{i}",
+            class_=["category-tooltip"],
+            elements=[
+                Text(
+                    text=f"{count} rows",
+                    x=tooltip_x,
+                    y=font_size_px * 1.25,
+                    fill="black",
+                    font_size=font_size_px,
+                    dominant_baseline="hanging",
+                    text_anchor="middle",
+                    font_weight="bold",
+                ),
+                Text(
+                    text=f'"{category}"',
+                    x=tooltip_x,
+                    y=font_size_px * 2.5,
+                    fill="black",
+                    font_size=font_size_px,
+                    dominant_baseline="hanging",
+                    text_anchor="middle",
+                    font_weight="bold",
+                ),
+            ],
+        )
+
+        elements.append(section)
+        elements.append(tooltip)
+
+        current_x += section_width
+
+    return SVG(height=height_px, width=width_px, elements=elements)
 
 
 def _plot_numeric(data: list[float] | list[int]) -> str:
@@ -258,7 +391,7 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
     svg = _make_histogram_svg(
         width_px=180,  # TODO choose how to assign dimensions
         height_px=40,
-        fill="#f18e2c",
+        fill=COLOR_MAPPING["numeric"],
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
@@ -314,7 +447,7 @@ def _plot_datetime(
     svg = _make_histogram_svg(
         width_px=180,  # TODO choose how to assign dimensions
         height_px=40,
-        fill="#73a657",
+        fill=COLOR_MAPPING["datetime"],
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max).date()),
         data_min=str(datetime.fromtimestamp(data_min).date()),
@@ -387,7 +520,7 @@ def _make_histogram_svg(
             stroke="black",
             stroke_width=line_stroke_width,
         ),
-        # Median line
+        # Mean line
         Line(
             x1=mean_px,
             x2=mean_px,
@@ -439,6 +572,7 @@ def _make_histogram_svg(
             width_px - min_width_tooltip,
         )
 
+        # TODO: this is too wide when in the dates case
         tooltip = G(
             id=f"tooltip-{i}",
             class_=["tooltip"],
