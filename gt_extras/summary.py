@@ -39,6 +39,9 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     small plot overview appropriate for the data type (histograms for numeric and datetime and
     a categorical bar chart for strings).
 
+    Inspired by the Observable team and the observablehq/SummaryTable function:
+    https://observablehq.com/@observablehq/summary-table
+
     Parameters
     ----------
     df
@@ -154,7 +157,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     gt = gt_theme_espn(gt)
 
     for i, col_name in enumerate(nw_summary_df.get_column("Column")):
-        vals = nw.from_native(df, eager_only=True).get_column(col_name)
+        vals = nw.from_native(df, eager_only=True)[col_name]
         vals = _clean_series(vals, vals.dtype.is_numeric())
 
         col_type = nw_summary_df.item(row=i, column="Type")
@@ -186,7 +189,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
     }
 
     for col_name in nw_df.columns:
-        col = nw_df.get_column(col_name)
+        col = nw_df[col_name]
 
         mean_val = None
         median_val = None
