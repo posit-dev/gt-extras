@@ -8,7 +8,6 @@ import narwhals.stable.v1 as nw
 from faicons import icon_svg
 from great_tables import GT, loc, style
 from great_tables._helpers import random_id
-from great_tables._tbl_data import is_na
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
 from svg import SVG, Element, G, Line, Rect, Style, Text
 
@@ -137,23 +136,25 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         .fmt(_make_icon_html, columns="Type")
         # Format numerics
         .fmt_percent(columns="Missing", decimals=1)
-        .fmt_number(columns=["Mean", "Median", "SD"], rows=numeric_cols)  # type: ignore
+        .fmt_number(columns=["Mean", "Median", "SD"], rows=numeric_cols)
         .tab_style(
             style=style.text(weight="bold"),
             locations=loc.body(columns="Column"),
         )
         # add style
-        .pipe(gt_theme_espn)
         .cols_align(align="center", columns="Plot Overview")
     )
 
+    gt = gt_theme_espn(gt)
+
     for i, col_name in enumerate(nw_summary_df.get_column("Column")):
-        vals = nw.from_native(df, eager_only=True).get_column(col_name).to_list()
+        vals = nw.from_native(df, eager_only=True).get_column(col_name)
+        vals = _clean_series(vals, vals.dtype.is_numeric())
+
         col_type = nw_summary_df.item(row=i, column="Type")
         gt = gt.fmt(
             lambda _, vals=vals, col_type=col_type: _make_summary_plot(
-                gt=gt,  # TODO: dont pass gt
-                data=vals,
+                nw_series=vals,
                 col_type=col_type,
             ),
             columns="Plot Overview",
@@ -185,22 +186,26 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         median_val = None
         std_val = None
 
+        clean_col = _clean_series(col, col.dtype.is_numeric())
+
+        missing_count = len(col) - len(clean_col)
+        missing_ratio = missing_count / len(col)
+
         if col.dtype.is_numeric():
             col_type = "numeric"
-            mean_val = col.mean()
-            median_val = col.median()
-            std_val = col.std()
+            mean_val = clean_col.mean()
+            median_val = clean_col.median()
+            std_val = clean_col.std()
 
         elif col.dtype == nw.String:
             col_type = "string"
 
         elif col.dtype == nw.Boolean:
             col_type = "boolean"
-            mean_val = col.mean()  # Proportion of True values
+            mean_val = clean_col.mean()  # Proportion of True values
 
         elif col.dtype == nw.Datetime:
             col_type = "datetime"
-            std_val = None
 
         else:
             col_type = "other"
@@ -208,7 +213,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         summary_data["Type"].append(col_type)
         summary_data["Column"].append(col_name)
         summary_data["Plot Overview"].append(None)
-        summary_data["Missing"].append(col.null_count() / len(col))
+        summary_data["Missing"].append(missing_ratio)
         summary_data["Mean"].append(mean_val)
         summary_data["Median"].append(median_val)
         summary_data["SD"].append(std_val)
@@ -241,29 +246,22 @@ def _make_icon_html(dtype: str) -> str:
 
 
 def _make_summary_plot(
-    gt: GT,  # TODO: don't pass gt
-    data: list,
+    nw_series: nw.Series,
     col_type: str,
 ) -> str:
-    total = len(data)
+    total = len(nw_series)
     if total == 0:
         return "<div></div>"
 
-    missing = sum(1 for x in data if is_na(gt._tbl_data, x)) / total
-    if missing >= 0.99:
-        return "<div></div>"
-
-    clean_data = [x for x in data if not is_na(gt._tbl_data, x)]
-    if not clean_data:
-        return "<div></div>"
+    clean_list = nw_series.to_native().to_list()
 
     # TODO: add boolean
     if col_type == "string":
-        return _plot_categorical(clean_data)
+        return _plot_categorical(clean_list)
     elif col_type == "numeric":
-        return _plot_numeric(clean_data)
+        return _plot_numeric(clean_list)
     elif col_type == "datetime":
-        return _plot_datetime(clean_data)
+        return _plot_datetime(clean_list)
     else:
         return "<div></div>"
 
@@ -710,6 +708,15 @@ def _make_histogram_svg(
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
+
+
+def _clean_series(series: nw.Series, is_numeric: bool):
+    clean_series = series.drop_nulls()
+    if is_numeric:
+        is_nan_mask = clean_series.is_nan()
+        clean_series = clean_series.filter(~is_nan_mask)
+
+    return clean_series
 
 
 def _generate_hover_css(
