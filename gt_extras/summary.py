@@ -167,7 +167,7 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
 
 def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
-    nw_df = nw.from_native(df, eager_only=True)
+    nw_df = nw.from_native(df, eager_only=True)  # Should I be concerned about this?
 
     summary_data = {
         "Type": [],
@@ -249,8 +249,7 @@ def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
 ) -> str:
-    total = len(nw_series)
-    if total == 0:
+    if len(nw_series) == 0:
         return "<div></div>"
 
     clean_list = nw_series.to_native().to_list()
