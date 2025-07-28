@@ -109,6 +109,12 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
     gte.gt_plt_summary(df)
     ```
+
+    Note
+    ---------
+    The datatype (dtype) of each column in your dataframe will determine the classified type in the
+    summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
+    datatypes, especially when null values are present.
     """
     summary_df = _create_summary_df(df)
 
@@ -254,13 +260,14 @@ def _make_summary_plot(
 
     clean_list = nw_series.to_native().to_list()
 
-    # TODO: add boolean
     if col_type == "string":
         return _plot_categorical(clean_list)
     elif col_type == "numeric":
         return _plot_numeric(clean_list)
     elif col_type == "datetime":
         return _plot_datetime(clean_list)
+    elif col_type == "boolean":
+        return _plot_boolean(clean_list)
     else:
         return "<div></div>"
 
@@ -777,98 +784,35 @@ def _calculate_text_position(
         return center_x
 
 
-# def _make_dot_plot_svg(
-#     width_px: float,
-#     height_px: float,
-#     fill: str,
-#     data_min: float,
-#     data_max: float,
-#     data_range: float,
-#     bins: list[list[float]],
-# ) -> SVG:
-#     plot_width_px = width_px * 0.95
-#     x_offset = (width_px - plot_width_px) / 2
+def _plot_boolean(data: list[bool]) -> str:
+    true_count = sum(data)
+    false_count = len(data) - true_count
+    total_count = len(data)
 
-#     # Calculate dot size and max vertical stacks
-#     max_stack_height = max(len(bin_dates) for bin_dates in bins) if bins else 1
-#     max_vertical_stacks = int(height_px / 8)
+    if total_count == 0:
+        return "<div></div>"
 
-#     dot_radius = min(height_px / (min(max_stack_height, max_vertical_stacks) * 2.5), 3)
-#     baseline_y = height_px - dot_radius * 2
+    # Create boolean bars data structure similar to categorical
+    boolean_data = []
+    if true_count > 0:
+        boolean_data.append(("True", true_count))
+    if false_count > 0:
+        boolean_data.append(("False", false_count))
 
-#     elements: list[Element] = [
-#         Line(
-#             x1=x_offset,
-#             x2=x_offset + plot_width_px,
-#             y1=baseline_y,
-#             y2=baseline_y,
-#             stroke="black",
-#             stroke_width=1,
-#         ),
-#         Text(
-#             text=str(datetime.fromtimestamp(data_min).date()),
-#             x=x_offset,
-#             y=height_px,
-#             text_anchor="start",
-#             font_size=height_px / 6,
-#             dominant_baseline="text-top",
-#         ),
-#         Text(
-#             text=str(datetime.fromtimestamp(data_max).date()),
-#             x=x_offset + plot_width_px,
-#             y=height_px,
-#             text_anchor="end",
-#             font_size=height_px / 6,
-#             dominant_baseline="text-top",
-#         ),
-#     ]
+    boolean_data.sort(key=lambda x: x[1], reverse=True)
 
-#     for bin_idx, bin_dates in enumerate(bins):
-#         if not bin_dates:
-#             continue
+    # Extract counts and calculate proportions
+    counts = [count for _, count in boolean_data]
+    proportions = [count / total_count for count in counts]
+    categories = [label for label, _ in boolean_data]
 
-#         bin_center = data_min + (bin_idx + 0.5) * data_range / len(bins)
-#         bin_x_center = x_offset + ((bin_center - data_min) / data_range) * plot_width_px
-#         bin_width = plot_width_px / len(bins) * 0.8  # Use 80% of bin width for dots
+    svg = _make_categories_bar_svg(
+        width_px=DEFAULT_WIDTH_PX,
+        height_px=DEFAULT_HEIGHT_PX,
+        fill=COLOR_MAPPING["boolean"],
+        proportions=proportions,
+        categories=categories,
+        counts=counts,
+    )
 
-#         num_dots = len(bin_dates)
-
-#         if num_dots <= max_vertical_stacks:
-#             for stack_idx, _ in enumerate(bin_dates):
-#                 y_pos = baseline_y - (stack_idx + 1) * dot_radius * 2
-
-#                 circle = Circle(
-#                     cx=bin_x_center,
-#                     cy=y_pos,
-#                     r=dot_radius,
-#                     fill=fill,
-#                     opacity=0.7,
-#                 )
-#                 elements.append(circle)
-#         else:
-#             # Use both vertical stacking and horizontal spreading
-#             cols_needed = math.ceil(num_dots / max_vertical_stacks)
-#             col_spacing = bin_width / (cols_needed + 1) if cols_needed > 1 else 0
-
-#             for dot_idx, _ in enumerate(bin_dates):
-#                 col = dot_idx // max_vertical_stacks
-#                 row = dot_idx % max_vertical_stacks
-
-#                 if cols_needed == 1:
-#                     x_pos = bin_x_center
-#                 else:
-#                     x_pos = bin_x_center - bin_width / 2 + (col + 1) * col_spacing
-
-#                 # Calculate y position (stack vertically within column)
-#                 y_pos = baseline_y - (row + 1) * dot_radius * 2
-
-#                 circle = Circle(
-#                     cx=x_pos,
-#                     cy=y_pos,
-#                     r=dot_radius,  # TODO adjust radius
-#                     fill=fill,
-#                     opacity=0.3,  # TODO: adjust opacity
-#                 )
-#                 elements.append(circle)
-
-#     return SVG(height=height_px, width=width_px, elements=elements)
+    return svg.as_str()
