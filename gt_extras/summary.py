@@ -198,7 +198,10 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         clean_col = _clean_series(col, col.dtype.is_numeric())
 
         missing_count = len(col) - len(clean_col)
-        missing_ratio = missing_count / len(col)
+        if len(col) == 0:
+            missing_ratio = 1
+        else:
+            missing_ratio = missing_count / len(col)
 
         if col.dtype.is_numeric():
             col_type = "numeric"
@@ -314,6 +317,7 @@ def _make_categories_bar_svg(
     proportions: list[float],
     categories: list[str],
     counts: list[int],
+    opacities: list[float] | None = None,
 ) -> SVG:
     plot_width_px = width_px * PLOT_WIDTH_RATIO
     plot_height_px = height_px * PLOT_HEIGHT_RATIO
@@ -344,7 +348,10 @@ def _make_categories_bar_svg(
     ):
         section_width = proportion * plot_width_px
 
-        if len(proportions) == 1:
+        if opacities is not None:
+            opacity = opacities[i]
+
+        elif len(proportions) == 1:
             opacity = max_opacity
         else:
             opacity = max_opacity - (max_opacity - min_opacity) * (
@@ -434,6 +441,9 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
     # after cleaning in _make_summary_plot, we know len(data) > 1
     if len(data) == 1:
         bw = 1
+    # edge case when len(data) == 2 means we can't get quartiles
+    elif len(data) == 2:
+        bw = (max(data) - min(data)) * 0.5
     # Calculate binwidth using Freedman-Diaconis rule
     else:
         quantiles = statistics.quantiles(data, method="inclusive")
@@ -489,11 +499,15 @@ def _plot_datetime(
     # after cleaning in _make_summary_plot, we know len(data) > 1
     if len(date_timestamps) == 1:
         bw = timedelta(days=1).total_seconds()
+
+    # edge case when len(data) == 2 means we can't get quartiles
+    # slight duplicate in _plot_numeric
+    elif len(date_timestamps) == 2:
+        bw = (max(date_timestamps) - min(date_timestamps)) * 0.5
+
     # Calculate binwidth using Freedman-Diaconis rule
     else:
         quantiles = statistics.quantiles(date_timestamps, method="inclusive")
-        # q25 = datetime.fromtimestamp(quantiles[0])
-        # q75 = datetime.fromtimestamp(quantiles[2])
         q25, _, q75 = quantiles
         iqr = q75 - q25
         bw = 2 * iqr / (len(date_timestamps) ** (1 / 3))
@@ -795,19 +809,23 @@ def _plot_boolean(data: list[bool]) -> str:
     if total_count == 0:
         return "<div></div>"
 
-    # Create boolean bars data structure similar to categorical
     boolean_data = []
     if true_count > 0:
         boolean_data.append(("True", true_count))
     if false_count > 0:
         boolean_data.append(("False", false_count))
 
-    boolean_data.sort(key=lambda x: x[1], reverse=True)
-
-    # Extract counts and calculate proportions
     counts = [count for _, count in boolean_data]
     proportions = [count / total_count for count in counts]
     categories = [label for label, _ in boolean_data]
+
+    # Set opacities: False is always lighter (0.2)
+    if true_count == 0 and false_count > 0:
+        opacities = [0.2]  # Only False present
+    elif true_count > 0 and false_count > 0:
+        opacities = [1.0, 0.2]
+    else:
+        opacities = [1.0]  # Only True present
 
     svg = _make_categories_bar_svg(
         width_px=DEFAULT_WIDTH_PX,
@@ -816,6 +834,7 @@ def _plot_boolean(data: list[bool]) -> str:
         proportions=proportions,
         categories=categories,
         counts=counts,
+        opacities=opacities,
     )
 
     return svg.as_str()
