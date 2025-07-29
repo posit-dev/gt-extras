@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
@@ -17,11 +17,11 @@ def test_gt_plt_summary_snap(snapshot):
             "string": ["A", "B", "A", "C", None],
             "boolean": [True, False, True, None, False],
             "datetime": [
-                datetime(2024, 1, 1),
-                datetime(2024, 1, 2),
-                datetime(2024, 1, 3),
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 2, tzinfo=timezone.utc),
+                datetime(2024, 1, 3, tzinfo=timezone.utc),
                 None,
-                datetime(2024, 1, 5),
+                datetime(2024, 1, 5, tzinfo=timezone.utc),
             ],
         }
     )
@@ -133,11 +133,11 @@ def test_gt_plt_summary_datetime_column():
     df = pd.DataFrame(
         {
             "datetime": [
-                datetime(2024, 1, 1),
-                datetime(2024, 1, 2),
-                datetime(2024, 1, 3),
-                datetime(2024, 1, 4),
-                datetime(2024, 1, 5),
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 2, tzinfo=timezone.utc),
+                datetime(2024, 1, 3, tzinfo=timezone.utc),
+                datetime(2024, 1, 4, tzinfo=timezone.utc),
+                datetime(2024, 1, 5, tzinfo=timezone.utc),
             ]
         }
     )
@@ -145,16 +145,10 @@ def test_gt_plt_summary_datetime_column():
     result = gt_plt_summary(df)
     html = result.as_raw_html()
 
-    try:
-        assert "2023-12-31</text>" in html
-    except AssertionError:
-        print("FULL HTML OUTPUT:\n", html)
-        raise
-
     assert "<svg" in html
     assert "<title>Clock</title>" in html
-    assert "2023-12-31</text>" in html
-    assert "2024-01-04</text>" in html
+    assert "2024-01-01</text>" in html
+    assert "2024-01-05</text>" in html
 
 
 def test_gt_plt_summary_with_missing_values():
@@ -292,7 +286,8 @@ def test_gt_plt_summary_boolean_all_empty():
 
 def test_gt_plt_summary_datetime_single_date():
     df = pl.DataFrame(
-        {"datetime": [datetime(2024, 1, 1)]}, schema={"datetime": datetime}
+        {"datetime": [datetime(2024, 1, 1, tzinfo=timezone.utc)]},
+        schema={"datetime": datetime},
     )
 
     result = gt_plt_summary(df)
@@ -307,20 +302,33 @@ def test_gt_plt_summary_datetime_single_date():
 
 
 def test_gt_plt_summary_datetime_two_dates():
-    df = pd.DataFrame({"datetime": [datetime(2024, 1, 1), datetime(2024, 1, 2)]})
+    df = pd.DataFrame(
+        {
+            "datetime": [
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 2, tzinfo=timezone.utc),
+            ]
+        }
+    )
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
 
     assert html.count(">1 row</text>") == 2
 
-    assert "[2023-12-31 to 2024-01-01]" in html
     assert "[2024-01-01 to 2024-01-01]" in html
+    assert "[2024-01-01 to 2024-01-02]" in html
 
 
 def test_gt_plt_summary_datetime_repeated_date():
     df = pd.DataFrame(
-        {"datetime": [datetime(2024, 1, 1), datetime(2024, 1, 1), datetime(2024, 1, 1)]}
+        {
+            "datetime": [
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+                datetime(2024, 1, 1, tzinfo=timezone.utc),
+            ]
+        }
     )
 
     result = gt_plt_summary(df)
@@ -408,9 +416,9 @@ def test_gt_plt_summary_column_order_preserved():
 #     df = pd.DataFrame(
 #         {
 #             "datetime_with_time": [
-#                 datetime(2024, 1, 1, 10, 30, 0),
-#                 datetime(2024, 1, 1, 14, 45, 30),
-#                 datetime(2024, 1, 2, 9, 15, 45),
+#                 datetime(2024, 1, 1, 10, 30, 0, tzinfo = timezone.utc),
+#                 datetime(2024, 1, 1, 14, 45, 30, tzinfo = timezone.utc),
+#                 datetime(2024, 1, 2, 9, 15, 45, tzinfo = timezone.utc),
 #             ]
 #         }
 #     )
