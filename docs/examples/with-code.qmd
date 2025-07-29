@@ -2,6 +2,7 @@
 title: Examples With Code
 jupyter: python3
 echo: false
+collapse-level: 3
 ---
 <style>
 
@@ -227,6 +228,37 @@ gt.pipe(
 )
 ```
 {{< include ./_show-last.qmd >}}
+
+### [gt_plt_summary](https://posit-dev.github.io/gt-extras/reference/gt_plt_summary.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_summary
+import polars as pl
+from great_tables import GT
+import gt_extras as gte
+from datetime import datetime
+
+df = pl.DataFrame({
+    "Date": [
+        datetime(2024, 1, 1),
+        datetime(2024, 1, 2),
+        datetime(2024, 1, 7),
+        datetime(2024, 1, 8),
+        datetime(2024, 1, 13),
+        datetime(2024, 1, 16),
+        datetime(2024, 1, 20),
+        datetime(2024, 1, 22),
+        datetime(2024, 2, 1),
+    ] * 5,
+    "Value": [10, 15, 20, None, 25, 18, 22, 30, 40] * 5,
+    "Category": ["A", "B", "C", "A", "B", "C", "D", None, None] * 5,
+    "Boolean": [True, False, True] * 15,
+    "Status": ["Active", "Inactive", None] * 15,
+})
+
+gte.gt_plt_summary(df)
+```
+{{< include ./_show-last.qmd >}}
+
 
 ### [gt_plt_winloss](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html){title="Click for reference"}
 ```{python}

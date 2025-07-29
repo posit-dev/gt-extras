@@ -158,6 +158,11 @@ addEventListener('resize', setTableWidths);
 [gt_plt_dumbbell](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
 :::
 
+:::{.masonry-item style="--width: 521;"}
+{{< embed with-code.qmd#gt_plt_summary >}}
+[gt_plt_summary](./with-code.html#gt_plt_summary){.embed-hover-overlay}
+:::
+
 :::{.masonry-item style="--width: 167;"}
 {{< embed with-code.qmd#gt_plt_winloss >}}
 [gt_plt_winloss](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
