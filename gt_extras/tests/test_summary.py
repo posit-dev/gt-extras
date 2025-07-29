@@ -27,7 +27,6 @@ def test_gt_plt_summary_snap(snapshot):
             }
         )
         res = gt_plt_summary(df)
-        res.show()
         assert_rendered_body(snapshot(name="pd_and_pl"), gt=res)
 
 
