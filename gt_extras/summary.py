@@ -19,7 +19,7 @@ COLOR_MAPPING = {
     "string": "#4e79a7",
     "numeric": "#f18e2c",
     "datetime": "#73a657",
-    "boolean": "#A65773",
+    "boolean": "#a65773",
     "other": "black",
 }
 DEFAULT_WIDTH_PX = 180  # TODO choose how to assign dimensions
@@ -377,7 +377,8 @@ def _make_categories_bar_svg(
 
         section_center_x = x_loc + section_width / 2
 
-        text_top = f"{count} rows"
+        row_label = "row" if count == 1 else "rows"
+        text_top = f"{count:.0f} {row_label}"
         text_bottom = f'"{category}"'
 
         # Estimate text width
@@ -805,9 +806,6 @@ def _plot_boolean(data: list[bool]) -> str:
     true_count = sum(data)
     false_count = len(data) - true_count
     total_count = len(data)
-
-    if total_count == 0:
-        return "<div></div>"
 
     boolean_data = []
     if true_count > 0:
