@@ -26,6 +26,7 @@ def test_gt_plt_summary_snap(snapshot):
         }
     )
     res = gt_plt_summary(df)
+    res.show()
     assert_rendered_body(snapshot, gt=res)
 
 
@@ -143,6 +144,12 @@ def test_gt_plt_summary_datetime_column():
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
+
+    try:
+        assert "2023-12-31</text>" in html
+    except AssertionError:
+        print("FULL HTML OUTPUT:\n", html)
+        raise
 
     assert "<svg" in html
     assert "<title>Clock</title>" in html
