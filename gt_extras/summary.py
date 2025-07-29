@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 import statistics
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import narwhals.stable.v1 as nw
 from faicons import icon_svg
@@ -561,7 +561,9 @@ def _plot_datetime(
 
     n_bins = max(1, int(math.ceil(data_range / bw)))
     bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
-    bin_edges = [str(datetime.fromtimestamp(edge).date()) for edge in bin_edges]
+    bin_edges = [
+        str(datetime.fromtimestamp(edge, tz=timezone.utc).date()) for edge in bin_edges
+    ]
 
     counts = [0.0] * n_bins
     for x in date_timestamps:
@@ -580,8 +582,8 @@ def _plot_datetime(
         fill=COLOR_MAPPING["datetime"],
         plot_id=plot_id,
         normalized_mean=normalized_mean,
-        data_max=str(datetime.fromtimestamp(data_max).date()),
-        data_min=str(datetime.fromtimestamp(data_min).date()),
+        data_max=str(datetime.fromtimestamp(data_max, tz=timezone.utc).date()),
+        data_min=str(datetime.fromtimestamp(data_min, tz=timezone.utc).date()),
         counts=counts,
         bin_edges=bin_edges,
     )
