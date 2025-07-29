@@ -43,7 +43,7 @@ def fa_icon_repeat(
         The number of times to repeat the icon.
 
     fill
-        The fill color for the icon (e.g., `"yellow"`, `"#ffcc00"`). If `None`, uses the default.
+        The fill color for the icon (e.g., `"green"` or `"#ffcc00"`). If `None`, uses the default.
 
     fill_opacity
         The opacity of the fill color (`0.0` - `1.0`).
