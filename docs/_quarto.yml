@@ -125,5 +125,5 @@ format:
 
     extensions:
       preview-colour:
-        code: true    # Enable previews for inline code
-        text: true   # Disable previews for regular text
+        code: true
+        text: false
