@@ -1,6 +1,7 @@
 ---
 title: Examples
 notebook-links: false
+toc: false
 ---
 
 <style>
@@ -121,60 +122,63 @@ addEventListener('resize', setTableWidths);
 
 ::::{.masonry-container}
 
-:::{.masonry-item}
+<!-- Override width in case they render slowly -->
+:::{.masonry-item style="--width: 686;"}
 {{< embed with-code.qmd#gt_plt_bar >}}
 [gt_plt_bar](./with-code.html#gt_plt_bar){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 249;"}
 {{< embed with-code.qmd#gt_plt_bar_pct >}}
 [gt_plt_bar_pct](./with-code.html#gt_plt_bar_pct){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 297;"}
 {{< embed with-code.qmd#gt_plt_bar_stack >}}
 [gt_plt_bar_stack](./with-code.html#gt_plt_bar_stack){.embed-hover-overlay}
 :::
 
-<!-- Override width on some of the slower rendering ones -->
 :::{.masonry-item style="--width: 323;"}
 {{< embed with-code.qmd#gt_plt_bullet >}}
 [gt_plt_bullet](./with-code.html#gt_plt_bullet){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 376;"}
 {{< embed with-code.qmd#gt_plt_conf_int >}}
 [gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
 :::
 
-<!-- Override width on some of the slower rendering ones -->
 :::{.masonry-item style="--width: 292;"}
 {{< embed with-code.qmd#gt_plt_dot >}}
 [gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 359;"}
+:::{.masonry-item style="--width: 413;"}
 {{< embed with-code.qmd#gt_plt_dumbbell >}}
 [gt_plt_dumbbell](./with-code.html#gt_plt_dumbbell){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 521;"}
+{{< embed with-code.qmd#gt_plt_summary >}}
+[gt_plt_summary](./with-code.html#gt_plt_summary){.embed-hover-overlay}
+:::
+
+:::{.masonry-item style="--width: 167;"}
 {{< embed with-code.qmd#gt_plt_winloss >}}
 [gt_plt_winloss](./with-code.html#gt_plt_winloss){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 209;"}
+:::{.masonry-item style="--width: 211;"}
 {{< embed with-code.qmd#gt_color_box >}}
 [gt_color_box](./with-code.html#gt_color_box){.embed-hover-overlay}
 :::
 
-<!-- Override width on some of the slower rendering ones -->
-:::{.masonry-item style="--width: 322;"}
+:::{.masonry-item style="--width: 347;"}
 {{< embed with-code.qmd#gt_data_color_by_group >}}
 [gt_data_color_by_group](./with-code.html#gt_data_color_by_group){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 323;"}
 {{< embed with-code.qmd#gt_highlight_cols >}}
 [gt_highlight_cols](./with-code.html#gt_highlight_cols){.embed-hover-overlay}
 :::
@@ -194,17 +198,17 @@ addEventListener('resize', setTableWidths);
 [gt_theme_538](./with-code.html#gt_theme_538){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 395;"}
+:::{.masonry-item style="--width: 359;"}
 {{< embed with-code.qmd#gt_theme_espn >}}
 [gt_theme_espn](./with-code.html#gt_theme_espn){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 417;"}
+:::{.masonry-item style="--width: 388;"}
 {{< embed with-code.qmd#gt_theme_guardian >}}
 [gt_theme_guardian](./with-code.html#gt_theme_guardian){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 334;"}
+:::{.masonry-item style="--width: 308;"}
 {{< embed with-code.qmd#gt_theme_nytimes >}}
 [gt_theme_nytimes](./with-code.html#gt_theme_nytimes){.embed-hover-overlay}
 :::
@@ -214,7 +218,7 @@ addEventListener('resize', setTableWidths);
 [gt_theme_excel](./with-code.html#gt_theme_excel){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 411;"}
+:::{.masonry-item style="--width: 378;"}
 {{< embed with-code.qmd#gt_theme_dot_matrix >}}
 [gt_theme_dot_matrix](./with-code.html#gt_theme_dot_matrix){.embed-hover-overlay}
 :::
@@ -224,7 +228,7 @@ addEventListener('resize', setTableWidths);
 [gt_theme_dark](./with-code.html#gt_theme_dark){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 488;"}
+:::{.masonry-item style="--width: 283;"}
 {{< embed with-code.qmd#gt_theme_pff >}}
 [gt_theme_pff](./with-code.html#gt_theme_pff){.embed-hover-overlay}
 :::
@@ -239,7 +243,7 @@ addEventListener('resize', setTableWidths);
 [fa_icon_repeat](./with-code.html#fa_icon_repeat){.embed-hover-overlay}
 :::
 
-:::{.masonry-item}
+:::{.masonry-item style="--width: 451;"}
 {{< embed with-code.qmd#gt_fa_rank_change >}}
 [gt_fa_rank_change](./with-code.html#gt_fa_rank_change){.embed-hover-overlay}
 :::

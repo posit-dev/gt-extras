@@ -367,34 +367,53 @@ def gt_two_column_layout(
                 "mycombinedtable table", "mycombinedtable div"
             )
 
-        # Extract title and subtitle class/style information
-        title_pattern = (
-            r'<td[^>]*class="([^"]*gt_title[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+        title_td_pattern = (
+            r'<td[^>]*class="[^"]*gt_title[^"]*"[^>]*>\s*'
             + re.escape(str(title))
-            + r"</td>"
+            + r"\s*</td>"
         )
-        title_match = re.search(title_pattern, html)
+        title_match = re.search(title_td_pattern, html, re.DOTALL)
+
         if title_match:
-            title_class = f"gt_table {title_match.group(1)}"
-            title_inline_style = title_match.group(2) or ""
+            td_tag = title_match.group(0)
+
+            # Extract class attribute
+            class_match = re.search(r'class="([^"]*gt_title[^"]*)"', td_tag)
+            title_class = f"gt_table {class_match.group(1)}" if class_match else ""
+
+            # Extract style attribute
+            style_match = re.search(r'style="([^"]*)"', td_tag)
+            title_inline_style = style_match.group(1) if style_match else ""
         else:
             title_class = ""
             title_inline_style = ""
 
-        subtitle_pattern = (
-            r'<td[^>]*class="([^"]*gt_subtitle[^"]*)"[^>]*(?:style="([^"]*)")?[^>]*>'
+        subtitle_td_pattern = (
+            r'<td[^>]*class="[^"]*gt_subtitle[^"]*"[^>]*>\s*'
             + re.escape(str(subtitle))
-            + r"</td>"
+            + r"\s*</td>"
         )
-        subtitle_match = re.search(subtitle_pattern, html)
+        subtitle_match = re.search(subtitle_td_pattern, html, re.DOTALL)
+
         if subtitle_match:
-            # Exclude gt_bottom_border from class string if present
-            class_str = subtitle_match.group(1)
-            class_str = " ".join(
-                c for c in class_str.split() if c != "gt_bottom_border"
-            )
-            subtitle_class = f"gt_table {class_str}"
-            subtitle_inline_style = subtitle_match.group(2) or ""
+            td_tag = subtitle_match.group(0)
+
+            # Extract class attribute
+            class_match = re.search(r'class="([^"]*gt_subtitle[^"]*)"', td_tag)
+
+            if class_match:
+                # Exclude gt_bottom_border from class string if present
+                class_str = class_match.group(1)
+                class_str = " ".join(
+                    c for c in class_str.split() if c != "gt_bottom_border"
+                )
+                subtitle_class = f"gt_table {class_str}"
+            else:
+                subtitle_class = ""
+
+            # Extract style attribute
+            style_match = re.search(r'style="([^"]*)"', td_tag)
+            subtitle_inline_style = style_match.group(1) if style_match else ""
         else:
             subtitle_class = ""
             subtitle_inline_style = ""
