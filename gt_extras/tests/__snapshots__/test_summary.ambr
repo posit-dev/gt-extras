@@ -1,5 +1,5 @@
 # serializer version: 1
-# name: test_gt_plt_summary_snap
+# name: test_gt_plt_summary_snap[pd_and_pl]
   '''
   <tbody class="gt_table_body">
     <tr>
@@ -48,12 +48,22 @@
       <td class="gt_row gt_right gt_striped">&mdash;</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left"><svg viewBox="0 0 320 512" preserveAspectRatio="none" aria-label="Question" role="img" class="fa" style="fill:black;height:32.0px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Question</title>
-    <path d="M96 96c-17.7 0-32 14.3-32 32s-14.3 32-32 32s-32-14.3-32-32C0 75 43 32 96 32h97c70.1 0 127 56.9 127 127c0 52.4-32.2 99.4-81 118.4l-63 24.5 0 18.1c0 17.7-14.3 32-32 32s-32-14.3-32-32V301.9c0-26.4 16.2-50.1 40.8-59.6l63-24.5C240 208.3 256 185 256 159c0-34.8-28.2-63-63-63H96zm48 384c-22.1 0-40-17.9-40-40s17.9-40 40-40s40 17.9 40 40s-17.9 40-40 40z"></path></svg></td>
+      <td class="gt_row gt_left"><svg viewBox="0 0 512 512" preserveAspectRatio="none" aria-label="Check" role="img" class="fa" style="fill:#a65773;height:20.0px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Check</title>
+    <path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path></svg></td>
       <td style="font-weight: bold;" class="gt_row gt_left">boolean</td>
-      <td class="gt_row gt_center"><div></div></td>
-      <td class="gt_row gt_right">20.0%</td>
-      <td class="gt_row gt_right">&mdash;</td>
+      <td class="gt_row gt_center"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="40"><style>
+      .id2-category-tooltip {
+          opacity: 0;
+          transition: opacity 0.2s;
+          pointer-events: none;
+      }
+      .id2-bar-rect:hover, .id2-visual-bar:hover {
+          opacity: 0.4;
+      }
+      #id2-bar-0:hover ~ #id2-tooltip-0 { opacity: 1; }
+  #id2-bar-1:hover ~ #id2-tooltip-1 { opacity: 1; }</style><rect stroke="transparent" class="id2-visual-bar" id="id2-bar-1" x="72.9" y="4.0" width="102.6" height="32.0" fill-opacity="0.2" fill="#a65773"/><rect stroke="transparent" class="id2-visual-bar" id="id2-bar-0" x="4.5" y="4.0" width="68.4" height="32.0" fill-opacity="1.0" fill="#a65773"/><g id="id2-tooltip-0" class="id2-category-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="38.7" y="10.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="38.7" y="20.0">"True"</text></g><g id="id2-tooltip-1" class="id2-category-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="124.2" y="10.0">3 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="124.2" y="20.0">"False"</text></g></svg></td>
+      <td class="gt_row gt_right">0.0%</td>
+      <td class="gt_row gt_right">0.40</td>
       <td class="gt_row gt_right">&mdash;</td>
       <td class="gt_row gt_right">&mdash;</td>
     </tr>

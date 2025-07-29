@@ -11,22 +11,24 @@ from gt_extras.tests.conftest import assert_rendered_body
 
 
 def test_gt_plt_summary_snap(snapshot):
-    df = pd.DataFrame(
-        {
-            "numeric": [1.5, 2.2, 3.3, None, 5.1],
-            "string": ["A", "B", "A", "C", None],
-            "boolean": [True, False, True, None, False],
-            "datetime": [
-                datetime(2024, 1, 1, tzinfo=timezone.utc),
-                datetime(2024, 1, 2, tzinfo=timezone.utc),
-                datetime(2024, 1, 3, tzinfo=timezone.utc),
-                None,
-                datetime(2024, 1, 5, tzinfo=timezone.utc),
-            ],
-        }
-    )
-    res = gt_plt_summary(df)
-    assert_rendered_body(snapshot, gt=res)
+    for DataFrame in [pd.DataFrame, pl.DataFrame]:
+        df = DataFrame(
+            {
+                "numeric": [1.5, 2.2, 3.3, None, 5.1],
+                "string": ["A", "B", "A", "C", None],
+                "boolean": [True, False, True, False, False],
+                "datetime": [
+                    datetime(2024, 1, 1, tzinfo=timezone.utc),
+                    datetime(2024, 1, 2, tzinfo=timezone.utc),
+                    datetime(2024, 1, 3, tzinfo=timezone.utc),
+                    None,
+                    datetime(2024, 1, 5, tzinfo=timezone.utc),
+                ],
+            }
+        )
+        res = gt_plt_summary(df)
+        res.show()
+        assert_rendered_body(snapshot(name="pd_and_pl"), gt=res)
 
 
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
@@ -80,8 +82,9 @@ def test_gt_plt_summary_basic(DataFrame):
     assert html.count(">0.60</td>") == 1
 
 
-def test_gt_plt_summary_custom_title():
-    df = pd.DataFrame({"col": [1, 2, 3]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_custom_title(DataFrame):
+    df = DataFrame({"col": [1, 2, 3]})
 
     result = gt_plt_summary(df, title="Custom Title")
     html = result.as_raw_html()
@@ -96,8 +99,9 @@ def test_gt_plt_summary_custom_title():
     )
 
 
-def test_gt_plt_summary_numeric_column():
-    df = pd.DataFrame({"numeric": [1.1, 2.2, 3.3, 4.4, 5.5]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_numeric_column(DataFrame):
+    df = DataFrame({"numeric": [1.1, 2.2, 3.3, 4.4, 5.5]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -107,8 +111,9 @@ def test_gt_plt_summary_numeric_column():
     assert "<svg" in html
 
 
-def test_gt_plt_summary_string_column():
-    df = pd.DataFrame({"string": ["A", "B", "A", "C", "A"]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_string_column(DataFrame):
+    df = DataFrame({"string": ["A", "B", "A", "C", "A"]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -117,8 +122,9 @@ def test_gt_plt_summary_string_column():
     assert "<svg" in html
 
 
-def test_gt_plt_summary_boolean_column():
-    df = pd.DataFrame({"boolean": [True, False, True, True, False]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_boolean_column(DataFrame):
+    df = DataFrame({"boolean": [True, False, True, True, False]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -128,8 +134,9 @@ def test_gt_plt_summary_boolean_column():
     assert "<svg" in html
 
 
-def test_gt_plt_summary_datetime_column():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_datetime_column(DataFrame):
+    df = DataFrame(
         {
             "datetime": [
                 datetime(2024, 1, 1, tzinfo=timezone.utc),
@@ -150,8 +157,9 @@ def test_gt_plt_summary_datetime_column():
     assert "2024-01-05</text>" in html
 
 
-def test_gt_plt_summary_with_missing_values():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_with_missing_values(DataFrame):
+    df = DataFrame(
         {
             "numeric": [1, 2, None, 4, 5],
             "string": ["A", None, "C", "D", "E"],
@@ -180,8 +188,9 @@ def test_gt_plt_summary_with_nan_values():
     assert "40.0%" in html
 
 
-def test_gt_plt_summary_empty_dataframe():
-    df = pd.DataFrame()
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_empty_dataframe(DataFrame):
+    df = DataFrame()
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -190,8 +199,9 @@ def test_gt_plt_summary_empty_dataframe():
     assert "<svg" not in html
 
 
-def test_gt_plt_summary_empty_columns():
-    df = pd.DataFrame({"col1": [], "col2": []})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_empty_columns(DataFrame):
+    df = DataFrame({"col1": [], "col2": []})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -200,8 +210,9 @@ def test_gt_plt_summary_empty_columns():
     assert html.count("100.0%") == 2
 
 
-def test_gt_plt_summary_single_row():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_single_row(DataFrame):
+    df = DataFrame(
         {
             "numeric": [42],
             "string": ["test"],
@@ -223,7 +234,8 @@ def test_gt_plt_summary_single_row():
 
 
 def test_gt_plt_summary_all_missing_column():
-    df = pd.DataFrame(
+    # Pandas version
+    df_pd = pd.DataFrame(
         {
             "all_none": [None, None, None],
             "all_nan": [np.nan, np.nan, np.nan],
@@ -231,15 +243,30 @@ def test_gt_plt_summary_all_missing_column():
         }
     )
 
-    result = gt_plt_summary(df)
+    result = gt_plt_summary(df_pd)
     html = result.as_raw_html()
 
     assert "3 rows x 3 cols" in html
     assert html.count("100.0%") == 3
 
+    # Polars version
+    df_pl = pl.DataFrame(
+        {
+            "all_none": [None, None, None],
+            "mixed": [None, None, None],
+        }
+    )
 
-def test_gt_plt_summary_single_value_numeric():
-    df = pd.DataFrame({"numeric": [5, 5, 5, 5, 5]})
+    result = gt_plt_summary(df_pl)
+    html = result.as_raw_html()
+
+    assert "3 rows x 2 cols" in html
+    assert html.count("100.0%") == 2
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_single_value_numeric(DataFrame):
+    df = DataFrame({"numeric": [5, 5, 5, 5, 5]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -252,8 +279,9 @@ def test_gt_plt_summary_single_value_numeric():
     assert html.count(">5 rows</text>") == 1
 
 
-def test_gt_plt_summary_boolean_all_true():
-    df = pd.DataFrame({"boolean": [True, True, True]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_boolean_all_true(DataFrame):
+    df = DataFrame({"boolean": [True, True, True]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -263,8 +291,9 @@ def test_gt_plt_summary_boolean_all_true():
     assert ">0.0%</td>" in html
 
 
-def test_gt_plt_summary_boolean_all_false():
-    df = pd.DataFrame({"boolean": [False, False, False]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_boolean_all_false(DataFrame):
+    df = DataFrame({"boolean": [False, False, False]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -300,8 +329,9 @@ def test_gt_plt_summary_datetime_single_date():
     assert html.count(">1 row</text>") == 1
 
 
-def test_gt_plt_summary_datetime_two_dates():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_datetime_two_dates(DataFrame):
+    df = DataFrame(
         {
             "datetime": [
                 datetime(2024, 1, 1, tzinfo=timezone.utc),
@@ -319,8 +349,9 @@ def test_gt_plt_summary_datetime_two_dates():
     assert "[2024-01-01 to 2024-01-02]" in html
 
 
-def test_gt_plt_summary_datetime_repeated_date():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_datetime_repeated_date(DataFrame):
+    df = DataFrame(
         {
             "datetime": [
                 datetime(2024, 1, 1, tzinfo=timezone.utc),
@@ -341,8 +372,9 @@ def test_gt_plt_summary_datetime_repeated_date():
     assert html.count(">3 rows</text>") == 1
 
 
-def test_gt_plt_summary_numeric_two_values():
-    df = pd.DataFrame({"numeric": [1, 2]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_numeric_two_values(DataFrame):
+    df = DataFrame({"numeric": [1, 2]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -354,7 +386,6 @@ def test_gt_plt_summary_numeric_two_values():
 
 
 def test_gt_plt_summary_unknown_dtype():
-    # Create a DataFrame with an object column that's not string
     df = pd.DataFrame({"other": [object(), object(), object()]})
 
     result = gt_plt_summary(df)
@@ -364,8 +395,9 @@ def test_gt_plt_summary_unknown_dtype():
     assert "other" in html
 
 
-def test_gt_plt_summary_negative_numbers():
-    df = pd.DataFrame({"negative": [-5, -3, -1, 1, 3]})
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_negative_numbers(DataFrame):
+    df = DataFrame({"negative": [-5, -3, -1, 1, 3]})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -377,9 +409,10 @@ def test_gt_plt_summary_negative_numbers():
     assert "[-1 to 3]" in html
 
 
-def test_gt_plt_summary_categorical_many_categories():
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_categorical_many_categories(DataFrame):
     categories = [f"Cat_{i}" for i in range(20)]
-    df = pd.DataFrame({"many_cats": categories})
+    df = DataFrame({"many_cats": categories})
 
     result = gt_plt_summary(df)
     html = result.as_raw_html()
@@ -391,8 +424,9 @@ def test_gt_plt_summary_categorical_many_categories():
         assert f'>"Cat_{i}"</text>' in html
 
 
-def test_gt_plt_summary_column_order_preserved():
-    df = pd.DataFrame(
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_column_order_preserved(DataFrame):
+    df = DataFrame(
         {
             "z_column": [1, 2, 3],
             "a_column": ["A", "B", "C"],
