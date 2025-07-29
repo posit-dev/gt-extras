@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 import narwhals.stable.v1 as nw
 from faicons import icon_svg
 from great_tables import GT, loc, style
-from great_tables._helpers import random_id
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
 from svg import SVG, Element, G, Line, Rect, Style, Text
 
@@ -162,9 +161,13 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
         col_type = nw_summary_df.item(row=i, column="Type")
         gt = gt.fmt(
-            lambda _, vals=vals, col_type=col_type: _make_summary_plot(
+            lambda _,
+            vals=vals,
+            col_type=col_type,
+            plot_id="id" + str(i): _make_summary_plot(
                 nw_series=vals,
                 col_type=col_type,
+                plot_id=plot_id,
             ),
             columns="Plot Overview",
             rows=i,
@@ -260,6 +263,7 @@ def _make_icon_html(dtype: str) -> str:
 def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
+    plot_id: str,
 ) -> str:
     if len(nw_series) == 0:
         return "<div></div>"
@@ -267,18 +271,18 @@ def _make_summary_plot(
     clean_list = nw_series.to_native().to_list()
 
     if col_type == "string":
-        return _plot_categorical(clean_list)
+        return _plot_categorical(clean_list, plot_id=plot_id)
     elif col_type == "numeric":
-        return _plot_numeric(clean_list)
+        return _plot_numeric(clean_list, plot_id=plot_id)
     elif col_type == "datetime":
-        return _plot_datetime(clean_list)
+        return _plot_datetime(clean_list, plot_id=plot_id)
     elif col_type == "boolean":
-        return _plot_boolean(clean_list)
+        return _plot_boolean(clean_list, plot_id=plot_id)
     else:
         return "<div></div>"
 
 
-def _plot_categorical(data: list[str]) -> str:
+def _plot_categorical(data: list[str], plot_id: str) -> str:
     category_counts = {}
     for item in data:
         if item in category_counts:
@@ -300,6 +304,7 @@ def _plot_categorical(data: list[str]) -> str:
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["string"],
+        plot_id=plot_id,
         proportions=proportions,
         categories=[
             category for category, _ in sorted_categories
@@ -310,10 +315,48 @@ def _plot_categorical(data: list[str]) -> str:
     return svg.as_str()
 
 
+def _plot_boolean(data: list[bool], plot_id: str) -> str:
+    true_count = sum(data)
+    false_count = len(data) - true_count
+    total_count = len(data)
+
+    boolean_data = []
+    if true_count > 0:
+        boolean_data.append(("True", true_count))
+    if false_count > 0:
+        boolean_data.append(("False", false_count))
+
+    counts = [count for _, count in boolean_data]
+    proportions = [count / total_count for count in counts]
+    categories = [label for label, _ in boolean_data]
+
+    # Set opacities: False is always lighter (0.2)
+    if true_count == 0 and false_count > 0:
+        opacities = [0.2]  # Only False present
+    elif true_count > 0 and false_count > 0:
+        opacities = [1.0, 0.2]
+    else:
+        opacities = [1.0]  # Only True present
+
+    svg = _make_categories_bar_svg(
+        width_px=DEFAULT_WIDTH_PX,
+        height_px=DEFAULT_HEIGHT_PX,
+        fill=COLOR_MAPPING["boolean"],
+        plot_id=plot_id,
+        proportions=proportions,
+        categories=categories,
+        counts=counts,
+        opacities=opacities,
+    )
+
+    return svg.as_str()
+
+
 def _make_categories_bar_svg(
     width_px: float,
     height_px: float,
     fill: str,
+    plot_id: str,
     proportions: list[float],
     categories: list[str],
     counts: list[int],
@@ -330,8 +373,6 @@ def _make_categories_bar_svg(
 
     max_opacity = 1.0
     min_opacity = 0.2
-
-    plot_id = random_id(10)
 
     hover_css = _generate_hover_css(
         num_elements=len(proportions),
@@ -430,7 +471,7 @@ def _make_categories_bar_svg(
     return SVG(height=height_px, width=width_px, elements=elements)
 
 
-def _plot_numeric(data: list[float] | list[int]) -> str:
+def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
 
@@ -475,6 +516,7 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["numeric"],
+        plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
@@ -487,6 +529,7 @@ def _plot_numeric(data: list[float] | list[int]) -> str:
 
 def _plot_datetime(
     dates: list[datetime],
+    plot_id: str,
 ) -> str:
     date_timestamps = [x.timestamp() for x in dates]
     data_min, data_max = min(date_timestamps), max(date_timestamps)
@@ -535,6 +578,7 @@ def _plot_datetime(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
         fill=COLOR_MAPPING["datetime"],
+        plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max).date()),
         data_min=str(datetime.fromtimestamp(data_min).date()),
@@ -549,6 +593,7 @@ def _make_histogram_svg(
     width_px: float,
     height_px: float,
     fill: str,
+    plot_id: str,
     normalized_mean: float,
     data_min: str,
     data_max: str,
@@ -577,7 +622,6 @@ def _make_histogram_svg(
     bar_highlight_style = (
         f"stroke: white; stroke-width: {line_stroke_width}; fill-opacity: 0.6;"
     )
-    plot_id = random_id(10)
 
     hover_css = _generate_hover_css(
         num_elements=len(counts),
@@ -800,39 +844,3 @@ def _calculate_text_position(
         return svg_width - text_width / 2 - margin
     else:
         return center_x
-
-
-def _plot_boolean(data: list[bool]) -> str:
-    true_count = sum(data)
-    false_count = len(data) - true_count
-    total_count = len(data)
-
-    boolean_data = []
-    if true_count > 0:
-        boolean_data.append(("True", true_count))
-    if false_count > 0:
-        boolean_data.append(("False", false_count))
-
-    counts = [count for _, count in boolean_data]
-    proportions = [count / total_count for count in counts]
-    categories = [label for label, _ in boolean_data]
-
-    # Set opacities: False is always lighter (0.2)
-    if true_count == 0 and false_count > 0:
-        opacities = [0.2]  # Only False present
-    elif true_count > 0 and false_count > 0:
-        opacities = [1.0, 0.2]
-    else:
-        opacities = [1.0]  # Only True present
-
-    svg = _make_categories_bar_svg(
-        width_px=DEFAULT_WIDTH_PX,
-        height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["boolean"],
-        proportions=proportions,
-        categories=categories,
-        counts=counts,
-        opacities=opacities,
-    )
-
-    return svg.as_str()
