@@ -7,24 +7,26 @@ import pytest
 from great_tables import GT
 
 from gt_extras.summary import gt_plt_summary
+from gt_extras.tests.conftest import assert_rendered_body
 
-# def test_gt_plt_summary_snap(snapshot):
-#     df = pd.DataFrame(
-#         {
-#             "numeric": [1.5, 2.2, 3.3, None, 5.1],
-#             "string": ["A", "B", "A", "C", None],
-#             "boolean": [True, False, True, None, False],
-#             "datetime": [
-#                 datetime(2024, 1, 1),
-#                 datetime(2024, 1, 2),
-#                 datetime(2024, 1, 3),
-#                 None,
-#                 datetime(2024, 1, 5),
-#             ],
-#         }
-#     )
-#     res = gt_plt_summary(df)
-#     assert_rendered_body(snapshot, gt=res)
+
+def test_gt_plt_summary_snap(snapshot):
+    df = pd.DataFrame(
+        {
+            "numeric": [1.5, 2.2, 3.3, None, 5.1],
+            "string": ["A", "B", "A", "C", None],
+            "boolean": [True, False, True, None, False],
+            "datetime": [
+                datetime(2024, 1, 1),
+                datetime(2024, 1, 2),
+                datetime(2024, 1, 3),
+                None,
+                datetime(2024, 1, 5),
+            ],
+        }
+    )
+    res = gt_plt_summary(df)
+    assert_rendered_body(snapshot, gt=res)
 
 
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])

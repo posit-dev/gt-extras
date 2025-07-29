@@ -1,0 +1,86 @@
+# serializer version: 1
+# name: test_gt_plt_summary_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left"><svg viewBox="0 0 576 512" preserveAspectRatio="none" aria-label="signal" role="img" class="fa" style="fill:#f18e2c;height:17.78px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>signal</title>
+    <path d="M544 0c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V32c0-17.7 14.3-32 32-32zM416 96c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V128c0-17.7 14.3-32 32-32zM320 224V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32s32 14.3 32 32zM160 288c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32zM64 416v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V416c0-17.7 14.3-32 32-32s32 14.3 32 32z"></path></svg></td>
+      <td style="font-weight: bold;" class="gt_row gt_left">numeric</td>
+      <td class="gt_row gt_center"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="40"><rect stroke="transparent" class="id0-hover-area" id="id0-hover-area-1" x="94.275" y="0" width="76.95" height="-0.5333333333333333" fill="transparent"/><rect class="id0-bar-rect" id="id0-bar-1" x="94.275" y="-0.5333333333333333" width="76.95" height="32.0" fill="#f18e2c"/><rect stroke="transparent" class="id0-hover-area" id="id0-hover-area-0" x="8.775" y="0" width="76.95" height="-0.5333333333333333" fill="transparent"/><rect class="id0-bar-rect" id="id0-bar-0" x="8.775" y="-0.5333333333333333" width="76.95" height="32.0" fill="#f18e2c"/><style>
+      .id0-tooltip {
+          opacity: 0;
+          transition: opacity 0.2s;
+          pointer-events: none;
+      }
+      .id0-bar-rect:hover, .id0-visual-bar:hover {
+          stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6;
+      }
+      #id0-bar-0:hover ~ #id0-tooltip-0 { opacity: 1; }
+  #id0-hover-area-0:hover ~ #id0-tooltip-0 { opacity: 1; }
+  #id0-hover-area-0:hover ~ #id0-bar-0 { stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6; }
+  #id0-bar-1:hover ~ #id0-tooltip-1 { opacity: 1; }
+  #id0-hover-area-1:hover ~ #id0-tooltip-1 { opacity: 1; }
+  #id0-hover-area-1:hover ~ #id0-bar-1 { stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6; }</style><line stroke="black" stroke-width="1.0666666666666667" x1="0" y1="32.0" x2="180" y2="32.0"/><line stroke="black" stroke-width="1.0666666666666667" x1="76.9375" y1="31.466666666666665" x2="76.9375" y2="-0.5333333333333333"/><text dominant-baseline="text-top" text-anchor="middle" font-size="8.0" x="47.25" y="40">1.5</text><text dominant-baseline="text-top" text-anchor="middle" font-size="8.0" x="132.75" y="40">5.1</text><g id="id0-tooltip-0" class="id0-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="47.25" y="2.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="47.25" y="12.0">[1.5 to 3.3]</text></g><g id="id0-tooltip-1" class="id0-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="132.75" y="2.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="132.75" y="12.0">[3.3 to 5.1]</text></g></svg></td>
+      <td class="gt_row gt_right">20.0%</td>
+      <td class="gt_row gt_right">3.02</td>
+      <td class="gt_row gt_right">2.75</td>
+      <td class="gt_row gt_right">1.57</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped"><svg viewBox="0 0 512 512" preserveAspectRatio="none" aria-label="List" role="img" class="fa" style="fill:#4e79a7;height:20.0px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>List</title>
+    <path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path></svg></td>
+      <td style="font-weight: bold;" class="gt_row gt_left gt_striped">string</td>
+      <td class="gt_row gt_center gt_striped"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="40"><style>
+      .id1-category-tooltip {
+          opacity: 0;
+          transition: opacity 0.2s;
+          pointer-events: none;
+      }
+      .id1-bar-rect:hover, .id1-visual-bar:hover {
+          opacity: 0.4;
+      }
+      #id1-bar-0:hover ~ #id1-tooltip-0 { opacity: 1; }
+  #id1-bar-1:hover ~ #id1-tooltip-1 { opacity: 1; }
+  #id1-bar-2:hover ~ #id1-tooltip-2 { opacity: 1; }</style><rect stroke="transparent" class="id1-visual-bar" id="id1-bar-2" x="132.75" y="4.0" width="42.75" height="32.0" fill-opacity="0.19999999999999996" fill="#4e79a7"/><rect stroke="transparent" class="id1-visual-bar" id="id1-bar-1" x="90.0" y="4.0" width="42.75" height="32.0" fill-opacity="0.6" fill="#4e79a7"/><rect stroke="transparent" class="id1-visual-bar" id="id1-bar-0" x="4.5" y="4.0" width="85.5" height="32.0" fill-opacity="1.0" fill="#4e79a7"/><g id="id1-tooltip-0" class="id1-category-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="47.25" y="10.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="47.25" y="20.0">"A"</text></g><g id="id1-tooltip-1" class="id1-category-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="111.375" y="10.0">1 row</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="111.375" y="20.0">"B"</text></g><g id="id1-tooltip-2" class="id1-category-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="154.125" y="10.0">1 row</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="154.125" y="20.0">"C"</text></g></svg></td>
+      <td class="gt_row gt_right gt_striped">20.0%</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"><svg viewBox="0 0 320 512" preserveAspectRatio="none" aria-label="Question" role="img" class="fa" style="fill:black;height:32.0px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Question</title>
+    <path d="M96 96c-17.7 0-32 14.3-32 32s-14.3 32-32 32s-32-14.3-32-32C0 75 43 32 96 32h97c70.1 0 127 56.9 127 127c0 52.4-32.2 99.4-81 118.4l-63 24.5 0 18.1c0 17.7-14.3 32-32 32s-32-14.3-32-32V301.9c0-26.4 16.2-50.1 40.8-59.6l63-24.5C240 208.3 256 185 256 159c0-34.8-28.2-63-63-63H96zm48 384c-22.1 0-40-17.9-40-40s17.9-40 40-40s40 17.9 40 40s-17.9 40-40 40z"></path></svg></td>
+      <td style="font-weight: bold;" class="gt_row gt_left">boolean</td>
+      <td class="gt_row gt_center"><div></div></td>
+      <td class="gt_row gt_right">20.0%</td>
+      <td class="gt_row gt_right">&mdash;</td>
+      <td class="gt_row gt_right">&mdash;</td>
+      <td class="gt_row gt_right">&mdash;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped"><svg viewBox="0 0 512 512" preserveAspectRatio="none" aria-label="Clock" role="img" class="fa" style="fill:#73a657;height:20.0px;width:20px;margin-left:auto;margin-right:0.2em;position:relative;vertical-align:-0.125em;overflow:visible;">  <title>Clock</title>
+    <path d="M256 512C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256s-114.6 256-256 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"></path></svg></td>
+      <td style="font-weight: bold;" class="gt_row gt_left gt_striped">datetime</td>
+      <td class="gt_row gt_center gt_striped"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="40"><rect stroke="transparent" class="id3-hover-area" id="id3-hover-area-1" x="94.275" y="0" width="76.95" height="-0.5333333333333333" fill="transparent"/><rect class="id3-bar-rect" id="id3-bar-1" x="94.275" y="-0.5333333333333333" width="76.95" height="32.0" fill="#73a657"/><rect stroke="transparent" class="id3-hover-area" id="id3-hover-area-0" x="8.775" y="0" width="76.95" height="-0.5333333333333333" fill="transparent"/><rect class="id3-bar-rect" id="id3-bar-0" x="8.775" y="-0.5333333333333333" width="76.95" height="32.0" fill="#73a657"/><style>
+      .id3-tooltip {
+          opacity: 0;
+          transition: opacity 0.2s;
+          pointer-events: none;
+      }
+      .id3-bar-rect:hover, .id3-visual-bar:hover {
+          stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6;
+      }
+      #id3-bar-0:hover ~ #id3-tooltip-0 { opacity: 1; }
+  #id3-hover-area-0:hover ~ #id3-tooltip-0 { opacity: 1; }
+  #id3-hover-area-0:hover ~ #id3-bar-0 { stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6; }
+  #id3-bar-1:hover ~ #id3-tooltip-1 { opacity: 1; }
+  #id3-hover-area-1:hover ~ #id3-tooltip-1 { opacity: 1; }
+  #id3-hover-area-1:hover ~ #id3-bar-1 { stroke: white; stroke-width: 1.0666666666666667; fill-opacity: 0.6; }</style><line stroke="black" stroke-width="1.0666666666666667" x1="0" y1="32.0" x2="180" y2="32.0"/><line stroke="black" stroke-width="1.0666666666666667" x1="79.3125" y1="31.466666666666665" x2="79.3125" y2="-0.5333333333333333"/><text dominant-baseline="text-top" text-anchor="middle" font-size="8.0" x="47.25" y="40">2023-12-31</text><text dominant-baseline="text-top" text-anchor="middle" font-size="8.0" x="132.75" y="40">2024-01-04</text><g id="id3-tooltip-0" class="id3-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="52.0" y="2.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="52.0" y="12.0">[2023-12-31 to 2024-01-02]</text></g><g id="id3-tooltip-1" class="id3-tooltip"><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="128.0" y="2.0">2 rows</text><text dominant-baseline="hanging" text-anchor="middle" font-size="8.0" font-weight="bold" fill="black" x="128.0" y="12.0">[2024-01-02 to 2024-01-04]</text></g></svg></td>
+      <td class="gt_row gt_right gt_striped">20.0%</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+      <td class="gt_row gt_right gt_striped">&mdash;</td>
+    </tr>
+  </tbody>
+  '''
+# ---
