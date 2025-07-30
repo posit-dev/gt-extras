@@ -983,7 +983,7 @@ def gt_plt_dumbbell(
 
     width
         The width of the dumbbell plot in pixels. Note that if the width is too narrow,
-        some label text may overlap.
+        some plot label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
@@ -1057,7 +1057,7 @@ def gt_plt_dumbbell(
     The `col2` column is automatically hidden from the final table display.
     """
 
-    def _make_dumbbell_html(
+    def _make_dumbbell_svg(
         value_1: float,
         value_2: float,
         width: float,
@@ -1072,7 +1072,7 @@ def gt_plt_dumbbell(
         num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
@@ -1084,61 +1084,82 @@ def gt_plt_dumbbell(
         bar_left = min(pos_1, pos_2)
         bar_width = abs(pos_2 - pos_1)
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
         # Compute the locations of the two dots
-        dot_size = height / 5
-        dot_border = height / 20
-        dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
-        dot_1_left = pos_1 - dot_size / 2 - dot_border
-        dot_2_left = pos_2 - dot_size / 2 - dot_border
+        dot_radius = bar_height * 1.25
+        dot_border = bar_height / 2
+        dot_y = bar_y + bar_height / 2
 
-        label_bottom = height - dot_top
+        # Text positioning - labels above dots
+        label_y = dot_y - dot_radius - dot_border * 1.2  # 1.2 for padding
 
-        label_style = (
-            "position:absolute; left:{pos}px; "
-            f"bottom:{label_bottom}px; "
-            "transform:translateX(-50%); color:{color}; "
-            f"font-size:{font_size}px; font-weight:bold;"  # Do we want bold?
-        )
-
-        value_1_label = (
-            f'<div style="{label_style.format(pos=pos_1, color=value_1_color)}">'
+        # Format the label text
+        value_1_text = (
             f"{value_1:.{num_decimals}f}"
-            "</div>"
+            if num_decimals == 0
+            else f"{value_1:.{num_decimals}f}".rstrip("0").rstrip(".")
         )
-
-        value_2_label = (
-            f'<div style="{label_style.format(pos=pos_2, color=value_2_color)}">'
+        value_2_text = (
             f"{value_2:.{num_decimals}f}"
-            "</div>"
+            if num_decimals == 0
+            else f"{value_2:.{num_decimals}f}".rstrip("0").rstrip(".")
         )
 
-        dot_style = (
-            "position:absolute; left:{pos}px; "
-            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px; "
-            "background:{color}; border-radius:50%; "
-            f"border:{dot_border}px solid {dot_border_color}; box-sizing: content-box;"
-        )
+        elements = [
+            # Connecting bar
+            Rect(
+                x=bar_left,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=bar_color,
+                rx=2,
+            ),
+            # Value 1 dot
+            Circle(
+                cx=pos_1,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_1_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 2 dot
+            Circle(
+                cx=pos_2,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_2_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 1 label
+            Text(
+                text=value_1_text,
+                x=pos_1,
+                y=label_y,
+                fill=value_1_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+            # Value 2 label
+            Text(
+                text=value_2_text,
+                x=pos_2,
+                y=label_y,
+                fill=value_2_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+        ]
 
-        value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
-        value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
-
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px; box-sizing:content-box;">
-            {value_1_label}
-            {value_2_label}
-            <div style="
-                position:absolute; left:{bar_left}px;
-                top:{bar_top}px; width:{bar_width}px;
-                height:{bar_height}px; background:{bar_color};
-                border-radius:2px;
-            "></div>
-            {value_1_dot}
-            {value_2_dot}
-        </div>
-        """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     col1_name, col1_vals = _validate_and_get_single_column(
         gt,
@@ -1170,7 +1191,7 @@ def gt_plt_dumbbell(
         col2_value = col2_vals[i]
 
         res = res.fmt(
-            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_html(
+            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_svg(
                 value_1=value_1,
                 value_2=value_2,
                 width=width,
