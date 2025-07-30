@@ -10,6 +10,7 @@ from great_tables import GT, loc, style
 from narwhals.stable.v1.typing import IntoDataFrame, IntoDataFrameT
 from svg import SVG, Element, G, Line, Rect, Style, Text
 
+from gt_extras._utils_column import _format_numeric_text
 from gt_extras.themes import gt_theme_espn
 
 __all__ = ["gt_plt_summary"]
@@ -498,7 +499,7 @@ def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
 
     n_bins = max(1, int(math.ceil(data_range / bw)))
     bin_edges = [data_min + i * data_range / n_bins for i in range(n_bins + 1)]
-    bin_edges = [f"{edge:.2f}".rstrip("0").rstrip(".") for edge in bin_edges]
+    bin_edges = [_format_numeric_text(edge, 2) for edge in bin_edges]
 
     counts = [0.0] * n_bins
     for x in data:

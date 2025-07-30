@@ -16,6 +16,7 @@ from svg import SVG, Circle, Length, Line, Rect, Text
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
 from gt_extras._utils_column import (
+    _format_numeric_text,
     _scale_numeric_column,
     _validate_and_get_single_column,
 )
@@ -807,8 +808,8 @@ def gt_plt_conf_int(
         dot_border = height / 20
 
         # Format the label text
-        c1_text = f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
-        c2_text = f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
+        c1_text = _format_numeric_text(c1, num_decimals)
+        c2_text = _format_numeric_text(c2, num_decimals)
 
         elements = [
             # Confidence interval bar
@@ -1095,16 +1096,8 @@ def gt_plt_dumbbell(
         label_y = dot_y - dot_radius - dot_border * 1.2  # 1.2 for padding
 
         # Format the label text
-        value_1_text = (
-            f"{value_1:.{num_decimals}f}"
-            if num_decimals == 0
-            else f"{value_1:.{num_decimals}f}".rstrip("0").rstrip(".")
-        )
-        value_2_text = (
-            f"{value_2:.{num_decimals}f}"
-            if num_decimals == 0
-            else f"{value_2:.{num_decimals}f}".rstrip("0").rstrip(".")
-        )
+        value_1_text = _format_numeric_text(value_1, num_decimals)
+        value_2_text = _format_numeric_text(value_2, num_decimals)
 
         elements = [
             # Connecting bar

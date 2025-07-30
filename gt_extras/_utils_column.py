@@ -7,7 +7,11 @@ from great_tables._data_color.base import _rescale_numeric
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na, to_list
 
-__all__ = ["_validate_and_get_single_column", "_scale_numeric_column"]
+__all__ = [
+    "_validate_and_get_single_column",
+    "_scale_numeric_column",
+    "_format_numeric_text",
+]
 
 
 def _validate_and_get_single_column(
@@ -136,3 +140,10 @@ def _scale_numeric_column(
             scaled_vals_fixed.append(scaled_val)
 
     return scaled_vals_fixed
+
+
+def _format_numeric_text(value: float, num_decimals: int) -> str:
+    if num_decimals == 0:
+        return f"{value:.0f}"
+    else:
+        return f"{value:.{num_decimals}f}".rstrip("0").rstrip(".")
