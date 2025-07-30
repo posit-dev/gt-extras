@@ -12,7 +12,19 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Circle, Length, Line, Rect, Text
+from svg import (
+    SVG,
+    Arc,
+    Circle,
+    ClosePath,
+    Length,
+    Line,
+    LineTo,
+    MoveTo,
+    Path,
+    Rect,
+    Text,
+)
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -1328,15 +1340,17 @@ def gt_plt_pie(
 
         radius = size / 2
         center_x = center_y = radius
+        # Inner radius for donut shape (30% of outer radius)
+        inner_radius = radius * 0.3
 
         # Calculate the angle in radians (0 to 2π)
-        angle = scaled_val * 2 * 3.14159265359  # 2π
+        angle = scaled_val * 2 * math.pi
 
         elements = []
 
         if scaled_val >= 1.0:
-            # Full circle
-            circle = Circle(
+            # Full donut ring using two circles
+            outer_circle = Circle(
                 cx=center_x,
                 cy=center_y,
                 r=radius - stroke_width / 2,
@@ -1344,7 +1358,15 @@ def gt_plt_pie(
                 stroke=stroke_color,
                 stroke_width=stroke_width,
             )
-            elements.append(circle)
+            inner_circle = Circle(
+                cx=center_x,
+                cy=center_y,
+                r=inner_radius,
+                fill="white",  # This will create the hole
+                stroke="none",
+            )
+            elements.append(outer_circle)
+            elements.append(inner_circle)
 
             # Add label if requested
             if show_labels and not is_na(gt._tbl_data, original_val):
@@ -1363,33 +1385,77 @@ def gt_plt_pie(
             svg = SVG(width=size, height=size, elements=elements)
             return f'<div style="display: flex;">{svg.as_str()}</div>'
         else:
-            # Partial pie chart using path
-            # Start at the top (12 o'clock position)
-            start_x = center_x
-            start_y = stroke_width / 2
+            # Partial donut using path
+            # Outer arc start/end points
+            outer_start_x = center_x
+            outer_start_y = stroke_width / 2
+            outer_end_x = center_x + (radius - stroke_width / 2) * math.sin(angle)
+            outer_end_y = center_y - (radius - stroke_width / 2) * math.cos(angle)
 
-            # Calculate end point
-            end_x = center_x + (radius - stroke_width / 2) * math.sin(angle)
-            end_y = center_y - (radius - stroke_width / 2) * math.cos(angle)
+            # Inner arc start/end points
+            inner_start_x = center_x
+            inner_start_y = center_y - inner_radius
+            inner_end_x = center_x + inner_radius * math.sin(angle)
+            inner_end_y = center_y - inner_radius * math.cos(angle)
 
             # Determine if we need a large arc (> 180 degrees)
-            large_arc = 1 if angle > math.pi else 0
+            large_arc = True if angle > math.pi else False
 
-            # Create the path for the pie slice
-            path_data = f"M {center_x} {center_y} L {start_x} {start_y} A {radius - stroke_width / 2} {radius - stroke_width / 2} 0 {large_arc} 1 {end_x} {end_y} Z"
+            # Create donut path: outer arc -> line to inner end -> inner arc (reverse) -> close
+            path_commands = [
+                MoveTo(outer_start_x, outer_start_y),  # Start at outer edge
+                Arc(
+                    radius - stroke_width / 2,
+                    radius - stroke_width / 2,
+                    0,
+                    large_arc,
+                    True,
+                    outer_end_x,
+                    outer_end_y,
+                ),  # Outer arc
+                LineTo(inner_end_x, inner_end_y),  # Line to inner edge
+                Arc(
+                    inner_radius,
+                    inner_radius,
+                    0,
+                    large_arc,
+                    False,  # Reverse direction for inner arc
+                    inner_start_x,
+                    inner_start_y,
+                ),  # Inner arc (reverse)
+                ClosePath(),  # Close the path
+            ]
 
-            # For partial pies, we need to manually construct the SVG with the path
-            svg_start = f'<svg width="{size}" height="{size}" xmlns="http://www.w3.org/2000/svg">'
-            svg_content = f'<path d="{path_data}" fill="{fill}" stroke="{stroke_color}" stroke-width="{stroke_width}"/>'
+            path = Path(
+                d=path_commands,
+                fill=fill,
+                stroke=stroke_color,
+                stroke_width=stroke_width,
+            )
+            elements.append(path)
 
+            # Add label if requested
             if show_labels and not is_na(gt._tbl_data, original_val):
                 label_text = str(original_val)
-                svg_content += f'<text x="{center_x}" y="{center_y}" fill="{label_color}" font-size="{size * 0.2}" text-anchor="middle" dominant-baseline="central">{label_text}</text>'
+                # Position label in the middle of the donut ring
+                label_radius = (radius + inner_radius) / 2
+                label_angle = angle / 2
+                label_x = center_x + label_radius * math.sin(label_angle)
+                label_y = center_y - label_radius * math.cos(label_angle)
 
-            svg_end = "</svg>"
-            return (
-                f'<div style="display: flex;">{svg_start}{svg_content}{svg_end}</div>'
-            )
+                text = Text(
+                    text=label_text,
+                    x=label_x,
+                    y=label_y,
+                    fill=label_color,
+                    font_size=size * 0.15,
+                    text_anchor="middle",
+                    dominant_baseline="central",
+                )
+                elements.append(text)
+
+            svg = SVG(width=size, height=size, elements=elements)
+            return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
