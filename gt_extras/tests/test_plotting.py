@@ -23,7 +23,8 @@ def test_gt_plt_bar_snap(snapshot, mini_gt):
 
 
 def test_gt_plt_bar(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"]).as_raw_html()
+    result = gt_plt_bar(gt=mini_gt, columns=["num"])
+    html = result.as_raw_html()
     assert html.count("<svg") == 3
 
 
@@ -32,9 +33,8 @@ def test_gt_plt_bar_bar_height_too_high(mini_gt):
         UserWarning,
         match="Bar_height must be less than or equal to the plot height. Adjusting bar_height to 567.",
     ):
-        html = gt_plt_bar(
-            gt=mini_gt, columns=["num"], bar_height=1234, height=567
-        ).as_raw_html()
+        result = gt_plt_bar(gt=mini_gt, columns=["num"], bar_height=1234, height=567)
+        html = result.as_raw_html()
 
     assert html.count('height="567"') == 3
     assert 'height="1234"' not in html
@@ -45,16 +45,16 @@ def test_gt_plt_bar_bar_height_too_low(mini_gt):
         UserWarning,
         match="Bar_height cannot be negative. Adjusting bar_height to 0.",
     ):
-        html = gt_plt_bar(
-            gt=mini_gt, columns=["num"], bar_height=-345, height=1234
-        ).as_raw_html()
+        result = gt_plt_bar(gt=mini_gt, columns=["num"], bar_height=-345, height=1234)
+        html = result.as_raw_html()
 
     assert html.count('height="1234"') == 3
     assert 'height="-345"' not in html
 
 
 def test_gt_plt_bar_show_labels_true(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=True).as_raw_html()
+    result = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=True)
+    html = result.as_raw_html()
     assert ">33.33</text>" in html
 
 
@@ -73,18 +73,20 @@ def test_gt_plt_bar_keep_columns(mini_gt):
 
 
 def test_gt_plt_bar_show_labels_false(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=False).as_raw_html()
+    result = gt_plt_bar(gt=mini_gt, columns=["num"], show_labels=False)
+    html = result.as_raw_html()
     assert "</text>" not in html
 
 
 def test_gt_plt_bar_no_stroke_color(mini_gt):
-    html = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None).as_raw_html()
+    result = gt_plt_bar(gt=mini_gt, columns=["num"], stroke_color=None)
+    html = result.as_raw_html()
     assert html.count('line stroke="transparent"') == 3
 
 
 def test_gt_plt_bar_type_error(mini_gt):
     with pytest.raises(TypeError, match="Invalid column type provided"):
-        gt_plt_bar(gt=mini_gt, columns=["char"]).as_raw_html()
+        gt_plt_bar(gt=mini_gt, columns=["char"])
 
 
 def test_gt_plt_dot_snap(snapshot, mini_gt):
@@ -94,7 +96,8 @@ def test_gt_plt_dot_snap(snapshot, mini_gt):
 
 
 def test_gt_plt_dot_basic(mini_gt):
-    html = gt_plt_dot(gt=mini_gt, category_col="char", data_col="num").as_raw_html()
+    result = gt_plt_dot(gt=mini_gt, category_col="char", data_col="num")
+    html = result.as_raw_html()
 
     assert html.count("<svg") == 3
     assert html.count('<circle cx="5.818181818181818" cy="15.0"') == 3
@@ -104,12 +107,13 @@ def test_gt_plt_dot_basic(mini_gt):
 
 
 def test_gt_plt_dot_with_palette(mini_gt):
-    html = gt_plt_dot(
+    result = gt_plt_dot(
         gt=mini_gt,
         category_col="char",
         data_col="num",
         palette=["#FF0000", "#00FF00", "#0000FF"],
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert "#ff0000" in html
     assert "#00ff00" in html
@@ -117,9 +121,10 @@ def test_gt_plt_dot_with_palette(mini_gt):
 
 
 def test_gt_plt_dot_with_domain_expanded(mini_gt):
-    html = gt_plt_dot(
+    result = gt_plt_dot(
         gt=mini_gt, category_col="char", data_col="num", domain=[0, 100]
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert '<rect x="0" y="24.6" width="39.995999999999995"' in html
     assert '<rect x="0" y="24.6" width="2.6664"' in html
@@ -131,9 +136,10 @@ def test_gt_plt_dot_with_domain_restricted(mini_gt):
         UserWarning,
         match="Value 33.33 in column 'num' is greater than the domain maximum 10. Setting to 10.",
     ):
-        html = gt_plt_dot(
+        result = gt_plt_dot(
             gt=mini_gt, category_col="char", data_col="num", domain=[0, 10]
-        ).as_raw_html()
+        )
+        html = result.as_raw_html()
 
     assert '<rect x="0" y="24.6" width="1.3332"' in html
     assert '<rect x="0" y="24.6" width="26.664"' in html
@@ -207,9 +213,10 @@ def test_gt_plt_dot_with_na_in_category():
 
 
 def test_gt_plt_dot_palette_string_valid(mini_gt):
-    html = gt_plt_dot(
+    result = gt_plt_dot(
         gt=mini_gt, category_col="char", data_col="num", palette="viridis"
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert 'fill="#440154"' in html
     assert 'fill="#22908c"' in html
@@ -497,9 +504,8 @@ def test_gt_plt_dumbbell_decimals():
     )
     gt_test = GT(df)
 
-    html = gt_plt_dumbbell(
-        gt=gt_test, col1="value_1", col2="value_2", num_decimals=2
-    ).as_raw_html()
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2", num_decimals=2)
+    html = result.as_raw_html()
 
     assert "10.12" in html
     assert "15.79" in html
@@ -520,7 +526,8 @@ def test_gt_plt_dumbbell_with_label():
 def test_gt_plt_dumbbell_hides_col2():
     df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
 
     assert "value_2" not in html
     assert "value_1" in html
@@ -974,49 +981,48 @@ def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
 
 
 def test_gt_plt_bar_pct(mini_gt):
-    html = gt_plt_bar_pct(gt=mini_gt, column="num").as_raw_html()
+    result = gt_plt_bar_pct(gt=mini_gt, column="num")
+    html = result.as_raw_html()
     assert html.count("<svg") == 3
 
 
 def test_gt_plt_bar_pct_autoscale_on(mini_gt):
-    html = gt_plt_bar_pct(
-        mini_gt, column="num", autoscale=True, labels=True
-    ).as_raw_html()
+    result = gt_plt_bar_pct(mini_gt, column="num", autoscale=True, labels=True)
+    html = result.as_raw_html()
     assert ">100%</text>" in html
 
 
 def test_gt_plt_bar_pct_autoscale_off(mini_gt):
-    html = gt_plt_bar_pct(
-        mini_gt, column="num", autoscale=False, labels=True
-    ).as_raw_html()
+    result = gt_plt_bar_pct(mini_gt, column="num", autoscale=False, labels=True)
+    html = result.as_raw_html()
     assert ">33.3%</text>" in html
 
 
 def test_gt_plt_bar_pct_without_labels(mini_gt):
-    html = gt_plt_bar_pct(mini_gt, column="num", labels=False).as_raw_html()
+    result = gt_plt_bar_pct(mini_gt, column="num", labels=False)
+    html = result.as_raw_html()
     assert "</text>" not in html
 
 
 def test_gt_plt_bar_pct_column_decimal(mini_gt):
-    html = gt_plt_bar_pct(
+    result = gt_plt_bar_pct(
         mini_gt, column="num", autoscale=False, labels=True, decimals=2
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
     assert ">33.33%</text>" in html
 
 
 def test_gt_plt_bar_pct_label_placement():
     df = pd.DataFrame({"x": [10, 20, 30, 40]})
     gt = GT(df)
-    html_autoscale_on = gt_plt_bar_pct(
-        gt, "x", autoscale=True, labels=True
-    ).as_raw_html()
+    result_autoscale_on = gt_plt_bar_pct(gt, "x", autoscale=True, labels=True)
+    html_autoscale_on = result_autoscale_on.as_raw_html()
 
     assert html_autoscale_on.count('x="5.0px" y="8.0px"') == 3
     assert 'x="30.0px" y="8.0px"' in html_autoscale_on
 
-    html_autoscale_off = gt_plt_bar_pct(
-        gt, "x", autoscale=False, labels=True
-    ).as_raw_html()
+    result_autoscale_off = gt_plt_bar_pct(gt, "x", autoscale=False, labels=True)
+    html_autoscale_off = result_autoscale_off.as_raw_html()
 
     assert 'x="5.0px" y="8.0px"' in html_autoscale_off
     assert 'x="15.0px" y="8.0px"' in html_autoscale_off
@@ -1026,18 +1032,18 @@ def test_gt_plt_bar_pct_label_placement():
 
 def test_gt_plt_bar_pct_column_containing_effective_int():
     df = pd.DataFrame({"num": [1, 2.0]})
-    html = gt_plt_bar_pct(
-        GT(df), column="num", autoscale=False, labels=True
-    ).as_raw_html()
+    result = gt_plt_bar_pct(GT(df), column="num", autoscale=False, labels=True)
+    html = result.as_raw_html()
     assert ">1%</text>" in html
     assert ">2%</text>" in html
 
 
 @pytest.mark.parametrize("height, width", [(16, 100), (17, 101)])
 def test_gt_plt_bar_pct_height_width(mini_gt, height, width):
-    html = gt_plt_bar_pct(
+    result = gt_plt_bar_pct(
         mini_gt, column="num", height=height, width=width, labels=True
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
     assert f'height="{height}px">' in html
     assert f'width="{width}px"' in html
 
@@ -1046,20 +1052,22 @@ def test_gt_plt_bar_pct_height_width(mini_gt, height, width):
     "font_style, font_size", [("bold", 10), ("italic", 11), ("normal", 12)]
 )
 def test_gt_plt_bar_pct_fnot_style_size(mini_gt, font_style, font_size):
-    html = gt_plt_bar_pct(
+    result = gt_plt_bar_pct(
         mini_gt,
         column="num",
         labels=True,
         font_style=font_style,
         font_size=font_size,
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
     assert f'font-style="{font_style}"' in html
     assert f'font-size="{font_size}px"' in html
 
 
 def test_gt_plt_bar_pct_column_containing_some_none():
     df = pd.DataFrame({"num": [1, None, None]})
-    html = gt_plt_bar_pct(GT(df), column="num").as_raw_html()
+    result = gt_plt_bar_pct(GT(df), column="num")
+    html = result.as_raw_html()
     assert html.count('fill="transparent"/>') == 2
 
 
@@ -1098,9 +1106,8 @@ def test_gt_plt_bullet_basic():
         {"name": ["A", "B", "C"], "actual": [10, 15, 25], "target": [12, 18, 20]}
     )
     gt_test = GT(df)
-    html = gt_plt_bullet(
-        gt=gt_test, data_column="actual", target_column="target"
-    ).as_raw_html()
+    result = gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+    html = result.as_raw_html()
 
     assert html.count("<svg") == 3
     assert "target" not in html
@@ -1115,13 +1122,14 @@ def test_gt_plt_bullet_bar_height_too_high():
         UserWarning,
         match="Bar_height must be less than or equal to the plot height. Adjusting bar_height to 100.",
     ):
-        html = gt_plt_bullet(
+        result = gt_plt_bullet(
             gt=gt_test,
             data_column="actual",
             target_column="target",
             bar_height=1000,
             height=100,
-        ).as_raw_html()
+        )
+        html = result.as_raw_html()
 
     assert html.count('height="100"') == 1
     assert 'height="1000"' not in html
@@ -1135,13 +1143,14 @@ def test_gt_plt_bullet_bar_height_too_low():
         UserWarning,
         match="Bar_height cannot be negative. Adjusting bar_height to 0.",
     ):
-        html = gt_plt_bullet(
+        result = gt_plt_bullet(
             gt=gt_test,
             data_column="actual",
             target_column="target",
             bar_height=-100,
             height=1000,
-        ).as_raw_html()
+        )
+        html = result.as_raw_html()
 
     assert html.count('height="1000"') == 1
     assert 'height="-100"' not in html
@@ -1151,13 +1160,14 @@ def test_gt_plt_bullet_custom_colors():
     df = pd.DataFrame({"actual": [10, 20], "target": [15, 25]})
     gt_test = GT(df)
 
-    html = gt_plt_bullet(
+    result = gt_plt_bullet(
         gt=gt_test,
         data_column="actual",
         target_column="target",
         fill="blue",
         target_color="red",
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert html.count('fill="blue"') == 2
     assert html.count('stroke="red"') == 2
@@ -1167,9 +1177,10 @@ def test_gt_plt_bullet_no_stroke_color():
     df = pd.DataFrame({"actual": [10], "target": [12]})
     gt_test = GT(df)
 
-    html = gt_plt_bullet(
+    result = gt_plt_bullet(
         gt=gt_test, data_column="actual", target_column="target", stroke_color=None
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert 'stroke="transparent"' in html
 
@@ -1192,9 +1203,10 @@ def test_gt_plt_bullet_custom_dimensions():
     df = pd.DataFrame({"actual": [10, 18], "target": [12, 15]})
     gt_test = GT(df)
 
-    html = gt_plt_bullet(
+    result = gt_plt_bullet(
         gt=gt_test, data_column="actual", target_column="target", width=200, height=50
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert html.count('width="200"') == 2
     assert html.count('height="50"') == 2
@@ -1285,9 +1297,8 @@ def test_gt_plt_bullet_scaling():
     )
     gt_test = GT(df)
 
-    html = gt_plt_bullet(
-        gt=gt_test, data_column="actual", target_column="target"
-    ).as_raw_html()
+    result = gt_plt_bullet(gt=gt_test, data_column="actual", target_column="target")
+    html = result.as_raw_html()
 
     assert html.count("<svg") == 3
     assert 'x1="58.5px" y1="0" x2="58.5px" y2="30px"' in html
