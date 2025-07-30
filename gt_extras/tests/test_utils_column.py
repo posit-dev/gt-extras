@@ -1,11 +1,14 @@
-import pytest
-import pandas as pd
-import numpy as np
 import warnings
+
+import numpy as np
+import pandas as pd
+import pytest
 from great_tables import GT
+
 from gt_extras._utils_column import (
-    _validate_and_get_single_column,
+    _format_numeric_text,
     _scale_numeric_column,
+    _validate_and_get_single_column,
 )
 
 
@@ -192,3 +195,35 @@ def test_scaling_default_domain_min_zero_false():
 
     expected = [0.0, 2 / 6, 4 / 6, 6 / 6]
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    "value, num_decimals, expected",
+    [
+        (870.0, 0, "870"),
+        (87.9, 0, "88"),
+        (87.1, 0, "87"),
+        (0.0, 0, "0"),
+        (870.0, 1, "870"),
+        (87.5, 1, "87.5"),
+        (87.0, 1, "87"),
+        (87.10, 1, "87.1"),
+        (0.0, 1, "0"),
+        (0.54, 1, "0.5"),
+        (870.00, 2, "870"),
+        (87.50, 2, "87.5"),
+        (87.00, 2, "87"),
+        (87.12, 2, "87.12"),
+        (87.10, 2, "87.1"),
+        (0.00, 2, "0"),
+        (0.054, 2, "0.05"),
+        (87.123, 3, "87.123"),
+        (87.100, 3, "87.1"),
+        (87.000, 3, "87"),
+        (0.001, 3, "0.001"),
+        (-87.50, 2, "-87.5"),
+        (-87.00, 2, "-87"),
+    ],
+)
+def test_format_numeric_text(value, num_decimals, expected):
+    assert _format_numeric_text(value, num_decimals) == expected

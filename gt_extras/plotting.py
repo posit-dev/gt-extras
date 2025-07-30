@@ -11,11 +11,12 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Length, Line, Rect, Text
+from svg import SVG, Circle, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
 from gt_extras._utils_column import (
+    _format_numeric_text,
     _scale_numeric_column,
     _validate_and_get_single_column,
 )
@@ -448,6 +449,9 @@ def gt_plt_dot(
     gt: GT,
     category_col: SelectExpr,
     data_col: SelectExpr,
+    width: int = 120,
+    height: int = 30,
+    font_size: int = 16,
     domain: list[int] | list[float] | None = None,
     palette: list[str] | str | None = None,
 ) -> GT:
@@ -470,6 +474,16 @@ def gt_plt_dot(
 
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
+
+    width
+        The width of the SVG plot in pixels. You may need to increase this if your category labels
+        are long.
+
+    height
+        The height of the SVG plot in pixels.
+
+    font_size
+        The font size for the category label text.
 
     domain
         The domain of values to use for the color scheme. This can be a list of floats or integers.
@@ -505,59 +519,69 @@ def gt_plt_dot(
 
     Note
     -------
-    If the column is too narrow, the bar may render above the dot rather than below, as intended.
-    For the best way to resolve this issue please refer to
-    [`GT.cols_width()`](https://posit-dev.github.io/great-tables/reference/GT.cols_width)
+    If your category label text is cut off or does not fit, you likely need to increase the `width`
+    parameter to allow more space for the text and plot.
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
 
-    def _make_bottom_bar_html(
-        val: float,
-        fill: str,
-    ) -> str:
-        scaled_value = val * 100
-        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius:2px;"></div>'
-        html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
-
-        return html
-
-    def _make_dot_and_bar_html(
+    def _make_dot_and_bar_svg(
         bar_val: float,
         fill: str,
         dot_category_label: str,
+        svg_width: float,
+        svg_height: float,
+        font_size: float,
     ) -> str:
         if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
             return "<div></div>"
 
-        label_div_style = "display:inline-block; float:left; margin-right:0px;"
+        # Layout parameters
+        dot_radius = font_size / 2.75
+        dot_x = dot_radius
+        dot_y = svg_height / 2
 
-        dot_style = (
-            f"height:0.7em; width:0.7em; background-color:{fill};"
-            "border-radius:50%; margin-top:4px; display:inline-block;"
-            "float:left; margin-right:2px;"
-        )
+        # Text positioning
+        text_x = dot_x + dot_radius * 1.5
+        text_y = dot_y
 
-        padding_div_style = (
-            "display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"
-        )
+        # Bar positioning
+        bar_y = text_y + (font_size / 2) * 1.2  # 1.2 for padding
+        bar_height = svg_height / 8
+        bar_start_x = 0
+        bar_width = svg_width * bar_val
 
-        bar_container_style = "position:relative; top:1.2em;"
+        elements = [
+            # Dot
+            Circle(
+                cx=dot_x,
+                cy=dot_y,
+                r=dot_radius,
+                fill=fill,
+            ),
+            # Category label text
+            Text(
+                text=dot_category_label,
+                x=text_x,
+                y=text_y,
+                fill="black",
+                font_size=font_size,
+                dominant_baseline="central",
+                text_anchor="start",
+            ),
+            # Bar
+            Rect(
+                x=bar_start_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=fill,
+                rx=2,
+            ),
+        ]
 
-        html = f"""
-        <div>
-            <div style="{label_div_style}">
-                {dot_category_label}
-                <div style="{dot_style}"></div>
-                <div style="{padding_div_style}"></div>
-            </div>
-            <div style="{bar_container_style}">
-                <div>{_make_bottom_bar_html(bar_val, fill=fill)}</div>
-            </div>
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=svg_width, height=svg_height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Validate and get data column
     data_col_name, data_col_vals = _validate_and_get_single_column(
@@ -590,10 +614,13 @@ def gt_plt_dot(
         color_val = color_vals[i]
 
         res = res.fmt(
-            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
+            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_svg(
                 dot_category_label=x,
                 fill=fill,
                 bar_val=data,
+                svg_height=height,
+                svg_width=width,
+                font_size=font_size,
             ),
             columns=category_col,
             rows=[i],
@@ -602,15 +629,11 @@ def gt_plt_dot(
     return res
 
 
-# Changed wrt R version, palette removed
-
-
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
     ci_columns: SelectExpr = None,
     ci: float = 0.95,
-    # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float = 100,
     height: float = 30,
     dot_color: str = "red",
@@ -743,17 +766,14 @@ def gt_plt_conf_int(
     ----
     All confidence intervals are scaled to a common range for visual alignment.
     """
-    # TODO: comments
-    # TODO: refactor? It's quite a long function
 
-    def _make_conf_int_html(
+    def _make_conf_int_svg(
         mean: float,
         c1: float,
         c2: float,
         font_size: float,
         min_val: float,
         max_val: float,
-        # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float,
         height: float,
         dot_border_color: str,
@@ -761,13 +781,13 @@ def gt_plt_conf_int(
         dot_color: str,
         text_color: str,
         num_decimals: int,
-    ):
+    ) -> str:
         if (
             is_na(gt._tbl_data, mean)
             or is_na(gt._tbl_data, c1)
             or is_na(gt._tbl_data, c2)
         ):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         span = max_val - min_val
 
@@ -777,54 +797,63 @@ def gt_plt_conf_int(
         mean_pos = ((mean - min_val) / span) * width
 
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
-        label_bottom = height - bar_top
+        # Text positioning - place labels above the bar
+        label_y = bar_y - (font_size / 2) * 1.2  # 1.2 for padding
 
+        # Dot positioning
         dot_size = height / 5
-        dot_top = bar_top - dot_size / 4
-        dot_left = mean_pos - dot_size / 2
+        dot_y = bar_y - dot_size / 4
         dot_border = height / 20
 
-        label_style = (
-            "position:absolute;"
-            "left:{pos}px;"
-            f"bottom:{label_bottom}px;"
-            "color:{color};"
-            "font-size:{font_size}px;"
-        )
+        # Format the label text
+        c1_text = _format_numeric_text(c1, num_decimals)
+        c2_text = _format_numeric_text(c2, num_decimals)
 
-        c1_label_html = (
-            f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
-            f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
+        elements = [
+            # Confidence interval bar
+            Rect(
+                x=c1_pos,
+                y=bar_y,
+                width=c2_pos - c1_pos,
+                height=bar_height,
+                fill=line_color,
+                rx=2,
+            ),
+            # Mean dot
+            Circle(
+                cx=mean_pos,
+                cy=dot_y + dot_size / 2,
+                r=dot_size / 2,
+                fill=dot_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Lower bound label
+            Text(
+                text=c1_text,
+                x=c1_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="start",
+                dominant_baseline="central",
+            ),
+            # Upper bound label
+            Text(
+                text=c2_text,
+                x=c2_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="end",
+                dominant_baseline="central",
+            ),
+        ]
 
-        c2_label_html = (
-            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
-            f'transform:translateX(-100%);">'  # Move c2 to the left
-            f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
-
-        html = f"""
-            <div style="position:relative; width:{width}px; height:{height}px;">
-            {c1_label_html}
-            {c2_label_html}
-            <div style="
-                position:absolute; left:{c1_pos}px;
-                top:{bar_top}px; width:{c2_pos - c1_pos}px;
-                height:{bar_height}px; background:{line_color}; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:{dot_left}px;
-                top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;
-                background:{dot_color}; border-radius:50%;
-                border:{dot_border}px solid {dot_border_color}; box-sizing:border-box;
-            "></div>
-            </div>
-            """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     data_col_name, data_vals = _validate_and_get_single_column(gt, column)
 
@@ -894,7 +923,7 @@ def gt_plt_conf_int(
         mean = means[i]
 
         res = res.fmt(
-            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_html(
+            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_svg(
                 mean=mean,
                 c1=c1,
                 c2=c2,
@@ -955,7 +984,7 @@ def gt_plt_dumbbell(
 
     width
         The width of the dumbbell plot in pixels. Note that if the width is too narrow,
-        some label text may overlap.
+        some plot label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
@@ -1029,7 +1058,7 @@ def gt_plt_dumbbell(
     The `col2` column is automatically hidden from the final table display.
     """
 
-    def _make_dumbbell_html(
+    def _make_dumbbell_svg(
         value_1: float,
         value_2: float,
         width: float,
@@ -1044,7 +1073,7 @@ def gt_plt_dumbbell(
         num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
@@ -1056,61 +1085,74 @@ def gt_plt_dumbbell(
         bar_left = min(pos_1, pos_2)
         bar_width = abs(pos_2 - pos_1)
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
         # Compute the locations of the two dots
-        dot_size = height / 5
-        dot_border = height / 20
-        dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
-        dot_1_left = pos_1 - dot_size / 2 - dot_border
-        dot_2_left = pos_2 - dot_size / 2 - dot_border
+        dot_radius = bar_height * 1.25
+        dot_border = bar_height / 2
+        dot_y = bar_y + bar_height / 2
 
-        label_bottom = height - dot_top
+        # Text positioning - labels above dots
+        label_y = dot_y - dot_radius - dot_border * 1.2  # 1.2 for padding
 
-        label_style = (
-            "position:absolute; left:{pos}px; "
-            f"bottom:{label_bottom}px; "
-            "transform:translateX(-50%); color:{color}; "
-            f"font-size:{font_size}px; font-weight:bold;"  # Do we want bold?
-        )
+        # Format the label text
+        value_1_text = _format_numeric_text(value_1, num_decimals)
+        value_2_text = _format_numeric_text(value_2, num_decimals)
 
-        value_1_label = (
-            f'<div style="{label_style.format(pos=pos_1, color=value_1_color)}">'
-            f"{value_1:.{num_decimals}f}"
-            "</div>"
-        )
+        elements = [
+            # Connecting bar
+            Rect(
+                x=bar_left,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=bar_color,
+                rx=2,
+            ),
+            # Value 1 dot
+            Circle(
+                cx=pos_1,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_1_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 2 dot
+            Circle(
+                cx=pos_2,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_2_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 1 label
+            Text(
+                text=value_1_text,
+                x=pos_1,
+                y=label_y,
+                fill=value_1_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+            # Value 2 label
+            Text(
+                text=value_2_text,
+                x=pos_2,
+                y=label_y,
+                fill=value_2_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+        ]
 
-        value_2_label = (
-            f'<div style="{label_style.format(pos=pos_2, color=value_2_color)}">'
-            f"{value_2:.{num_decimals}f}"
-            "</div>"
-        )
-
-        dot_style = (
-            "position:absolute; left:{pos}px; "
-            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px; "
-            "background:{color}; border-radius:50%; "
-            f"border:{dot_border}px solid {dot_border_color}; box-sizing: content-box;"
-        )
-
-        value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
-        value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
-
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px; box-sizing:content-box;">
-            {value_1_label}
-            {value_2_label}
-            <div style="
-                position:absolute; left:{bar_left}px;
-                top:{bar_top}px; width:{bar_width}px;
-                height:{bar_height}px; background:{bar_color};
-                border-radius:2px;
-            "></div>
-            {value_1_dot}
-            {value_2_dot}
-        </div>
-        """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     col1_name, col1_vals = _validate_and_get_single_column(
         gt,
@@ -1142,7 +1184,7 @@ def gt_plt_dumbbell(
         col2_value = col2_vals[i]
 
         res = res.fmt(
-            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_html(
+            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_svg(
                 value_1=value_1,
                 value_2=value_2,
                 width=width,
@@ -1231,7 +1273,8 @@ def gt_plt_winloss(
     Examples
     --------
     First, let's make a table with randomly generated data:
-    ``` {python}
+
+    ```{python}
     from great_tables import GT, md
     import gt_extras as gte
     import pandas as pd
@@ -1256,8 +1299,8 @@ def gt_plt_winloss(
     )
     ```
 
-
     Let's do a more involved example using NFL season data from 2016.
+
     ```{python}
     #| code-fold: true
     #| code-summary: Show the setup Code
@@ -1325,11 +1368,10 @@ def gt_plt_winloss(
         gte.gt_plt_winloss,
         column="Games",
     )
-
     ```
     """
 
-    def _make_winloss_html(
+    def _make_winloss_svg(
         values: list[float],
         max_length: int,
         width: float,
@@ -1341,30 +1383,29 @@ def gt_plt_winloss(
         spacing: float,
     ) -> str:
         if len(values) == 0:
-            # TODO: do this in other functions, standardize the size of the empty div
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         available_width = width - (max_length) * spacing
         bar_width = available_width / max_length
         win_bar_height = height * 0.2 if shape == "square" else height * 0.4
 
-        # Generate bars HTML
-        bars_html = []
+        elements = []
+
         for i, value in enumerate(values):
             if is_na(gt._tbl_data, value):
                 continue
 
             if value == 1:  # Win
                 color = win_color
-                top_pos = height * 0.2
+                bar_y = height * 0.2
                 bar_height = win_bar_height
             elif value == 0.5:  # Tie
                 color = tie_color
-                top_pos = height * 0.4
+                bar_y = height * 0.4
                 bar_height = height * 0.2
             elif value == 0:  # Loss
                 color = loss_color
-                top_pos = height * 0.8 - win_bar_height
+                bar_y = height * 0.8 - win_bar_height
                 bar_height = win_bar_height
             else:
                 warnings.warn(
@@ -1373,29 +1414,21 @@ def gt_plt_winloss(
                 )
                 continue
 
-            left_pos = i * (bar_width + spacing)
+            bar_x = i * (bar_width + spacing)
             border_radius = 0.5 if shape == "square" else 2
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{left_pos}px;
-                top:{top_pos}px;
-                width:{bar_width}px;
-                height:{bar_height}px;
-                background:{color};
-                border-radius:{border_radius}px;
-            "></div>
-            """
-            bars_html.append(bar_html.strip())
+            bar_rect = Rect(
+                x=bar_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=color,
+                rx=border_radius,
+            )
+            elements.append(bar_rect)
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """
-
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     res = gt
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
@@ -1409,7 +1442,7 @@ def gt_plt_winloss(
 
     # I don't have to loop like with the others since I dont need to access other columns
     res = res.fmt(
-        lambda x: _make_winloss_html(
+        lambda x: _make_winloss_svg(
             x,
             max_length=max_length,
             width=width,
@@ -1569,7 +1602,7 @@ def gt_plt_bar_stack(
     Values of `0` will not be displayed in the plots.
     """
 
-    def _make_bar_stack_html(
+    def _make_bar_stack_svg(
         values: list[float],
         max_sum: float,
         width: float,
@@ -1581,7 +1614,7 @@ def gt_plt_bar_stack(
         scale_type: Literal["relative", "absolute"],
     ) -> str:
         if not values:
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         non_na_vals = [val if not is_na(gt._tbl_data, val) else 0 for val in values]
         # Count how many values will be displayed in the chart
@@ -1603,46 +1636,45 @@ def gt_plt_bar_stack(
                 "Spacing is too large relative to the width. No bars will be displayed.",
                 category=UserWarning,
             )
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
-        bars_html = []
+        elements = []
         current_left = 0
+
         for i, value in enumerate(normalized_values):
+            if value == 0:
+                continue
+
             bar_width = available_width * value
             color = colors[i % len(colors)]
 
+            # Create the bar rectangle
+            bar_rect = Rect(
+                x=current_left,
+                y=0,
+                width=bar_width,
+                height=height,
+                fill=color,
+            )
+            elements.append(bar_rect)
+
+            # Create the label text
             label = f"{non_na_vals[i]:.{num_decimals}f}"
-            label_html = f"""
-            <div style="
-                position:absolute;
-                left:50%;
-                top:50%;
-                transform:translateX(-50%) translateY(-50%);
-                font-size:{font_size}px;
-                color:{_ideal_fgnd_color(_html_color([color])[0])};
-            ">{label}</div>
-            """.strip()
+            label_text = Text(
+                text=label,
+                x=current_left + bar_width / 2,  # Center horizontally in the bar
+                y=height / 2,  # Center vertically
+                fill=_ideal_fgnd_color(_html_color([color])[0]),
+                font_size=font_size,
+                text_anchor="middle",
+                dominant_baseline="central",
+            )
+            elements.append(label_text)
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{current_left}px;
-                top:0px;
-                width:{bar_width}px;
-                height:{height}px;
-                background:{color};
-            ">{label_html}</div>
-            """.strip()
-            if value != 0 and not is_na(gt._tbl_data, value):
-                bars_html.append(bar_html.strip())
-                current_left += bar_width + spacing
+            current_left += bar_width + spacing
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Throw if `scale_type` is not one of the allowed values
     if scale_type not in ["relative", "absolute"]:
@@ -1670,7 +1702,7 @@ def gt_plt_bar_stack(
 
     res = gt
     res = res.fmt(
-        lambda x: _make_bar_stack_html(
+        lambda x: _make_bar_stack_svg(
             x,
             max_sum=max_sum,
             width=width,
