@@ -1338,70 +1338,87 @@ def gt_plt_pie(
         if is_na(gt._tbl_data, original_val) or scaled_val <= 0:
             return f'<div style="display: flex;"><div style="width:{size}px; height:{size}px;"></div></div>'
 
+        elements = []
+        svg_style = ""
+
         radius = size / 2
         center_x = center_y = radius
         # Inner radius for donut shape (30% of outer radius)
         inner_radius = radius * 0.3
 
         # Calculate the angle in radians (0 to 2π)
-        angle = scaled_val * 2 * math.pi
+        # Clamp to maximum of 2π for full circle
+        angle = min(scaled_val * 2 * math.pi, 2 * math.pi)
 
-        elements = []
+        # Outer arc start/end points
+        outer_start_x = center_x
+        outer_start_y = stroke_width / 2
+        outer_end_x = center_x + (radius - stroke_width / 2) * math.sin(angle)
+        outer_end_y = center_y - (radius - stroke_width / 2) * math.cos(angle)
 
-        if scaled_val >= 1.0:
-            # Full donut ring using two circles
-            outer_circle = Circle(
-                cx=center_x,
-                cy=center_y,
-                r=radius - stroke_width / 2,
-                fill=fill,
-                stroke=stroke_color,
-                stroke_width=stroke_width,
-            )
-            inner_circle = Circle(
-                cx=center_x,
-                cy=center_y,
-                r=inner_radius,
-                fill="white",  # This will create the hole
-                stroke="none",
-            )
-            elements.append(outer_circle)
-            elements.append(inner_circle)
+        # Inner arc start/end points
+        inner_start_x = center_x
+        inner_start_y = center_y - inner_radius
+        inner_end_x = center_x + inner_radius * math.sin(angle)
+        inner_end_y = center_y - inner_radius * math.cos(angle)
 
-            # Add label if requested
-            if show_labels and not is_na(gt._tbl_data, original_val):
-                label_text = str(original_val)
-                text = Text(
-                    text=label_text,
-                    x=center_x,
-                    y=center_y,
-                    fill=label_color,
-                    font_size=size * 0.2,
-                    text_anchor="middle",
-                    dominant_baseline="central",
-                )
-                elements.append(text)
+        # Determine if we need a large arc (> 180 degrees)
+        large_arc = angle > math.pi
 
-            svg = SVG(width=size, height=size, elements=elements)
-            return f'<div style="display: flex;">{svg.as_str()}</div>'
+        # For full circle (angle >= 2π), we need special handling to avoid degenerate arcs
+        if (
+            angle >= 2 * math.pi - 0.001
+        ):  # Use small epsilon to handle floating point precision
+            # Create full donut using two semicircular arcs with evenodd fill rule
+            path_commands = [
+                # Outer circle - first semicircle (top to bottom)
+                MoveTo(center_x, stroke_width / 2),  # Top
+                Arc(
+                    radius - stroke_width / 2,
+                    radius - stroke_width / 2,
+                    0,
+                    False,  # small arc
+                    True,  # clockwise
+                    center_x,
+                    center_y + (radius - stroke_width / 2),  # Bottom
+                ),
+                # Outer circle - second semicircle (bottom to top)
+                Arc(
+                    radius - stroke_width / 2,
+                    radius - stroke_width / 2,
+                    0,
+                    False,  # small arc
+                    True,  # clockwise
+                    center_x,
+                    stroke_width / 2,  # Back to top
+                ),
+                ClosePath(),
+                # Inner circle - first semicircle (top to bottom, counter-clockwise)
+                MoveTo(center_x, center_y - inner_radius),  # Top of inner circle
+                Arc(
+                    inner_radius,
+                    inner_radius,
+                    0,
+                    False,  # small arc
+                    False,  # counter-clockwise
+                    center_x,
+                    center_y + inner_radius,  # Bottom of inner circle
+                ),
+                # Inner circle - second semicircle (bottom to top, counter-clockwise)
+                Arc(
+                    inner_radius,
+                    inner_radius,
+                    0,
+                    False,  # small arc
+                    False,  # counter-clockwise
+                    center_x,
+                    center_y - inner_radius,  # Back to top
+                ),
+                ClosePath(),
+            ]
+            svg_style = "fill-rule:true;"
         else:
-            # Partial donut using path
-            # Outer arc start/end points
-            outer_start_x = center_x
-            outer_start_y = stroke_width / 2
-            outer_end_x = center_x + (radius - stroke_width / 2) * math.sin(angle)
-            outer_end_y = center_y - (radius - stroke_width / 2) * math.cos(angle)
-
-            # Inner arc start/end points
-            inner_start_x = center_x
-            inner_start_y = center_y - inner_radius
-            inner_end_x = center_x + inner_radius * math.sin(angle)
-            inner_end_y = center_y - inner_radius * math.cos(angle)
-
-            # Determine if we need a large arc (> 180 degrees)
-            large_arc = True if angle > math.pi else False
-
-            # Create donut path: outer arc -> line to inner end -> inner arc (reverse) -> close
+            # Partial donut using path: outer arc -> line to inner end -> inner arc (reverse) -> close
             path_commands = [
                 MoveTo(outer_start_x, outer_start_y),  # Start at outer edge
                 Arc(
@@ -1426,36 +1443,45 @@ def gt_plt_pie(
                 ClosePath(),  # Close the path
             ]
 
-            path = Path(
-                d=path_commands,
-                fill=fill,
-                stroke=stroke_color,
-                stroke_width=stroke_width,
-            )
-            elements.append(path)
+        path = Path(
+            d=path_commands,
+            fill=fill,
+            stroke=stroke_color,
+            stroke_width=stroke_width,
+        )
+        elements.append(path)
 
-            # Add label if requested
-            if show_labels and not is_na(gt._tbl_data, original_val):
-                label_text = str(original_val)
+        # Add label if requested
+        if show_labels and not is_na(gt._tbl_data, original_val):
+            label_text = str(original_val)
+
+            if angle >= 2 * math.pi - 0.001:  # Full circle
+                # Center the label
+                label_x = center_x
+                label_y = center_y
+                font_size = size * 0.2
+            else:
                 # Position label in the middle of the donut ring
                 label_radius = (radius + inner_radius) / 2
                 label_angle = angle / 2
                 label_x = center_x + label_radius * math.sin(label_angle)
                 label_y = center_y - label_radius * math.cos(label_angle)
+                font_size = size * 0.15
 
-                text = Text(
-                    text=label_text,
-                    x=label_x,
-                    y=label_y,
-                    fill=label_color,
-                    font_size=size * 0.15,
-                    text_anchor="middle",
-                    dominant_baseline="central",
-                )
-                elements.append(text)
+            text = Text(
+                text=label_text,
+                x=label_x,
+                y=label_y,
+                fill=label_color,
+                font_size=font_size,
+                text_anchor="middle",
+                dominant_baseline="central",
+                font_weight="bold" if angle >= 2 * math.pi - 0.001 else None,
+            )
+            elements.append(text)
 
-            svg = SVG(width=size, height=size, elements=elements)
-            return f'<div style="display: flex;">{svg.as_str()}</div>'
+        svg = SVG(width=size, height=size, elements=elements, style=svg_style)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
