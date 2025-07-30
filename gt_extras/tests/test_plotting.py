@@ -96,11 +96,11 @@ def test_gt_plt_dot_snap(snapshot, mini_gt):
 def test_gt_plt_dot_basic(mini_gt):
     html = gt_plt_dot(gt=mini_gt, category_col="char", data_col="num").as_raw_html()
 
-    assert "border-radius:50%; margin-top:4px; display:inline-block;" in html
-    assert "height:0.7em; width:0.7em;" in html
-
-    assert "flex-grow:1; margin-left:0px;" in html
-    assert "width:100.0%; height:4px; border-radius:2px;" in html
+    assert html.count("<svg") == 3
+    assert html.count('<circle cx="5.818181818181818" cy="15.0"') == 3
+    assert html.count('<text dominant-baseline="central"') == 3
+    assert html.count('text-anchor="start" font-size="16"') == 3
+    assert html.count('<rect x="0"') == 3
 
 
 def test_gt_plt_dot_with_palette(mini_gt):
@@ -121,9 +121,9 @@ def test_gt_plt_dot_with_domain_expanded(mini_gt):
         gt=mini_gt, category_col="char", data_col="num", domain=[0, 100]
     ).as_raw_html()
 
-    assert "width:0.1111%; height:4px; border-radius:2px;" in html
-    assert "width:2.222%; height:4px; border-radius:2px;" in html
-    assert "width:33.33%; height:4px; border-radius:2px;" in html
+    assert '<rect x="0" y="24.6" width="39.995999999999995"' in html
+    assert '<rect x="0" y="24.6" width="2.6664"' in html
+    assert '<rect x="0" y="24.6" width="0.13332"' in html
 
 
 def test_gt_plt_dot_with_domain_restricted(mini_gt):
@@ -135,9 +135,9 @@ def test_gt_plt_dot_with_domain_restricted(mini_gt):
             gt=mini_gt, category_col="char", data_col="num", domain=[0, 10]
         ).as_raw_html()
 
-    assert "width:1.111%; height:4px; border-radius:2px;" in html
-    assert "width:22.220000000000002%; height:4px; border-radius:2px;" in html
-    assert "width:100%; height:4px; border-radius:2px;" in html
+    assert '<rect x="0" y="24.6" width="1.3332"' in html
+    assert '<rect x="0" y="24.6" width="26.664"' in html
+    assert '<rect x="0" y="24.6" width="120"' in html
 
 
 def test_gt_plt_dot_invalid_data_col(mini_gt):
@@ -182,8 +182,9 @@ def test_gt_plt_dot_with_na_values():
     html = result.as_raw_html()
 
     assert isinstance(result, GT)
-    assert "width:100.0%; height:4px; border-radius:2px;" in html
-    assert html.count("width:0%; height:4px; border-radius:2px;") == 2
+    assert '<rect x="0" y="24.6" width="60.0"' in html
+    assert '<rect x="0" y="24.6" width="120.0"' in html
+    assert html.count('<rect x="0" y="24.6" width="0"') == 2
 
 
 def test_gt_plt_dot_with_na_in_category():
@@ -201,8 +202,8 @@ def test_gt_plt_dot_with_na_in_category():
     html = result.as_raw_html()
 
     assert isinstance(result, GT)
-    assert html.count("width:100.0%; height:4px; border-radius:2px;") == 1
-    assert "width:50.0%; height:4px; border-radius:2px;" not in html
+    assert html.count('<rect x="0" y="24.6" width="120.0"') == 1
+    assert '<rect x="0" y="24.6" width="60.0"' not in html
 
 
 def test_gt_plt_dot_palette_string_valid(mini_gt):
@@ -210,7 +211,9 @@ def test_gt_plt_dot_palette_string_valid(mini_gt):
         gt=mini_gt, category_col="char", data_col="num", palette="viridis"
     ).as_raw_html()
 
-    assert "background:#440154;" in html
+    assert 'fill="#440154"' in html
+    assert 'fill="#22908c"' in html
+    assert 'fill="#fde725"' in html
 
 
 def test_gt_plt_conf_int_snap(snapshot):

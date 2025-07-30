@@ -11,7 +11,7 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Length, Line, Rect, Text
+from svg import SVG, Circle, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -448,6 +448,9 @@ def gt_plt_dot(
     gt: GT,
     category_col: SelectExpr,
     data_col: SelectExpr,
+    width: int = 120,
+    height: int = 30,
+    font_size: int = 16,
     domain: list[int] | list[float] | None = None,
     palette: list[str] | str | None = None,
 ) -> GT:
@@ -512,52 +515,63 @@ def gt_plt_dot(
     # Get the underlying Dataframe
     data_table = gt._tbl_data
 
-    def _make_bottom_bar_html(
-        val: float,
-        fill: str,
-    ) -> str:
-        scaled_value = val * 100
-        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius:2px;"></div>'
-        html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
-
-        return html
-
-    def _make_dot_and_bar_html(
+    def _make_dot_and_bar_svg(
         bar_val: float,
         fill: str,
         dot_category_label: str,
+        svg_width: float,
+        svg_height: float,
+        font_size: float,
     ) -> str:
         if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
             return "<div></div>"
 
-        label_div_style = "display:inline-block; float:left; margin-right:0px;"
+        # Layout parameters
+        dot_radius = font_size / 2.75
+        dot_x = dot_radius
+        dot_y = svg_height / 2
 
-        dot_style = (
-            f"height:0.7em; width:0.7em; background-color:{fill};"
-            "border-radius:50%; margin-top:4px; display:inline-block;"
-            "float:left; margin-right:2px;"
-        )
+        # Text positioning
+        text_x = dot_x + dot_radius * 1.5
+        text_y = dot_y
 
-        padding_div_style = (
-            "display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"
-        )
+        # Bar positioning
+        bar_y = text_y + (font_size / 2) * 1.2  # 1.2 for padding
+        bar_height = svg_height / 8
+        bar_start_x = 0
+        bar_width = svg_width * bar_val
 
-        bar_container_style = "position:relative; top:1.2em;"
+        elements = [
+            # Dot
+            Circle(
+                cx=dot_x,
+                cy=dot_y,
+                r=dot_radius,
+                fill=fill,
+            ),
+            # Category label text
+            Text(
+                text=dot_category_label,
+                x=text_x,
+                y=text_y,
+                fill="black",
+                font_size=font_size,
+                dominant_baseline="central",
+                text_anchor="start",
+            ),
+            # Bar
+            Rect(
+                x=bar_start_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=fill,
+                rx=2,
+            ),
+        ]
 
-        html = f"""
-        <div>
-            <div style="{label_div_style}">
-                {dot_category_label}
-                <div style="{dot_style}"></div>
-                <div style="{padding_div_style}"></div>
-            </div>
-            <div style="{bar_container_style}">
-                <div>{_make_bottom_bar_html(bar_val, fill=fill)}</div>
-            </div>
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=svg_width, height=svg_height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Validate and get data column
     data_col_name, data_col_vals = _validate_and_get_single_column(
@@ -590,10 +604,13 @@ def gt_plt_dot(
         color_val = color_vals[i]
 
         res = res.fmt(
-            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
+            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_svg(
                 dot_category_label=x,
                 fill=fill,
                 bar_val=data,
+                svg_height=height,
+                svg_width=width,
+                font_size=font_size,
             ),
             columns=category_col,
             rows=[i],
