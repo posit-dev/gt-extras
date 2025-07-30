@@ -243,14 +243,33 @@ def test_gt_plt_conf_int_basic():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_conf_int(
+    result = gt_plt_conf_int(
         gt=gt_test, column="mean", ci_columns=["ci_lower", "ci_upper"]
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert "position:absolute;left:8.333333333333336px;bottom:11.5px" in html
-    assert "top:18.5px; width:55.55555555555556px;" in html
-    assert "height:3.0px; background:royalblue; border-radius:2px;" in html
-    assert html.count("position:absolute;") == 12
+    assert html.count("<svg") == 3
+    assert html.count('height="3.0" rx="2" fill="royalblue"') == 3
+    assert html.count('<circle stroke="red" stroke-width="1.5"') == 3
+    assert html.count('cy="20.0" r="3.0" fill="red"') == 3
+
+    assert html.count('<text dominant-baseline="central"') == 6
+    assert html.count('text-anchor="start" font-size="10" fill="black"') == 3
+    assert html.count('text-anchor="end" font-size="10" fill="black"') == 3
+
+    assert 'cx="22.222222222222225"' in html
+    assert 'cx="36.111111111111114"' in html
+    assert 'cx="50.000000000000014"' in html
+
+    assert '<rect x="8.333333333333336"' in html
+    assert '<rect x="36.111111111111114"' in html
+    assert 'width="55.55555555555556"' in html
+    assert 'width="41.66666666666667"' in html
+
+    assert 'x="8.333333333333336" y="12.5">0</text>' in html
+    assert 'x="63.88888888888889" y="12.5">4</text>' in html
+    assert 'x="36.111111111111114" y="12.5">2</text>' in html
+    assert 'x="91.66666666666667" y="12.5">6</text>' in html
 
 
 def test_gt_plt_conf_int_computed_ci():
@@ -261,12 +280,13 @@ def test_gt_plt_conf_int_computed_ci():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_conf_int(gt=gt_test, column="data").as_raw_html()
+    result = gt_plt_conf_int(gt=gt_test, column="data")
+    html = result.as_raw_html()
 
-    assert ">2.4</div>" in html
-    assert ">4</div>" in html
-    assert ">4.1</div>" in html
-    assert ">5.9</div>" in html
+    assert ">2.4</text>" in html
+    assert ">4</text>" in html
+    assert ">4.1</text>" in html
+    assert ">5.9</text>" in html
 
 
 def test_gt_plt_conf_int_custom_colors():
@@ -279,18 +299,19 @@ def test_gt_plt_conf_int_custom_colors():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_conf_int(
+    result = gt_plt_conf_int(
         gt=gt_test,
         column="mean",
         ci_columns=["ci_lower", "ci_upper"],
         line_color="blue",
         dot_color="green",
         text_color="red",
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert html.count("background:blue;") == 2
-    assert html.count("background:green;") == 2
-    assert html.count("color:red;") == 4
+    assert html.count('fill="blue"') == 2
+    assert html.count('fill="green"') == 2
+    assert html.count('fill="red"') == 4
 
 
 def test_gt_plt_conf_int_invalid_column():
@@ -340,8 +361,10 @@ def test_gt_plt_conf_int_with_none_values():
     )
 
     assert isinstance(result, GT)
+
     html = result.as_raw_html()
-    assert '<div style="position:relative; width:100px; height:30px;"></div>' in html
+
+    assert '<div style="width:100px; height:30px;"></div>' in html
 
 
 def test_gt_plt_conf_int_computed_invalid_data():
@@ -367,9 +390,11 @@ def test_gt_plt_conf_int_empty_data():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_conf_int(gt=gt_test, column="data").as_raw_html()
+    result = gt_plt_conf_int(gt=gt_test, column="data")
+    html = result.as_raw_html()
 
-    assert html.count("border-radius:50%;") == 1
+    assert html.count("<circle") == 1
+    assert html.count("<rect") == 1
 
 
 def test_gt_plt_conf_int_precomputed_invalid_data():

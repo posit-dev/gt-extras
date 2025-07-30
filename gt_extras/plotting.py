@@ -628,15 +628,11 @@ def gt_plt_dot(
     return res
 
 
-# Changed wrt R version, palette removed
-
-
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
     ci_columns: SelectExpr = None,
     ci: float = 0.95,
-    # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
     width: float = 100,
     height: float = 30,
     dot_color: str = "red",
@@ -769,17 +765,14 @@ def gt_plt_conf_int(
     ----
     All confidence intervals are scaled to a common range for visual alignment.
     """
-    # TODO: comments
-    # TODO: refactor? It's quite a long function
 
-    def _make_conf_int_html(
+    def _make_conf_int_svg(
         mean: float,
         c1: float,
         c2: float,
         font_size: float,
         min_val: float,
         max_val: float,
-        # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float,
         height: float,
         dot_border_color: str,
@@ -787,13 +780,13 @@ def gt_plt_conf_int(
         dot_color: str,
         text_color: str,
         num_decimals: int,
-    ):
+    ) -> str:
         if (
             is_na(gt._tbl_data, mean)
             or is_na(gt._tbl_data, c1)
             or is_na(gt._tbl_data, c2)
         ):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         span = max_val - min_val
 
@@ -803,54 +796,63 @@ def gt_plt_conf_int(
         mean_pos = ((mean - min_val) / span) * width
 
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
-        label_bottom = height - bar_top
+        # Text positioning - place labels above the bar
+        label_y = bar_y - (font_size / 2) * 1.2  # 1.2 for padding
 
+        # Dot positioning
         dot_size = height / 5
-        dot_top = bar_top - dot_size / 4
-        dot_left = mean_pos - dot_size / 2
+        dot_y = bar_y - dot_size / 4
         dot_border = height / 20
 
-        label_style = (
-            "position:absolute;"
-            "left:{pos}px;"
-            f"bottom:{label_bottom}px;"
-            "color:{color};"
-            "font-size:{font_size}px;"
-        )
+        # Format the label text
+        c1_text = f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
+        c2_text = f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
 
-        c1_label_html = (
-            f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
-            f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
+        elements = [
+            # Confidence interval bar
+            Rect(
+                x=c1_pos,
+                y=bar_y,
+                width=c2_pos - c1_pos,
+                height=bar_height,
+                fill=line_color,
+                rx=2,
+            ),
+            # Mean dot
+            Circle(
+                cx=mean_pos,
+                cy=dot_y + dot_size / 2,
+                r=dot_size / 2,
+                fill=dot_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Lower bound label
+            Text(
+                text=c1_text,
+                x=c1_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="start",
+                dominant_baseline="central",
+            ),
+            # Upper bound label
+            Text(
+                text=c2_text,
+                x=c2_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="end",
+                dominant_baseline="central",
+            ),
+        ]
 
-        c2_label_html = (
-            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
-            f'transform:translateX(-100%);">'  # Move c2 to the left
-            f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
-
-        html = f"""
-            <div style="position:relative; width:{width}px; height:{height}px;">
-            {c1_label_html}
-            {c2_label_html}
-            <div style="
-                position:absolute; left:{c1_pos}px;
-                top:{bar_top}px; width:{c2_pos - c1_pos}px;
-                height:{bar_height}px; background:{line_color}; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:{dot_left}px;
-                top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;
-                background:{dot_color}; border-radius:50%;
-                border:{dot_border}px solid {dot_border_color}; box-sizing:border-box;
-            "></div>
-            </div>
-            """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     data_col_name, data_vals = _validate_and_get_single_column(gt, column)
 
@@ -920,7 +922,7 @@ def gt_plt_conf_int(
         mean = means[i]
 
         res = res.fmt(
-            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_html(
+            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_svg(
                 mean=mean,
                 c1=c1,
                 c2=c2,
