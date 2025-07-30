@@ -425,52 +425,70 @@ def test_gt_plt_dumbbell_snap(snapshot):
 def test_gt_plt_dumbbell_basic():
     df = pd.DataFrame({"value_1": [10, 15, 25], "value_2": [15, 20, 30]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
 
-    assert html.count("left:24.666666666666668px; top:15.5px; width:6.0px;") == 2
-    assert html.count("height:3.0px; background:grey;") == 3
-    assert html.count("transform:translateX(-50%); color:purple;") == 3
-    assert html.count("position:absolute;") == 15
+    assert html.count('<circle stroke="white" stroke-width="1.5"') == 6
+    assert html.count('r="3.75" fill="purple"') == 3
+    assert html.count('r="3.75" fill="green"') == 3
+
+    assert html.count("<rect") == 3
+    assert html.count('height="3.0" rx="2" fill="grey"') == 3
+
+    assert 'x="8.333333333333332" y="18.5" width="20.833333333333336"' in html
+    assert 'x="29.166666666666668" y="18.5" width="20.833333333333332"' in html
+    assert 'x="70.83333333333334" y="18.5" width="20.833333333333314"' in html
+
+    assert html.count('<text dominant-baseline="lower" text-anchor="middle"') == 6
+    assert html.count('font-size="10" font-weight="bold" fill="green"') == 3
+    assert html.count('font-size="10" font-weight="bold" fill="purple"') == 3
+
+    assert ">10</text>" in html
+    assert ">15</text>" in html
+    assert ">20</text>" in html
+    assert ">25</text>" in html
+    assert ">30</text>" in html
 
 
 def test_gt_plt_dumbbell_custom_colors():
     df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
     gt_test = GT(df)
 
-    html = gt_plt_dumbbell(
+    result = gt_plt_dumbbell(
         gt=gt_test,
         col1="value_1",
         col2="value_2",
         col1_color="blue",
         col2_color="red",
         bar_color="green",
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert "background:blue;" in html
-    assert "background:red;" in html
-    assert "background:green;" in html
+    assert html.count('fill="blue"') == 4
+    assert html.count('fill="red"') == 4
+    assert html.count('fill="green"') == 2
 
 
 def test_gt_plt_dumbbell_custom_dimensions():
     df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
     gt_test = GT(df)
 
-    html = gt_plt_dumbbell(
+    result = gt_plt_dumbbell(
         gt=gt_test, col1="value_1", col2="value_2", width=200, height=50
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert "width:200px; height:50px;" in html
+    assert '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="50">' in html
 
 
 def test_gt_plt_dumbbell_font_size():
     df = pd.DataFrame({"group": ["A", "B"], "value_1": [10, 20], "value_2": [15, 25]})
     gt_test = GT(df)
 
-    html = gt_plt_dumbbell(
-        gt=gt_test, col1="value_1", col2="value_2", font_size=14
-    ).as_raw_html()
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2", font_size=14)
+    html = result.as_raw_html()
 
-    assert "font-size:14px;" in html
+    assert html.count('font-size="14"') == 4
 
 
 def test_gt_plt_dumbbell_decimals():
@@ -512,23 +530,20 @@ def test_gt_plt_dumbbell_hides_col2():
 def test_gt_plt_dumbbell_with_none_values():
     df = pd.DataFrame({"value_1": [10, None, 30], "value_2": [15, 25, None]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert (
-        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
-        == 2
-    )
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
+
+    assert html.count('<div style="width:100px; height:30px;"></div>') == 2
 
 
 def test_gt_plt_dumbbell_with_na_values():
     df = pd.DataFrame({"value_1": [10, np.nan], "value_2": [np.nan, 25]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
 
-    assert (
-        html.count('<div style="position:relative; width:100px; height:30px;"></div>')
-        == 2
-    )
+    assert html.count('<div style="width:100px; height:30px;"></div>') == 2
 
 
 def test_gt_plt_dumbbell_invalid_col1():
@@ -566,22 +581,30 @@ def test_gt_plt_dumbbell_non_numeric_col2():
 def test_gt_plt_dumbbell_same_values():
     df = pd.DataFrame({"value_1": [20, 20, 30], "value_2": [20, 30, 30]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert html.count("position:absolute;") == 15
-    assert html.count("20.0") == 3
-    assert html.count("30.0") == 3
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
+
+    assert html.count('<text dominant-baseline="lower"') == 6
+    assert html.count(">20</text>") == 3
+    assert html.count(">30</text>") == 3
+    assert html.count('width="0.0"') == 2
 
 
 def test_gt_plt_dumbbell_reversed_values():
     df = pd.DataFrame({"value_1": [200, 300, 0], "value_2": [15, 20, 400]})
     gt_test = GT(df)
-    html = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2").as_raw_html()
 
-    assert 'color:purple; font-size:10px; font-weight:bold;">0.0' in html
-    assert 'color:green; font-size:10px; font-weight:bold;">400.0' in html
-    assert 'color:purple; font-size:10px; font-weight:bold;">200.0' in html
-    assert 'color:green; font-size:10px; font-weight:bold;">15.0' in html
+    result = gt_plt_dumbbell(gt=gt_test, col1="value_1", col2="value_2")
+    html = result.as_raw_html()
+
+    assert 'fill="purple" x="50.0" y="14.45">200</text>' in html
+    assert 'fill="purple" x="70.83333333333334" y="14.45">300</text>' in html
+    assert 'fill="purple" x="8.333333333333332" y="14.45">0</text>' in html
+
+    assert 'fill="green" x="11.458333333333332" y="14.45">15</text>' in html
+    assert 'fill="green" x="12.5" y="14.45">20</text>' in html
+    assert 'fill="green" x="91.66666666666666" y="14.45">400</text>' in html
 
 
 def test_gt_plt_winloss_snap(snapshot):
