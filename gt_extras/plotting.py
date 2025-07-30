@@ -483,7 +483,7 @@ def gt_plt_dot(
         The height of the SVG plot in pixels.
 
     font_size
-        The font size for the category label text and dot.
+        The font size for the category label text.
 
     domain
         The domain of values to use for the color scheme. This can be a list of floats or integers.
