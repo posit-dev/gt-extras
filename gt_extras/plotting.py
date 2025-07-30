@@ -1280,7 +1280,8 @@ def gt_plt_winloss(
     Examples
     --------
     First, let's make a table with randomly generated data:
-    ``` {python}
+
+    ```{python}
     from great_tables import GT, md
     import gt_extras as gte
     import pandas as pd
@@ -1305,8 +1306,8 @@ def gt_plt_winloss(
     )
     ```
 
-
     Let's do a more involved example using NFL season data from 2016.
+
     ```{python}
     #| code-fold: true
     #| code-summary: Show the setup Code
@@ -1374,11 +1375,10 @@ def gt_plt_winloss(
         gte.gt_plt_winloss,
         column="Games",
     )
-
     ```
     """
 
-    def _make_winloss_html(
+    def _make_winloss_svg(
         values: list[float],
         max_length: int,
         width: float,
@@ -1390,30 +1390,29 @@ def gt_plt_winloss(
         spacing: float,
     ) -> str:
         if len(values) == 0:
-            # TODO: do this in other functions, standardize the size of the empty div
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         available_width = width - (max_length) * spacing
         bar_width = available_width / max_length
         win_bar_height = height * 0.2 if shape == "square" else height * 0.4
 
-        # Generate bars HTML
-        bars_html = []
+        elements = []
+
         for i, value in enumerate(values):
             if is_na(gt._tbl_data, value):
                 continue
 
             if value == 1:  # Win
                 color = win_color
-                top_pos = height * 0.2
+                bar_y = height * 0.2
                 bar_height = win_bar_height
             elif value == 0.5:  # Tie
                 color = tie_color
-                top_pos = height * 0.4
+                bar_y = height * 0.4
                 bar_height = height * 0.2
             elif value == 0:  # Loss
                 color = loss_color
-                top_pos = height * 0.8 - win_bar_height
+                bar_y = height * 0.8 - win_bar_height
                 bar_height = win_bar_height
             else:
                 warnings.warn(
@@ -1422,29 +1421,21 @@ def gt_plt_winloss(
                 )
                 continue
 
-            left_pos = i * (bar_width + spacing)
+            bar_x = i * (bar_width + spacing)
             border_radius = 0.5 if shape == "square" else 2
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{left_pos}px;
-                top:{top_pos}px;
-                width:{bar_width}px;
-                height:{bar_height}px;
-                background:{color};
-                border-radius:{border_radius}px;
-            "></div>
-            """
-            bars_html.append(bar_html.strip())
+            bar_rect = Rect(
+                x=bar_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=color,
+                rx=border_radius,
+            )
+            elements.append(bar_rect)
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """
-
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     res = gt
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
@@ -1458,7 +1449,7 @@ def gt_plt_winloss(
 
     # I don't have to loop like with the others since I dont need to access other columns
     res = res.fmt(
-        lambda x: _make_winloss_html(
+        lambda x: _make_winloss_svg(
             x,
             max_length=max_length,
             width=width,

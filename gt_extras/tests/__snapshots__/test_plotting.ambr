@@ -252,63 +252,11 @@
   <tbody class="gt_table_body">
     <tr>
       <td class="gt_row gt_left">A</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:80px; height:30px;">
-              <div style="
-                  position:absolute;
-                  left:0.0px;
-                  top:6.0px;
-                  width:24.666666666666668px;
-                  height:12.0px;
-                  background:blue;
-                  border-radius:2px;
-              "></div><div style="
-                  position:absolute;
-                  left:26.666666666666668px;
-                  top:12.0px;
-                  width:24.666666666666668px;
-                  height:6.0px;
-                  background:grey;
-                  border-radius:2px;
-              "></div><div style="
-                  position:absolute;
-                  left:53.333333333333336px;
-                  top:12.0px;
-                  width:24.666666666666668px;
-                  height:12.0px;
-                  background:red;
-                  border-radius:2px;
-              "></div>
-          </div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="30"><rect x="0.0" y="6.0" width="24.666666666666668" height="12.0" rx="2" fill="blue"/><rect x="26.666666666666668" y="12.0" width="24.666666666666668" height="6.0" rx="2" fill="grey"/><rect x="53.333333333333336" y="12.0" width="24.666666666666668" height="12.0" rx="2" fill="red"/></svg></div></td>
     </tr>
     <tr>
       <td class="gt_row gt_left">B</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:80px; height:30px;">
-              <div style="
-                  position:absolute;
-                  left:0.0px;
-                  top:12.0px;
-                  width:24.666666666666668px;
-                  height:12.0px;
-                  background:red;
-                  border-radius:2px;
-              "></div><div style="
-                  position:absolute;
-                  left:26.666666666666668px;
-                  top:12.0px;
-                  width:24.666666666666668px;
-                  height:12.0px;
-                  background:red;
-                  border-radius:2px;
-              "></div><div style="
-                  position:absolute;
-                  left:53.333333333333336px;
-                  top:6.0px;
-                  width:24.666666666666668px;
-                  height:12.0px;
-                  background:blue;
-                  border-radius:2px;
-              "></div>
-          </div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="30"><rect x="0.0" y="12.0" width="24.666666666666668" height="12.0" rx="2" fill="red"/><rect x="26.666666666666668" y="12.0" width="24.666666666666668" height="12.0" rx="2" fill="red"/><rect x="53.333333333333336" y="6.0" width="24.666666666666668" height="12.0" rx="2" fill="blue"/></svg></div></td>
     </tr>
   </tbody>
   '''
