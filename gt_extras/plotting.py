@@ -474,6 +474,16 @@ def gt_plt_dot(
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
 
+    width
+        The width of the SVG plot in pixels. You may need to increase this if your category labels
+        are long.
+
+    height
+        The height of the SVG plot in pixels.
+
+    font_size
+        The font size for the category label text and dot.
+
     domain
         The domain of values to use for the color scheme. This can be a list of floats or integers.
         If `None`, the domain is automatically set to `[0, max(data_col)]`.
@@ -508,9 +518,8 @@ def gt_plt_dot(
 
     Note
     -------
-    If the column is too narrow, the bar may render above the dot rather than below, as intended.
-    For the best way to resolve this issue please refer to
-    [`GT.cols_width()`](https://posit-dev.github.io/great-tables/reference/GT.cols_width)
+    If your category label text is cut off or does not fit, you likely need to increase the `width`
+    parameter to allow more space for the text and plot.
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
