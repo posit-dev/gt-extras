@@ -148,7 +148,7 @@ addEventListener('resize', setTableWidths);
 [gt_plt_conf_int](./with-code.html#gt_plt_conf_int){.embed-hover-overlay}
 :::
 
-:::{.masonry-item style="--width: 292;"}
+:::{.masonry-item style="--width: 304;"}
 {{< embed with-code.qmd#gt_plt_dot >}}
 [gt_plt_dot](./with-code.html#gt_plt_dot){.embed-hover-overlay}
 :::
