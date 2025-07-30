@@ -1343,11 +1343,9 @@ def gt_plt_pie(
 
         radius = size / 2
         center_x = center_y = radius
-        # Inner radius for donut shape (30% of outer radius)
-        inner_radius = radius * 0.3
+        inner_radius = radius * 0.4
 
         # Calculate the angle in radians (0 to 2π)
-        # Clamp to maximum of 2π for full circle
         angle = min(scaled_val * 2 * math.pi, 2 * math.pi)
 
         # Outer arc start/end points
@@ -1366,9 +1364,7 @@ def gt_plt_pie(
         large_arc = angle > math.pi
 
         # For full circle (angle >= 2π), we need special handling to avoid degenerate arcs
-        if (
-            angle >= 2 * math.pi - 0.001
-        ):  # Use small epsilon to handle floating point precision
+        if angle >= 2 * math.pi - 0.001:
             # Create full donut using two semicircular arcs with evenodd fill rule
             path_commands = [
                 # Outer circle - first semicircle (top to bottom)
@@ -1440,7 +1436,7 @@ def gt_plt_pie(
                     inner_start_x,
                     inner_start_y,
                 ),  # Inner arc (reverse)
-                ClosePath(),  # Close the path
+                ClosePath(),
             ]
 
         path = Path(
@@ -1455,18 +1451,11 @@ def gt_plt_pie(
         if show_labels and not is_na(gt._tbl_data, original_val):
             label_text = str(original_val)
 
-            if angle >= 2 * math.pi - 0.001:  # Full circle
-                # Center the label
-                label_x = center_x
-                label_y = center_y
-                font_size = size * 0.2
-            else:
-                # Position label in the middle of the donut ring
-                label_radius = (radius + inner_radius) / 2
-                label_angle = angle / 2
-                label_x = center_x + label_radius * math.sin(label_angle)
-                label_y = center_y - label_radius * math.cos(label_angle)
-                font_size = size * 0.15
+            label_radius = (radius + inner_radius) / 2
+            label_angle = angle / 2
+            label_x = center_x + label_radius * math.sin(label_angle)
+            label_y = center_y - label_radius * math.cos(label_angle)
+            font_size = size * 0.15
 
             text = Text(
                 text=label_text,
