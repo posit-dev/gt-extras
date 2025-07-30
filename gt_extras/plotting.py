@@ -1649,7 +1649,7 @@ def gt_plt_bar_stack(
         current_left = 0
 
         for i, value in enumerate(normalized_values):
-            if value == 0 or is_na(gt._tbl_data, value):
+            if value == 0:
                 continue
 
             bar_width = available_width * value
