@@ -799,52 +799,61 @@ def test_gt_plt_bar_stack_basic():
     df = pd.DataFrame({"team": ["A", "B"], "values": [[10, 20, 30], [40, 30, 20]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+    result = gt_plt_bar_stack(gt=gt_test, column="values")
+    html = result.as_raw_html()
 
-    assert html.count("width:32.0px;") == 2
-    assert html.count("height:30px;") == 8
-    assert html.count("transform:translateX(-50%) translateY(-50%);") == 6
+    assert html.count('width="32.0"') == 2
+    assert html.count('height="30"') == 8
+    assert html.count("<rect") == 6
+
+    assert html.count('height="30" fill="#000000"') == 2
+    assert html.count('height="30" fill="#25bce6"') == 2
+    assert html.count('height="30" fill="#9e9e9e"') == 2
+
+    assert html.count('<text dominant-baseline="central" text-anchor="middle"') == 6
 
 
 def test_gt_plt_bar_stack_custom_palette():
     df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(
+    result = gt_plt_bar_stack(
         gt=gt_test,
         column="values",
         palette=["red", "blue", "green"],
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert "background:red;" in html
-    assert "background:blue;" in html
-    assert "background:green;" in html
+    assert 'fill="red"' in html
+    assert 'fill="blue"' in html
+    assert 'fill="green"' in html
 
 
 def test_gt_plt_bar_stack_custom_dimensions():
     df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(
+    result = gt_plt_bar_stack(
         gt=gt_test,
         column="values",
         width=200,
         height=50,
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert "width:200px;" in html
-    assert "height:50px;" in html
+    assert '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="50">' in html
 
 
 def test_gt_plt_bar_stack_with_labels():
     df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(
+    result = gt_plt_bar_stack(
         gt=gt_test,
         column="values",
         labels=["Group 1", "Group 2", "Group 3"],
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
     assert "Group 1" in html
     assert "Group 2" in html
@@ -855,36 +864,39 @@ def test_gt_plt_bar_stack_relative_scaling():
     df = pd.DataFrame({"team": ["A", "B"], "values": [[1, 1], [2, 2]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(
+    result = gt_plt_bar_stack(
         gt=gt_test,
         column="values",
         scale_type="relative",
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert html.count("width:49.0px;")
+    assert html.count('width="49.0"') == 4
 
 
 def test_gt_plt_bar_stack_absolute_scaling():
     df = pd.DataFrame({"team": ["A", "B"], "values": [[1, 1], [2, 2]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(
+    result = gt_plt_bar_stack(
         gt=gt_test,
         column="values",
         scale_type="absolute",
-    ).as_raw_html()
+    )
+    html = result.as_raw_html()
 
-    assert html.count("width:49.0px") == 2
-    assert html.count("width:24.5px") == 2
+    assert html.count('width="49.0"') == 2
+    assert html.count('width="24.5"') == 2
 
 
 def test_gt_plt_bar_stack_with_empty_list():
     df = pd.DataFrame({"team": ["A", "B"], "values": [[], [10, 20, 30]]})
     gt_test = GT(df)
 
-    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+    result = gt_plt_bar_stack(gt=gt_test, column="values")
+    html = result.as_raw_html()
 
-    assert '<div style="position:relative; width:100px; height:30px;"></div>' in html
+    assert '<div style="width:100px; height:30px;"></div>' in html
 
 
 def test_gt_plt_bar_stack_with_none_values():
@@ -895,9 +907,11 @@ def test_gt_plt_bar_stack_with_none_values():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+    result = gt_plt_bar_stack(gt=gt_test, column="values")
+    html = result.as_raw_html()
 
-    assert html.count("background:") == 4
+    assert '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"></svg>'
+    assert html.count("<rect") == 4
 
 
 def test_gt_plt_bar_stack_with_na_values():
@@ -908,12 +922,13 @@ def test_gt_plt_bar_stack_with_na_values():
         }
     )
     gt_test = GT(df)
-    html = gt_plt_bar_stack(gt=gt_test, column="values").as_raw_html()
+    result = gt_plt_bar_stack(gt=gt_test, column="values")
+    html = result.as_raw_html()
 
-    assert html.count("background:") == 4
+    assert '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"></svg>'
+    assert html.count("<rect") == 4
 
 
-# TODO : not working
 def test_gt_plt_bar_stack_spacing_warning():
     df = pd.DataFrame({"team": ["A"], "values": [[10, 20, 30]]})
     gt_test = GT(df)
@@ -922,14 +937,18 @@ def test_gt_plt_bar_stack_spacing_warning():
         UserWarning,
         match="Spacing is too large relative to the width. No bars will be displayed.",
     ):
-        html = gt_plt_bar_stack(
+        result = gt_plt_bar_stack(
             gt=gt_test,
             column="values",
             width=10,
             spacing=5,
-        ).as_raw_html()
+        )
+        html = result.as_raw_html()
 
-    assert html.count("width:0.0px;") == 3
+    assert (
+        '<div style="display: flex;"><div style="width:10px; height:30px;"></div></div>'
+        in html
+    )
 
 
 def test_gt_plt_bar_stack_invalid_column():

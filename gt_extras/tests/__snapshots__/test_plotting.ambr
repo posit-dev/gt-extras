@@ -82,71 +82,11 @@
   <tbody class="gt_table_body">
     <tr>
       <td class="gt_row gt_left">A</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
-              <div style="
-                  position:absolute;
-                  left:0px;
-                  top:0px;
-                  width:32.666666666666664px;
-                  height:30px;
-                  background:red;
-              "><div style="
-                  position:absolute;
-                  left:50%;
-                  top:50%;
-                  transform:translateX(-50%) translateY(-50%);
-                  font-size:10px;
-                  color:#000000;
-              ">10</div></div><div style="
-                  position:absolute;
-                  left:34.666666666666664px;
-                  top:0px;
-                  width:65.33333333333333px;
-                  height:30px;
-                  background:blue;
-              "><div style="
-                  position:absolute;
-                  left:50%;
-                  top:50%;
-                  transform:translateX(-50%) translateY(-50%);
-                  font-size:10px;
-                  color:#FFFFFF;
-              ">20</div></div>
-          </div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"><rect x="0" y="0" width="32.666666666666664" height="30" fill="red"/><text dominant-baseline="central" text-anchor="middle" font-size="10" fill="#000000" x="16.333333333333332" y="15.0">10</text><rect x="34.666666666666664" y="0" width="65.33333333333333" height="30" fill="blue"/><text dominant-baseline="central" text-anchor="middle" font-size="10" fill="#FFFFFF" x="67.33333333333333" y="15.0">20</text></svg></div></td>
     </tr>
     <tr>
       <td class="gt_row gt_left">B</td>
-      <td class="gt_row gt_right"><div style="position:relative; width:100px; height:30px;">
-              <div style="
-                  position:absolute;
-                  left:0px;
-                  top:0px;
-                  width:56.0px;
-                  height:30px;
-                  background:red;
-              "><div style="
-                  position:absolute;
-                  left:50%;
-                  top:50%;
-                  transform:translateX(-50%) translateY(-50%);
-                  font-size:10px;
-                  color:#000000;
-              ">40</div></div><div style="
-                  position:absolute;
-                  left:58.0px;
-                  top:0px;
-                  width:42.0px;
-                  height:30px;
-                  background:blue;
-              "><div style="
-                  position:absolute;
-                  left:50%;
-                  top:50%;
-                  transform:translateX(-50%) translateY(-50%);
-                  font-size:10px;
-                  color:#FFFFFF;
-              ">30</div></div>
-          </div></td>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"><rect x="0" y="0" width="56.0" height="30" fill="red"/><text dominant-baseline="central" text-anchor="middle" font-size="10" fill="#000000" x="28.0" y="15.0">40</text><rect x="58.0" y="0" width="42.0" height="30" fill="blue"/><text dominant-baseline="central" text-anchor="middle" font-size="10" fill="#FFFFFF" x="79.0" y="15.0">30</text></svg></div></td>
     </tr>
   </tbody>
   '''

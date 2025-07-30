@@ -1609,7 +1609,7 @@ def gt_plt_bar_stack(
     Values of `0` will not be displayed in the plots.
     """
 
-    def _make_bar_stack_html(
+    def _make_bar_stack_svg(
         values: list[float],
         max_sum: float,
         width: float,
@@ -1621,7 +1621,7 @@ def gt_plt_bar_stack(
         scale_type: Literal["relative", "absolute"],
     ) -> str:
         if not values:
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         non_na_vals = [val if not is_na(gt._tbl_data, val) else 0 for val in values]
         # Count how many values will be displayed in the chart
@@ -1643,46 +1643,45 @@ def gt_plt_bar_stack(
                 "Spacing is too large relative to the width. No bars will be displayed.",
                 category=UserWarning,
             )
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
-        bars_html = []
+        elements = []
         current_left = 0
+
         for i, value in enumerate(normalized_values):
+            if value == 0 or is_na(gt._tbl_data, value):
+                continue
+
             bar_width = available_width * value
             color = colors[i % len(colors)]
 
+            # Create the bar rectangle
+            bar_rect = Rect(
+                x=current_left,
+                y=0,
+                width=bar_width,
+                height=height,
+                fill=color,
+            )
+            elements.append(bar_rect)
+
+            # Create the label text
             label = f"{non_na_vals[i]:.{num_decimals}f}"
-            label_html = f"""
-            <div style="
-                position:absolute;
-                left:50%;
-                top:50%;
-                transform:translateX(-50%) translateY(-50%);
-                font-size:{font_size}px;
-                color:{_ideal_fgnd_color(_html_color([color])[0])};
-            ">{label}</div>
-            """.strip()
+            label_text = Text(
+                text=label,
+                x=current_left + bar_width / 2,  # Center horizontally in the bar
+                y=height / 2,  # Center vertically
+                fill=_ideal_fgnd_color(_html_color([color])[0]),
+                font_size=font_size,
+                text_anchor="middle",
+                dominant_baseline="central",
+            )
+            elements.append(label_text)
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{current_left}px;
-                top:0px;
-                width:{bar_width}px;
-                height:{height}px;
-                background:{color};
-            ">{label_html}</div>
-            """.strip()
-            if value != 0 and not is_na(gt._tbl_data, value):
-                bars_html.append(bar_html.strip())
-                current_left += bar_width + spacing
+            current_left += bar_width + spacing
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Throw if `scale_type` is not one of the allowed values
     if scale_type not in ["relative", "absolute"]:
@@ -1710,7 +1709,7 @@ def gt_plt_bar_stack(
 
     res = gt
     res = res.fmt(
-        lambda x: _make_bar_stack_html(
+        lambda x: _make_bar_stack_svg(
             x,
             max_sum=max_sum,
             width=width,
