@@ -263,6 +263,9 @@ class GTCombinedLayout:
 
     __str__()
         Returns the HTML content as a string.
+
+    show()
+        Displays the table in an environment of choice. Options are `"notebook"` and `"browser"`.
     """
 
     def __init__(self, html_content: str):
@@ -273,6 +276,30 @@ class GTCombinedLayout:
 
     def __str__(self):
         return self.html_content
+
+    # do a show based on code from great_tables `GT.show()`
+    def show(self, target: Literal["notebook", "browser"] = "browser"):
+        if target == "notebook":
+            from IPython.core.display import display_html
+
+            # https://github.com/ipython/ipython/pull/10962
+            display_html(  # pyright: ignore[reportUnknownVariableType]
+                self._repr_html_(), raw=True, metadata={"text/html": {"isolated": True}}
+            )
+        elif target == "browser":
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                f_path = Path(tmp_dir) / "index.html"
+                f_path.write_text(self._repr_html_(), encoding="utf-8")
+
+                # create a server that closes after 1 request ----
+                server = _create_temp_file_server(f_path)
+                webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
+                server.handle_request()
+        else:
+            raise Exception(f"Unknown target display: {target}")
+
+    def save(self):
+        raise NotImplementedError
 
 
 def gt_two_column_layout(
@@ -310,7 +337,8 @@ def gt_two_column_layout(
     Returns
     -------
     GTCombinedLayout
-        A layout object that automatically renders as HTML in Jupyter notebooks and Quarto documents.
+        A layout object that automatically renders as HTML in Jupyter notebooks and Quarto
+        documents. It also has a `.show()` method, taking `"notebook"` and `"browser"` as targets.
 
     Examples
     --------
@@ -490,29 +518,14 @@ def gt_two_column_layout(
     </div>
     """
 
-    # do a show or save
-    # based on code from great_tables `GT.show()`
-    if target == "notebook":
-        from IPython.core.display import display_html
+    double_table = GTCombinedLayout(double_table_html)
 
-        # https://github.com/ipython/ipython/pull/10962
-        display_html(  # pyright: ignore[reportUnknownVariableType]
-            double_table_html, raw=True, metadata={"text/html": {"isolated": True}}
-        )
-    elif target == "browser":
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            f_path = Path(tmp_dir) / "index.html"
-            f_path.write_text(double_table_html, encoding="utf-8")
-
-            # create a server that closes after 1 request ----
-            server = _create_temp_file_server(f_path)
-            webbrowser.open(f"http://127.0.0.1:{server.server_port}/{f_path.name}")
-            server.handle_request()
-    elif target == "save":
-        raise NotImplementedError(
-            "At the moment, only notebook and browser display options are available."
-        )
-    elif target is not None:
-        raise Exception(f"Unknown target display: {target}")
+    if target:
+        if target == "save":
+            raise NotImplementedError(
+                "At the moment, only notebook and browser display options are available."
+            )
+        else:
+            double_table.show(target)
 
     return GTCombinedLayout(double_table_html)
