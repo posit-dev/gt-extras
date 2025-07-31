@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import warnings
 from typing import TYPE_CHECKING, Literal
 
@@ -10,7 +11,6 @@ from great_tables._data_color.base import (
 )
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
-from scipy.stats import sem, t, tmean
 from svg import SVG, Circle, Length, Line, Rect, Text
 
 from gt_extras import gt_duplicate_column
@@ -667,10 +667,8 @@ def gt_plt_conf_int(
 
     ci_columns
         Optional columns representing the left/right confidence intervals of your sample. If `None`,
-        the confidence interval will be computed from the data in `column` using a t-distribution.
-
-    ci
-        The confidence level to use when computing the interval (if `ci_columns` is `None`).
+        the confidence interval will be computed from the data in `column` using a t-distribution
+        for a confidence interval of `0.95`.
 
     width
         The width of the confidence interval plot in pixels. Note that if the width is too narrow,
@@ -866,17 +864,69 @@ def gt_plt_conf_int(
                 "since ci_columns were not given."
             )
 
+        # def _compute_mean_and_conf_int(val):
+        #     if val is None or not isinstance(val, list) or len(val) == 0:
+        #         return (None, None, None)
+        #     mean = tmean(val)
+        #     conf_int = t.interval(
+        #         ci,
+        #         len(val) - 1,
+        #         loc=mean,
+        #         scale=sem(val),
+        #     )
+        #     return (mean, conf_int[0], conf_int[1])
+
         def _compute_mean_and_conf_int(val):
             if val is None or not isinstance(val, list) or len(val) == 0:
                 return (None, None, None)
-            mean = tmean(val)
-            conf_int = t.interval(
-                ci,
-                len(val) - 1,
-                loc=mean,
-                scale=sem(val),
-            )
-            return (mean, conf_int[0], conf_int[1])
+
+            # Compute the mean
+            m = sum(val) / len(val)
+
+            # Compute the standard deviation
+            variance = sum((x - m) ** 2 for x in val) / (len(val) - 1)
+            std_dev = math.sqrt(variance)
+
+            # Compute the standard error of the mean
+            sem = std_dev / math.sqrt(len(val))
+
+            # Compute the critical t-value for the given confidence interval
+            t_critical = _compute_95_t_critical(len(val) - 1)
+
+            # Compute the confidence interval
+            margin_of_error = t_critical * sem
+            conf_int = (m - margin_of_error, m + margin_of_error)
+
+            return (m, conf_int[0], conf_int[1])
+
+        def _compute_95_t_critical(df):
+            # Approximation for the inverse CDF of the t-distribution
+            if df <= 30:
+                # Simplified lookup for small degrees of freedom
+                # This is the best alternative to scipy.stats I could come up with
+                t_table = {
+                    1: 12.706,
+                    2: 4.303,
+                    3: 3.182,
+                    4: 2.776,
+                    5: 2.571,
+                    6: 2.447,
+                    7: 2.365,
+                    8: 2.306,
+                    9: 2.262,
+                    10: 2.228,
+                    11: 2.201,
+                    12: 2.179,
+                    13: 2.160,
+                    14: 2.145,
+                    15: 2.131,
+                    20: 2.086,
+                    30: 2.042,
+                }
+                return t_table.get(df, 20)
+            else:
+                # For large degrees of freedom, use the normal approximation
+                return 1.96  # Approximation for 95% CI
 
         stats = list(map(_compute_mean_and_conf_int, data_vals))
         means, c1_vals, c2_vals = zip(*stats) if stats else ([], [], [])
