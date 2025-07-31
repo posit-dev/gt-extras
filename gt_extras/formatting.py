@@ -338,7 +338,7 @@ def gt_two_column_layout(
     -------
     GTCombinedLayout
         A layout object that automatically renders as HTML in Jupyter notebooks and Quarto
-        documents. It also has a `.show()` method, taking `"notebook"` and `"browser"` as targets.
+        documents. It also has a `.show()` method, taking `"notebook"` or `"browser"` as targets.
 
     Examples
     --------
