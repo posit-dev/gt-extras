@@ -1,9 +1,9 @@
 from __future__ import annotations
+
 from typing import Literal
 
-from great_tables import GT, style, loc
+from great_tables import GT, loc, style
 from great_tables._tbl_data import SelectExpr
-
 
 __all__ = ["gt_add_divider"]
 
@@ -20,8 +20,9 @@ def gt_add_divider(
     weight: int = 2,
     include_labels: bool = True,
 ) -> GT:
+    # TODO: include a simpler example first
     """
-    Add dividers to specified columns in a GT table.
+    Add dividers to specified columns in a `GT` object.
 
     The `gt_add_divider()` function takes an existing `GT` object and adds dividers to the specified
     columns. Dividers can be applied to one or more sides of the cells, with customizable color,
@@ -104,7 +105,7 @@ def gt_add_divider(
         style=style.borders(
             sides=sides,
             color=color,
-            weight=weight,
+            weight=f"{weight}px",
             style=divider_style,
         ),
         locations=locations,

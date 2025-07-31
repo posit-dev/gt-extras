@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from great_tables import GT, style, loc, google_font
+from great_tables import GT, google_font, loc, style
 
 __all__ = [
     "gt_theme_538",
@@ -48,13 +48,13 @@ def gt_theme_538(gt: GT) -> GT:
     ```
     """
     gt_themed = (
-        gt.opt_table_font(font=google_font("Cairo"), weight=400)
+        gt.opt_table_font(font=google_font("Cairo"))
         .tab_style(
-            style=style.text(font=google_font("Chivo"), weight=700),
+            style=style.text(font=google_font("Chivo"), weight="bold"),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(font=google_font("Chivo"), weight=300),
+            style=style.text(font=google_font("Chivo")),
             locations=loc.subtitle(),
         )
         .tab_style(
@@ -65,7 +65,6 @@ def gt_theme_538(gt: GT) -> GT:
                     transform="uppercase",
                     v_align="bottom",
                     size="14px",
-                    weight=200,
                 ),
             ],
             locations=[loc.column_labels(), loc.stubhead()],
@@ -200,11 +199,11 @@ def gt_theme_nytimes(gt: GT) -> GT:
             locations=[loc.column_labels(), loc.stubhead()],
         )
         .tab_style(
-            style=style.text(font=google_font("Libre Franklin"), weight=800),
+            style=style.text(font=google_font("Libre Franklin"), weight="bolder"),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(font=google_font("Source Sans Pro"), weight=400),
+            style=style.text(font=google_font("Source Sans Pro")),
             locations=loc.body(),
         )
         .tab_options(
@@ -259,7 +258,7 @@ def gt_theme_guardian(gt: GT) -> GT:
     """
     ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
-        gt.opt_table_font(font=[google_font("Noto Sans")])
+        gt.opt_table_font(font=google_font("Noto Sans"))
         ## Altered wrt R package
         # .tab_style(
         #     ## style hidden or weight 0px?
@@ -268,11 +267,11 @@ def gt_theme_guardian(gt: GT) -> GT:
         #     locations=loc.body(rows=0),
         # )
         .tab_style(
-            style=style.text(color="#005689", size="22px", weight=700),
+            style=style.text(color="#005689", size="22px", weight="bold"),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(color="#005689", size="16px", weight=700),
+            style=style.text(color="#005689", size="16px", weight="bold"),
             locations=loc.subtitle(),
         )
         .tab_options(
@@ -326,8 +325,9 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
     ----------
     gt
         An existing `GT` object.
+
     color
-        A string indicating the color of the row striping, defaults to a light gray.
+        A string indicating the color of the row striping, defaults to a light grey.
         Accepts either named colors or hex colors.
 
     Returns
@@ -420,8 +420,9 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
     ----------
     gt
         An existing `GT` object.
+
     color
-        A string indicating the color of the row striping, defaults to a light green.
+        A string indicating the color of the row striping, defaults to `"#b5dbb6"`.
         Accepts either named colors or hex colors.
 
     Returns
@@ -515,11 +516,11 @@ def gt_theme_dark(gt: GT) -> GT:
             locations=[loc.column_labels(), loc.stubhead()],
         )
         .tab_style(
-            style=style.text(font=google_font("Libre Franklin"), weight=800),
+            style=style.text(font=google_font("Libre Franklin"), weight="bolder"),
             locations=loc.title(),
         )
         .tab_style(
-            style=style.text(font=google_font("Source Sans Pro"), weight=400),
+            style=style.text(font=google_font("Source Sans Pro")),
             locations=loc.body(),
         )
         .tab_options(
@@ -558,12 +559,15 @@ def gt_theme_pff(
     ----------
     gt
         An existing `GT` object.
+
     divider
-        Zero or more column names to visually divide with a preceding border.
+        Zero or more column names/indices to visually divide with a preceding border.
+
     spanners
         Optional list of spanners to style, as referenced by the `GT` spanner ids.
+
     rank_col
-        Optional single column name to highlight as a rank column.
+        Optional single column name/index to highlight as a rank column.
 
     Returns
     -------
@@ -621,7 +625,7 @@ def gt_theme_pff(
         gt_themed = (
             gt_themed.tab_spanner(
                 columns=[
-                    col
+                    str(col)
                     for col in gt._boxhead._get_column_labels()
                     if col not in span_cols
                 ],

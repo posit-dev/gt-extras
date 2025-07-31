@@ -1,0 +1,76 @@
+# serializer version: 1
+# name: test_gt_merge_stack_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left"><div>
+              <div style="line-height:14px;">
+              <span style="
+                  font-weight:bold;
+                  font-variant:small-caps;
+                  color:black;
+                  font-size:14px;
+              ">
+                  A
+              </span>
+          </div>
+              <div style="line-height:10px;">
+              <span style="
+                  font-weight:normal;
+                  color:grey;
+                  font-size:10px;
+              ">
+                  X
+              </span>
+          </div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"><div>
+              <div style="line-height:14px;">
+              <span style="
+                  font-weight:bold;
+                  font-variant:small-caps;
+                  color:black;
+                  font-size:14px;
+              ">
+                  B
+              </span>
+          </div>
+              <div style="line-height:10px;">
+              <span style="
+                  font-weight:normal;
+                  color:grey;
+                  font-size:10px;
+              ">
+                  1
+              </span>
+          </div>
+          </div></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"><div>
+              <div style="line-height:14px;">
+              <span style="
+                  font-weight:bold;
+                  font-variant:small-caps;
+                  color:black;
+                  font-size:14px;
+              ">
+                  C
+              </span>
+          </div>
+              <div style="line-height:10px;">
+              <span style="
+                  font-weight:normal;
+                  color:grey;
+                  font-size:10px;
+              ">
+                  
+              </span>
+          </div>
+          </div></td>
+    </tr>
+  </tbody>
+  '''
+# ---

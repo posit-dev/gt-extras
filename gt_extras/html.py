@@ -1,14 +1,20 @@
 from __future__ import annotations
+
 from typing import Literal
 
-__all__ = ["gt_hyperlink", "with_tooltip"]
+from great_tables import GT
+from great_tables._tbl_data import SelectExpr, is_na
+
+from gt_extras._utils_column import _validate_and_get_single_column
+
+__all__ = ["with_hyperlink", "with_tooltip", "gt_merge_stack"]
 
 
-def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
+def with_hyperlink(text: str, url: str, new_tab: bool = True) -> str:
     """
     Create HTML hyperlinks for use in `GT` cells.
 
-    The `gt_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
+    The `with_hyperlink()` function creates properly formatted HTML hyperlink elements that can be
     used within table cells.
 
     Parameters
@@ -28,7 +34,7 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
         An string containing the HTML formatted hyperlink element.
 
     Examples
-    -------
+    --------
     ```{python}
     import pandas as pd
     from great_tables import GT
@@ -52,12 +58,12 @@ def gt_hyperlink(text: str, url: str, new_tab: bool = True) -> int:
     )
 
     df["Package"] = [
-        gte.gt_hyperlink(name, url)
+        gte.with_hyperlink(name, url)
         for name, url in zip(df["name"], df["url"])
     ]
 
     df["Github Stars"] = [
-        gte.gt_hyperlink(github_stars, repo_url, new_tab=False)
+        gte.with_hyperlink(github_stars, repo_url, new_tab=False)
         for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
     ]
 
@@ -151,4 +157,170 @@ def with_tooltip(
     if color != "none":
         style += f"color: {color}; "
 
+    # Why doesn't the output have to be wrapped in GT.html()?
     return f'<abbr style="{style}" title="{tooltip}">{label}</abbr>'
+
+
+def gt_merge_stack(
+    gt: GT,
+    col1: SelectExpr,
+    col2: SelectExpr,
+    font_size_main: int = 14,
+    font_size_secondary: int = 10,
+    font_weight_main: Literal["normal", "bold", "bolder", "lighter"] | int = "bold",
+    font_weight_secondary: Literal["normal", "bold", "bolder", "lighter"]
+    | int = "normal",
+    color_main: str = "black",
+    color_secondary: str = "grey",
+    small_caps: bool = True,
+) -> GT:
+    """
+    Merge two columns into a stacked format within a `GT` object.
+
+    The `gt_merge_stack()` function combines two columns in a `GT` object into a single column
+    with a stacked format. The top section displays values from the first column (`col1`), and
+    the bottom section displays values from the second column (`col2`). Both sections can be
+    styled independently with customizable font sizes, weights, colors, and text variants.
+
+    The resulting table will hide `col2`, and the orignal `col1` will contain the merged entries.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    col1
+        The column containing values to display in the top section of the stack.
+
+    col2
+        The column containing values to display in the bottom section of the stack.
+
+    font_size_main
+        The font size for the top section of the stack.
+
+    font_size_secondary
+        The font size for the bottom section of the stack.
+
+    font_weight_main
+        The font weight for the top section of the stack. Options include `"normal"`, `"bold"`,
+        `"bolder"`, `"lighter"`, or an integer value.
+
+    font_weight_secondary
+        The font weight for the bottom section of the stack.
+
+    color_main
+        The text color for the top section of the stack.
+
+    color_secondary
+        The text color for the bottom section of the stack.
+
+    small_caps
+        A boolean indicating whether the top section should use small caps styling.
+
+    Returns
+    -------
+    GT
+        A `GT` object with the merged and styled column.
+
+    Examples
+    -------
+    ```{python}
+    import pandas as pd
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pd.read_csv("../assets/teams_colors_logos.csv")
+    df = (df.filter(items=["team_nick", "team_abbr", "team_conf", "team_division", "team_wordmark"]).head(8))
+
+    gt = GT(df, groupname_col="team_conf", rowname_col="team_nick")
+    gt = gt.fmt_image(columns="team_wordmark")
+
+
+    gt.pipe(
+        gte.gt_merge_stack,
+        col1="team_nick",
+        col2="team_division",
+    )
+    ```
+    """
+
+    def _make_merge_stack_html(
+        col1_val: str,
+        col2_val: str,
+        font_size_main: int,
+        font_size_secondary: int,
+        font_weight_main: str | int,
+        font_weight_secondary: str | int,
+        color_main: str,
+        color_secondary: str,
+        small_caps: bool,
+    ) -> str:
+        font_variant = "small-caps" if small_caps else "normal"
+
+        top_section_html = f"""
+        <div style="line-height:{font_size_main}px;">
+            <span style="
+                font-weight:{font_weight_main};
+                font-variant:{font_variant};
+                color:{color_main};
+                font-size:{font_size_main}px;
+            ">
+                {col1_val}
+            </span>
+        </div>
+        """.strip()
+
+        bottom_section_html = f"""
+        <div style="line-height:{font_size_secondary}px;">
+            <span style="
+                font-weight:{font_weight_secondary};
+                color:{color_secondary};
+                font-size:{font_size_secondary}px;
+            ">
+                {col2_val}
+            </span>
+        </div>
+        """.strip()
+
+        html = f"""
+        <div>
+            {top_section_html}
+            {bottom_section_html}
+        </div>
+        """.strip()
+
+        return html
+
+    _, col1_vals = _validate_and_get_single_column(gt, expr=col1)
+    _, col2_vals = _validate_and_get_single_column(gt, expr=col2)
+
+    res = gt
+
+    for i in range(len(gt._tbl_data)):
+        col1_val = col1_vals[i]
+        col2_val = col2_vals[i]
+
+        if is_na(gt._tbl_data, col1_val):
+            col1_val = ""
+        if is_na(gt._tbl_data, col2_val):
+            col2_val = ""
+
+        res = res.fmt(
+            lambda _, col1_val=col1_val, col2_val=col2_val: _make_merge_stack_html(
+                col1_val=col1_val,
+                col2_val=col2_val,
+                font_size_main=font_size_main,
+                font_size_secondary=font_size_secondary,
+                font_weight_main=font_weight_main,
+                font_weight_secondary=font_weight_secondary,
+                color_main=color_main,
+                color_secondary=color_secondary,
+                small_caps=small_caps,
+            ),
+            columns=col1,
+            rows=[i],
+        )
+
+    res = res.cols_hide(col2)
+
+    return res

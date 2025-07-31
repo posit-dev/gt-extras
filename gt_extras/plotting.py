@@ -1,39 +1,36 @@
 from __future__ import annotations
-from typing import Literal
+
+import math
 import warnings
+from typing import TYPE_CHECKING, Literal
 
 from great_tables import GT, html
-from great_tables._tbl_data import SelectExpr, is_na
-from great_tables._locations import resolve_cols_c
-
-from gt_extras._utils_column import (
-    _validate_and_get_single_column,
-    _scale_numeric_column,
-)
-
-from gt_extras._utils_color import _get_discrete_colors_from_palette
-
 from great_tables._data_color.base import (
     _html_color,
     _ideal_fgnd_color,
 )
+from great_tables._locations import resolve_cols_c
+from great_tables._tbl_data import SelectExpr, is_na
+from svg import SVG, Circle, Length, Line, Rect, Text
 
-from svg import SVG, Line, Rect, Text
-
-import math
-
+from gt_extras import gt_duplicate_column
+from gt_extras._utils_color import _get_discrete_colors_from_palette
+from gt_extras._utils_column import (
+    _format_numeric_text,
+    _scale_numeric_column,
+    _validate_and_get_single_column,
+)
 
 __all__ = [
     "gt_plt_bar",
-    "gt_plt_dot",
+    "gt_plt_bar_pct",
+    "gt_plt_bar_stack",
+    "gt_plt_bullet",
     "gt_plt_conf_int",
+    "gt_plt_dot",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
-    "gt_plt_bar_stack",
 ]
-
-# TODO: keep_columns - this is tricky because we can't copy cols in the gt object, so we will have
-# to handle the underlying _tbl_data.
 
 # TODO: default font for labels?
 
@@ -44,14 +41,14 @@ def gt_plt_bar(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "purple",
-    bar_height: int = 20,
-    height: int = 30,
-    width: int = 60,
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
     stroke_color: str | None = "black",
-    scale_type: Literal["percent", "number"] | None = None,
-    scale_color: str = "white",
+    show_labels: bool = False,
+    label_color: str = "white",
     domain: list[int] | list[float] | None = None,
-    # keep_columns: bool = False,
+    keep_columns: bool = False,
 ) -> GT:
     """
     Create horizontal bar plots in `GT` cells.
@@ -66,8 +63,8 @@ def gt_plt_bar(
         A `GT` object to modify.
 
     columns
-        The columns to target. Can be a single column name or a list of column names. If `None`,
-        the bar plot is applied to all numeric columns.
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the bar plot is applied to all numeric columns.
 
     fill
         The fill color for the bars.
@@ -76,21 +73,28 @@ def gt_plt_bar(
         The height of each individual bar in pixels.
 
     height
-        The height of the bar plot in pixels.
+        The height of the bar plot in pixels. In practice, this allows for the bar to appear
+        less stout, the larger the difference between `height` and `bar_height`.
 
     width
-        The width of the maximum bar in pixels
+        The width of the maximum bar in pixels. Not all bars will have this width.
 
     stroke_color
         The color of the vertical axis on the left side of the bar. The default is black, but if
-        `None` is passed no stroke will be drawn.
+        `None` is passed, no stroke will be drawn.
 
-    scale_type
-        The type of value to show on bars. Options are `"number"`, `"percent"`, or `None` for no
-        labels.
+    show_labels
+        Whether or not to show labels on the bars.
 
-    scale_color
-        The color of text labels on the bars (when `scale_type` is not `None`).
+    label_color
+        The color of text labels on the bars (when `show_labels` is `True`).
+
+    keep_columns
+        Whether to keep the original column values. If this flag is `True`, the plotted values will
+        be duplicated into a new column with the string " plot" appended to the end of the column
+        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
 
     Returns
     -------
@@ -127,12 +131,6 @@ def gt_plt_bar(
     --------
     Each column's bars are scaled independently based on that column's min/max values.
     """
-    # A version with svg.py
-
-    # Throw if `scale_type` is not one of the allowed values
-    if scale_type not in [None, "percent", "number"]:
-        raise ValueError("Scale_type must be one of `None`, 'percent', or 'number'")
-
     if bar_height > height:
         bar_height = height
         warnings.warn(
@@ -147,66 +145,12 @@ def gt_plt_bar(
             category=UserWarning,
         )
 
-    # Helper function to make the individual bars
-    def _make_bar_html(
-        scaled_val: int,
-        original_val: int,
-        fill: str,
-        bar_height: int,
-        height: int,
-        width: int,
-        stroke_color: str,
-        scale_type: Literal["percent", "number"] | None,
-        scale_color: str,
-    ) -> str:
-        UNITS = "px"  # TODO: let use control this?
-
-        text = ""
-        if scale_type == "percent":
-            text = str(round(original_val * 100)) + "%"
-        if scale_type == "number":
-            text = original_val
-
-        canvas = SVG(
-            width=str(width) + UNITS,
-            height=str(height) + UNITS,
-            elements=[
-                Rect(
-                    x=0,
-                    y=str((height - bar_height) / 2) + UNITS,
-                    width=str(width * scaled_val) + UNITS,
-                    height=str(bar_height) + UNITS,
-                    fill=fill,
-                    # onmouseover="this.style.fill= 'blue';",
-                    # onmouseout=f"this.style.fill='{fill}';",
-                ),
-                Text(
-                    text=text,
-                    x=str((width * scaled_val) * 0.98) + UNITS,
-                    y=str(height / 2) + UNITS,
-                    fill=scale_color,
-                    font_size=bar_height * 0.6,
-                    text_anchor="end",
-                    dominant_baseline="central",
-                ),
-                Line(
-                    x1=0,
-                    x2=0,
-                    y1=0,
-                    y2=str(height) + UNITS,
-                    stroke_width=str(height / 10) + UNITS,
-                    stroke=stroke_color,
-                ),
-            ],
-        )
-        return f'<div style="display: flex;">{canvas.as_str()}</div>'
-
     # Allow the user to hide the vertical stroke
     if stroke_color is None:
-        stroke_color = "#FFFFFF00"
+        stroke_color = "transparent"
 
-    def _make_bar(scaled_val: int, original_val: int) -> str:
-        return _make_bar_html(
+    def _make_bar(scaled_val: float, original_val: int | float) -> str:
+        svg = _make_bar_svg(
             scaled_val=scaled_val,
             original_val=original_val,
             fill=fill,
@@ -214,9 +158,11 @@ def gt_plt_bar(
             height=height,
             width=width,
             stroke_color=stroke_color,
-            scale_type=scale_type,
-            scale_color=scale_color,
+            show_labels=show_labels,
+            label_color=label_color,
         )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
@@ -229,7 +175,22 @@ def gt_plt_bar(
             column,
         )
 
-        scaled_vals = _scale_numeric_column(gt._tbl_data, col_name, col_vals, domain)
+        scaled_vals = _scale_numeric_column(
+            res._tbl_data,
+            col_name,
+            col_vals,
+            domain,
+        )
+
+        # The location of the plot column will be right after the original column
+        if keep_columns:
+            res = gt_duplicate_column(
+                res,
+                col_name,
+                after=col_name,
+                append_text=" plot",
+            )
+            col_name = col_name + " plot"
 
         # Apply the scaled value for each row, so the bar is proportional
         for i, scaled_val in enumerate(scaled_vals):
@@ -238,9 +199,249 @@ def gt_plt_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
                 ),
-                columns=column,
+                columns=col_name,
                 rows=[i],
             )
+
+    return res
+
+
+def gt_plt_bullet(
+    gt: GT,
+    data_column: SelectExpr,
+    target_column: SelectExpr,
+    # target_value: int | None = None, # if this, let target_column be none?
+    fill: str = "purple",
+    bar_height: float = 20,
+    height: float = 30,
+    width: float = 60,
+    target_color: str = "darkgrey",
+    stroke_color: str | None = "black",
+    # show_labels: bool = False, # Maybe include in later version of fn, to label target or data?
+    # label_color: str = "white",
+    keep_data_column: bool = False,
+) -> GT:
+    """
+    Create bullet chart plots in `GT` cells.
+
+    The `gt_plt_bullet()` function takes an existing `GT` object and adds bullet chart
+    visualizations to compare actual values against target values. Each bullet chart consists
+    of a horizontal bar representing the actual value and a vertical line indicating the target
+    value, making it easy to assess performance against goals or benchmarks.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    data_column
+        The column containing the actual values to be plotted as horizontal bars.
+
+    target_column
+        The column containing the target values to be displayed as vertical reference lines.
+        This column will be automatically hidden from the returned table.
+
+    fill
+        The fill color for the horizontal bars representing actual values.
+
+    bar_height
+        The height of each horizontal bar in pixels.
+
+    height
+        The height of the bullet chart plot in pixels. This allows for spacing around
+        the bar and target line.
+
+    width
+        The width of the maximum bar in pixels. Bars are scaled proportionally to this width.
+
+    target_color
+        The color of the vertical target line.
+
+    stroke_color
+        The color of the vertical axis on the left side of the chart. The default is black, but if
+        `None` is passed, no stroke will be drawn.
+
+    keep_data_column
+        Whether to keep the original data column values. If this flag is `True`, the plotted values
+        will be duplicated into a new column with the string " plot" appended to the end of the
+        column name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
+    Returns
+    -------
+    GT
+        A `GT` object with bullet chart plots added to the specified data column. The target
+        column is automatically hidden from the table.
+
+    Examples
+    --------
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    from great_tables.data import airquality
+    import gt_extras as gte
+
+    air_bullet = (
+        pl.from_pandas(airquality)
+        .with_columns(pl.col("Temp").mean().over("Month").alias("target_temp"))
+        .group_by("Month", maintain_order=True)
+        .head(2)
+        .with_columns(
+            (pl.col("Month").cast(pl.Utf8) + "/" + pl.col("Day").cast(pl.Utf8)).alias(
+                "Date"
+            )
+        )
+        .select(["Date", "Temp", "target_temp"])
+        .with_columns(pl.col(["Temp", "target_temp"]).round(1))
+    )
+
+    (
+        GT(air_bullet, rowname_col="Date")
+        .tab_header(title="Daily Temp vs Monthly Average")
+        .tab_source_note("Target line shows monthly average temperature")
+
+        ## Call gt_plt_bullet
+        .pipe(
+            gte.gt_plt_bullet,
+            data_column="Temp",
+            target_column="target_temp",
+            width=200,
+            fill="tomato",
+            target_color="darkblue",
+            keep_data_column=True,
+        )
+        .cols_move_to_end("Temp")
+        .cols_align("left", "Temp plot")
+    )
+    ```
+
+    Note
+    ----
+    Both data and target values are scaled to a common domain for consistent visualization.
+    The scaling domain is automatically determined as `[0, max(data_values, target_values)]`.
+    """
+    if bar_height > height:
+        bar_height = height
+        warnings.warn(
+            f"Bar_height must be less than or equal to the plot height. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    if bar_height < 0:
+        bar_height = 0
+        warnings.warn(
+            f"Bar_height cannot be negative. Adjusting bar_height to {bar_height}.",
+            category=UserWarning,
+        )
+
+    # Allow the user to hide the vertical stroke
+    if stroke_color is None:
+        stroke_color = "transparent"
+
+    def _make_bullet_plot_svg(
+        scaled_val: float,
+        original_val: int | float,
+        target_val: float,
+        original_target_val: float | int | None,
+    ) -> str:
+        svg = _make_bar_svg(
+            scaled_val=scaled_val,
+            original_val=original_val,
+            fill=fill,
+            bar_height=bar_height,
+            height=height,
+            width=width,
+            stroke_color=stroke_color,
+            show_labels=False,
+            label_color="black",  # placeholder
+        )
+
+        # this should never be reached, but is needed for the type checker
+        if TYPE_CHECKING:
+            if svg.elements is None:
+                raise ValueError(
+                    "Unreachable code: svg.elements should never be None here."
+                )
+
+        if not is_na(res._tbl_data, original_target_val):
+            _stroke_width = height / 10
+            _x_location = max(_stroke_width, width * target_val - _stroke_width / 2)
+
+            svg.elements.append(
+                Line(
+                    x1=Length(_x_location, "px"),
+                    x2=Length(_x_location, "px"),
+                    y1=0,
+                    y2=Length(height, "px"),
+                    stroke_width=Length(_stroke_width, "px"),
+                    stroke=target_color,
+                ),
+            )
+
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
+
+    res = gt
+
+    data_col_name, data_col_vals = _validate_and_get_single_column(
+        gt,
+        data_column,
+    )
+    target_col_name, target_col_vals = _validate_and_get_single_column(
+        gt,
+        target_column,
+    )
+
+    # Only consider numeric values for scaling domain
+    domain = None
+    numeric_data_vals = [v for v in data_col_vals if isinstance(v, (int, float))]
+    numeric_target_vals = [v for v in target_col_vals if isinstance(v, (int, float))]
+    if numeric_data_vals or numeric_target_vals:
+        domain = [0, max([*numeric_data_vals, *numeric_target_vals])]
+
+    scaled_data_vals = _scale_numeric_column(
+        res._tbl_data,
+        data_col_name,
+        data_col_vals,
+        domain,
+    )
+
+    scaled_target_vals = _scale_numeric_column(
+        res._tbl_data,
+        target_col_name,
+        target_col_vals,
+        domain,
+    )
+
+    if keep_data_column:
+        res = gt_duplicate_column(
+            res,
+            data_col_name,
+            after=data_col_name,
+            append_text=" plot",
+        )
+        data_col_name = data_col_name + " plot"
+
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_data_vals):
+        target_val = scaled_target_vals[i]
+        original_target_val = target_col_vals[i]
+
+        res = res.fmt(
+            lambda original_val,
+            scaled_val=scaled_val,
+            target_val=target_val,
+            original_target_val=original_target_val: _make_bullet_plot_svg(
+                original_val=original_val,
+                scaled_val=scaled_val,
+                target_val=target_val,
+                original_target_val=original_target_val,
+            ),
+            columns=data_col_name,
+            rows=[i],
+        )
+
+    res = res.cols_hide(target_col_name)
+
     return res
 
 
@@ -248,6 +449,9 @@ def gt_plt_dot(
     gt: GT,
     category_col: SelectExpr,
     data_col: SelectExpr,
+    width: int = 120,
+    height: int = 30,
+    font_size: int = 16,
     domain: list[int] | list[float] | None = None,
     palette: list[str] | str | None = None,
 ) -> GT:
@@ -255,8 +459,9 @@ def gt_plt_dot(
     Create dot plots with thin horizontal bars in `GT` cells.
 
     The `gt_plt_dot()` function takes an existing `GT` object and adds dot plots with horizontal
-    bar charts to a specified category column. Each cell displays a colored dot with the category
-    label and a horizontal bar representing the corresponding numeric value from the data column.
+    bar charts to a specified category column. Each cell displays a colored dot according to the
+    value in the assigned category column and a horizontal bar representing the corresponding
+    numeric value from the data column.
 
     Parameters
     ----------
@@ -264,10 +469,21 @@ def gt_plt_dot(
         A `GT` object to modify.
 
     category_col
-        The column containing category labels that will be displayed next to colored dots.
+        The column containing category labels that will be displayed next to colored dots. The
+        coloring of the dots are determined by this column.
 
     data_col
         The column containing numeric values that will determine the length of the horizontal bars.
+
+    width
+        The width of the SVG plot in pixels. You may need to increase this if your category labels
+        are long.
+
+    height
+        The height of the SVG plot in pixels.
+
+    font_size
+        The font size for the category label text.
 
     domain
         The domain of values to use for the color scheme. This can be a list of floats or integers.
@@ -275,8 +491,8 @@ def gt_plt_dot(
 
     palette
         The color palette to use. This should be a list of colors
-        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`). A ColorBrewer palette could also be used,
-        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color.html#great_tables.GT.data_color) for additional reference).
+        (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`). A ColorBrewer palette could also be used,
+        just supply the name (see [`GT.data_color()`](https://posit-dev.github.io/great-tables/reference/GT.data_color) for additional reference).
         If `None`, then a default palette will be used.
 
     Returns
@@ -291,7 +507,7 @@ def gt_plt_dot(
     from great_tables.data import gtcars
     import gt_extras as gte
 
-    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp", "trq", "mpg_c"]]
+    gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp"]]
 
     gt = (
         GT(gtcars_mini, rowname_col="model")
@@ -300,56 +516,72 @@ def gt_plt_dot(
 
     gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
     ```
+
+    Note
+    -------
+    If your category label text is cut off or does not fit, you likely need to increase the `width`
+    parameter to allow more space for the text and plot.
     """
     # Get the underlying Dataframe
     data_table = gt._tbl_data
 
-    def _make_bottom_bar_html(
-        val: float,
-        fill: str,
-    ) -> str:
-        scaled_value = val * 100
-        inner_html = f' <div style="background:{fill}; width:{scaled_value}%; height:4px; border-radius:2px;"></div>'
-        html = f'<div style="flex-grow:1; margin-left:0px;"> {inner_html} </div>'
-
-        return html
-
-    def _make_dot_and_bar_html(
+    def _make_dot_and_bar_svg(
         bar_val: float,
         fill: str,
         dot_category_label: str,
+        svg_width: float,
+        svg_height: float,
+        font_size: float,
     ) -> str:
         if is_na(data_table, bar_val) or is_na(data_table, dot_category_label):
             return "<div></div>"
 
-        label_div_style = "display:inline-block; float:left; margin-right:0px;"
+        # Layout parameters
+        dot_radius = font_size / 2.75
+        dot_x = dot_radius
+        dot_y = svg_height / 2
 
-        dot_style = (
-            f"height:0.7em; width:0.7em; background-color:{fill};"
-            "border-radius:50%; margin-top:4px; display:inline-block;"
-            "float:left; margin-right:2px;"
-        )
+        # Text positioning
+        text_x = dot_x + dot_radius * 1.5
+        text_y = dot_y
 
-        padding_div_style = (
-            "display:inline-block; float:right; line-height:20px; padding:0px 2.5px;"
-        )
+        # Bar positioning
+        bar_y = text_y + (font_size / 2) * 1.2  # 1.2 for padding
+        bar_height = svg_height / 8
+        bar_start_x = 0
+        bar_width = svg_width * bar_val
 
-        bar_container_style = "position:relative; top:1.2em;"
+        elements = [
+            # Dot
+            Circle(
+                cx=dot_x,
+                cy=dot_y,
+                r=dot_radius,
+                fill=fill,
+            ),
+            # Category label text
+            Text(
+                text=dot_category_label,
+                x=text_x,
+                y=text_y,
+                fill="black",
+                font_size=font_size,
+                dominant_baseline="central",
+                text_anchor="start",
+            ),
+            # Bar
+            Rect(
+                x=bar_start_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=fill,
+                rx=2,
+            ),
+        ]
 
-        html = f"""
-        <div>
-            <div style="{label_div_style}">
-                {dot_category_label}
-                <div style="{dot_style}"></div>
-                <div style="{padding_div_style}"></div>
-            </div>
-            <div style="{bar_container_style}">
-                <div>{_make_bottom_bar_html(bar_val, fill=fill)}</div>
-            </div>
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=svg_width, height=svg_height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Validate and get data column
     data_col_name, data_col_vals = _validate_and_get_single_column(
@@ -359,7 +591,10 @@ def gt_plt_dot(
 
     # Process numeric data column
     scaled_data_vals = _scale_numeric_column(
-        data_table, data_col_name, data_col_vals, domain
+        data_table,
+        data_col_name,
+        data_col_vals,
+        domain,
     )
 
     # Validate and get category column
@@ -379,8 +614,13 @@ def gt_plt_dot(
         color_val = color_vals[i]
 
         res = res.fmt(
-            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_html(
-                dot_category_label=x, fill=fill, bar_val=data
+            lambda x, data=data_val, fill=color_val: _make_dot_and_bar_svg(
+                dot_category_label=x,
+                fill=fill,
+                bar_val=data,
+                svg_height=height,
+                svg_width=width,
+                font_size=font_size,
             ),
             columns=category_col,
             rows=[i],
@@ -389,14 +629,11 @@ def gt_plt_dot(
     return res
 
 
-# Changed wrt R version, palette removed
-
-
 def gt_plt_conf_int(
     gt: GT,
     column: SelectExpr,
-    ci_columns: SelectExpr | None = None,
-    # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
+    ci_columns: SelectExpr = None,
+    ci: float = 0.95,
     width: float = 100,
     height: float = 30,
     dot_color: str = "red",
@@ -434,7 +671,8 @@ def gt_plt_conf_int(
         for a confidence interval of `0.95`.
 
     width
-        The width of the confidence interval plot in pixels.
+        The width of the confidence interval plot in pixels. Note that if the width is too narrow,
+        some label text may overlap.
 
     height
         The width of the confidence interval plot in pixels.
@@ -526,17 +764,14 @@ def gt_plt_conf_int(
     ----
     All confidence intervals are scaled to a common range for visual alignment.
     """
-    # TODO: comments
-    # TODO: refactor? It's quite a long function
 
-    def _make_conf_int_html(
+    def _make_conf_int_svg(
         mean: float,
         c1: float,
         c2: float,
         font_size: float,
         min_val: float,
         max_val: float,
-        # or min_width? see: https://github.com/posit-dev/gt-extras/issues/53
         width: float,
         height: float,
         dot_border_color: str,
@@ -544,13 +779,13 @@ def gt_plt_conf_int(
         dot_color: str,
         text_color: str,
         num_decimals: int,
-    ):
+    ) -> str:
         if (
             is_na(gt._tbl_data, mean)
             or is_na(gt._tbl_data, c1)
             or is_na(gt._tbl_data, c2)
         ):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         span = max_val - min_val
 
@@ -560,54 +795,63 @@ def gt_plt_conf_int(
         mean_pos = ((mean - min_val) / span) * width
 
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
-        label_bottom = height - bar_top
+        # Text positioning - place labels above the bar
+        label_y = bar_y - (font_size / 2) * 1.2  # 1.2 for padding
 
+        # Dot positioning
         dot_size = height / 5
-        dot_top = bar_top - dot_size / 4
-        dot_left = mean_pos - dot_size / 2
+        dot_y = bar_y - dot_size / 4
         dot_border = height / 20
 
-        label_style = (
-            "position:absolute;"
-            "left:{pos}px;"
-            f"bottom:{label_bottom}px;"
-            "color:{color};"
-            "font-size:{font_size}px;"
-        )
+        # Format the label text
+        c1_text = _format_numeric_text(c1, num_decimals)
+        c2_text = _format_numeric_text(c2, num_decimals)
 
-        c1_label_html = (
-            f'<div style="{label_style.format(pos=c1_pos, color=text_color, font_size=font_size)}">'
-            f"{c1:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
+        elements = [
+            # Confidence interval bar
+            Rect(
+                x=c1_pos,
+                y=bar_y,
+                width=c2_pos - c1_pos,
+                height=bar_height,
+                fill=line_color,
+                rx=2,
+            ),
+            # Mean dot
+            Circle(
+                cx=mean_pos,
+                cy=dot_y + dot_size / 2,
+                r=dot_size / 2,
+                fill=dot_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Lower bound label
+            Text(
+                text=c1_text,
+                x=c1_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="start",
+                dominant_baseline="central",
+            ),
+            # Upper bound label
+            Text(
+                text=c2_text,
+                x=c2_pos,
+                y=label_y,
+                fill=text_color,
+                font_size=font_size,
+                text_anchor="end",
+                dominant_baseline="central",
+            ),
+        ]
 
-        c2_label_html = (
-            f'<div style="{label_style.format(pos=c2_pos, color=text_color, font_size=font_size)}'
-            f'transform:translateX(-100%);">'  # Move c2 to the left
-            f"{c2:.{num_decimals}f}".rstrip("0").rstrip(".")
-            + "</div>"
-        )
-
-        html = f"""
-            <div style="position:relative; width:{width}px; height:{height}px;">
-            {c1_label_html}
-            {c2_label_html}
-            <div style="
-                position:absolute; left:{c1_pos}px;
-                top:{bar_top}px; width:{c2_pos - c1_pos}px;
-                height:{bar_height}px; background:{line_color}; border-radius:2px;
-            "></div>
-            <div style="
-                position:absolute; left:{dot_left}px;
-                top:{dot_top}px; width:{dot_size}px; height:{dot_size}px;
-                background:{dot_color}; border-radius:50%;
-                border:{dot_border}px solid {dot_border_color}; box-sizing:border-box;
-            "></div>
-            </div>
-            """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     data_col_name, data_vals = _validate_and_get_single_column(gt, column)
 
@@ -729,7 +973,7 @@ def gt_plt_conf_int(
         mean = means[i]
 
         res = res.fmt(
-            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_html(
+            lambda _, c1=c1, c2=c2, mean=mean: _make_conf_int_svg(
                 mean=mean,
                 c1=c1,
                 c2=c2,
@@ -755,7 +999,7 @@ def gt_plt_dumbbell(
     gt: GT,
     col1: SelectExpr,  # exactly 1 col
     col2: SelectExpr,  # exactly 1 col
-    label: str = None,
+    label: str | None = None,
     width: float = 100,
     height: float = 30,
     col1_color: str = "purple",
@@ -789,7 +1033,8 @@ def gt_plt_dumbbell(
         original column name is retained.
 
     width
-        The width of the dumbbell plot in pixels.
+        The width of the dumbbell plot in pixels. Note that if the width is too narrow,
+        some plot label text may overlap.
 
     height
         The height of the dumbbell plot in pixels.
@@ -863,7 +1108,7 @@ def gt_plt_dumbbell(
     The `col2` column is automatically hidden from the final table display.
     """
 
-    def _make_dumbbell_html(
+    def _make_dumbbell_svg(
         value_1: float,
         value_2: float,
         width: float,
@@ -878,7 +1123,7 @@ def gt_plt_dumbbell(
         num_decimals: int,
     ) -> str:
         if is_na(gt._tbl_data, value_1) or is_na(gt._tbl_data, value_2):
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         # Normalize positions based on global min/max, then scale to width
         span = max_val - min_val
@@ -890,61 +1135,74 @@ def gt_plt_dumbbell(
         bar_left = min(pos_1, pos_2)
         bar_width = abs(pos_2 - pos_1)
         bar_height = height / 10
-        bar_top = height / 2 - bar_height / 2 + font_size / 2
+        bar_y = height / 2 - bar_height / 2 + font_size / 2
 
         # Compute the locations of the two dots
-        dot_size = height / 5
-        dot_border = height / 20
-        dot_top = bar_top - dot_size / 2 - dot_border / 2 + bar_height / 4
-        dot_1_left = pos_1 - dot_size / 2 - dot_border
-        dot_2_left = pos_2 - dot_size / 2 - dot_border
+        dot_radius = bar_height * 1.25
+        dot_border = bar_height / 2
+        dot_y = bar_y + bar_height / 2
 
-        label_bottom = height - dot_top
+        # Text positioning - labels above dots
+        label_y = dot_y - dot_radius - dot_border * 1.2  # 1.2 for padding
 
-        label_style = (
-            "position:absolute; left:{pos}px; "
-            f"bottom:{label_bottom}px; "
-            "transform:translateX(-50%); color:{color}; "
-            f"font-size:{font_size}px; font-weight:bold;"  # Do we want bold?
-        )
+        # Format the label text
+        value_1_text = _format_numeric_text(value_1, num_decimals)
+        value_2_text = _format_numeric_text(value_2, num_decimals)
 
-        value_1_label = (
-            f'<div style="{label_style.format(pos=pos_1, color=value_1_color)}">'
-            f"{value_1:.{num_decimals}f}"
-            "</div>"
-        )
+        elements = [
+            # Connecting bar
+            Rect(
+                x=bar_left,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=bar_color,
+                rx=2,
+            ),
+            # Value 1 dot
+            Circle(
+                cx=pos_1,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_1_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 2 dot
+            Circle(
+                cx=pos_2,
+                cy=dot_y,
+                r=dot_radius,
+                fill=value_2_color,
+                stroke=dot_border_color,
+                stroke_width=dot_border,
+            ),
+            # Value 1 label
+            Text(
+                text=value_1_text,
+                x=pos_1,
+                y=label_y,
+                fill=value_1_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+            # Value 2 label
+            Text(
+                text=value_2_text,
+                x=pos_2,
+                y=label_y,
+                fill=value_2_color,
+                font_size=font_size,
+                font_weight="bold",
+                text_anchor="middle",
+                dominant_baseline="lower",
+            ),
+        ]
 
-        value_2_label = (
-            f'<div style="{label_style.format(pos=pos_2, color=value_2_color)}">'
-            f"{value_2:.{num_decimals}f}"
-            "</div>"
-        )
-
-        dot_style = (
-            "position:absolute; left:{pos}px; "
-            f"top:{dot_top}px; width:{dot_size}px; height:{dot_size}px; "
-            "background:{color}; border-radius:50%; "
-            f"border:{dot_border}px solid {dot_border_color}; box-sizing: content-box;"
-        )
-
-        value_1_dot = f'<div style="{dot_style.format(pos=dot_1_left, color=value_1_color)}"></div>'
-        value_2_dot = f'<div style="{dot_style.format(pos=dot_2_left, color=value_2_color)}"></div>'
-
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px; box-sizing:content-box;">
-            {value_1_label}
-            {value_2_label}
-            <div style="
-                position:absolute; left:{bar_left}px;
-                top:{bar_top}px; width:{bar_width}px;
-                height:{bar_height}px; background:{bar_color};
-                border-radius:2px;
-            "></div>
-            {value_1_dot}
-            {value_2_dot}
-        </div>
-        """
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     col1_name, col1_vals = _validate_and_get_single_column(
         gt,
@@ -976,7 +1234,7 @@ def gt_plt_dumbbell(
         col2_value = col2_vals[i]
 
         res = res.fmt(
-            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_html(
+            lambda _, value_1=col1_value, value_2=col2_value: _make_dumbbell_svg(
                 value_1=value_1,
                 value_2=value_2,
                 width=width,
@@ -1021,8 +1279,8 @@ def gt_plt_winloss(
     patterns over time. All win/loss charts are scaled to accommodate the longest sequence in the
     column, ensuring consistent bar spacing across all rows.
 
-    Wins must be represented as 1, ties as 0.5, and losses as 0.
-    Invalid values (not 0, 0.5, or 1) are skipped.
+    Wins must be represented as `1`, ties as `0.5`, and losses as `0`.
+    Invalid values (not `0`, `0.5`, or `1`) are skipped.
 
     Parameters
     ----------
@@ -1065,7 +1323,8 @@ def gt_plt_winloss(
     Examples
     --------
     First, let's make a table with randomly generated data:
-    ``` {python}
+
+    ```{python}
     from great_tables import GT, md
     import gt_extras as gte
     import pandas as pd
@@ -1090,8 +1349,8 @@ def gt_plt_winloss(
     )
     ```
 
-
     Let's do a more involved example using NFL season data from 2016.
+
     ```{python}
     #| code-fold: true
     #| code-summary: Show the setup Code
@@ -1159,11 +1418,10 @@ def gt_plt_winloss(
         gte.gt_plt_winloss,
         column="Games",
     )
-
     ```
     """
 
-    def _make_winloss_html(
+    def _make_winloss_svg(
         values: list[float],
         max_length: int,
         width: float,
@@ -1174,31 +1432,30 @@ def gt_plt_winloss(
         shape: Literal["pill", "square"],
         spacing: float,
     ) -> str:
-        if not values:
-            # TODO: do this in other functions, standardize the size of the empty div``
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+        if len(values) == 0:
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         available_width = width - (max_length) * spacing
         bar_width = available_width / max_length
         win_bar_height = height * 0.2 if shape == "square" else height * 0.4
 
-        # Generate bars HTML
-        bars_html = []
+        elements = []
+
         for i, value in enumerate(values):
             if is_na(gt._tbl_data, value):
                 continue
 
             if value == 1:  # Win
                 color = win_color
-                top_pos = height * 0.2
+                bar_y = height * 0.2
                 bar_height = win_bar_height
             elif value == 0.5:  # Tie
                 color = tie_color
-                top_pos = height * 0.4
+                bar_y = height * 0.4
                 bar_height = height * 0.2
             elif value == 0:  # Loss
                 color = loss_color
-                top_pos = height * 0.8 - win_bar_height
+                bar_y = height * 0.8 - win_bar_height
                 bar_height = win_bar_height
             else:
                 warnings.warn(
@@ -1207,29 +1464,21 @@ def gt_plt_winloss(
                 )
                 continue
 
-            left_pos = i * (bar_width + spacing)
+            bar_x = i * (bar_width + spacing)
             border_radius = 0.5 if shape == "square" else 2
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{left_pos}px;
-                top:{top_pos}px;
-                width:{bar_width}px;
-                height:{bar_height}px;
-                background:{color};
-                border-radius:{border_radius}px;
-            "></div>
-            """
-            bars_html.append(bar_html.strip())
+            bar_rect = Rect(
+                x=bar_x,
+                y=bar_y,
+                width=bar_width,
+                height=bar_height,
+                fill=color,
+                rx=border_radius,
+            )
+            elements.append(bar_rect)
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """
-
-        return html.strip()
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     res = gt
     _, col_vals = _validate_and_get_single_column(gt, expr=column)
@@ -1243,7 +1492,7 @@ def gt_plt_winloss(
 
     # I don't have to loop like with the others since I dont need to access other columns
     res = res.fmt(
-        lambda x: _make_winloss_html(
+        lambda x: _make_winloss_svg(
             x,
             max_length=max_length,
             width=width,
@@ -1278,7 +1527,7 @@ def gt_plt_bar_stack(
     The `gt_plt_bar_stack()` function takes an existing `GT` object and adds stacked horizontal bar
     charts to a specified column. Each cell displays a series of horizontal bars whose lengths are
     proportional to the values in the list. The scaling of the bars can be controlled using the
-    `scale_type` parameter.
+    `scale_type` - see below for more info.
 
     Parameters
     ----------
@@ -1294,14 +1543,15 @@ def gt_plt_bar_stack(
         header, with each label corresponding to a color in the palette.
 
     width
-        The total width of the stacked bar plot in pixels.
+        The total width of the stacked bar plot in pixels. If `scale_type = "absolute"`, this
+        value will determine the width of the maximum length bar plot.
 
     height
         The height of the stacked bar plot in pixels.
 
     palette
         The color palette to use for the bars. This can be a list of colors
-        (e.g., `["#FF0000", "#00FF00", "#0000FF"]`) or a named palette (e.g., `"viridis"`).
+        (e.g., `["#FF0000"`, `"#00FF00"`, `"#0000FF"` `]`) or a named palette (e.g., `"viridis"`).
         If `None`, a default palette will be used.
 
     font_size
@@ -1396,9 +1646,13 @@ def gt_plt_bar_stack(
         scale_type="absolute",
     )
     ```
+
+    Note
+    -------
+    Values of `0` will not be displayed in the plots.
     """
 
-    def _make_bar_stack_html(
+    def _make_bar_stack_svg(
         values: list[float],
         max_sum: float,
         width: float,
@@ -1410,7 +1664,7 @@ def gt_plt_bar_stack(
         scale_type: Literal["relative", "absolute"],
     ) -> str:
         if not values:
-            return f'<div style="position:relative; width:{width}px; height:{height}px;"></div>'
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
         non_na_vals = [val if not is_na(gt._tbl_data, val) else 0 for val in values]
         # Count how many values will be displayed in the chart
@@ -1432,46 +1686,45 @@ def gt_plt_bar_stack(
                 "Spacing is too large relative to the width. No bars will be displayed.",
                 category=UserWarning,
             )
+            return f'<div style="display: flex;"><div style="width:{width}px; height:{height}px;"></div></div>'
 
-        bars_html = []
+        elements = []
         current_left = 0
+
         for i, value in enumerate(normalized_values):
+            if value == 0:
+                continue
+
             bar_width = available_width * value
             color = colors[i % len(colors)]
 
+            # Create the bar rectangle
+            bar_rect = Rect(
+                x=current_left,
+                y=0,
+                width=bar_width,
+                height=height,
+                fill=color,
+            )
+            elements.append(bar_rect)
+
+            # Create the label text
             label = f"{non_na_vals[i]:.{num_decimals}f}"
-            label_html = f"""
-            <div style="
-                position:absolute;
-                left:50%;
-                top:50%;
-                transform:translateX(-50%) translateY(-50%);
-                font-size:{font_size}px;
-                color:{_ideal_fgnd_color(_html_color([color])[0])};
-            ">{label}</div>
-            """.strip()
+            label_text = Text(
+                text=label,
+                x=current_left + bar_width / 2,  # Center horizontally in the bar
+                y=height / 2,  # Center vertically
+                fill=_ideal_fgnd_color(_html_color([color])[0]),
+                font_size=font_size,
+                text_anchor="middle",
+                dominant_baseline="central",
+            )
+            elements.append(label_text)
 
-            bar_html = f"""
-            <div style="
-                position:absolute;
-                left:{current_left}px;
-                top:0px;
-                width:{bar_width}px;
-                height:{height}px;
-                background:{color};
-            ">{label_html}</div>
-            """.strip()
-            if value != 0 and not is_na(gt._tbl_data, value):
-                bars_html.append(bar_html.strip())
-                current_left += bar_width + spacing
+            current_left += bar_width + spacing
 
-        html = f"""
-        <div style="position:relative; width:{width}px; height:{height}px;">
-            {"".join(bars_html)}
-        </div>
-        """.strip()
-
-        return html
+        svg = SVG(width=width, height=height, elements=elements)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
 
     # Throw if `scale_type` is not one of the allowed values
     if scale_type not in ["relative", "absolute"]:
@@ -1499,7 +1752,7 @@ def gt_plt_bar_stack(
 
     res = gt
     res = res.fmt(
-        lambda x: _make_bar_stack_html(
+        lambda x: _make_bar_stack_svg(
             x,
             max_sum=max_sum,
             width=width,
@@ -1524,3 +1777,313 @@ def gt_plt_bar_stack(
         )
 
     return res
+
+
+def gt_plt_bar_pct(
+    gt: GT,
+    column: SelectExpr,
+    height: int = 16,
+    width: int = 100,
+    fill: str = "purple",
+    background: str = "#e1e1e1",
+    autoscale: bool = True,
+    labels: bool = False,
+    label_cutoff: float = 0.4,
+    decimals: int = 1,
+    font_style: Literal["oblique", "italic", "normal"] = "normal",
+    font_size: int = 10,
+):
+    """
+    Create horizontal bar plots in percentage in `GT` cells.
+
+    The `gt_plt_bar_pct()` function takes an existing `GT` object and adds
+    horizontal bar plots via native HTML. By default, values are normalized
+    as a percentage of the maximum value in the specified column. If the values
+    already represent percentages (i.e., between 0–100), you can disable this
+    behavior by setting `autoscale=False`.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column to target.
+
+    height
+        The height of the bar plot in pixels.
+
+    width
+        The width of the maximum bar in pixels.
+
+    fill
+        The fill color for the bars.
+
+    background
+        The background filling color for the bars. Defaults to `#e1e1e1`.
+
+    autoscale
+        Indicates whether the function should automatically scale the values.
+        If `True`, values will be divided by the column's maximum and multiplied by 100.
+        If `False`, the values are assumed to already be scaled appropriately.
+
+    labels
+        `True`/`False` logical representing if labels should be plotted. Defaults
+        to `False`, meaning that no value labels will be plotted.
+
+    label_cutoff
+        A number, 0 to 1, representing where to set the inside/outside label
+        boundary. Defaults to 0.40 (40%) of the column's maximum value. If the
+        value in that row is less than the cutoff, the label will be placed
+        outside the bar; otherwise, it will be placed within the bar. This
+        interacts with the overall width of the bar, so if you are not happy with
+        the placement of the labels, you may try adjusting the `width` argument as
+        well.
+
+    decimals
+        A number representing how many decimal places to be used in label
+        rounding.
+
+    font_style
+        The font style for the text labels displayed on the bars. Options are
+        `"oblique"`, `"italic"`, or `"normal"`.
+
+    font_size
+        The font size for the text labels displayed on the bars.
+
+    Returns
+    -------
+    GT
+        A `GT` object with horizontal bar plots added to the specified columns.
+
+    Examples
+    --------
+    The `autoscale` parameter is perhaps the most important in the `gt_plt_bar_pct()` function.
+    This example demonstrates the difference between `autoscale=True` and `autoscale=False` using column `x`:
+
+    * **When `autoscale=True`**:
+    The function scales the values relative to the maximum in the column.
+    For example, `[10, 20, 30, 40]` becomes `[25%, 50%, 75%, 100%]`,
+    which are used for both bar lengths and labels.
+
+    * **When `autoscale=False`**:
+    The values are assumed to already represent percentages.
+    The function uses them as-is — e.g., `[10%, 20%, 30%, 40%]`,
+    which are directly reflected in both the bar lengths and labels.
+
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+
+    df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+        pl.col("x").alias("autoscale_on"),
+        pl.col("x").alias("autoscale_off"),
+    )
+
+    gt = GT(df)
+
+    (
+        gt.pipe(
+            gte.gt_plt_bar_pct,
+            column=["autoscale_on"],
+            autoscale=True,
+            labels=True,
+            fill="green",
+        ).pipe(
+            gte.gt_plt_bar_pct,
+            column=["autoscale_off"],
+            autoscale=False,
+            labels=True,
+        )
+    )
+    ```
+    Finally, label colors are automatically adjusted based on the `fill` and `background` parameters
+    to ensure optimal readability.
+    """
+
+    def _not_na(val, tbl_data) -> bool:
+        return val is not None and not is_na(tbl_data, val)
+
+    def _is_na(val, tbl_data) -> bool:
+        return not _not_na(val, tbl_data)
+
+    def _is_effective_int(val) -> bool:
+        return isinstance(val, int) or (isinstance(val, float) and val.is_integer())
+
+    if not (0 <= label_cutoff <= 1):
+        raise ValueError("Label_cutoff must be a number between 0 and 1.")
+
+    if font_style not in ["bold", "italic", "normal"]:
+        raise ValueError("Font_style must be one of 'bold', 'italic', or 'normal'.")
+
+    # Helper function to make the individual bars
+
+    def _make_bar_pct_html(
+        # original_val: int | float,
+        scaled_val: int | float,
+        height: int,
+        width: int,
+        fill: str,
+        background: str,
+        # autoscale: bool,
+        labels: bool,
+        label_cutoff: float,
+        decimals: int,
+        font_style: Literal["oblique", "italic", "normal"],
+        font_size: int,
+    ) -> str:
+        elements = []
+        if _is_na(scaled_val, tbl_data):
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=Length(width, "%"),
+                height=Length(height, "px"),
+                fill="transparent",
+            )
+            elements.append(outer_rect)
+        else:
+            outer_rect = Rect(
+                x=0,
+                y=0,
+                width=Length(width, "px"),
+                height=Length(height, "px"),
+                fill=background,
+            )
+            elements.append(outer_rect)
+
+            _width = width * scaled_val * 0.01
+
+            inner_rect = Rect(
+                x=0,
+                y=0,
+                width=Length(_width, "px"),
+                height=Length(height, "px"),
+                fill=fill,
+            )
+            elements.append(inner_rect)
+
+            if labels:
+                padding = 5.0
+
+                if _width < (label_cutoff * 100):
+                    _x = _width + padding
+                    _fill = _ideal_fgnd_color(_html_color([background])[0])
+                else:
+                    _x = padding
+                    _fill = _ideal_fgnd_color(_html_color([fill])[0])
+
+                _decimals = decimals
+                if _is_effective_int(scaled_val):
+                    _decimals = 0
+                _text = f"{scaled_val:.{_decimals}f}%"
+
+                inner_text = Text(
+                    text=_text,
+                    x=Length(_x, "px"),
+                    y=Length(height / 2, "px"),
+                    fill=_fill,
+                    font_size=Length(font_size, "px"),
+                    font_style=font_style,
+                    text_anchor="start",
+                    dominant_baseline="central",
+                )
+                elements.append(inner_text)
+
+        canvas = SVG(
+            width=Length(width, "px"),
+            height=Length(height, "px"),
+            elements=elements,
+        )
+        return f'<div style="display: flex;">{canvas.as_str()}</div>'
+
+    def _make_bar_pct(scaled_val: int) -> str:
+        return _make_bar_pct_html(
+            # original_val=original_val,
+            scaled_val=scaled_val,
+            height=height,
+            width=width,
+            fill=fill,
+            background=background,
+            # autoscale=autoscale,
+            labels=labels,
+            label_cutoff=label_cutoff,
+            decimals=decimals,
+            font_style=font_style,
+            font_size=font_size,
+        )
+
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+    tbl_data = gt._tbl_data
+    if all(_is_na(val, tbl_data) for val in col_vals):
+        raise ValueError("All values in the column are None.")
+
+    max_x = max(val for val in col_vals if _not_na(val, tbl_data))
+
+    scaled_vals = col_vals
+    if autoscale:
+        scaled_vals = [
+            val if _is_na(val, tbl_data) else (val / max_x * 100) for val in col_vals
+        ]
+
+    res = gt
+    # Apply the scaled value for each row, so the bar is proportional
+    for i, scaled_val in enumerate(scaled_vals):
+        res = res.fmt(
+            lambda _, scaled_val=scaled_val: _make_bar_pct(scaled_val=scaled_val),
+            columns=column,
+            rows=[i],
+        )
+    return res
+
+
+########### Helper functions that get reused across plots ###########
+
+
+# Helper function to make the individual bars
+def _make_bar_svg(
+    scaled_val: float,
+    original_val: int | float,
+    fill: str,
+    bar_height: float,
+    height: float,
+    width: float,
+    stroke_color: str,
+    show_labels: bool,
+    label_color: str | None,
+) -> SVG:
+    text = ""
+    if show_labels:
+        text = str(original_val)
+
+    elements = [
+        Rect(
+            x=0,
+            y=Length((height - bar_height) / 2, "px"),
+            width=Length(width * scaled_val, "px"),
+            height=Length(bar_height, "px"),
+            fill=fill,
+            # onmouseover="this.style.fill= 'blue';",
+            # onmouseout=f"this.style.fill='{fill}';",
+        ),
+        Text(
+            text=text,
+            x=Length((width * scaled_val) * 0.98, "px"),
+            y=Length(height / 2, "px"),
+            fill=label_color,
+            font_size=bar_height * 0.6,
+            text_anchor="end",
+            dominant_baseline="central",
+        ),
+        Line(
+            x1=0,
+            x2=0,
+            y1=0,
+            y2=Length(height, "px"),
+            stroke_width=Length(height / 10, "px"),
+            stroke=stroke_color,
+        ),
+    ]
+
+    return SVG(width=width, height=height, elements=elements)

@@ -1,24 +1,72 @@
-from great_tables import GT
 import numpy as np
 import pandas as pd
-from gt_extras import gt_highlight_cols, gt_hulk_col_numeric, gt_color_box
-from conftest import assert_rendered_body
+import polars as pl
 import pytest
+from conftest import assert_rendered_body
+from great_tables import GT
+
+from gt_extras import (
+    gt_color_box,
+    gt_data_color_by_group,
+    gt_highlight_cols,
+    gt_highlight_rows,
+    gt_hulk_col_numeric,
+)
 
 
-def test_gt_highlight_cols(snapshot, mini_gt):
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_no_groups(DataFrame):
+    df = DataFrame({"B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df)).as_raw_html()
+    assert 'style="color:' not in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_single_group(DataFrame):
+    df = DataFrame({"A": [1, 1, 1, 1, 1, 1], "B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df, groupname_col="A")).as_raw_html()
+
+    assert "color: #FFFFFF; background-color: #000000;" in html
+    assert "color: #000000; background-color: #ad8560;" in html
+    assert "color: #000000; background-color: #2fa2c8;" in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_data_color_by_group_multiple_singletons(DataFrame):
+    df = DataFrame({"A": [1, 2, 3, 4, 5, 6], "B": [1, 2, 3, 4, 5, 6]})
+    html = gt_data_color_by_group(GT(df, groupname_col="A")).as_raw_html()
+    assert html.count("color: #FFFFFF; background-color: #000000;") == 6
+
+
+def test_gt_data_color_by_group_multiple_groups_snap(snapshot):
+    for DataFrame in [pd.DataFrame, pl.DataFrame]:
+        df = DataFrame({"A": [1, 2, 2, 3, 3, 3], "B": [1, 2, 3, 4, 5, 6]})
+        gt = gt_data_color_by_group(GT(df, groupname_col="A"))
+        assert_rendered_body(snapshot(name="pd_and_pl"), gt)
+
+
+def test_gt_highlight_cols_snap(snapshot, mini_gt):
     res = gt_highlight_cols(mini_gt)
     assert_rendered_body(snapshot, gt=res)
 
 
-def test_gt_highlight_cols_font(mini_gt):
-    res = gt_highlight_cols(mini_gt, font_weight="bolder").as_raw_html()
-    assert "bolder" in res
+def test_gt_highlight_cols_all_params(mini_gt):
+    html = gt_highlight_cols(
+        mini_gt,
+        columns=[1, 2],
+        font_weight="bolder",
+        font_color="#cccccc",
+        fill="#aaaaaa",
+        include_column_labels=True,
+    ).as_raw_html()
+
+    assert "bolder" in html
+    assert html.count("background-color: #aaaaaa;") == 8
+    assert html.count("#cccccc") == 8
 
 
 def test_gt_highlight_cols_alpha(mini_gt):
-    res = gt_highlight_cols(mini_gt, alpha=0.2, columns="num")
-    html = res.as_raw_html()
+    html = gt_highlight_cols(mini_gt, alpha=0.2, columns="num").as_raw_html()
     assert "#80bcd833" in html
 
 
@@ -27,13 +75,54 @@ def test_gt_highlight_cols_font_weight_invalid_string(mini_gt):
         ValueError,
         match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
     ):
-        gt_highlight_cols(mini_gt, font_weight="invalid")
+        gt_highlight_cols(mini_gt, font_weight="invalid")  # type: ignore
 
 
 @pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
 def test_gt_highlight_cols_font_weight_invalid_type(mini_gt, invalid_weight):
     with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
         gt_highlight_cols(mini_gt, font_weight=invalid_weight)
+
+
+def test_gt_highlight_rows_snap(snapshot, mini_gt):
+    res = gt_highlight_rows(mini_gt, rows=[0, 1])
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_highlight_rows_all_params():
+    df = pd.DataFrame({"rowname": ["A", "B", "C"], "num": [1, 2, 3]})
+    gt_with_rowname = GT(df, rowname_col="rowname")
+    html = gt_highlight_rows(
+        gt_with_rowname,
+        rows=[1, 2],
+        font_weight="bolder",
+        font_color="#cccccc",
+        fill="#aaaaaa",
+        include_row_labels=True,
+    ).as_raw_html()
+
+    assert "bolder" in html
+    assert html.count("background-color: #aaaaaa;") == 4
+    assert html.count("#cccccc") == 4
+
+
+def test_gt_highlight_rows_alpha(mini_gt):
+    html = gt_highlight_rows(mini_gt, rows=[0], alpha=0.3).as_raw_html()
+    assert "#80bcd84C" in html
+
+
+def test_gt_highlight_rows_font_weight_invalid_string(mini_gt):
+    with pytest.raises(
+        ValueError,
+        match="Font_weight must be one of 'normal', 'bold', 'bolder', or 'lighter', or an integer",
+    ):
+        gt_highlight_rows(mini_gt, rows=[0], font_weight="invalid")  # type: ignore
+
+
+@pytest.mark.parametrize("invalid_weight", [(1.5, 5), [], {}, None])
+def test_gt_highlight_rows_font_weight_invalid_type(mini_gt, invalid_weight):
+    with pytest.raises(TypeError, match="Font_weight must be an int, float, or str"):
+        gt_highlight_rows(mini_gt, rows=[0], font_weight=invalid_weight)
 
 
 def test_gt_hulk_col_numeric_snap(snapshot, mini_gt):
@@ -126,3 +215,23 @@ def test_gt_color_box_with_na():
     html = res.as_raw_html()
 
     assert html.count("<div></div>") == 2
+
+
+def test_gt_color_box_custom_domain(mini_gt):
+    with pytest.warns(UserWarning) as record:
+        res = gt_color_box(mini_gt, columns="num", domain=[1, 3])
+
+    messages = [str(w.message) for w in record]
+    assert any(
+        "Value 0.1111 in column 'num' is less than the domain minimum 1" in m
+        for m in messages
+    )
+    assert any(
+        "Value 33.33 in column 'num' is greater than the domain maximum 3" in m
+        for m in messages
+    )
+
+    html = res.as_raw_html()
+    assert "background-color:#000000;" in html
+    assert "background-color:#56a6da;" in html
+    assert "background-color:#9e9e9e;" in html

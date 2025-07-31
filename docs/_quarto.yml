@@ -17,8 +17,8 @@ website:
     left:
       - text: Intro
         file: articles/intro.qmd
-      # - text: Get Started
-      #   file: get-started/index.qmd
+      - text: Examples
+        file: examples/index.qmd
       - reference/index.qmd
     right:
       - icon: github
@@ -47,10 +47,13 @@ quartodoc:
         and win/loss charts, directly within columns of your existing `GT` objects.
       contents:
         - gt_plt_bar
+        - gt_plt_bar_pct
         - gt_plt_bar_stack
+        - gt_plt_bullet
         - gt_plt_conf_int
         - gt_plt_dot
         - gt_plt_dumbbell
+        - gt_plt_summary
         - gt_plt_winloss
 
     - title: Colors
@@ -60,7 +63,9 @@ quartodoc:
         styles with palettes that are easy on the eye.
       contents:
         - gt_color_box
+        - gt_data_color_by_group
         - gt_highlight_cols
+        - gt_highlight_rows
         - gt_hulk_col_numeric
 
     - title: Themes
@@ -83,7 +88,9 @@ quartodoc:
         Functions to enhance `GT` objects by adding icons, ratings, or images to cells
         or headers alike.
       contents:
+        - add_text_img
         - fa_icon_repeat
+        - gt_fa_rank_change
         - gt_fa_rating
         - img_header
 
@@ -95,7 +102,10 @@ quartodoc:
       contents:
         - fmt_pct_extra
         - gt_add_divider
-        - gt_hyperlink
+        - gt_duplicate_column
+        - gt_merge_stack
+        - gt_two_column_layout
+        - with_hyperlink
         - with_tooltip
 
 
@@ -110,3 +120,10 @@ format:
       - reference/_styles-quartodoc.css
     toc: true
     page-layout: full
+    filters:
+      - preview-colour
+
+    extensions:
+      preview-colour:
+        code: true
+        text: false

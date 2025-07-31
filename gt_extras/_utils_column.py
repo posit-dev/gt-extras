@@ -1,13 +1,17 @@
 from __future__ import annotations
+
 import warnings
 
 from great_tables import GT
-from great_tables._tbl_data import SelectExpr, is_na
-from great_tables._locations import resolve_cols_c
-
 from great_tables._data_color.base import _rescale_numeric
+from great_tables._locations import resolve_cols_c
+from great_tables._tbl_data import SelectExpr, is_na, to_list
 
-__all__ = ["_validate_and_get_single_column", "_scale_numeric_column"]
+__all__ = [
+    "_validate_and_get_single_column",
+    "_scale_numeric_column",
+    "_format_numeric_text",
+]
 
 
 def _validate_and_get_single_column(
@@ -20,7 +24,7 @@ def _validate_and_get_single_column(
     Parameters
     ----------
     gt
-        The GT object containing the data
+        The `GT` object containing the data
     expr
         The column expression to resolve
 
@@ -46,7 +50,7 @@ def _validate_and_get_single_column(
         )
 
     col_name = col_names[0]
-    col_vals = gt._tbl_data[col_name].to_list()
+    col_vals = to_list(gt._tbl_data[col_name])
 
     return col_name, col_vals
 
@@ -55,7 +59,7 @@ def _scale_numeric_column(
     data_table,
     col_name: str,
     col_vals: list,
-    domain: list[int] | list[float] | None = None,
+    domain: list[float] | list[int] | None = None,
     default_domain_min_zero: bool = True,
 ) -> list[float]:
     """
@@ -98,7 +102,12 @@ def _scale_numeric_column(
                 domain = [min(col_vals_filtered), max(col_vals_filtered)]
 
         # Rescale based on the given domain
-        scaled_vals = _rescale_numeric(df=data_table, vals=col_vals, domain=domain)
+        scaled_vals = _rescale_numeric(
+            df=data_table,
+            vals=col_vals,
+            # Alternatively we could convert the domain to floats, but I dont mind ignoring this
+            domain=domain,  # type: ignore
+        )
     else:
         raise TypeError(
             f"Invalid column type provided ({col_name}). Please ensure that the column is numeric."
@@ -109,7 +118,10 @@ def _scale_numeric_column(
     for orig_val, scaled_val in zip(col_vals, scaled_vals):
         if is_na(data_table, orig_val):
             scaled_vals_fixed.append(0)
+
         elif is_na(data_table, scaled_val):
+            # consider handling by leaving the original val, and having a third color/category.
+
             # If original value < domain[0], set to 0; if > domain[1], set to 1
             if orig_val < min(domain):
                 warnings.warn(
@@ -117,6 +129,7 @@ def _scale_numeric_column(
                     category=UserWarning,
                 )
                 scaled_vals_fixed.append(0)
+
             else:
                 warnings.warn(
                     f"Value {orig_val} in column '{col_name}' is greater than the domain maximum {max(domain)}. Setting to {max(domain)}.",
@@ -127,3 +140,10 @@ def _scale_numeric_column(
             scaled_vals_fixed.append(scaled_val)
 
     return scaled_vals_fixed
+
+
+def _format_numeric_text(value: float, num_decimals: int) -> str:
+    if num_decimals == 0:
+        return f"{value:.0f}"
+    else:
+        return f"{value:.{num_decimals}f}".rstrip("0").rstrip(".")

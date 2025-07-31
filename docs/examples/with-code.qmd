@@ -1,0 +1,905 @@
+---
+title: Examples With Code
+jupyter: python3
+echo: false
+collapse-level: 3
+---
+<style>
+
+h3 a {
+    font-weight: 600;;
+    font-size: 20px;
+}
+
+</style>
+
+## Plotting
+
+### [gt_plt_bar](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_bar
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[
+    9:17,
+    ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+    .cols_align("center")
+    .cols_align("left", columns="mfr")
+)
+
+gt.pipe(
+    gte.gt_plt_bar,
+    columns= ["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_bar_pct](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_bar_pct
+import polars as pl
+from great_tables import GT
+import gt_extras as gte
+
+df = pl.DataFrame({"x": [10, 20, 30, 40]}).with_columns(
+    pl.col("x").alias("autoscale_on"),
+    pl.col("x").alias("autoscale_off"),
+)
+
+gt = GT(df)
+
+(
+    gt.pipe(
+        gte.gt_plt_bar_pct,
+        column=["autoscale_on"],
+        autoscale=True,
+        labels=True,
+        fill="green",
+    ).pipe(
+        gte.gt_plt_bar_pct,
+        column=["autoscale_off"],
+        autoscale=False,
+        labels=True,
+    )
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_bar_stack](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack.html){title="Click for reference"}
+
+```{python}
+# | label: gt_plt_bar_stack
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame({
+    "x": ["Example A", "Example B", "Example C"],
+    "col": [
+        [10, 40, 50],
+        [30, 30, 40],
+        [50, 20, 30],
+    ],
+})
+
+gt = GT(df)
+
+gt.pipe(
+    gte.gt_plt_bar_stack,
+    column="col",
+    palette=["red", "grey", "black"],
+    labels=["Group 1", "Group 2", "Group 3"],
+    width=200,
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_bullet](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet.html){title="Click for reference"}
+
+```{python}
+# | label: gt_plt_bullet
+import polars as pl
+from great_tables import GT
+from great_tables.data import airquality
+import gt_extras as gte
+
+air_bullet = (
+    pl.from_pandas(airquality)
+    .with_columns(pl.col("Temp").mean().over("Month").alias("target_temp"))
+    .group_by("Month", maintain_order=True)
+    .head(2)
+    .with_columns(
+        (pl.col("Month").cast(pl.Utf8) + "/" + pl.col("Day").cast(pl.Utf8)).alias(
+            "Date"
+        )
+    )
+    .select(["Date", "Temp", "target_temp"])
+    .with_columns(pl.col(["Temp", "target_temp"]).round(1))
+)
+
+(
+    GT(air_bullet, rowname_col="Date")
+    .tab_header(title="Daily Temp vs Monthly Average")
+    .tab_source_note("Target line shows monthly average temperature")
+
+    ## Call gt_plt_bullet
+    .pipe(
+        gte.gt_plt_bullet,
+        data_column="Temp",
+        target_column="target_temp",
+        width=200,
+        fill="tomato",
+        target_color="darkblue",
+        keep_data_column=True,
+    )
+    .cols_move_to_end("Temp")
+    .cols_align("left", "Temp plot")
+)
+```
+{{< include ./_show-last.qmd >}}
+
+
+### [gt_plt_conf_int](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_conf_int
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame({
+    'group': ['A', 'B', 'C'],
+    'mean': [5.2, 7.8, 3.4],
+    'ci_lower': [3.1, 6.1, 1.8],
+    'ci_upper': [7.3, 9.7, 5.0],
+    'ci': [5.2, 7.8, 3.4],
+})
+
+gt = GT(df)
+gt.pipe(
+    gte.gt_plt_conf_int,
+    column='ci',
+    ci_columns=['ci_lower', 'ci_upper'],
+    width=120,
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_dot](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_dot
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[8:20, ["model", "mfr", "hp"]]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+)
+
+gt.pipe(gte.gt_plt_dot, category_col="mfr", data_col="hp")
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_dumbbell](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_dumbbell
+import pandas as pd
+from great_tables import GT, html, style, loc
+from great_tables.data import sp500
+import gt_extras as gte
+
+# Trim the data to December 2008
+df = sp500[["date", "open", "close"]].copy()
+df["date"] = pd.to_datetime(df["date"], errors='coerce')
+
+dec_2008 = df[
+    (df["date"].dt.month == 12) &
+    (df["date"].dt.year == 2008)
+]
+dec_2008 = dec_2008.iloc[::-1].iloc[2:11]
+
+# Make the Great Table
+gt = (
+    GT(dec_2008)
+    .tab_source_note(html("Purple: Open<br>Green: Close"))
+    .tab_style(
+        style=style.text(align="right"),
+        locations=[loc.source_notes()]
+    )
+)
+
+gt.pipe(
+    gte.gt_plt_dumbbell,
+    col1='open',
+    col2='close',
+    label = "Open to Close ($)",
+    num_decimals=0,
+    width=300,
+    height=60,
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_plt_summary](https://posit-dev.github.io/gt-extras/reference/gt_plt_summary.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_summary
+import polars as pl
+from great_tables import GT
+import gt_extras as gte
+from datetime import datetime
+
+df = pl.DataFrame({
+    "Date": [
+        datetime(2024, 1, 1),
+        datetime(2024, 1, 2),
+        datetime(2024, 1, 7),
+        datetime(2024, 1, 8),
+        datetime(2024, 1, 13),
+        datetime(2024, 1, 16),
+        datetime(2024, 1, 20),
+        datetime(2024, 1, 22),
+        datetime(2024, 2, 1),
+    ] * 5,
+    "Value": [10, 15, 20, None, 25, 18, 22, 30, 40] * 5,
+    "Category": ["A", "B", "C", "A", "B", "C", "D", None, None] * 5,
+    "Boolean": [True, False, True] * 15,
+    "Status": ["Active", "Inactive", None] * 15,
+})
+
+gte.gt_plt_summary(df)
+```
+{{< include ./_show-last.qmd >}}
+
+
+### [gt_plt_winloss](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_winloss
+from great_tables import GT, md
+import gt_extras as gte
+import pandas as pd
+
+df = pd.DataFrame(
+    {
+        "Team": ["Liverpool", "Chelsea", "Man City"],
+        "10 Games": [
+            [1, 1, 0, 1, 0.5, 1, 0, 1, 1, 0],
+            [0, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+            [0.5, 1, 0.5, 0, 1, 0, 1, 0.5, 1, 0],
+        ],
+    }
+)
+
+gt = GT(df)
+
+gt.pipe(
+    gte.gt_plt_winloss,
+    column="10 Games",
+    win_color="green",
+)
+```
+{{< include ./_show-last.qmd >}}
+
+## Coloring
+
+### [gt_color_box](https://posit-dev.github.io/gt-extras/reference/gt_color_box.html){title="Click for reference"}
+```{python}
+# | label: gt_color_box
+from great_tables import GT
+from great_tables.data import islands
+import gt_extras as gte
+
+islands_mini = (
+    islands
+    .sort_values(by="size", ascending=False)
+    .head(10)
+)
+
+gt = (
+    GT(islands_mini, rowname_col="name")
+    .tab_stubhead(label="Island")
+)
+
+gt.pipe(gte.gt_color_box, columns="size", palette=["lightblue", "navy"])
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_data_color_by_group](https://posit-dev.github.io/gt-extras/reference/gt_data_color_by_group.html){title="Click for reference"}
+```{python}
+# | label: gt_data_color_by_group
+from great_tables import GT, md
+from great_tables.data import exibble
+import gt_extras as gte
+
+gt = (
+    GT(exibble, rowname_col="row", groupname_col="group")
+    .cols_hide(columns=None)
+    .cols_unhide("num")
+    .cols_label({"num": "Color by Group"})
+    .pipe(gte.gt_duplicate_column, column="num", dupe_name="Color All")
+    .tab_source_note(md("Left: `gt_data_color_by_group`, Right: `data_color`"))
+)
+
+(
+    gt
+    .data_color(columns="Color All", palette="PiYG")
+    .pipe(gte.gt_data_color_by_group, columns=["num"], palette="PiYG")
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_highlight_cols](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols.html){title="Click for reference"}
+```{python}
+# | label: gt_highlight_cols
+from great_tables import GT, md
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["model", "year", "hp", "trq", "mpg_h"]].head(8)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label=md("*Car*"))
+)
+
+(
+    gt
+    .pipe(gte.gt_highlight_cols, columns="hp")
+    .pipe(gte.gt_highlight_cols, columns="mpg_h", fill="darkorchid")
+)
+
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_highlight_rows](https://posit-dev.github.io/gt-extras/reference/gt_highlight_rows.html){title="Click for reference"}
+```{python}
+# | label: gt_highlight_rows
+from great_tables import GT, md
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["model", "year", "hp", "trq"]].head(8)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label=md("*Car*"))
+)
+
+(
+    gt
+    .pipe(gte.gt_highlight_rows, rows=2, fill="#007FFF")
+    .pipe(gte.gt_highlight_rows, rows=3, fill="chartreuse")
+    .pipe(gte.gt_highlight_rows, rows=7, fill="#FF007F")
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_hulk_col_numeric](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric.html){title="Click for reference"}
+```{python}
+# | label: gt_hulk_col_numeric
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[0:8, ["model", "mfr", "year", "hp", "trq", "mpg_h"]]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+)
+
+gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
+```
+{{< include ./_show-last.qmd >}}
+
+
+## Themes
+
+### Setup themes
+```{python}
+# | label: setup-themes
+# | echo: true
+from great_tables import GT, html
+import gt_extras as gte
+from great_tables.data import airquality
+
+# Prepare the dataset
+airquality_mini = airquality.head(10).assign(Year=1973)
+
+# Create the base table
+gt = (
+    GT(airquality_mini)
+    .tab_header(
+        title="Default Theme",
+        subtitle="New York Air Quality Measurements",
+    )
+    .tab_spanner(label="Time", columns=["Year", "Month", "Day"])
+    .tab_spanner(
+        label="Measurement",
+        columns=["Ozone", "Solar_R", "Wind", "Temp"],
+    )
+    .cols_move_to_start(columns=["Year", "Month", "Day"])
+    .cols_label(
+        Ozone=html("Ozone,<br>ppbV"),
+        Solar_R=html("Solar R.,<br>cal/m<sup>2</sup>"),
+        Wind=html("Wind,<br>mph"),
+        Temp=html("Temp,<br>&deg;F"),
+    )
+)
+
+gt
+```
+
+### [gt_theme_538](https://posit-dev.github.io/gt-extras/reference/gt_theme_538.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_538
+gt = gt.tab_header(title="FiveThirtyEight Theme")
+
+gt.pipe(gte.gt_theme_538)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_espn](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_espn
+gt = gt.tab_header(title="ESPN Theme")
+
+gt.pipe(gte.gt_theme_espn)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_guardian](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_guardian
+gt = gt.tab_header(title="Guardian Theme")
+
+gt.pipe(gte.gt_theme_guardian)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_nytimes](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_nytimes
+gt = gt.tab_header(title="NYTimes Theme")
+
+gt.pipe(gte.gt_theme_nytimes)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_excel](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_excel
+gt = gt.tab_header(title="Excel Theme")
+
+gt.pipe(gte.gt_theme_excel)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_dot_matrix](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_dot_matrix
+gt = gt.tab_header(title="Dot Matrix Theme")
+
+gt.pipe(gte.gt_theme_dot_matrix)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_dark](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_dark
+gt = gt.tab_header(title="Dark Theme")
+
+gt.pipe(gte.gt_theme_dark)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_theme_pff](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff.html){title="Click for reference"}
+```{python}
+# | label: gt_theme_pff
+gt = gt.tab_header(title="PFF Theme")
+
+gt.pipe(gte.gt_theme_pff)
+```
+{{< include ./_show-last.qmd >}}
+
+## Icons and Images
+
+### [add_text_img](https://posit-dev.github.io/gt-extras/reference/add_text_img.html){title="Click for reference"}
+```{python}
+# | label: add_text_img
+import pandas as pd
+from great_tables import GT, md, html
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "Player": ["Josh Hart", "Jalen Brunson"],
+        "Points": [1051, 1690],
+        "Assists": [453, 475],
+    }
+)
+
+hart_img = gte.add_text_img(
+    text="Josh Hart",
+    img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png",
+)
+
+brunson_img = gte.add_text_img(
+    text="Jalen Brunson",
+    img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
+)
+
+df["Player"] = [hart_img, brunson_img]
+gt = (
+    GT(df, rowname_col="Player")
+    .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+)
+
+gt
+```
+{{< include ./_show-last.qmd >}}
+
+### [fa_icon_repeat](https://posit-dev.github.io/gt-extras/reference/fa_icon_repeat.html){title="Click for reference"}
+```{python}
+# | label: fa_icon_repeat
+import pandas as pd
+from great_tables import GT
+from great_tables.data import countrypops
+import gt_extras as gte
+
+countries_2020 = (
+    countrypops
+    .query("year == 2020")
+    .sort_values("population", ascending=False)
+    .iloc[[2, 5, 10, 20, 28, 38, 65, 80, 98]]
+)
+
+# Scale: 1 icon = 10 million people
+def create_population_icons(population):
+    icon_count = max(1, round(population / 10_000_000))
+
+    return gte.fa_icon_repeat(
+        name="person",
+        repeats=icon_count,
+        fill="cornflowerblue",
+    )
+
+# Prepare the data
+df = pd.DataFrame({
+    "Country": countries_2020["country_name"],
+    "Population": countries_2020["population"],
+    "People": [create_population_icons(pop) for pop in countries_2020["population"]],
+})
+
+(
+    GT(df)
+    .tab_header(
+        title="World Population in 2020",
+        subtitle="Each person icon represents ~10 million people"
+    )
+    .fmt_number(
+        columns="Population",
+        decimals=0
+    )
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_fa_rank_change](https://posit-dev.github.io/gt-extras/reference/gt_fa_rank_change.html){title="Click for reference"}
+```{python}
+# | label: gt_fa_rank_change
+from great_tables import GT
+from great_tables.data import towny
+import gt_extras as gte
+
+mini_towny = towny.head(10)
+gt = GT(mini_towny).cols_hide(None).cols_unhide("name")
+
+columns = [
+    "pop_change_1996_2001_pct",
+    "pop_change_2001_2006_pct",
+    "pop_change_2006_2011_pct",
+]
+
+for col in columns:
+    gt = (
+        gt
+        .cols_align(columns=col, align="center")
+        .cols_unhide(col)
+        .cols_label({col: col[11:20]})
+
+        .pipe(
+            gte.gt_fa_rank_change,
+            column=col,
+            neutral_range=[-0.01, 0.01],
+        )
+    )
+
+gt
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_fa_rating](https://posit-dev.github.io/gt-extras/reference/gt_fa_rating.html){title="Click for reference"}
+```{python}
+# | label: gt_fa_rating
+from random import randint
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = (
+    gtcars
+    .loc[8:15, ["model", "mfr", "hp", "trq", "mpg_c"]]
+    .assign(rating=[randint(1, 5) for _ in range(8)])
+)
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+)
+
+gt.pipe(gte.gt_fa_rating, columns="rating", name="star")
+```
+{{< include ./_show-last.qmd >}}
+
+### [img_header](https://posit-dev.github.io/gt-extras/reference/img_header.html){title="Click for reference"}
+```{python}
+# | label: img_header
+import pandas as pd
+from great_tables import GT, md
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "Category": ["Points", "Rebounds", "Assists", "Blocks", "Steals"],
+        "Hart": [1051, 737, 453, 27, 119],
+        "Brunson": [1690, 187, 475, 8, 60],
+        "Bridges": [1444, 259, 306, 43, 75],
+    }
+)
+
+hart_header = gte.img_header(
+    label="Josh Hart",
+    img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3062679.png",
+)
+
+brunson_header = gte.img_header(
+    label="Jalen Brunson",
+    img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3934672.png",
+)
+
+bridges_header = gte.img_header(
+    label="Mikal Bridges",
+    img_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3147657.png",
+)
+
+gt = (
+    GT(df, rowname_col="Category")
+    .tab_source_note(md("Images and data courtesy of [ESPN](https://www.espn.com)"))
+    .cols_label(
+        {
+            "Hart": hart_header,
+            "Brunson": brunson_header,
+            "Bridges": bridges_header,
+        }
+    )
+)
+
+gt
+```
+{{< include ./_show-last.qmd >}}
+
+
+## Utilities
+
+### [fmt_pct_extra](https://posit-dev.github.io/gt-extras/reference/fmt_pct_extra.html){title="Click for reference"}
+```{python}
+# | label: fmt_pct_extra
+from great_tables import GT
+from great_tables.data import towny
+import gt_extras as gte
+
+towny_mini = towny[
+    [
+        "name",
+        "pop_change_1996_2001_pct",
+        "pop_change_2001_2006_pct",
+        "pop_change_2006_2011_pct",
+    ]
+].tail(10)
+
+gt = (
+    GT(towny_mini)
+    .tab_spanner(label="Population Change", columns=[1, 2, 3])
+    .cols_label(
+        pop_change_1996_2001_pct="'96-'01",
+        pop_change_2001_2006_pct="'01-'06",
+        pop_change_2006_2011_pct="'06-'11",
+    )
+)
+
+gt.pipe(
+    gte.fmt_pct_extra,
+    columns=[1, 2, 3],
+    threshold=5,
+    color="green",
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_add_divider](https://posit-dev.github.io/gt-extras/reference/gt_add_divider.html){title="Click for reference"}
+```{python}
+# | label: gt_add_divider
+import pandas as pd
+from great_tables import GT
+from great_tables.data import peeps
+import gt_extras as gte
+
+peeps_mini = peeps.head(6)
+
+gt = (
+    GT(peeps_mini)
+    .cols_hide([
+        "name_family", "postcode", "country", "country_code",
+        "dob", "gender", "state_prov", "email_addr",
+    ])
+    .tab_spanner("Location", ["address", "city"])
+    .tab_spanner("Body Measurements", ["height_cm", "weight_kg"])
+)
+
+gt.pipe(
+    gte.gt_add_divider,
+    columns="name_given",
+    color="#FFB90F",
+    divider_style="double",
+    weight=8,
+).pipe(
+    gte.gt_add_divider,
+    columns="phone_number",
+    color="purple",
+    sides=["right", "left"],
+    weight=5,
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_duplicate_column](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column.html){title="Click for reference"}
+```{python}
+# | label: gt_duplicate_column
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars[["mfr", "model", "year", "hp"]].head(5)
+gt = GT(gtcars_mini)
+
+(
+    gt.pipe(
+        gte.gt_duplicate_column,
+        column="hp",
+        after="year",
+    ).pipe(
+        gte.gt_highlight_cols,
+        ["hp", "hp_dupe"],
+        fill="tan",
+    ).pipe(
+        gte.gt_add_divider,
+        columns=["hp_dupe"],
+        include_labels=False,
+    )
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_merge_stack](https://posit-dev.github.io/gt-extras/reference/gt_merge_stack.html){title="Click for reference"}
+```{python}
+# | label: gt_merge_stack
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.read_csv("../assets/teams_colors_logos.csv")
+df = (df.filter(items=["team_nick", "team_abbr", "team_conf", "team_division", "team_wordmark"]).head(8))
+
+gt = GT(df, groupname_col="team_conf", rowname_col="team_nick")
+gt = gt.fmt_image(columns="team_wordmark")
+
+
+gt.pipe(
+    gte.gt_merge_stack,
+    col1="team_nick",
+    col2="team_division",
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_two_column_layout](https://posit-dev.github.io/gt-extras/reference/gt_two_column_layout.html){title="Click for reference"}
+```{python}
+# | label: gt_two_column_layout
+from great_tables import GT
+import gt_extras as gte
+from great_tables.data import peeps
+
+df1 = peeps.loc[0:5, ["name_given", "address"]]
+df2 = peeps.loc[6:11, ["name_given", "address"]]
+
+gt1 = GT(df1).tab_header(title="Joined Table")
+gt2 = GT(df2)
+
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
+```
+{{< include ./_show-last.qmd >}}
+
+### [with_hyperlink](https://posit-dev.github.io/gt-extras/reference/with_hyperlink.html){title="Click for reference"}
+```{python}
+# | label: with_hyperlink
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "name": ["Great Tables", "Plotnine", "Quarto"],
+        "url": [
+            "https://posit-dev.github.io/great-tables/",
+            "https://plotnine.org/",
+            "https://quarto.org/",
+        ],
+        "github_stars": [2334, 4256, 4628],
+        "repo_url": [
+            "https://github.com/posit-dev/great-tables",
+            "https://github.com/has2k1/plotnine",
+            "https://github.com/quarto-dev/quarto-cli",
+        ],
+    }
+)
+
+df["Package"] = [
+    gte.with_hyperlink(name, url)
+    for name, url in zip(df["name"], df["url"])
+]
+
+df["Github Stars"] = [
+    gte.with_hyperlink(github_stars, repo_url, new_tab=False)
+    for github_stars, repo_url in zip(df["github_stars"], df["repo_url"])
+]
+
+GT(df[["Package", "Github Stars"]]).tab_header("Click the Links!")
+```
+{{< include ./_show-last.qmd >}}
+
+### [with_tooltip](https://posit-dev.github.io/gt-extras/reference/with_tooltip.html){title="Click for reference"}
+```{python}
+# | label: with_tooltip
+import pandas as pd
+from great_tables import GT
+import gt_extras as gte
+
+df = pd.DataFrame(
+    {
+        "name": ["Great Tables", "Plotnine", "Quarto"],
+        "Description": [
+            "Absolutely Delightful Table-making in Python",
+            "A grammar of graphics for Python",
+            "An open-source scientific and technical publishing system",
+        ],
+        "Designed for": ["Tabling", "Plotting", "Notebooking"]
+    }
+)
+
+df["Package"] = [
+    gte.with_tooltip(name, description, color = "none")
+    for name, description in zip(df["name"], df["Description"])
+]
+
+GT(df[["Package", "Designed for"]]).tab_header("Hover for Tooltip")
+```
+{{< include ./_show-last.qmd >}}

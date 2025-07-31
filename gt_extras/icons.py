@@ -1,14 +1,15 @@
 from __future__ import annotations
+
+from math import floor
 from typing import Literal
 
+from faicons import icon_svg
 from great_tables import GT
 from great_tables._tbl_data import SelectExpr, is_na
 
-from math import floor
+from gt_extras._utils_column import _validate_and_get_single_column
 
-from faicons import icon_svg
-
-__all__ = ["fa_icon_repeat", "gt_fa_rating"]
+__all__ = ["fa_icon_repeat", "gt_fa_rating", "gt_fa_rank_change"]
 
 
 def fa_icon_repeat(
@@ -42,7 +43,7 @@ def fa_icon_repeat(
         The number of times to repeat the icon.
 
     fill
-        The fill color for the icon (e.g., `"yellow"`, `"#ffcc00"`). If `None`, uses the default.
+        The fill color for the icon (e.g., `"green"` or `"#ffcc00"`). If `None`, uses the default.
 
     fill_opacity
         The opacity of the fill color (`0.0` - `1.0`).
@@ -104,7 +105,8 @@ def fa_icon_repeat(
 
     Note
     --------
-    See `icon_svg()` in the `faicons` package for further implementation details.
+    See `icon_svg()` in the [`faicons`](https://github.com/posit-dev/py-faicons)
+    package for further implementation details.
     """
     # Throw if `a11y` is not one of the allowed values
     if a11y not in [None, "deco", "sem"]:
@@ -116,10 +118,10 @@ def fa_icon_repeat(
     icon = icon_svg(
         name=name,
         fill=fill,
-        fill_opacity=fill_opacity,
+        fill_opacity=str(fill_opacity),
         stroke=stroke,
         stroke_width=stroke_width,
-        stroke_opacity=stroke_opacity,
+        stroke_opacity=str(stroke_opacity),
         height=height,
         width=width,
         margin_left=margin_left,
@@ -140,7 +142,7 @@ def gt_fa_rating(
     max_rating: int = 5,
     name: str = "star",
     primary_color: str = "gold",
-    secondary_color: str = "gray",
+    secondary_color: str = "grey",
     height: int = 20,
 ) -> GT:
     """
@@ -172,7 +174,7 @@ def gt_fa_rating(
         The color for unfilled icons.
 
     height
-        The height of the rating icons in pixels.
+        The height of the rating icons in pixels. The icon's width will be scaled proportionally.
 
     Returns
     -------
@@ -252,9 +254,203 @@ def gt_fa_rating(
         return div_html
 
     # Apply the formatting to the columns
-    res = gt.fmt(
+    res = gt
+    res = res.fmt(
         lambda x: _make_rating_html(x),
         columns=columns,
+    )
+
+    return res
+
+
+def gt_fa_rank_change(
+    gt: GT,
+    column: SelectExpr,
+    neutral_range: list[int] | int = [0],
+    icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"] = "angles",
+    color_up: str = "green",
+    color_down: str = "red",
+    color_neutral: str = "grey",
+    show_text: bool = True,
+    font_color: str = "black",
+    size: int = 12,
+) -> GT:
+    """
+    Create rank change indicators in `GT` cells using FontAwesome icons.
+
+    This function represents numeric rank changes in table column(s) by displaying FontAwesome
+    icons alongside the numeric values. Values greater than the maximum of `neutral_range` show
+    up-pointing icons (e.g., arrows up), values less than the minimum of the range show
+    down-pointing icons (e.g., arrows down), and values within the neutral range show neutral
+    indicators (equals sign).
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    column
+        The column containing numeric rank change values.
+
+    neutral_range
+        A single number or list of numbers defining the neutral range. If a single number,
+        only that exact value is considered neutral. If a list of numbers, any value within
+        that range (inclusive) is considered neutral.
+
+    icon_type
+        The type of FontAwesome icon to use for indicating direction. Options include `"angles"`,
+        `"arrow"`, `"turn"`, `"chevron"`, and `"caret"`.
+
+    color_up
+        The color for positive (upward) rank changes.
+
+    color_down
+        The color for negative (downward) rank changes.
+
+    color_neutral
+        The color for neutral rank changes (values within the neutral range).
+
+    show_text
+        Whether to display the numeric value alongside the icon.
+
+    font_color
+        The color for the numeric text displayed alongside the icons.
+
+    size
+        The size of the font as well as the icon. Specificially it is both the width of the icon
+        in pixels and the font size of the text.
+
+    Returns
+    -------
+    GT
+        A `GT` object with rank change indicators added to the specified column.
+
+    Example
+    -------
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import towny
+    import gt_extras as gte
+
+    mini_towny = towny.head(10)
+    gt = GT(mini_towny).cols_hide(None).cols_unhide("name")
+
+    columns = [
+        "pop_change_1996_2001_pct",
+        "pop_change_2001_2006_pct",
+        "pop_change_2006_2011_pct",
+    ]
+
+    for col in columns:
+        gt = (
+            gt
+            .cols_align(columns=col, align="center")
+            .cols_unhide(col)
+            .cols_label({col: col[11:20]})
+
+            .pipe(
+                gte.gt_fa_rank_change,
+                column=col,
+                neutral_range=[-0.01, 0.01],
+            )
+        )
+
+    gt
+    ```
+    """
+
+    # TODO: consider in this and in others, do I really need to pass all these params in?
+    # I can just get them from the parent function, but maybe that's less clean.
+    def _make_ranked_cell_html(
+        value: float,
+        icon_type: Literal["angles", "arrow", "turn", "chevron", "caret"],
+        color_up: str,
+        color_down: str,
+        color_neutral: str,
+        show_text: bool,
+        font_color: str,
+        size: int,
+        neutral_min: float,
+        neutral_max: float,
+        max_text_width: str,
+    ) -> str:
+        if value is None or is_na(gt._tbl_data, value):
+            return "<bold style='color:#d3d3d3;'>--</bold>"
+
+        if neutral_min <= value <= neutral_max:
+            color = color_neutral
+            fa_name = "equals"
+        elif value > neutral_max:
+            color = color_up
+            fa_name = f"{icon_type}-up"
+        else:  # value < neutral_min
+            color = color_down
+            fa_name = f"{icon_type}-down"
+
+        my_fa = icon_svg(name=fa_name, fill=color, width=f"{size}px", a11y="sem")
+        text_div = (
+            f'<div style="text-align:right;">{str(value)}</div>' if show_text else ""
+        )
+
+        # Set up grid columns
+        if show_text:
+            grid_columns = f"auto {max_text_width}"
+        else:
+            grid_columns = "auto"
+
+        html = f"""
+        <div aria-label="{str(value)}" role="img" style="
+            padding:0px;
+            display:inline-grid;
+            grid-template-columns: {grid_columns};
+            align-items:center;
+            gap:{size / 8}px;
+            color:{font_color};
+            font-weight:bold;
+            font-size:{size}px;
+            min-width:{size}px;
+        ">
+            <div>{my_fa}</div>
+            {text_div}
+        </div>
+        """
+        return html.strip()
+
+    _, col_vals = _validate_and_get_single_column(gt, expr=column)
+
+    max_text_width = 0
+    for value in col_vals:
+        if value is not None and not is_na(gt._tbl_data, value):
+            text_length = len(str(value))
+            max_text_width = max(max_text_width, text_length)
+
+    # Convert to em units (approximate 0.6em per character)
+    max_text_width = f"{max_text_width * 0.6}em"
+
+    # Ensure neutral_range is a list with two elements (min and max)
+    if isinstance(neutral_range, (int, float)):
+        neutral_min, neutral_max = neutral_range, neutral_range
+    elif isinstance(neutral_range, list):
+        neutral_min, neutral_max = min(neutral_range), max(neutral_range)
+    else:
+        raise ValueError("neutral_range must be a single number or a list")
+
+    res = gt
+    res = res.fmt(
+        lambda x: _make_ranked_cell_html(
+            x,
+            icon_type=icon_type,
+            color_up=color_up,
+            color_down=color_down,
+            color_neutral=color_neutral,
+            font_color=font_color,
+            size=size,
+            show_text=show_text,
+            neutral_min=neutral_min,
+            neutral_max=neutral_max,
+            max_text_width=max_text_width,
+        ),
+        columns=column,
     )
 
     return res
