@@ -416,6 +416,8 @@ def gt_two_column_layout(
             title_class = ""
             title_inline_style = ""
 
+        subtitle_class = ""
+
         subtitle_td_pattern = (
             r'<td[^>]*class="[^"]*gt_subtitle[^"]*"[^>]*>\s*'
             + re.escape(str(subtitle))
@@ -436,14 +438,11 @@ def gt_two_column_layout(
                     c for c in class_str.split() if c != "gt_bottom_border"
                 )
                 subtitle_class = f"gt_table {class_str}"
-            else:
-                subtitle_class = ""
 
             # Extract style attribute
             style_match = re.search(r'style="([^"]*)"', td_tag)
             subtitle_inline_style = style_match.group(1) if style_match else ""
         else:
-            subtitle_class = ""
             subtitle_inline_style = ""
 
         return {
