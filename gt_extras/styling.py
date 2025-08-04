@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Literal
 
 from great_tables import GT, loc, style
+from great_tables._locations import Loc
 from great_tables._tbl_data import SelectExpr
 
 __all__ = ["gt_add_divider"]
@@ -96,7 +97,7 @@ def gt_add_divider(
     ```
     """
 
-    locations = [loc.body(columns=columns)]
+    locations: list[Loc] = [loc.body(columns=columns)]
 
     if include_labels:
         locations.append(loc.column_labels(columns=columns))
