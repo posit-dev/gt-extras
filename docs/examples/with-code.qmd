@@ -7,11 +7,315 @@ collapse-level: 3
 <style>
 
 h3 a {
-    font-weight: 600;;
+    font-weight: 600;
     font-size: 20px;
 }
 
+#mycombinedtable {
+    zoom: .5;
+}
+
 </style>
+
+## Mega Examples
+
+### Cars
+```{python}
+# | label: cars_table
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+# Setup dataframe
+gtcars_mini = gtcars.iloc[5:21].copy().reset_index(drop=True)
+gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
+
+(
+    # Start with a standard GT
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+    .cols_hide(["drivetrain", "hp_rpm", "trq_rpm", "trim", "bdy_style", "msrp", "trsmn", "ctry_origin"])
+    .cols_align("center")
+    .tab_header(title="Car Performance Review", subtitle="Using gt-extras functionality")
+
+    # Add gt-extras features using gt.pipe()
+    .pipe(gte.gt_color_box, columns=["hp", "trq"], palette=["lightblue", "darkblue"])
+    .pipe(gte.gt_plt_dot, category_col="mfr", data_col="efficiency", domain=[0, 0])
+    .pipe(gte.gt_plt_bar, columns=["mpg_c", "mpg_h"])
+    .pipe(gte.gt_fa_rating, columns="efficiency")
+    .pipe(gte.gt_hulk_col_numeric, columns="year", palette="viridis")
+    .pipe(gte.gt_theme_538)
+)
+```
+{{< include ./_show-last.qmd >}}
+
+### NFL 2011 Season
+<!-- Add a "see the notebook" -->
+```{python}
+# | label: nfl_table
+import polars as pl
+from great_tables import GT, md
+import gt_extras as gte
+
+nfl_df = pl.read_json("./nfl-season/nfl_2011_stats.json")
+
+def make_gt(df) -> GT:
+    return (
+        GT(df, rowname_col="Team", groupname_col="team_division")
+        .tab_header(
+            title="2011 NFL Season at a Glance",
+            subtitle="Super Bowl XLVI: New York Giants def. New England Patriots",
+        )
+        .tab_source_note(
+            md(
+                '<span style="float: right;">Source: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+            )
+        )
+        .tab_stubhead(label="Team")
+        .tab_spanner(label="Scoring", columns=["Avg PF", "Avg PA", "Point Diff"])
+        .tab_spanner(label="Season Trends", columns=["Games", "Streak"])
+        .fmt_number(columns="Point Diff", decimals=1)
+        .fmt_image("team_logo_espn")
+        .cols_hide(["Wins", "team_conf", "team_name"])
+        .cols_align(align="center", columns=["Avg PF", "Avg PA", "Games"])
+        .cols_move("team_logo_espn", after="Team")
+        .cols_label({"team_logo_espn": ""})
+        .pipe(
+            gte.gt_plt_winloss,
+            column="Games",
+            win_color="blue",
+            loss_color="orange",
+            tie_color="gray",
+            height=40,
+            width=120,
+        )
+        .pipe(
+            gte.gt_fa_rank_change,
+            column="Streak",
+            icon_type="turn",
+            color_up="blue",
+            color_down="orange",
+            size=14,
+        )
+        .pipe(
+            gte.gt_plt_dumbbell,
+            col1="Avg PF",
+            col2="Avg PA",
+            col1_color="green",
+            col2_color="red",
+            width=300,
+            height=40,
+            num_decimals=0,
+            label="Points For vs Points Against",
+            font_size=12,
+        )
+        .pipe(
+            gte.gt_color_box,
+            columns="Point Diff",
+            palette=["green", "yellow", "red"],
+            domain=[14, -14]
+        )
+        .pipe(gte.gt_highlight_cols, columns="Team", fill="lightgray")
+        .pipe(gte.gt_highlight_rows, rows="NYG", fill="gold", alpha=0.3)
+        .pipe(gte.gt_highlight_rows, rows="NE", fill="silver", alpha=0.3)
+        .pipe(gte.gt_add_divider, columns="Point Diff", color="darkblue", weight=3)
+        .pipe(gte.gt_theme_538)
+    )
+
+
+gt1 = make_gt(nfl_df.head(16))
+gt2 = make_gt(nfl_df.slice(16, 16))
+
+gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
+```
+{{< include ./_show-last.qmd >}}
+
+### Gini Coefficient
+```{python}
+# | label: gini_coefficient_setup
+# | echo: true
+# | code-fold: true
+# | code-summary: Setup
+import polars as pl
+
+pre_tax_col = "gini_market__age_total"
+post_tax_col = "gini_disposable__age_total"
+
+# Read the data
+df = pl.read_csv(
+    "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-08-05/income_inequality_raw.csv",
+    schema={
+        "Entity": pl.String,
+        "Code": pl.String,
+        "Year": pl.Int64,
+        post_tax_col: pl.Float64,
+        pre_tax_col: pl.Float64,
+        "population_historical": pl.Int64,
+        "owid_region": pl.String,
+    },
+    null_values=["NA", ""],
+)
+
+# Propogate the region field to all rows of that country
+df = (
+    df.sort("Entity")
+    .group_by("Entity", maintain_order=True)
+    .agg(
+        [
+            pl.col("Code"),
+            pl.col("Year"),
+            pl.col(post_tax_col),
+            pl.col(pre_tax_col),
+            pl.col("population_historical"),
+            # Most important action happens here
+            pl.col("owid_region").fill_null(strategy="backward"),
+        ]
+    )
+    .explode(
+        [
+            "Code",
+            "Year",
+            post_tax_col,
+            pre_tax_col,
+            "population_historical",
+            "owid_region",
+        ]
+    )
+)
+
+# Drop rows where there is a null in either pre-tax or post-tax cols
+df = df.drop_nulls(
+    subset=(
+        pl.col(post_tax_col),
+        pl.col(pre_tax_col),
+    )
+)
+
+# Compute the percent reduction in gini coefficient.
+df = df.with_columns(
+    ((pl.col(pre_tax_col) - pl.col(post_tax_col)) / pl.col(pre_tax_col) * 100)
+    .round(2)
+    .alias("gini_pct_change")
+)
+
+# Calculate 5-year benchmark (mean) of percent change for each country
+df = df.with_columns(
+    pl.col("gini_pct_change")
+    .rolling_mean(window_size=5)
+    .over(pl.col("Entity"))
+    .alias("gini_pct_benchmark_5yr")
+)
+
+# Select rows with large population in the year 2020, sorted by coefficient post-tax
+df = (
+    # Choose a smaller pop to include more countries
+    df.filter(pl.col("population_historical").gt(40000000))
+    .filter(pl.col("Year").eq(2020))
+    .sort(by=pl.col(post_tax_col))
+)
+
+
+# Scale population
+df = df.with_columns((pl.col("population_historical").log10()).alias("pop_log"))
+pop_min = df["pop_log"].min() / 1
+pop_max = df["pop_log"].max()
+
+# Set up gt-extras icons, scaling population to 1-10 range
+df = df.with_columns(
+    ((pl.col("pop_log") - pop_min) / (pop_max - pop_min) * 10 + 1)
+    .round(0)
+    .cast(pl.Int64)
+    .alias("pop_icons")
+)
+
+# Format original population value with commas
+df = df.with_columns(
+    pl.col("population_historical").map_elements(
+        lambda x: f"{int(x):,}" if x is not None else None, return_dtype=pl.String
+    )
+)
+```
+
+```{python}
+# | label: gini_coefficient_table
+from great_tables import GT, html
+import gt_extras as gte
+
+# Apply gte.fa_icon_repeat to each entry in the pop_icons column
+df_with_icons = df.with_columns(
+    pl.col("pop_icons").map_elements(
+        lambda x: gte.fa_icon_repeat(name="person", repeats=int(x)),
+        return_dtype=pl.String,
+    )
+)
+
+# Generate the table, before gt-extras add-ons
+gt = (
+    GT(df_with_icons, rowname_col="Entity", groupname_col="owid_region")
+    .tab_header(
+        "Income Inequality Before and After Taxes in 2020",
+        "As measured by the Gini coefficient, where 0 is best and 1 is worst",
+    )
+    .cols_move("pop_icons", after=pre_tax_col)
+    .cols_align("left")
+    .cols_hide(["Year", "pop_log", "population_historical"])
+    .fmt_flag("Code")
+    .cols_label(
+        {
+            "Code": "",
+            "gini_pct_change": "Improvement Post Taxes",
+            "pop_icons": "Population",
+        }
+    )
+    .tab_source_note(
+        html(
+            """
+            <div>
+            <strong>Source:</strong> Data from <a href="https://github.com/rfordatascience/tidytuesday">#TidyTuesday</a> (2025-08-05).<br>
+                <div>
+                <strong>Dumbbell plot:</strong>
+                <span style="color:#106ea0;">Blue:</span> post-tax Gini coefficient
+                <span style="color:#e0b165;">Gold:</span> pre-tax Gini coefficient
+                <br>
+                </div>
+            <strong>Bullet plot:</strong> Percent reduction in Gini after taxes for each country, compared to its 5-year average benchmark.
+            </div>
+            """
+        )
+    )
+)
+
+# Apply the gt-extras functions via pipe
+(
+    gt.pipe(
+        gte.gt_plt_dumbbell,
+        col1=pre_tax_col,
+        col2=post_tax_col,
+        col1_color="#e0b165",
+        col2_color="#106ea0",
+        dot_border_color="transparent",
+        num_decimals=2,
+        width=240,
+        label="Pre-tax to Post-tax Coefficient",
+    )
+    .pipe(
+        gte.gt_plt_bullet,
+        "gini_pct_change",
+        "gini_pct_benchmark_5yr",
+        fill="#963d4c",
+        target_color="#3D3D3D",
+        bar_height=15,
+        width=200,
+    )
+    .pipe(
+        gte.gt_merge_stack,
+        col1="pop_icons",
+        col2="population_historical",
+    )
+    .pipe(gte.gt_theme_guardian)
+)
+```
+{{< include ./_show-last.qmd >}}
 
 ## Plotting
 
@@ -73,7 +377,6 @@ gt = GT(df)
 {{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bar_stack](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack.html){title="Click for reference"}
-
 ```{python}
 # | label: gt_plt_bar_stack
 import pandas as pd
@@ -102,7 +405,6 @@ gt.pipe(
 {{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bullet](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet.html){title="Click for reference"}
-
 ```{python}
 # | label: gt_plt_bullet
 import polars as pl
@@ -144,7 +446,6 @@ air_bullet = (
 )
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ### [gt_plt_conf_int](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html){title="Click for reference"}
 ```{python}
@@ -258,7 +559,6 @@ df = pl.DataFrame({
 gte.gt_plt_summary(df)
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ### [gt_plt_winloss](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html){title="Click for reference"}
 ```{python}
@@ -399,7 +699,6 @@ gt = (
 gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ## Themes
 
@@ -696,7 +995,6 @@ gt = (
 gt
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ## Utilities
 
