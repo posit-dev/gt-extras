@@ -29,6 +29,12 @@ h3 a {
   bottom: 0;
 }
 
+.mega-example-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+}
+
 .masonry-container {
   column-count: auto;
   /* Effectively determines number of columns (wider = fewer cols) */
@@ -36,7 +42,8 @@ h3 a {
   column-gap: 1em;
 }
 
-.masonry-item {
+.masonry-item,
+.mega-example-item {
   display: inline-block;
   width: 100%;
   margin-bottom: 1em;
@@ -64,13 +71,18 @@ h3 a {
     font-size: 1em;
 }
 
-.masonry-item:hover .embed-hover-overlay {
-    opacity: 1;
-    pointer-events: auto;
+.masonry-item:hover .embed-hover-overlay,
+.mega-example-item:hover .embed-hover-overlay {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .masonry-item .cell-output table {
   zoom: calc(260/var(--width) * var(--dynamic-factor));
+}
+
+.mega-example-item .cell-output table {
+  zoom: calc( 1 / 2600 * var(--mega-container-width));
 }
 </style>
 
@@ -83,6 +95,13 @@ function updateZoom() {
   const factor = Math.max(0.3, Math.min(2.5, width / 300));
 
   document.documentElement.style.setProperty('--dynamic-factor', factor);
+
+  // similar, but for mega examples
+  const mega_example_container = document.querySelector('.mega-example-container');
+  if (!mega_example_container) return;
+
+  const mega_example_width = mega_example_container.offsetWidth;
+  document.documentElement.style.setProperty('--mega-container-width', mega_example_width);
 }
 
 addEventListener('DOMContentLoaded', updateZoom);
@@ -111,14 +130,19 @@ addEventListener('DOMContentLoaded', setTableWidths);
 addEventListener('resize', setTableWidths);
 </script>
 
-<!-- ::::: {.grid}
+::::{.mega-example-container}
 
-:::{.g-col-lg-5 .g-col-12 .example .shrink-example}
-### [Two Column Layout](./before-after.qmd#two-column-layout)
-{{< embed _raw.qmd#two-column-layout >}}
+:::{.mega-example-item style="--width: 724;"}
+{{< embed with-code.qmd#cars_table >}}
+[Cars](./with-code.html#cars_table){.embed-hover-overlay}
 :::
 
-::::: -->
+:::{.mega-example-item style="--width: 756;"}
+{{< embed with-code.qmd#gini_coefficient_table >}}
+[Gini Coefficients](./with-code.html#gini_coefficient_table){.embed-hover-overlay}
+:::
+
+::::
 
 ::::{.masonry-container}
 
