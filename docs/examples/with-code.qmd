@@ -7,8 +7,12 @@ collapse-level: 3
 <style>
 
 h3 a {
-    font-weight: 600;;
+    font-weight: 600;
     font-size: 20px;
+}
+
+#mycombinedtable {
+    zoom: .5;
 }
 
 </style>
@@ -51,6 +55,7 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 <!-- ::: {style="zoom: 0.56;"} -->
 ```{python}
 # | label: nfl_table
+# | tbl-width: 8%
 import polars as pl
 from great_tables import GT, md
 import gt_extras as gte
