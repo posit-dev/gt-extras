@@ -144,7 +144,7 @@ addEventListener('resize', setTableWidths);
 
 :::{.mega-example-item style="--width: 615;"}
 {{< embed with-code.qmd#nfl_table >}}
-[NFL](./with-code.html#nfl_table){.embed-hover-overlay}
+[NFL 2011 Season](./with-code.html#nfl_table){.embed-hover-overlay}
 :::
 
 :::{.mega-example-item style="--width: 756;"}

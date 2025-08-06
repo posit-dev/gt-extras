@@ -23,7 +23,7 @@ from great_tables.data import gtcars
 import gt_extras as gte
 
 # Setup dataframe
-gtcars_mini = gtcars.iloc[5:25].copy().reset_index(drop=True)
+gtcars_mini = gtcars.iloc[5:21].copy().reset_index(drop=True)
 gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 
 (
@@ -46,8 +46,9 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 {{< include ./_show-last.qmd >}}
 
 
-### NFL
-::: {style="zoom: 0.56"}
+### NFL 2011 Season
+<!-- Add a "see the notebook" -->
+<!-- ::: {style="zoom: 0.56;"} -->
 ```{python}
 # | label: nfl_table
 import polars as pl
@@ -125,7 +126,7 @@ gt2 = make_gt(nfl_df.slice(16, 16))
 
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
-:::
+<!-- ::: -->
 {{< include ./_show-last.qmd >}}
 
 
@@ -207,7 +208,7 @@ df = df.with_columns(
 
 # Select rows with large population in the year 2020, sorted by coefficient post-tax
 df = (
-    df.filter(pl.col("population_historical").gt(19000000))
+    df.filter(pl.col("population_historical").gt(40000000))
     .filter(pl.col("Year").eq(2020))
     .sort(by=pl.col(post_tax_col))
 )
