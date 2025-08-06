@@ -88,7 +88,7 @@ h3 a {
 
 .mega-example-item .cell-output #mycombinedtable {
   zoom: 0.47;
-  padding-top: 25px;
+  padding-top: 30px;
 }
 </style>
 
