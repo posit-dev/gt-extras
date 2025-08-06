@@ -49,13 +49,10 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 ```
 {{< include ./_show-last.qmd >}}
 
-
 ### NFL 2011 Season
 <!-- Add a "see the notebook" -->
-<!-- ::: {style="zoom: 0.56;"} -->
 ```{python}
 # | label: nfl_table
-# | tbl-width: 8%
 import polars as pl
 from great_tables import GT, md
 import gt_extras as gte
@@ -131,9 +128,7 @@ gt2 = make_gt(nfl_df.slice(16, 16))
 
 gte.gt_two_column_layout(gt1, gt2, table_header_from=1)
 ```
-<!-- ::: -->
 {{< include ./_show-last.qmd >}}
-
 
 ### Gini Coefficient
 ```{python}
@@ -213,6 +208,7 @@ df = df.with_columns(
 
 # Select rows with large population in the year 2020, sorted by coefficient post-tax
 df = (
+    # Choose a smaller pop to include more countries
     df.filter(pl.col("population_historical").gt(40000000))
     .filter(pl.col("Year").eq(2020))
     .sort(by=pl.col(post_tax_col))
@@ -321,7 +317,6 @@ gt = (
 ```
 {{< include ./_show-last.qmd >}}
 
-
 ## Plotting
 
 ### [gt_plt_bar](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar.html){title="Click for reference"}
@@ -382,7 +377,6 @@ gt = GT(df)
 {{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bar_stack](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack.html){title="Click for reference"}
-
 ```{python}
 # | label: gt_plt_bar_stack
 import pandas as pd
@@ -411,7 +405,6 @@ gt.pipe(
 {{< include ./_show-last.qmd >}}
 
 ### [gt_plt_bullet](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet.html){title="Click for reference"}
-
 ```{python}
 # | label: gt_plt_bullet
 import polars as pl
@@ -453,7 +446,6 @@ air_bullet = (
 )
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ### [gt_plt_conf_int](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int.html){title="Click for reference"}
 ```{python}
@@ -567,7 +559,6 @@ df = pl.DataFrame({
 gte.gt_plt_summary(df)
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ### [gt_plt_winloss](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss.html){title="Click for reference"}
 ```{python}
@@ -708,7 +699,6 @@ gt = (
 gt.pipe(gte.gt_hulk_col_numeric, columns=["hp", "trq", "mpg_h"])
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ## Themes
 
@@ -1005,7 +995,6 @@ gt = (
 gt
 ```
 {{< include ./_show-last.qmd >}}
-
 
 ## Utilities
 

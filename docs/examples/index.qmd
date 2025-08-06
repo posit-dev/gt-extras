@@ -86,7 +86,7 @@ h3 a {
 }
 
 .mega-example-item .cell-output #mycombinedtable {
-  zoom: 0.5;
+  zoom: 0.47;
   padding-top: 25px;
 }
 </style>
@@ -142,7 +142,7 @@ addEventListener('resize', setTableWidths);
 [Cars](./with-code.html#cars_table){.embed-hover-overlay}
 :::
 
-:::{.mega-example-item style="--width: 615;"}
+:::{.mega-example-item style="--width: 763;"}
 {{< embed with-code.qmd#nfl_table >}}
 [NFL 2011 Season](./with-code.html#nfl_table){.embed-hover-overlay}
 :::
