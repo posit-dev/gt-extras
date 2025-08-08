@@ -71,6 +71,11 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).
 
+In general, if you're interested in extending **Great Tables** functionality, [this subsection of the Great Tables get-started page](https://posit-dev.github.io/great-tables/get-started/extensions) is a great place to start.
+
+Some of the work that went into this project was featured on the [_great tables blog_](https://posit-dev.github.io/great-tables/blog/plots-in-tables/), if you choose to contribute hopefully that can give you a sense of the process!
+
+
 ## Code of Conduct
 Please note that the **gt-extras** project is released with a [contributor code of conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).<br>By participating in this project you agree to abide by its terms.
 
