@@ -29,7 +29,9 @@ PLOT_HEIGHT_RATIO = 0.8
 FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
-def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
+def gt_plt_summary(
+    df: IntoDataFrame, title: str | None = None, hide_stats: bool = False
+) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
 
@@ -119,7 +121,10 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
+    breakpoint()
     summary_df = _create_summary_df(df)
+    if hide_stats:
+        summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -139,13 +144,10 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     gt = (
         GT(summary_df)
         .tab_header(title=title, subtitle=subtitle)
-        # handle missing
-        .sub_missing(columns=["Mean", "Median", "SD"])
         # Add visuals
         .fmt(_make_icon_html, columns="Type")
         # Format numerics
         .fmt_percent(columns="Missing", decimals=1)
-        .fmt_number(columns=["Mean", "Median", "SD"], rows=numeric_cols)
         .tab_style(
             style=style.text(weight="bold"),
             locations=loc.body(columns="Column"),
@@ -153,6 +155,14 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         # add style
         .cols_align(align="center", columns="Plot Overview")
     )
+
+    if not hide_stats:
+        gt = (
+            # handle missing
+            gt.sub_missing(columns=["Mean", "Median", "SD"]).fmt_number(
+                columns=["Mean", "Median", "SD"], rows=numeric_cols
+            )
+        )
 
     gt = gt_theme_espn(gt)
 
