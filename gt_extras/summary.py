@@ -30,7 +30,10 @@ FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
 def gt_plt_summary(
-    df: IntoDataFrame, title: str | None = None, hide_stats: bool = False
+    df: IntoDataFrame,
+    title: str | None = None,
+    hide_desc_stats: bool = False,
+    add_mode: bool = False,
 ) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
@@ -121,10 +124,9 @@ def gt_plt_summary(
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
-    breakpoint()
     summary_df = _create_summary_df(df)
-    if hide_stats:
-        summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])
+    if hide_desc_stats:
+        summary_df = summary_df.drop(columns=["Mean", "Median", "SD", "Mode"])  # type: ignore
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -156,11 +158,14 @@ def gt_plt_summary(
         .cols_align(align="center", columns="Plot Overview")
     )
 
-    if not hide_stats:
+    if not hide_desc_stats:
         gt = (
             # handle missing
-            gt.sub_missing(columns=["Mean", "Median", "SD"]).fmt_number(
-                columns=["Mean", "Median", "SD"], rows=numeric_cols
+            gt.sub_missing(
+                columns=["Mean", "Median", "SD", "Mode"]
+            ).fmt_number(  # Mode?
+                columns=["Mean", "Median", "SD"],
+                rows=numeric_cols,  # Mode?
             )
         )
 
@@ -200,6 +205,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         "Mean": [],
         "Median": [],
         "SD": [],
+        "Mode": [],
     }
 
     for col_name in nw_df.columns:
@@ -208,6 +214,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         mean_val = None
         median_val = None
         std_val = None
+        mode_val = None
 
         clean_col = _clean_series(col, col.dtype.is_numeric())
 
@@ -222,6 +229,15 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
             mean_val = clean_col.mean()
             median_val = clean_col.median()
             std_val = clean_col.std()
+            mode_val = clean_col.mode()
+            # If lengths are the same there's no mode, likely due to continuous data input.
+            if len(mode_val) == len(clean_col):
+                mode_val = "No Singular Mode"
+            # Limiting the number of modes displayed to two at maximum
+            elif len(mode_val) > 2:
+                mode_val = "Greater than 2 Modes"
+            else:
+                mode_val = ", ".join(str(i) for i in mode_val.to_list())
 
         elif col.dtype == nw.String:
             col_type = "string"
@@ -243,6 +259,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         summary_data["Mean"].append(mean_val)
         summary_data["Median"].append(median_val)
         summary_data["SD"].append(std_val)
+        summary_data["Mode"].append(mode_val)
 
     summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
     return summary_nw_df.to_native()
