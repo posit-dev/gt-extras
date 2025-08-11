@@ -125,8 +125,12 @@ def gt_plt_summary(
     datatypes, especially when null values are present.
     """
     summary_df = _create_summary_df(df)
+
+    if not add_mode:
+        summary_df = summary_df.drop(columns=["Mode"])  # type: ignore
+
     if hide_desc_stats:
-        summary_df = summary_df.drop(columns=["Mean", "Median", "SD", "Mode"])  # type: ignore
+        summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])  # type: ignore
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -162,10 +166,10 @@ def gt_plt_summary(
         gt = (
             # handle missing
             gt.sub_missing(
-                columns=["Mean", "Median", "SD", "Mode"]
-            ).fmt_number(  # Mode?
+                columns=["Mean", "Median", "SD"] + (["Mode"] if add_mode else [])
+            ).fmt_number(
                 columns=["Mean", "Median", "SD"],
-                rows=numeric_cols,  # Mode?
+                rows=numeric_cols,
             )
         )
 
