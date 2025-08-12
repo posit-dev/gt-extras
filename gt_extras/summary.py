@@ -198,13 +198,22 @@ def gt_plt_summary(
         .cols_align(align="center", columns="Plot Overview")
     )
 
+    # Polars has strict column checking, so can't perform .sub_missing or .fmt_number etc on columns
+    # that aren't present in a df. Therefore, we need to check if those columns are present prior to
+    # handling missing and formatting.
+    cols_to_check = ["Mean", "Median", "SD"] + (["Mode"] if add_mode else [])
+    existing_desc_cols = [col for col in cols_to_check if col in nw_summary_df.columns]
+
+    # Mode stays as a string object, so we don't include in here.
+    columns_to_format_as_number = [
+        col for col in ["Mean", "Median", "SD"] if col in nw_summary_df.columns
+    ]
+
     if not hide_desc_stats:
         gt = (
             # handle missing
-            gt.sub_missing(
-                columns=["Mean", "Median", "SD"] + (["Mode"] if add_mode else [])
-            ).fmt_number(
-                columns=["Mean", "Median", "SD"],
+            gt.sub_missing(columns=existing_desc_cols).fmt_number(
+                columns=columns_to_format_as_number,
                 rows=numeric_cols,
             )
         )
