@@ -158,13 +158,15 @@ def gt_plt_summary(
     if color_mapping:
         change_color_mapping(color_mapping)
 
-    summary_df = _create_summary_df(df)
+    summary_df = _create_summary_df(
+        df, hide_desc_stats=hide_desc_stats, add_mode=add_mode
+    )
 
-    if not add_mode:
-        summary_df = summary_df.drop(columns=["Mode"])  # type: ignore
+    # if not add_mode:
+    #     summary_df = summary_df.drop(columns=["Mode"])  # type: ignore
 
-    if hide_desc_stats:
-        summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])  # type: ignore
+    # if hide_desc_stats:
+    #     summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])  # type: ignore
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -233,7 +235,9 @@ def gt_plt_summary(
 ############### Helpers for gt_plt_summary ###############
 
 
-def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
+def _create_summary_df(
+    df: IntoDataFrameT, hide_desc_stats: bool = False, add_mode: bool = False
+) -> IntoDataFrameT:
     nw_df = nw.from_native(df, eager_only=True)  # Should I be concerned about this?
 
     summary_data = {
@@ -241,10 +245,10 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         "Column": [],
         "Plot Overview": [],
         "Missing": [],
-        "Mean": [],
-        "Median": [],
-        "SD": [],
-        "Mode": [],
+        # "Mean": [],
+        # "Median": [],
+        # "SD": [],
+        # "Mode": [],
     }
 
     for col_name in nw_df.columns:
@@ -295,10 +299,12 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         summary_data["Column"].append(col_name)
         summary_data["Plot Overview"].append(None)
         summary_data["Missing"].append(missing_ratio)
-        summary_data["Mean"].append(mean_val)
-        summary_data["Median"].append(median_val)
-        summary_data["SD"].append(std_val)
-        summary_data["Mode"].append(mode_val)
+        if not hide_desc_stats:
+            summary_data.setdefault("Mean", []).append(mean_val)
+            summary_data.setdefault("Median", []).append(median_val)
+            summary_data.setdefault("SD", []).append(std_val)
+        if not hide_desc_stats and add_mode:
+            summary_data.setdefault("Mode", []).append(mode_val)
 
     summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
     return summary_nw_df.to_native()
@@ -434,7 +440,7 @@ def _make_categories_bar_svg(
     categories: list[str],
     counts: list[int],
     opacities: list[float] | None = None,
-    interactivity: bool = False,
+    interactivity: bool = True,
 ) -> SVG:
     plot_width_px = width_px * PLOT_WIDTH_RATIO
     plot_height_px = height_px * PLOT_HEIGHT_RATIO
@@ -665,6 +671,7 @@ def _plot_datetime(
         data_min=str(datetime.fromtimestamp(data_min, tz=timezone.utc).date()),
         counts=counts,
         bin_edges=bin_edges,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
@@ -680,7 +687,7 @@ def _make_histogram_svg(
     data_max: str,
     counts: list[float],
     bin_edges: list[str],
-    interactivity: bool = False,
+    interactivity: bool = True,
 ) -> SVG:
     max_count = max(counts)
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
