@@ -29,12 +29,19 @@ PLOT_HEIGHT_RATIO = 0.8
 FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
+def change_color_mapping(user_overrides: dict[str, str] | None = None) -> None:
+    global COLOR_MAPPING  # declare that you want to modify the global variable
+    if user_overrides:
+        COLOR_MAPPING.update(user_overrides)
+
+
 def gt_plt_summary(
     df: IntoDataFrame,
     title: str | None = None,
     hide_desc_stats: bool = False,
     add_mode: bool = False,
-    interactivity: bool = False,
+    interactivity: bool = False,  # TODO Bug if Interactivity is False with Sp500 set
+    color_mapping: dict | None = None,
 ) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
@@ -61,6 +68,23 @@ def gt_plt_summary(
 
     add_mode
         Boolean that allows the addition of a Mode column. Defaults to 'False'.
+
+    color_mapping
+        List detailing the color scheme for the 5 possible data types. If the list doesn't modify
+        all 5 data types, then the default color mapping is used for the unaltered types.
+        Examples:
+            {
+                "string": "#4e79a7",
+                "numeric": "#f18e2c",
+                "datetime": "#73a657",
+                "boolean": "#a65773",
+                "other": "black",
+            }
+
+            {
+                "string": "purple",
+                "numeric": "pink",
+            }
 
     Returns
     -------
@@ -131,6 +155,9 @@ def gt_plt_summary(
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
+    if color_mapping:
+        change_color_mapping(color_mapping)
+
     summary_df = _create_summary_df(df)
 
     if not add_mode:
