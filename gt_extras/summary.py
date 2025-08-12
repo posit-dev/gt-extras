@@ -29,19 +29,13 @@ PLOT_HEIGHT_RATIO = 0.8
 FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
-def change_color_mapping(user_overrides: dict[str, str] | None = None) -> None:
-    global COLOR_MAPPING  # declare that you want to modify the global variable
-    if user_overrides:
-        COLOR_MAPPING.update(user_overrides)
-
-
 def gt_plt_summary(
     df: IntoDataFrame,
     title: str | None = None,
     hide_desc_stats: bool = False,
     add_mode: bool = False,
     interactivity: bool = True,
-    color_mapping: dict | None = None,
+    new_color_mapping: dict | None = None,
 ) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
@@ -69,7 +63,7 @@ def gt_plt_summary(
     add_mode
         Boolean that allows the addition of a Mode column. Defaults to 'False'.
 
-    color_mapping
+    new_color_mapping
         List detailing the color scheme for the 5 possible data types. If the list doesn't modify
         all 5 data types, then the default color mapping is used for the unaltered types.
         Examples:
@@ -155,18 +149,13 @@ def gt_plt_summary(
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
-    if color_mapping:
-        change_color_mapping(color_mapping)
+    if new_color_mapping:
+        global COLOR_MAPPING
+        COLOR_MAPPING.update(new_color_mapping)
 
     summary_df = _create_summary_df(
         df, hide_desc_stats=hide_desc_stats, add_mode=add_mode
     )
-
-    # if not add_mode:
-    #     summary_df = summary_df.drop(columns=["Mode"])  # type: ignore
-
-    # if hide_desc_stats:
-    #     summary_df = summary_df.drop(columns=["Mean", "Median", "SD"])  # type: ignore
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -254,10 +243,6 @@ def _create_summary_df(
         "Column": [],
         "Plot Overview": [],
         "Missing": [],
-        # "Mean": [],
-        # "Median": [],
-        # "SD": [],
-        # "Mode": [],
     }
 
     for col_name in nw_df.columns:
@@ -288,6 +273,7 @@ def _create_summary_df(
             # Limiting the number of modes displayed to two at maximum
             elif len(mode_val) > 2:
                 mode_val = "Greater than 2 Modes"
+            # Converting to string, then listing together
             else:
                 mode_val = ", ".join(str(i) for i in mode_val.to_list())
 
@@ -308,6 +294,7 @@ def _create_summary_df(
         summary_data["Column"].append(col_name)
         summary_data["Plot Overview"].append(None)
         summary_data["Missing"].append(missing_ratio)
+        # setdefault adds the column if it's not present
         if not hide_desc_stats:
             summary_data.setdefault("Mean", []).append(mean_val)
             summary_data.setdefault("Median", []).append(median_val)
