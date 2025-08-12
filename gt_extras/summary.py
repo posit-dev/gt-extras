@@ -40,7 +40,7 @@ def gt_plt_summary(
     title: str | None = None,
     hide_desc_stats: bool = False,
     add_mode: bool = False,
-    interactivity: bool = False,  # TODO Bug if Interactivity is False with Sp500 set
+    interactivity: bool = True,
     color_mapping: dict | None = None,
 ) -> GT:
     """
@@ -337,7 +337,7 @@ def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
     plot_id: str,
-    interactivity: bool = False,
+    interactivity: bool = True,
 ) -> str:
     if len(nw_series) == 0:
         return "<div></div>"
@@ -358,9 +358,7 @@ def _make_summary_plot(
         return "<div></div>"
 
 
-def _plot_categorical(
-    data: list[str], plot_id: str, interactivity: bool = False
-) -> str:
+def _plot_categorical(data: list[str], plot_id: str, interactivity: bool = True) -> str:
     category_counts = {}
     for item in data:
         if item in category_counts:
@@ -394,7 +392,7 @@ def _plot_categorical(
     return svg.as_str()
 
 
-def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = False) -> str:
+def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = True) -> str:
     true_count = sum(data)
     false_count = len(data) - true_count
     total_count = len(data)
@@ -426,6 +424,7 @@ def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = False) -
         categories=categories,
         counts=counts,
         opacities=opacities,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
@@ -556,7 +555,7 @@ def _make_categories_bar_svg(
 
 
 def _plot_numeric(
-    data: list[float] | list[int], plot_id: str, interactivity: bool = False
+    data: list[float] | list[int], plot_id: str, interactivity: bool = True
 ) -> str:
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
@@ -608,13 +607,14 @@ def _plot_numeric(
         data_min=str(round(data_min, 2)),
         counts=counts,
         bin_edges=bin_edges,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
 
 
 def _plot_datetime(
-    dates: list[datetime], plot_id: str, interactivity: bool = False
+    dates: list[datetime], plot_id: str, interactivity: bool = True
 ) -> str:
     date_timestamps = [x.timestamp() for x in dates]
     data_min, data_max = min(date_timestamps), max(date_timestamps)
