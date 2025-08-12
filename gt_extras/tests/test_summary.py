@@ -6,7 +6,7 @@ import polars as pl
 import pytest
 from great_tables import GT
 
-from gt_extras.summary import gt_plt_summary
+from gt_extras.summary import COLOR_MAPPING, change_color_mapping, gt_plt_summary
 from gt_extras.tests.conftest import assert_rendered_body
 
 
@@ -441,6 +441,26 @@ def test_gt_plt_summary_column_order_preserved(DataFrame):
     m_pos = html.find("m_column")
 
     assert z_pos < a_pos < m_pos
+
+
+def test_change_color_mapping_updates():
+    overrides = {"string": "#00FF00"}
+    change_color_mapping(overrides)
+    assert COLOR_MAPPING.get("string") == "#00FF00"
+    # Existing keys should remain too
+    assert COLOR_MAPPING.get("numeric") == "#f18e2c"
+
+
+def test_change_color_mapping_with_none():
+    old_mapping = COLOR_MAPPING.copy()
+    change_color_mapping(None)
+    assert COLOR_MAPPING == old_mapping
+
+
+def test_change_color_mapping_with_empty_dict():
+    old_mapping = COLOR_MAPPING.copy()
+    change_color_mapping({})
+    assert COLOR_MAPPING == old_mapping
 
 
 # TODO: time
