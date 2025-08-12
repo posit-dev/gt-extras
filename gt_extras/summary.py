@@ -34,6 +34,7 @@ def gt_plt_summary(
     title: str | None = None,
     hide_desc_stats: bool = False,
     add_mode: bool = False,
+    interactivity: bool = False,
 ) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
@@ -194,6 +195,7 @@ def gt_plt_summary(
                 nw_series=vals,
                 col_type=col_type,
                 plot_id=plot_id,
+                interactivity=interactivity,
             ),
             columns="Plot Overview",
             rows=i,
@@ -302,6 +304,7 @@ def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
     plot_id: str,
+    interactivity: bool = False,
 ) -> str:
     if len(nw_series) == 0:
         return "<div></div>"
@@ -309,18 +312,22 @@ def _make_summary_plot(
     clean_list = nw_series.to_native().to_list()
 
     if col_type == "string":
-        return _plot_categorical(clean_list, plot_id=plot_id)
+        return _plot_categorical(
+            clean_list, plot_id=plot_id, interactivity=interactivity
+        )
     elif col_type == "numeric":
-        return _plot_numeric(clean_list, plot_id=plot_id)
+        return _plot_numeric(clean_list, plot_id=plot_id, interactivity=interactivity)
     elif col_type == "datetime":
-        return _plot_datetime(clean_list, plot_id=plot_id)
+        return _plot_datetime(clean_list, plot_id=plot_id, interactivity=interactivity)
     elif col_type == "boolean":
-        return _plot_boolean(clean_list, plot_id=plot_id)
+        return _plot_boolean(clean_list, plot_id=plot_id, interactivity=interactivity)
     else:
         return "<div></div>"
 
 
-def _plot_categorical(data: list[str], plot_id: str) -> str:
+def _plot_categorical(
+    data: list[str], plot_id: str, interactivity: bool = False
+) -> str:
     category_counts = {}
     for item in data:
         if item in category_counts:
@@ -348,12 +355,13 @@ def _plot_categorical(data: list[str], plot_id: str) -> str:
             category for category, _ in sorted_categories
         ],  # maybe leave combined with counts?
         counts=counts,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
 
 
-def _plot_boolean(data: list[bool], plot_id: str) -> str:
+def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = False) -> str:
     true_count = sum(data)
     false_count = len(data) - true_count
     total_count = len(data)
@@ -399,6 +407,7 @@ def _make_categories_bar_svg(
     categories: list[str],
     counts: list[int],
     opacities: list[float] | None = None,
+    interactivity: bool = False,
 ) -> SVG:
     plot_width_px = width_px * PLOT_WIDTH_RATIO
     plot_height_px = height_px * PLOT_HEIGHT_RATIO
@@ -412,15 +421,18 @@ def _make_categories_bar_svg(
     max_opacity = 1.0
     min_opacity = 0.2
 
-    hover_css = _generate_hover_css(
-        num_elements=len(proportions),
-        bar_highlight_style="opacity: 0.4;",
-        tooltip_class="category-tooltip",
-        use_hover_areas=False,
-        plot_id=plot_id,
-    )
+    if interactivity:
+        hover_css = _generate_hover_css(
+            num_elements=len(proportions),
+            bar_highlight_style="opacity: 0.4;",
+            tooltip_class="category-tooltip",
+            use_hover_areas=False,
+            plot_id=plot_id,
+        )
 
-    elements: list[Element] = [Style(text=hover_css)]
+        elements: list[Element] = [Style(text=hover_css)]
+    else:
+        elements: list[Element] = []
 
     for i, (proportion, category, count) in enumerate(
         zip(proportions, categories, counts)
@@ -503,13 +515,16 @@ def _make_categories_bar_svg(
                 ),
             ],
         )
-        elements.append(tooltip)
+        if interactivity:
+            elements.append(tooltip)
         x_loc += section_width
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
 
-def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
+def _plot_numeric(
+    data: list[float] | list[int], plot_id: str, interactivity: bool = False
+) -> str:
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
 
@@ -566,8 +581,7 @@ def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
 
 
 def _plot_datetime(
-    dates: list[datetime],
-    plot_id: str,
+    dates: list[datetime], plot_id: str, interactivity: bool = False
 ) -> str:
     date_timestamps = [x.timestamp() for x in dates]
     data_min, data_max = min(date_timestamps), max(date_timestamps)
@@ -639,6 +653,7 @@ def _make_histogram_svg(
     data_max: str,
     counts: list[float],
     bin_edges: list[str],
+    interactivity: bool = False,
 ) -> SVG:
     max_count = max(counts)
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
@@ -663,14 +678,6 @@ def _make_histogram_svg(
         f"stroke: white; stroke-width: {line_stroke_width}; fill-opacity: 0.6;"
     )
 
-    hover_css = _generate_hover_css(
-        num_elements=len(counts),
-        bar_highlight_style=bar_highlight_style,
-        tooltip_class="tooltip",
-        use_hover_areas=True,
-        plot_id=plot_id,
-    )
-
     # Calculate text positioning to avoid overflow
     min_text_width = len(data_min) * font_size_px * 0.6
     max_text_width = len(data_max) * font_size_px * 0.6
@@ -688,9 +695,6 @@ def _make_histogram_svg(
     )
 
     elements: list[Element] = [
-        Style(
-            text=hover_css,
-        ),
         # Bottom line
         Line(
             x1=0,
@@ -726,6 +730,16 @@ def _make_histogram_svg(
             dominant_baseline="text-top",
         ),
     ]
+
+    if interactivity:
+        hover_css = _generate_hover_css(
+            num_elements=len(counts),
+            bar_highlight_style=bar_highlight_style,
+            tooltip_class="tooltip",
+            use_hover_areas=True,
+            plot_id=plot_id,
+        )
+        elements.append(Style(text=hover_css))
 
     # Make each bar, with an accompanying tooltip
     for i, (count, normalized_count) in enumerate(zip(counts, normalized_counts)):
@@ -812,7 +826,8 @@ def _make_histogram_svg(
         # Insert bars at beginning, tooltips at end
         elements.insert(0, bar)
         elements.insert(0, hover_area)
-        elements.append(tooltip)
+        if interactivity:
+            elements.append(tooltip)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
