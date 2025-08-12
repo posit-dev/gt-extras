@@ -63,6 +63,10 @@ def gt_plt_summary(
     add_mode
         Boolean that allows the addition of a Mode column. Defaults to 'False'.
 
+    interactivity
+        Boolean that toggles interactivity in Plot Overview column graphs. Interactivity refers to
+        hovering css and tooltips code applied to the graphs.
+
     new_color_mapping
         List detailing the color scheme for the 5 possible data types. If the list doesn't modify
         all 5 data types, then the default color mapping is used for the unaltered types.
