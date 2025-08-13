@@ -30,6 +30,58 @@ def test_gt_plt_summary_snap(snapshot):
         assert_rendered_body(snapshot(name="pd_and_pl"), gt=res)
 
 
+def test_gt_plt_summary_additional_parameters_snap(snapshot):
+    for DataFrame in [pd.DataFrame, pl.DataFrame]:
+        df = DataFrame(
+            {
+                "numeric": [1.5, 2.2, 3.3, None, 5.1],
+                "modes_test": [1, 2, 3, 4, 5],
+                "string": ["A", "B", "A", "C", None],
+                "boolean": [True, False, True, False, False],
+                "datetime": [
+                    datetime(2024, 1, 1, tzinfo=timezone.utc),
+                    datetime(2024, 1, 2, tzinfo=timezone.utc),
+                    datetime(2024, 1, 3, tzinfo=timezone.utc),
+                    None,
+                    datetime(2024, 1, 5, tzinfo=timezone.utc),
+                ],
+            }
+        )
+        res = gt_plt_summary(
+            df,
+            show_desc_stats=True,
+            add_mode=True,
+            interactivity=False,
+            new_color_mapping={"string": "purple", "numeric": "green"},
+        )
+        assert_rendered_body(snapshot(name="pd_and_pl_optional_parameters"), gt=res)
+
+
+def test_gt_plt_summary_interactivity_snap(snapshot):
+    for DataFrame in [pd.DataFrame, pl.DataFrame]:
+        df = DataFrame(
+            {
+                "numeric": [1.5, 2.2, 3.3, None, 5.1],
+                "string": ["A", "B", "A", "C", None],
+                "boolean": [True, False, True, False, False],
+                "datetime": [
+                    datetime(2024, 1, 1, tzinfo=timezone.utc),
+                    datetime(2024, 1, 2, tzinfo=timezone.utc),
+                    datetime(2024, 1, 3, tzinfo=timezone.utc),
+                    None,
+                    datetime(2024, 1, 5, tzinfo=timezone.utc),
+                ],
+            }
+        )
+        res = gt_plt_summary(
+            df,
+            show_desc_stats=True,
+            add_mode=True,
+            interactivity=True,
+        )
+        assert_rendered_body(snapshot(name="pd_and_pl_optional_parameters"), gt=res)
+
+
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
 def test_gt_plt_summary_basic(DataFrame):
     df = DataFrame(
