@@ -518,9 +518,9 @@ def _make_categories_bar_svg(
             fill_opacity=opacity,
             stroke="transparent",
         )
-        if interactivity:
-            elements.insert(1, visual_bar)
+        elements.insert(1, visual_bar)
 
+        if interactivity:
             section_center_x = x_loc + section_width / 2
 
             row_label = "row" if count == 1 else "rows"
@@ -571,7 +571,7 @@ def _make_categories_bar_svg(
                 ],
             )
             elements.append(tooltip)
-            x_loc += section_width
+        x_loc += section_width
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
@@ -840,32 +840,34 @@ def _make_histogram_svg(
         hover_area_id = f"{plot_id}-hover-area-{i}"
         hover_area_class = f"{plot_id}-hover-area"
 
-        tooltip = G(
-            id=tooltip_id,
-            class_=[tooltip_class],
-            elements=[
-                Text(
-                    text=text_top,
-                    x=x_loc_tooltip,
-                    y=font_size_px * 0.25,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-                Text(
-                    text=text_bottom,
-                    x=x_loc_tooltip,
-                    y=font_size_px * 1.5,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-            ],
-        )
+        if interactivity:
+            tooltip = G(
+                id=tooltip_id,
+                class_=[tooltip_class],
+                elements=[
+                    Text(
+                        text=text_top,
+                        x=x_loc_tooltip,
+                        y=font_size_px * 0.25,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                    Text(
+                        text=text_bottom,
+                        x=x_loc_tooltip,
+                        y=font_size_px * 1.5,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                ],
+            )
+            elements.append(tooltip)
 
         # Add invisible hover area that covers bar + tooltip space
         hover_area = Rect(
@@ -882,8 +884,6 @@ def _make_histogram_svg(
         # Insert bars at beginning, tooltips at end
         elements.insert(0, bar)
         elements.insert(0, hover_area)
-        if interactivity:
-            elements.append(tooltip)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
