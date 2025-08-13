@@ -32,7 +32,7 @@ FONT_SIZE_RATIO = 0.2  # height_px / 5
 def gt_plt_summary(
     df: IntoDataFrame,
     title: str | None = None,
-    hide_desc_stats: bool = False,
+    show_desc_stats: bool = True,
     add_mode: bool = False,
     interactivity: bool = True,
     new_color_mapping: dict | None = None,
@@ -57,7 +57,7 @@ def gt_plt_summary(
     title
         Optional title for the summary table. If `None`, defaults to "Summary Table".
 
-    hide_desc_stats
+    show_desc_stats
         Boolean that allows the hiding of the Mean, Median, and SD columns. Defaults to 'False'.
 
     add_mode
@@ -158,7 +158,7 @@ def gt_plt_summary(
         COLOR_MAPPING.update(new_color_mapping)
 
     summary_df = _create_summary_df(
-        df, hide_desc_stats=hide_desc_stats, add_mode=add_mode
+        df, show_desc_stats=show_desc_stats, add_mode=add_mode
     )
 
     nw_df = nw.from_native(df, eager_only=True)
@@ -202,7 +202,7 @@ def gt_plt_summary(
         col for col in ["Mean", "Median", "SD"] if col in nw_summary_df.columns
     ]
 
-    if not hide_desc_stats:
+    if show_desc_stats:
         gt = (
             # handle missing
             gt.sub_missing(columns=existing_desc_cols).fmt_number(
@@ -238,7 +238,7 @@ def gt_plt_summary(
 
 
 def _create_summary_df(
-    df: IntoDataFrameT, hide_desc_stats: bool = False, add_mode: bool = False
+    df: IntoDataFrameT, show_desc_stats: bool = True, add_mode: bool = False
 ) -> IntoDataFrameT:
     nw_df = nw.from_native(df, eager_only=True)  # Should I be concerned about this?
 
@@ -299,11 +299,11 @@ def _create_summary_df(
         summary_data["Plot Overview"].append(None)
         summary_data["Missing"].append(missing_ratio)
         # setdefault adds the column if it's not present
-        if not hide_desc_stats:
+        if show_desc_stats:
             summary_data.setdefault("Mean", []).append(mean_val)
             summary_data.setdefault("Median", []).append(median_val)
             summary_data.setdefault("SD", []).append(std_val)
-        if not hide_desc_stats and add_mode:
+        if show_desc_stats and add_mode:
             summary_data.setdefault("Mode", []).append(mode_val)
 
     summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
