@@ -58,31 +58,18 @@ def gt_plt_summary(
         Optional title for the summary table. If `None`, defaults to "Summary Table".
 
     show_desc_stats
-        Boolean that allows the hiding of the Mean, Median, and SD columns. Defaults to 'False'.
+        Boolean that allows the hiding of the Mean, Median, and SD columns. Defaults to `False`.
 
     add_mode
-        Boolean that allows the addition of a Mode column. Defaults to 'False'.
+        Boolean that allows the addition of a Mode column. Defaults to `False`.
 
     interactivity
         Boolean that toggles interactivity in Plot Overview column graphs. Interactivity refers to
         hovering css and tooltips code applied to the graphs.
 
     new_color_mapping
-        List detailing the color scheme for the 5 possible data types. If the list doesn't modify
-        all 5 data types, then the default color mapping is used for the unaltered types.
-        Examples:
-            {
-                "string": "#4e79a7",
-                "numeric": "#f18e2c",
-                "datetime": "#73a657",
-                "boolean": "#a65773",
-                "other": "black",
-            }
-
-            {
-                "string": "purple",
-                "numeric": "pink",
-            }
+        A dictionary that maps data types (string, numeric, datetime, boolean, and other) to their
+        corresponding color codes in hexadecimal format.
 
     Returns
     -------
@@ -145,6 +132,41 @@ def gt_plt_summary(
     })
 
     gte.gt_plt_summary(df)
+    ```
+
+    And lastly, an example showing ocean swell data with changes to the default color mapping:
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+    from datetime import datetime
+
+    df = pl.DataFrame({
+    "Date": [
+        datetime(2024, 7, 1, 6, 0),
+        datetime(2024, 7, 1, 12, 0),
+        datetime(2024, 7, 2, 6, 0),
+        datetime(2024, 7, 2, 12, 0),
+        datetime(2024, 7, 3, 6, 0),
+        datetime(2024, 7, 3, 12, 0),
+        datetime(2024, 7, 4, 6, 0),
+        datetime(2024, 7, 4, 12, 0),
+        datetime(2024, 7, 5, 6, 0),
+    ],
+    "Height_m": [1.2, 1.5, 2.1, 2.4, 1.8, None, 2.7, 3.0, 2.5],
+    "Period_s": [10, 12, 14, 15, 11, 9, 16, None, 13],
+    "Direction_deg": [210, 215, 220, 225, 205, 200, 230, 240, 235],
+    "WindSpeed_kts": [5, 7, 10, 12, 6, 4, 8, 11, None],
+    "Breaking": [True, True, True, False, True, False, True, True, True]
+    })
+
+    color_mapping = {
+        "date": "blue",
+        "numeric": "lightblue",
+        "boolean": "lightgreen",
+    }
+
+    gte.gt_plt_summary(df, new_color_mapping=color_mapping)
     ```
 
     Note
