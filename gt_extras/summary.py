@@ -518,60 +518,60 @@ def _make_categories_bar_svg(
             fill_opacity=opacity,
             stroke="transparent",
         )
-        elements.insert(1, visual_bar)
-
-        section_center_x = x_loc + section_width / 2
-
-        row_label = "row" if count == 1 else "rows"
-        text_top = f"{count:.0f} {row_label}"
-        text_bottom = f'"{category}"'
-
-        # Estimate text width
-        max_text_width = max(
-            len(text_top) * font_size_px * 0.6,
-            len(text_bottom) * font_size_px * 0.6,
-        )
-
-        tooltip_x = _calculate_text_position(
-            center_x=section_center_x,
-            text_width=max_text_width,
-            svg_width=width_px,
-            margin=5,
-        )
-
-        # Use plot_id in tooltip ID and class
-        tooltip_id = f"{plot_id}-tooltip-{i}"
-        tooltip_class = f"{plot_id}-category-tooltip"
-
-        tooltip = G(
-            id=tooltip_id,
-            class_=[tooltip_class],
-            elements=[
-                Text(
-                    text=text_top,
-                    x=tooltip_x,
-                    y=font_size_px * 1.25,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-                Text(
-                    text=text_bottom,
-                    x=tooltip_x,
-                    y=font_size_px * 2.5,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-            ],
-        )
         if interactivity:
+            elements.insert(1, visual_bar)
+
+            section_center_x = x_loc + section_width / 2
+
+            row_label = "row" if count == 1 else "rows"
+            text_top = f"{count:.0f} {row_label}"
+            text_bottom = f'"{category}"'
+
+            # Estimate text width
+            max_text_width = max(
+                len(text_top) * font_size_px * 0.6,
+                len(text_bottom) * font_size_px * 0.6,
+            )
+
+            tooltip_x = _calculate_text_position(
+                center_x=section_center_x,
+                text_width=max_text_width,
+                svg_width=width_px,
+                margin=5,
+            )
+
+            # Use plot_id in tooltip ID and class
+            tooltip_id = f"{plot_id}-tooltip-{i}"
+            tooltip_class = f"{plot_id}-category-tooltip"
+
+            tooltip = G(
+                id=tooltip_id,
+                class_=[tooltip_class],
+                elements=[
+                    Text(
+                        text=text_top,
+                        x=tooltip_x,
+                        y=font_size_px * 1.25,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                    Text(
+                        text=text_bottom,
+                        x=tooltip_x,
+                        y=font_size_px * 2.5,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                ],
+            )
             elements.append(tooltip)
-        x_loc += section_width
+            x_loc += section_width
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
