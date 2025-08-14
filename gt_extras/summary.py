@@ -58,10 +58,10 @@ def gt_plt_summary(
         Optional title for the summary table. If `None`, defaults to "Summary Table".
 
     show_desc_stats
-        Boolean that allows the hiding of the Mean, Median, and SD columns. Defaults to `False`.
+        Boolean that allows the hiding of the Mean, Median, and SD columns.
 
     add_mode
-        Boolean that allows the addition of a Mode column. Defaults to `False`.
+        Boolean that allows the addition of a Mode column.
 
     interactivity
         Boolean that toggles interactivity in Plot Overview column graphs. Interactivity refers to
