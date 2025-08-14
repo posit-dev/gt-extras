@@ -232,6 +232,8 @@ def gt_plt_summary(
                 rows=numeric_cols,
             )
         )
+        if add_mode:
+            gt = gt.cols_align(align="right", columns="Mode")
 
     gt = gt_theme_espn(gt)
 
