@@ -301,7 +301,8 @@ def _create_summary_df(
                 mode_val = "Greater than 2 Modes"
             # Converting to string, then listing together
             else:
-                mode_val = ", ".join(str(i) for i in mode_val.to_list())
+                mode_val = sorted(mode_val.to_list())  # sorts from least to greatest
+                mode_val = ", ".join(str(i) for i in mode_val)
 
         elif col.dtype == nw.String:
             col_type = "string"
