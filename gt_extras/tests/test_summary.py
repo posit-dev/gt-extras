@@ -83,6 +83,26 @@ def test_gt_plt_summary_interactivity_snap(snapshot):
 
 
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_two_modes(DataFrame):
+    df = DataFrame({"numeric": [1, 1, 2, 2, 3]})
+
+    result = gt_plt_summary(df, add_mode=True)
+    html = result.as_raw_html()
+
+    assert "1, 2" in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
+def test_gt_plt_summary_greater_than_two_modes(DataFrame):
+    df = DataFrame({"numeric": [1, 1, 2, 2, 3, 4, 4]})
+
+    result = gt_plt_summary(df, add_mode=True)
+    html = result.as_raw_html()
+
+    assert "Greater than 2 Modes" in html
+
+
+@pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
 def test_gt_plt_summary_basic(DataFrame):
     df = DataFrame(
         {
