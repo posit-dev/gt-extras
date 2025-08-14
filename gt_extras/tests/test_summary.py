@@ -89,7 +89,7 @@ def test_gt_plt_summary_two_modes(DataFrame):
     result = gt_plt_summary(df, add_mode=True)
     html = result.as_raw_html()
 
-    assert "1, 2" in html
+    assert '<td class="gt_row gt_right">1, 2</td>' in html
 
 
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
@@ -99,7 +99,7 @@ def test_gt_plt_summary_greater_than_two_modes(DataFrame):
     result = gt_plt_summary(df, add_mode=True)
     html = result.as_raw_html()
 
-    assert "Greater than 2 Modes" in html
+    assert '<td class="gt_row gt_right">Greater than 2 Modes</td>' in html
 
 
 @pytest.mark.parametrize("DataFrame", [pd.DataFrame, pl.DataFrame])
