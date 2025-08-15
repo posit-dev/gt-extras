@@ -472,6 +472,35 @@ gt.pipe(
 ```
 {{< include ./_show-last.qmd >}}
 
+### [gt_plt_donut](https://posit-dev.github.io/gt-extras/reference/gt_plt_donut.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_donut
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[
+    9:17,
+    ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+    .cols_align("center")
+    .cols_align("left", columns="mfr")
+)
+
+gt.pipe(
+    gte.gt_plt_donut,
+    columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"],
+    size=40,
+    fill="steelblue"
+)
+```
+{{< include ./_show-last.qmd >}}
+
+
 ### [gt_plt_dot](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot.html){title="Click for reference"}
 ```{python}
 # | label: gt_plt_dot
