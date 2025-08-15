@@ -40,9 +40,9 @@ __all__ = [
     "gt_plt_bar_stack",
     "gt_plt_bullet",
     "gt_plt_conf_int",
+    "gt_plt_donut",
     "gt_plt_dot",
     "gt_plt_dumbbell",
-    "gt_plt_pie",
     "gt_plt_winloss",
 ]
 
@@ -1223,7 +1223,7 @@ def gt_plt_dumbbell(
     return res
 
 
-def gt_plt_pie(
+def gt_plt_donut(
     gt: GT,
     columns: SelectExpr = None,
     fill: str = "purple",
@@ -1236,10 +1236,10 @@ def gt_plt_pie(
     keep_columns: bool = False,
 ) -> GT:
     """
-    Create pie charts in `GT` cells.
+    Create donut charts in `GT` cells.
 
-    The `gt_plt_pie()` function takes an existing `GT` object and adds pie charts to
-    specified columns. Each cell value is represented as a portion of a full pie chart,
+    The `gt_plt_donut()` function takes an existing `GT` object and adds donut charts to
+    specified columns. Each cell value is represented as a portion of a full donut chart,
     with the chart size proportional to the cell's numeric value relative to the column's
     maximum value. The maximum value in the column will display as a full circle.
 
@@ -1250,26 +1250,26 @@ def gt_plt_pie(
 
     columns
         The columns to target. Can be a single column or a list of columns (by name or index).
-        If `None`, the pie chart is applied to all numeric columns.
+        If `None`, the donut chart is applied to all numeric columns.
 
     fill
-        The fill color for the pie chart segments.
+        The fill color for the donut chart segments.
 
     size
-        The diameter of the pie chart in pixels.
+        The diameter of the donut chart in pixels.
 
     stroke_color
-        The color of the border around the pie chart. The default is white, but if
+        The color of the border around the donut chart. The default is white, but if
         `None` is passed, no stroke will be drawn.
 
     stroke_width
         The width of the border stroke in pixels.
 
     show_labels
-        Whether or not to show labels on the pie charts.
+        Whether or not to show labels on the donut charts.
 
     label_color
-        The color of text labels on the pie charts (when `show_labels` is `True`).
+        The color of text labels on the donut charts (when `show_labels` is `True`).
 
     domain
         The domain of values to use for scaling. This can be a list of floats or integers.
@@ -1284,7 +1284,7 @@ def gt_plt_pie(
     Returns
     -------
     GT
-        A `GT` object with pie charts added to the specified columns.
+        A `GT` object with donut charts added to the specified columns.
 
     Examples
     --------
@@ -1307,7 +1307,7 @@ def gt_plt_pie(
     )
 
     gt.pipe(
-        gte.gt_plt_pie,
+        gte.gt_plt_donut,
         columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"],
         size=40,
         fill="steelblue"
@@ -1316,7 +1316,7 @@ def gt_plt_pie(
 
     Note
     --------
-    Each column's pie charts are scaled independently based on that column's min/max values.
+    Each column's donut charts are scaled independently based on that column's min/max values.
     A value equal to the column maximum will display as a full circle (360 degrees).
     """
 
@@ -1500,7 +1500,7 @@ def gt_plt_pie(
             )
             col_name = col_name + " plot"
 
-        # Apply the scaled value for each row, so the pie is proportional
+        # Apply the scaled value for each row, so the donut is proportional
         for i, scaled_val in enumerate(scaled_vals):
             res = res.fmt(
                 lambda original_val, scaled_val=scaled_val: _make_pie_svg(

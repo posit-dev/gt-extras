@@ -16,9 +16,9 @@ from .plotting import (
     gt_plt_bar_stack,
     gt_plt_bullet,
     gt_plt_conf_int,
+    gt_plt_donut,
     gt_plt_dot,
     gt_plt_dumbbell,
-    gt_plt_pie,
     gt_plt_winloss,
 )
 from .styling import gt_add_divider
@@ -57,7 +57,7 @@ __all__ = [
     "gt_plt_dot",
     "gt_plt_conf_int",
     "gt_plt_dumbbell",
-    "gt_plt_pie",
+    "gt_plt_donut",
     "gt_plt_winloss",
     "gt_plt_bar_stack",
     "with_hyperlink",
