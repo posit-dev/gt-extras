@@ -133,6 +133,45 @@
   </tbody>
   '''
 # ---
+# name: test_gt_plt_donut_snap
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path stroke="transparent" stroke-width="0" d="M 15.0 0.0 A 15.0 15.0 0 0 1 15.314136298250354 0.00328974787731795 L 15.125654519300141 9.001315899150928 A 6.0 6.0 0 0 0 15.0 9.0 Z " fill="purple"/></svg></div></td>
+      <td class="gt_row gt_left">apricot</td>
+      <td class="gt_row gt_left">one</td>
+      <td class="gt_row gt_right">2015-01-15</td>
+      <td class="gt_row gt_right">13:35</td>
+      <td class="gt_row gt_right">2018-01-01 02:22</td>
+      <td class="gt_row gt_right">49.95</td>
+      <td class="gt_row gt_left">row_1</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path stroke="transparent" stroke-width="0" d="M 15.0 0.0 A 15.0 15.0 0 0 1 21.101049646137003 1.2968181353609864 L 17.440419858454803 9.518727254144395 A 6.0 6.0 0 0 0 15.0 9.0 Z " fill="purple"/></svg></div></td>
+      <td class="gt_row gt_left">banana</td>
+      <td class="gt_row gt_left">two</td>
+      <td class="gt_row gt_right">2015-02-15</td>
+      <td class="gt_row gt_right">14:40</td>
+      <td class="gt_row gt_right">2018-02-02 14:33</td>
+      <td class="gt_row gt_right">17.95</td>
+      <td class="gt_row gt_left">row_2</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path stroke="transparent" stroke-width="0" d="M 15.0 0.0 A 15.0 15.0 0 0 1 15.0 30.0 A 15.0 15.0 0 0 1 15.0 0.0 Z  M 15.0 9.0 A 6.0 6.0 0 0 0 15.0 21.0 A 6.0 6.0 0 0 0 15.0 9.0 Z " fill="purple"/></svg></div></td>
+      <td class="gt_row gt_left">coconut</td>
+      <td class="gt_row gt_left">three</td>
+      <td class="gt_row gt_right">2015-03-15</td>
+      <td class="gt_row gt_right">15:45</td>
+      <td class="gt_row gt_right">2018-03-03 03:44</td>
+      <td class="gt_row gt_right">1.39</td>
+      <td class="gt_row gt_left">row_3</td>
+      <td class="gt_row gt_left">grp_a</td>
+    </tr>
+  </tbody>
+  '''
+# ---
 # name: test_gt_plt_dot_snap
   '''
   <tbody class="gt_table_body">

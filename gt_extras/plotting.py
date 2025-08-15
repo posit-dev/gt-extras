@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import warnings
 from typing import TYPE_CHECKING, Literal
 
@@ -11,7 +12,19 @@ from great_tables._data_color.base import (
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
 from scipy.stats import sem, t, tmean
-from svg import SVG, Circle, Length, Line, Rect, Text
+from svg import (
+    SVG,
+    Arc,
+    Circle,
+    ClosePath,
+    Length,
+    Line,
+    LineTo,
+    MoveTo,
+    Path,
+    Rect,
+    Text,
+)
 
 from gt_extras import gt_duplicate_column
 from gt_extras._utils_color import _get_discrete_colors_from_palette
@@ -27,6 +40,7 @@ __all__ = [
     "gt_plt_bar_stack",
     "gt_plt_bullet",
     "gt_plt_conf_int",
+    "gt_plt_donut",
     "gt_plt_dot",
     "gt_plt_dumbbell",
     "gt_plt_winloss",
@@ -1209,6 +1223,320 @@ def gt_plt_dumbbell(
     return res
 
 
+def gt_plt_donut(
+    gt: GT,
+    columns: SelectExpr = None,
+    fill: str = "purple",
+    size: float = 30,
+    stroke_color: str | None = None,
+    stroke_width: float = 1,
+    show_labels: bool = False,
+    label_color: str = "black",
+    domain: list[int] | list[float] | None = None,
+    keep_columns: bool = False,
+) -> GT:
+    """
+    Create donut charts in `GT` cells.
+
+    The `gt_plt_donut()` function takes an existing `GT` object and adds donut charts to
+    specified columns. Each cell value is represented as a portion of a full donut chart,
+    with the chart size proportional to the cell's numeric value relative to the column's
+    maximum value. The maximum value in the column will display as a full circle.
+
+    Parameters
+    ----------
+    gt
+        A `GT` object to modify.
+
+    columns
+        The columns to target. Can be a single column or a list of columns (by name or index).
+        If `None`, the donut chart is applied to all numeric columns.
+
+    fill
+        The fill color for the donut chart segments.
+
+    size
+        The diameter of the donut chart in pixels.
+
+    stroke_color
+        The color of the border around the donut chart. If `None`, no stroke will be drawn,
+        except for the case of the 0 value.
+
+    stroke_width
+        The width of the border stroke in pixels.
+
+    show_labels
+        Whether or not to show labels on the donut charts.
+
+    label_color
+        The color of text labels on the donut charts (when `show_labels` is `True`).
+
+    domain
+        The domain of values to use for scaling. This can be a list of floats or integers.
+        If `None`, the domain is automatically set to `[0, max(column_values)]`.
+
+    keep_columns
+        Whether to keep the original column values. If this flag is `True`, the plotted values will
+        be duplicated into a new column with the string " plot" appended to the end of the column
+        name. See [`gt_duplicate_column()`](https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column)
+        for more details.
+
+    Returns
+    -------
+    GT
+        A `GT` object with donut charts added to the specified columns.
+
+    Examples
+    --------
+
+    ```{python}
+    from great_tables import GT
+    from great_tables.data import gtcars
+    import gt_extras as gte
+
+    gtcars_mini = gtcars.loc[
+        9:17,
+        ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+    ]
+
+    gt = (
+        GT(gtcars_mini, rowname_col="model")
+        .tab_stubhead(label="Car")
+        .cols_align("center")
+        .cols_align("left", columns="mfr")
+    )
+
+    gt.pipe(
+        gte.gt_plt_donut,
+        columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"],
+        size=40,
+        fill="steelblue"
+    )
+    ```
+
+    Note
+    --------
+    Each column's donut charts are scaled independently based on that column's min/max values.
+    A value equal to the column maximum will display as a full circle (360 degrees).
+    """
+
+    # Allow the user to hide the stroke
+    if stroke_color is None:
+        stroke_color = "transparent"
+        stroke_width = 0
+
+    def _make_pie_svg(
+        scaled_val: float,
+        original_val: int | float,
+        fill: str,
+        size: float,
+        stroke_color: str,
+        stroke_width: float,
+        show_labels: bool,
+        label_color: str,
+    ) -> str:
+        if is_na(gt._tbl_data, original_val):
+            return f'<div style="display: flex;"><div style="width:{size}px; height:{size}px;"></div></div>'
+
+        elements = []
+        svg_style = ""
+
+        radius = size / 2
+        center_x = center_y = radius
+        inner_radius = radius * 0.4
+
+        # Calculate the angle in radians (0 to 2π)
+        angle = min(scaled_val * 2 * math.pi, 2 * math.pi)
+
+        # Outer arc start/end points
+        outer_start_x = center_x
+        outer_start_y = stroke_width / 2
+        outer_end_x = center_x + (radius - stroke_width / 2) * math.sin(angle)
+        outer_end_y = center_y - (radius - stroke_width / 2) * math.cos(angle)
+
+        # Inner arc start/end points
+        inner_start_x = center_x
+        inner_start_y = center_y - inner_radius
+        inner_end_x = center_x + inner_radius * math.sin(angle)
+        inner_end_y = center_y - inner_radius * math.cos(angle)
+
+        # Determine if we need a large arc (> 180 degrees)
+        large_arc = angle > math.pi
+
+        if scaled_val <= 0:
+            stroke_width = max(stroke_width, 1)
+            if stroke_color == "transparent":
+                stroke_color = "black"
+
+            # Draw empty donut with just stroke/outline
+            outer_circle = Circle(
+                cx=center_x,
+                cy=center_y,
+                r=radius - stroke_width / 2,
+                fill="transparent",
+                stroke=stroke_color,
+                stroke_width=stroke_width,
+                stroke_dasharray=3,
+            )
+            elements.append(outer_circle)
+
+        else:
+            # For full circle (angle >= 2π), we need special handling to avoid degenerate arcs
+            if angle >= 2 * math.pi - 0.001:
+                # Create full donut using two semicircular arcs with evenodd fill rule
+                path_commands = [
+                    # Outer circle - first semicircle (top to bottom)
+                    MoveTo(center_x, stroke_width / 2),  # Top
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        False,  # small arc
+                        True,  # clockwise
+                        center_x,
+                        center_y + (radius - stroke_width / 2),  # Bottom
+                    ),
+                    # Outer circle - second semicircle (bottom to top)
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        False,  # small arc
+                        True,  # clockwise
+                        center_x,
+                        stroke_width / 2,  # Back to top
+                    ),
+                    ClosePath(),
+                    # Inner circle - first semicircle (top to bottom, counter-clockwise)
+                    MoveTo(center_x, center_y - inner_radius),  # Top of inner circle
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        False,  # small arc
+                        False,  # counter-clockwise
+                        center_x,
+                        center_y + inner_radius,  # Bottom of inner circle
+                    ),
+                    # Inner circle - second semicircle (bottom to top, counter-clockwise)
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        False,  # small arc
+                        False,  # counter-clockwise
+                        center_x,
+                        center_y - inner_radius,  # Back to top
+                    ),
+                    ClosePath(),
+                ]
+                svg_style = "fill-rule:true;"
+            else:
+                # Partial donut using path: outer arc -> line to inner end -> inner arc (reverse) -> close
+                path_commands = [
+                    MoveTo(outer_start_x, outer_start_y),  # Start at outer edge
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        large_arc,
+                        True,
+                        outer_end_x,
+                        outer_end_y,
+                    ),  # Outer arc
+                    LineTo(inner_end_x, inner_end_y),  # Line to inner edge
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        large_arc,
+                        False,  # Reverse direction for inner arc
+                        inner_start_x,
+                        inner_start_y,
+                    ),  # Inner arc (reverse)
+                    ClosePath(),
+                ]
+
+            path = Path(
+                d=path_commands,
+                fill=fill,
+                stroke=stroke_color,
+                stroke_width=stroke_width,
+            )
+            elements.append(path)
+
+        # Add label if requested
+        if show_labels and not is_na(gt._tbl_data, original_val):
+            label_text = str(original_val)
+
+            # Position label in the center of the donut
+            label_x = center_x
+            label_y = center_y
+            font_size = size * 0.15
+
+            text = Text(
+                text=label_text,
+                x=label_x,
+                y=label_y,
+                fill=label_color,
+                font_size=font_size,
+                text_anchor="middle",
+                dominant_baseline="central",
+                font_weight="bold",
+            )
+            elements.append(text)
+
+        svg = SVG(width=size, height=size, elements=elements, style=svg_style)
+        return f'<div style="display: flex;">{svg.as_str()}</div>'
+
+    # Get names of columns
+    columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
+    res = gt
+    for column in columns_resolved:
+        # Validate this is a single column and get values
+        col_name, col_vals = _validate_and_get_single_column(
+            gt,
+            column,
+        )
+
+        scaled_vals = _scale_numeric_column(
+            res._tbl_data,
+            col_name,
+            col_vals,
+            domain,
+        )
+
+        # The location of the plot column will be right after the original column
+        if keep_columns:
+            res = gt_duplicate_column(
+                res,
+                col_name,
+                after=col_name,
+                append_text=" plot",
+            )
+            col_name = col_name + " plot"
+
+        # Apply the scaled value for each row, so the donut is proportional
+        for i, scaled_val in enumerate(scaled_vals):
+            res = res.fmt(
+                lambda original_val, scaled_val=scaled_val: _make_pie_svg(
+                    original_val=original_val,
+                    scaled_val=scaled_val,
+                    fill=fill,
+                    size=size,
+                    stroke_color=stroke_color,
+                    stroke_width=stroke_width,
+                    show_labels=show_labels,
+                    label_color=label_color,
+                ),
+                columns=col_name,
+                rows=[i],
+            )
+
+    return res
+
+
 def gt_plt_winloss(
     gt: GT,
     column: SelectExpr,
@@ -1869,7 +2197,7 @@ def gt_plt_bar_pct(
 
     # Helper function to make the individual bars
 
-    def _make_bar_pct_html(
+    def _make_bar_pct_svg(
         # original_val: int | float,
         scaled_val: int | float,
         height: int,
@@ -1949,7 +2277,7 @@ def gt_plt_bar_pct(
         return f'<div style="display: flex;">{canvas.as_str()}</div>'
 
     def _make_bar_pct(scaled_val: int) -> str:
-        return _make_bar_pct_html(
+        return _make_bar_pct_svg(
             # original_val=original_val,
             scaled_val=scaled_val,
             height=height,

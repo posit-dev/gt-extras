@@ -51,6 +51,7 @@ quartodoc:
         - gt_plt_bar_stack
         - gt_plt_bullet
         - gt_plt_conf_int
+        - gt_plt_donut
         - gt_plt_dot
         - gt_plt_dumbbell
         - gt_plt_summary
