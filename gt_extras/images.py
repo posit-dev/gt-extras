@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from great_tables import html
+from great_tables import GT, html
 from great_tables._helpers import px
+from great_tables._tbl_data import SelectExpr
 from great_tables._text import Html
 
-__all__ = ["add_text_img", "img_header"]
+__all__ = ["add_text_img", "img_header", "fmt_image_circle"]
 
 
 def img_header(
@@ -244,3 +245,18 @@ def add_text_img(
     """.strip()
 
     return combined_html
+
+
+def fmt_image_circle(
+    gt: GT,
+    columns: SelectExpr,
+    color: str = "grey",
+    height: str | int | None = None,
+    width: str | None = None,
+    border_radius: str | None = "50%",
+    border_width: int = 3,
+    border_color: str = "black",
+    border_style: str = "solid",
+) -> GT:
+    res = gt
+    return res
