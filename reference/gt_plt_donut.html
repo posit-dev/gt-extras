@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gt_plt_dot – gt-extras</title>
+<title>gt_plt_donut – gt-extras</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/gt_plt_dumbbell.html" rel="next">
-<link href="../reference/gt_plt_donut.html" rel="prev">
+<link href="../reference/gt_plt_dot.html" rel="next">
+<link href="../reference/gt_plt_conf_int.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -160,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_dot.html">gt_plt_dot</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_donut.html">gt_plt_donut</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -219,13 +219,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_donut.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/gt_plt_donut.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">gt_plt_donut</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/gt_plt_dot.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/gt_plt_dot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">gt_plt_dot</span></a>
   </div>
 </li>
@@ -463,9 +463,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_dot.html">gt_plt_dot</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/gt_plt_bar.html">Plotting</a></li><li class="breadcrumb-item"><a href="../reference/gt_plt_donut.html">gt_plt_donut</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">gt_plt_dot</h1>
+<h1 class="title">gt_plt_donut</h1>
 </div>
 
 
@@ -482,18 +482,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_dot(</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gt_plt_donut(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    gt,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    category_col,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    data_col,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">120</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">30</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    font_size<span class="op">=</span><span class="dv">16</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    domain<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Create dot plots with thin horizontal bars in <code>GT</code> cells.</p>
-<p>The <code>gt_plt_dot()</code> function takes an existing <code>GT</code> object and adds dot plots with horizontal bar charts to a specified category column. Each cell displays a colored dot according to the value in the assigned category column and a horizontal bar representing the corresponding numeric value from the data column.</p>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">'purple'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    stroke_color<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    stroke_width<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    show_labels<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    label_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    domain<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    keep_columns<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create donut charts in <code>GT</code> cells.</p>
+<p>The <code>gt_plt_donut()</code> function takes an existing <code>GT</code> object and adds donut charts to specified columns. Each cell value is represented as a portion of a full donut chart, with the chart size proportional to the cell’s numeric value relative to the column’s maximum value. The maximum value in the column will display as a full circle.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <dl>
@@ -501,33 +503,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>A <code>GT</code> object to modify.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>category_col</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
+<dt><code><span class="parameter-name"><strong>columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>The column containing category labels that will be displayed next to colored dots. The coloring of the dots are determined by this column.</p>
+<p>The columns to target. Can be a single column or a list of columns (by name or index). If <code>None</code>, the donut chart is applied to all numeric columns.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>data_col</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">SelectExpr</span></code></dt>
+<dt><code><span class="parameter-name"><strong>fill</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'purple'</span></code></dt>
 <dd>
-<p>The column containing numeric values that will determine the length of the horizontal bars.</p>
+<p>The fill color for the donut chart segments.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">120</span></code></dt>
+<dt><code><span class="parameter-name"><strong>size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
 <dd>
-<p>The width of the SVG plot in pixels. You may need to increase this if your category labels are long.</p>
+<p>The diameter of the donut chart in pixels.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>height</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
+<dt><code><span class="parameter-name"><strong>stroke_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>The height of the SVG plot in pixels.</p>
+<p>The color of the border around the donut chart. If <code>None</code>, no stroke will be drawn, except for the case of the 0 value.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>font_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">int</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">16</span></code></dt>
+<dt><code><span class="parameter-name"><strong>stroke_width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">float</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
 <dd>
-<p>The font size for the category label text.</p>
+<p>The width of the border stroke in pixels.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>show_labels</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
+<dd>
+<p>Whether or not to show labels on the donut charts.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>label_color</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'black'</span></code></dt>
+<dd>
+<p>The color of text labels on the donut charts (when <code>show_labels</code> is <code>True</code>).</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>domain</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">list[int] | list[float] | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>The domain of values to use for the color scheme. This can be a list of floats or integers. If <code>None</code>, the domain is automatically set to <code>[0, max(data_col)]</code>.</p>
+<p>The domain of values to use for scaling. This can be a list of floats or integers. If <code>None</code>, the domain is automatically set to <code>[0, max(column_values)]</code>.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>palette</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">list[str] | str | None</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>keep_columns</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
 <dd>
-<p>The color palette to use. This should be a list of colors (e.g., <span><code>["#FF0000"</code><span style="display: inline-block; color: #FF0000; cursor: pointer; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; position: relative;" title="Colour preview: #FF0000 (click to copy)" aria-label="Colour preview: #FF0000 (click to copy)" onclick="navigator.clipboard.writeText('#FF0000').then(() => { const span = this; const originalTitle = span.title; span.title = 'Copied: #FF0000'; let tooltip = document.createElement('div'); tooltip.textContent = 'Copied!'; tooltip.style.cssText = 'position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:4px 8px;border-radius:4px;font-size:12px;font-family:sans-serif;white-space:nowrap;z-index:9999;box-shadow:0 2px 4px rgba(0,0,0,0.3);pointer-events:none;'; span.appendChild(tooltip); setTimeout(() => { span.title = originalTitle; if (span.contains(tooltip)) span.removeChild(tooltip); }, 1500); }).catch(() => console.error('Failed to copy colour code'));">◉</span></span>, <span><code>"#00FF00"</code><span style="display: inline-block; color: #00FF00; cursor: pointer; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; position: relative;" title="Colour preview: #00FF00 (click to copy)" aria-label="Colour preview: #00FF00 (click to copy)" onclick="navigator.clipboard.writeText('#00FF00').then(() => { const span = this; const originalTitle = span.title; span.title = 'Copied: #00FF00'; let tooltip = document.createElement('div'); tooltip.textContent = 'Copied!'; tooltip.style.cssText = 'position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:4px 8px;border-radius:4px;font-size:12px;font-family:sans-serif;white-space:nowrap;z-index:9999;box-shadow:0 2px 4px rgba(0,0,0,0.3);pointer-events:none;'; span.appendChild(tooltip); setTimeout(() => { span.title = originalTitle; if (span.contains(tooltip)) span.removeChild(tooltip); }, 1500); }).catch(() => console.error('Failed to copy colour code'));">◉</span></span>, <span><code>"#0000FF"</code><span style="display: inline-block; color: #0000FF; cursor: pointer; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; position: relative;" title="Colour preview: #0000FF (click to copy)" aria-label="Colour preview: #0000FF (click to copy)" onclick="navigator.clipboard.writeText('#0000FF').then(() => { const span = this; const originalTitle = span.title; span.title = 'Copied: #0000FF'; let tooltip = document.createElement('div'); tooltip.textContent = 'Copied!'; tooltip.style.cssText = 'position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:4px 8px;border-radius:4px;font-size:12px;font-family:sans-serif;white-space:nowrap;z-index:9999;box-shadow:0 2px 4px rgba(0,0,0,0.3);pointer-events:none;'; span.appendChild(tooltip); setTimeout(() => { span.title = originalTitle; if (span.contains(tooltip)) span.removeChild(tooltip); }, 1500); }).catch(() => console.error('Failed to copy colour code'));">◉</span></span> <code>]</code>). A ColorBrewer palette could also be used, just supply the name (see <a href="https://posit-dev.github.io/great-tables/reference/GT.data_color"><code>GT.data_color()</code></a> for additional reference). If <code>None</code>, then a default palette will be used.</p>
+<p>Whether to keep the original column values. If this flag is <code>True</code>, the plotted values will be duplicated into a new column with the string ” plot” appended to the end of the column name. See <a href="https://posit-dev.github.io/gt-extras/reference/gt_duplicate_column"><code>gt_duplicate_column()</code></a> for more details.</p>
 </dd>
 </dl>
 </section>
@@ -536,72 +546,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl>
 <dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">GT</span></code></dt>
 <dd>
-<p>A <code>GT</code> object with dot plots and horizontal bars added to the specified category column.</p>
+<p>A <code>GT</code> object with donut charts added to the specified columns.</p>
 </dd>
 </dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div id="450677d4" class="cell" data-execution_count="1">
+<div id="82fe4fd1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> gtcars</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gt_extras <span class="im">as</span> gte</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars.loc[<span class="dv">8</span>:<span class="dv">20</span>, [<span class="st">"model"</span>, <span class="st">"mfr"</span>, <span class="st">"hp"</span>]]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Car"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>gt.pipe(gte.gt_plt_dot, category_col<span class="op">=</span><span class="st">"mfr"</span>, data_col<span class="op">=</span><span class="st">"hp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gtcars_mini <span class="op">=</span> gtcars.loc[</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>:<span class="dv">17</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"model"</span>, <span class="st">"mfr"</span>, <span class="st">"year"</span>, <span class="st">"hp"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"mpg_c"</span>, <span class="st">"mpg_h"</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>gt <span class="op">=</span> (</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    GT(gtcars_mini, rowname_col<span class="op">=</span><span class="st">"model"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Car"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    .cols_align(<span class="st">"center"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    .cols_align(<span class="st">"left"</span>, columns<span class="op">=</span><span class="st">"mfr"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>gt.pipe(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    gte.gt_plt_donut,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"hp"</span>, <span class="st">"hp_rpm"</span>, <span class="st">"trq"</span>, <span class="st">"trq_rpm"</span>, <span class="st">"mpg_c"</span>, <span class="st">"mpg_h"</span>],</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    fill<span class="op">=</span><span class="st">"steelblue"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="btsfwxmnop" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="fuihufhydj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#btsfwxmnop table {
+#fuihufhydj table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#btsfwxmnop thead, tbody, tfoot, tr, td, th { border-style: none; }
+#fuihufhydj thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#btsfwxmnop p { margin: 0; padding: 0; }
- #btsfwxmnop .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #btsfwxmnop .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #btsfwxmnop .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #btsfwxmnop .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #btsfwxmnop .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #btsfwxmnop .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #btsfwxmnop .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #btsfwxmnop .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #btsfwxmnop .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #btsfwxmnop .gt_column_spanner_outer:first-child { padding-left: 0; }
- #btsfwxmnop .gt_column_spanner_outer:last-child { padding-right: 0; }
- #btsfwxmnop .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #btsfwxmnop .gt_spanner_row { border-bottom-style: hidden; }
- #btsfwxmnop .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #btsfwxmnop .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #btsfwxmnop .gt_from_md> :first-child { margin-top: 0; }
- #btsfwxmnop .gt_from_md> :last-child { margin-bottom: 0; }
- #btsfwxmnop .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #btsfwxmnop .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #btsfwxmnop .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #btsfwxmnop .gt_row_group_first td { border-top-width: 2px; }
- #btsfwxmnop .gt_row_group_first th { border-top-width: 2px; }
- #btsfwxmnop .gt_striped { background-color: rgba(128,128,128,0.05); }
- #btsfwxmnop .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #btsfwxmnop .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #btsfwxmnop .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #btsfwxmnop .gt_left { text-align: left; }
- #btsfwxmnop .gt_center { text-align: center; }
- #btsfwxmnop .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #btsfwxmnop .gt_font_normal { font-weight: normal; }
- #btsfwxmnop .gt_font_bold { font-weight: bold; }
- #btsfwxmnop .gt_font_italic { font-style: italic; }
- #btsfwxmnop .gt_super { font-size: 65%; }
- #btsfwxmnop .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #btsfwxmnop .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#fuihufhydj p { margin: 0; padding: 0; }
+ #fuihufhydj .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #fuihufhydj .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #fuihufhydj .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #fuihufhydj .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #fuihufhydj .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #fuihufhydj .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #fuihufhydj .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #fuihufhydj .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #fuihufhydj .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #fuihufhydj .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #fuihufhydj .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #fuihufhydj .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #fuihufhydj .gt_spanner_row { border-bottom-style: hidden; }
+ #fuihufhydj .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #fuihufhydj .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #fuihufhydj .gt_from_md> :first-child { margin-top: 0; }
+ #fuihufhydj .gt_from_md> :last-child { margin-bottom: 0; }
+ #fuihufhydj .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #fuihufhydj .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #fuihufhydj .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #fuihufhydj .gt_row_group_first td { border-top-width: 2px; }
+ #fuihufhydj .gt_row_group_first th { border-top-width: 2px; }
+ #fuihufhydj .gt_striped { background-color: rgba(128,128,128,0.05); }
+ #fuihufhydj .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #fuihufhydj .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #fuihufhydj .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #fuihufhydj .gt_left { text-align: left; }
+ #fuihufhydj .gt_center { text-align: center; }
+ #fuihufhydj .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #fuihufhydj .gt_font_normal { font-weight: normal; }
+ #fuihufhydj .gt_font_bold { font-weight: bold; }
+ #fuihufhydj .gt_font_italic { font-style: italic; }
+ #fuihufhydj .gt_super { font-size: 65%; }
+ #fuihufhydj .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #fuihufhydj .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
@@ -610,74 +630,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="gt_col_headings">
   <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Car">Car</th>
   <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="mfr">mfr</th>
-  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="year">year</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="hp">hp</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="hp_rpm">hp_rpm</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="trq">trq</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="trq_rpm">trq_rpm</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="mpg_c">mpg_c</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="mpg_h">mpg_h</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
   <tr>
-    <th class="gt_row gt_left gt_stub">F12Berlinetta</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#000000"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Ferrari</text><rect x="0" y="24.6" width="92.4341412012645" height="3.75" rx="2" fill="#000000"></rect></svg></div></td>
-    <td class="gt_row gt_right">731.0</td>
-  </tr>
-  <tr>
     <th class="gt_row gt_left gt_stub">LaFerrari</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#000000"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Ferrari</text><rect x="0" y="24.6" width="120.0" height="3.75" rx="2" fill="#000000"></rect></svg></div></td>
-    <td class="gt_row gt_right">949.0</td>
+    <td class="gt_row gt_left">Ferrari</td>
+    <td class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 11.32232521764884 38.01937735804839 L 16.528930087059535 27.207750943219352 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 4.589735144484212 32.74847979497379 L 13.835894057793684 25.099391917989514 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">NSX</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#ca6866"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Acura</text><rect x="0" y="24.6" width="72.45521601685985" height="3.75" rx="2" fill="#ca6866"></rect></svg></div></td>
-    <td class="gt_row gt_right">573.0</td>
+    <td class="gt_row gt_left">Acura</td>
+    <td class="gt_row gt_center">2017</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 7.862011287419977 35.89557265446199 L 15.14480451496799 26.358229061784797 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.3038449397558409 23.472963553338605 L 12.121537975902335 21.389185421335444 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.43181718108854383 24.133548253699054 L 12.172726872435417 21.65341930147962 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 39.15979024630978 25.7360646542218 L 27.663916098523913 22.29442586168872 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 6.30905788142622 5.420627451571775 L 14.523623152570488 14.16825098062871 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">GT-R</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#4cbd81"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Nissan</text><rect x="0" y="24.6" width="68.91464699683877" height="3.75" rx="2" fill="#4cbd81"></rect></svg></div></td>
-    <td class="gt_row gt_right">545.0</td>
+    <td class="gt_row gt_left">Nissan</td>
+    <td class="gt_row gt_center">2016</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 10.999919874062817 37.86053072354544 L 16.399967949625125 27.144212289418174 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.594085474480071 24.838437911993356 L 12.237634189792029 21.935375164797343 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 3.3443685367247866 31.072034165389702 L 13.337747414689915 24.428813666155882 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 23.243558462111352 39.73523064225158 L 21.29742338484454 27.894092256900635 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.055924056376394304 18.50539812827153 L 12.022369622550558 19.40215925130861 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 6.30905788142622 5.420627451571775 L 14.523623152570488 14.16825098062871 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Aventador</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#25bce6"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Lamborghini</text><rect x="0" y="24.6" width="88.51422550052686" height="3.75" rx="2" fill="#25bce6"></rect></svg></div></td>
-    <td class="gt_row gt_right">700.0</td>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.060490058256370105 21.554330493526717 L 12.024196023302547 20.621732197410687 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 9.999999999999991 2.6794919243112325 L 15.999999999999996 13.071796769724493 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.07248465758513589 18.298785058312692 L 12.028993863034053 19.319514023325077 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 1.635677862394516 12.07840467921687 L 12.654271144957807 16.83136187168675 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 17.01915467647651 39.77661652450257 L 18.807661870590604 27.910646609801027 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.3542549854262269 23.747626291714493 L 12.14170199417049 21.4990505166858 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Huracan</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#25bce6"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Lamborghini</text><rect x="0" y="24.6" width="77.13382507903056" height="3.75" rx="2" fill="#25bce6"></rect></svg></div></td>
-    <td class="gt_row gt_right">610.0</td>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_center">2015</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 4.369269286955657 32.477189482262915 L 13.747707714782262 24.990875792905165 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 9.999999999999991 2.6794919243112325 L 15.999999999999996 13.071796769724493 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 6.1280244861639925 34.40723066184248 L 14.451209794465598 25.762892264736994 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 15.387682585151191 0.539102588403523 L 18.155073034060475 12.21564103536141 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.055924056376394304 18.50539812827153 L 12.022369622550558 19.40215925130861 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.9788696740969272 13.819660112501055 L 12.39154786963877 17.52786404500042 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Gallardo</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#25bce6"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Lamborghini</text><rect x="0" y="24.6" width="69.54689146469968" height="3.75" rx="2" fill="#25bce6"></rect></svg></div></td>
-    <td class="gt_row gt_right">550.0</td>
+    <td class="gt_row gt_left">Lamborghini</td>
+    <td class="gt_row gt_center">2014</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 10.41369961552477 37.55285859735132 L 16.16547984620991 27.021143438940527 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 7.144247806269208 4.679111137620444 L 14.857699122507682 13.871644455048177 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 8.30562243551906 36.224719824371846 L 15.322248974207625 26.48988792974874 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 15.387682585151191 0.539102588403523 L 18.155073034060475 12.21564103536141 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 11.32232521764884 38.01937735804839 L 16.528930087059535 27.207750943219352 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.9788696740969272 13.819660112501055 L 12.39154786963877 17.52786404500042 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Continental GT</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#9653ca"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Bentley</text><rect x="0" y="24.6" width="63.224446786090624" height="3.75" rx="2" fill="#9653ca"></rect></svg></div></td>
-    <td class="gt_row gt_right">500.0</td>
+    <td class="gt_row gt_left">Bentley</td>
+    <td class="gt_row gt_center">2016</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 16.63938570056913 39.71563520484341 L 18.65575428022765 27.886254081937363 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 2.6794919243112325 30.000000000000007 L 13.071796769724493 24.000000000000004 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.10824723185222851 22.078021128594568 L 12.043298892740891 20.831208451437828 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 39.99864616007524 20.232705316027936 L 27.9994584640301 20.093082126411176 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.5014417563635263 24.450418679126294 L 12.200576702545412 21.78016747165052 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="fill-rule:true;" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 20.0 40.0 A 20.0 20.0 0 0 1 20.0 0.0 Z  M 20.0 12.0 A 8.0 8.0 0 0 0 20.0 28.0 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Granturismo</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#eea82d"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Maserati</text><rect x="0" y="24.6" width="57.40779768177028" height="3.75" rx="2" fill="#eea82d"></rect></svg></div></td>
-    <td class="gt_row gt_right">454.0</td>
+    <td class="gt_row gt_left">Maserati</td>
+    <td class="gt_row gt_center">2016</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 22.706221059903672 39.81606337229809 L 21.08248842396147 27.926425348919235 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 3.4192485488991693 8.81614193058506 L 13.367699419559667 15.526456772234024 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 10.551208630406586 37.62726132029298 L 16.220483452162636 27.050904528117194 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.8402097536902247 25.736064654221813 L 12.33608390147609 22.294425861688726 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 6.39654524458161 34.66103743659652 L 14.558618097832644 25.86441497463861 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 3.1134414899596905 9.28346410042008 L 13.245376595983876 15.713385640168031 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
   <tr>
     <th class="gt_row gt_left gt_stub">Quattroporte</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#eea82d"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Maserati</text><rect x="0" y="24.6" width="51.085353003161224" height="3.75" rx="2" fill="#eea82d"></rect></svg></div></td>
-    <td class="gt_row gt_right">404.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">Ghibli</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#eea82d"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">Maserati</text><rect x="0" y="24.6" width="43.62486828240253" height="3.75" rx="2" fill="#eea82d"></rect></svg></div></td>
-    <td class="gt_row gt_right">345.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">6-Series</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#9e9e9e"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">BMW</text><rect x="0" y="24.6" width="39.831401475237094" height="3.75" rx="2" fill="#9e9e9e"></rect></svg></div></td>
-    <td class="gt_row gt_right">315.0</td>
-  </tr>
-  <tr>
-    <th class="gt_row gt_left gt_stub">i8</th>
-    <td class="gt_row gt_left"><div style="display: flex;"><svg xmlns="http://www.w3.org/2000/svg" width="120" height="30"><circle cx="5.818181818181818" cy="15.0" r="5.818181818181818" fill="#9e9e9e"></circle><text dominant-baseline="central" text-anchor="start" font-size="16" fill="black" x="14.545454545454545" y="15.0">BMW</text><rect x="0" y="24.6" width="45.14225500526871" height="3.75" rx="2" fill="#9e9e9e"></rect></svg></div></td>
-    <td class="gt_row gt_right">357.0</td>
+    <td class="gt_row gt_left">Maserati</td>
+    <td class="gt_row gt_center">2016</td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 29.00008012593719 37.86053072354544 L 23.600032050374875 27.144212289418174 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 7.144247806269215 35.32088886237956 L 14.857699122507686 26.128355544951823 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 7.112059390702454 35.293821852343484 L 14.84482375628098 26.117528740937395 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 0 1 39.69615506024416 16.52703644666139 L 27.878462024097665 18.610814578664556 A 8.0 8.0 0 0 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 0.055924056376394304 18.50539812827153 L 12.022369622550558 19.40215925130861 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
+    <td class="gt_row gt_center"><div style="display: flex;"><svg style="" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path stroke="transparent" stroke-width="0" d="M 20.0 0.0 A 20.0 20.0 0 1 1 10.364926517965694 2.473866399122727 L 16.14597060718628 12.989546559649092 A 8.0 8.0 0 1 0 20.0 12.0 Z " fill="steelblue"></path></svg></div></td>
   </tr>
 </tbody>
 
@@ -691,7 +751,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="note" class="level2 doc-section doc-section-note">
 <h2 class="doc-section doc-section-note anchored" data-anchor-id="note">Note</h2>
-<p>If your category label text is cut off or does not fit, you likely need to increase the <code>width</code> parameter to allow more space for the text and plot.</p>
+<p>Each column’s donut charts are scaled independently based on that column’s min/max values. A value equal to the column maximum will display as a full circle (360 degrees).</p>
 
 
 </section>
@@ -1098,13 +1158,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/gt_plt_donut.html" class="pagination-link" aria-label="gt_plt_donut">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_donut</span>
+      <a href="../reference/gt_plt_conf_int.html" class="pagination-link" aria-label="gt_plt_conf_int">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">gt_plt_conf_int</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/gt_plt_dumbbell.html" class="pagination-link" aria-label="gt_plt_dumbbell">
-        <span class="nav-page-text">gt_plt_dumbbell</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/gt_plt_dot.html" class="pagination-link" aria-label="gt_plt_dot">
+        <span class="nav-page-text">gt_plt_dot</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
