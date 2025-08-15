@@ -1259,8 +1259,8 @@ def gt_plt_donut(
         The diameter of the donut chart in pixels.
 
     stroke_color
-        The color of the border around the donut chart. The default is white, but if
-        `None` is passed, no stroke will be drawn.
+        The color of the border around the donut chart. If `None`, no stroke will be drawn,
+        except for the case of the 0 value.
 
     stroke_width
         The width of the border stroke in pixels.
