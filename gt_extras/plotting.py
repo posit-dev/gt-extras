@@ -1228,7 +1228,7 @@ def gt_plt_donut(
     columns: SelectExpr = None,
     fill: str = "purple",
     size: float = 30,
-    stroke_color: str | None = "white",
+    stroke_color: str | None = None,
     stroke_width: float = 1,
     show_labels: bool = False,
     label_color: str = "black",
@@ -1335,7 +1335,7 @@ def gt_plt_donut(
         show_labels: bool,
         label_color: str,
     ) -> str:
-        if is_na(gt._tbl_data, original_val) or scaled_val <= 0:
+        if is_na(gt._tbl_data, original_val):
             return f'<div style="display: flex;"><div style="width:{size}px; height:{size}px;"></div></div>'
 
         elements = []
@@ -1363,98 +1363,115 @@ def gt_plt_donut(
         # Determine if we need a large arc (> 180 degrees)
         large_arc = angle > math.pi
 
-        # For full circle (angle >= 2π), we need special handling to avoid degenerate arcs
-        if angle >= 2 * math.pi - 0.001:
-            # Create full donut using two semicircular arcs with evenodd fill rule
-            path_commands = [
-                # Outer circle - first semicircle (top to bottom)
-                MoveTo(center_x, stroke_width / 2),  # Top
-                Arc(
-                    radius - stroke_width / 2,
-                    radius - stroke_width / 2,
-                    0,
-                    False,  # small arc
-                    True,  # clockwise
-                    center_x,
-                    center_y + (radius - stroke_width / 2),  # Bottom
-                ),
-                # Outer circle - second semicircle (bottom to top)
-                Arc(
-                    radius - stroke_width / 2,
-                    radius - stroke_width / 2,
-                    0,
-                    False,  # small arc
-                    True,  # clockwise
-                    center_x,
-                    stroke_width / 2,  # Back to top
-                ),
-                ClosePath(),
-                # Inner circle - first semicircle (top to bottom, counter-clockwise)
-                MoveTo(center_x, center_y - inner_radius),  # Top of inner circle
-                Arc(
-                    inner_radius,
-                    inner_radius,
-                    0,
-                    False,  # small arc
-                    False,  # counter-clockwise
-                    center_x,
-                    center_y + inner_radius,  # Bottom of inner circle
-                ),
-                # Inner circle - second semicircle (bottom to top, counter-clockwise)
-                Arc(
-                    inner_radius,
-                    inner_radius,
-                    0,
-                    False,  # small arc
-                    False,  # counter-clockwise
-                    center_x,
-                    center_y - inner_radius,  # Back to top
-                ),
-                ClosePath(),
-            ]
-            svg_style = "fill-rule:true;"
-        else:
-            # Partial donut using path: outer arc -> line to inner end -> inner arc (reverse) -> close
-            path_commands = [
-                MoveTo(outer_start_x, outer_start_y),  # Start at outer edge
-                Arc(
-                    radius - stroke_width / 2,
-                    radius - stroke_width / 2,
-                    0,
-                    large_arc,
-                    True,
-                    outer_end_x,
-                    outer_end_y,
-                ),  # Outer arc
-                LineTo(inner_end_x, inner_end_y),  # Line to inner edge
-                Arc(
-                    inner_radius,
-                    inner_radius,
-                    0,
-                    large_arc,
-                    False,  # Reverse direction for inner arc
-                    inner_start_x,
-                    inner_start_y,
-                ),  # Inner arc (reverse)
-                ClosePath(),
-            ]
+        if scaled_val <= 0:
+            stroke_width = max(stroke_width, 1)
+            if stroke_color == "transparent":
+                stroke_color = "black"
 
-        path = Path(
-            d=path_commands,
-            fill=fill,
-            stroke=stroke_color,
-            stroke_width=stroke_width,
-        )
-        elements.append(path)
+            # Draw empty donut with just stroke/outline
+            outer_circle = Circle(
+                cx=center_x,
+                cy=center_y,
+                r=radius - stroke_width / 2,
+                fill="transparent",
+                stroke=stroke_color,
+                stroke_width=stroke_width,
+                stroke_dasharray=3,
+            )
+            elements.append(outer_circle)
+
+        else:
+            # For full circle (angle >= 2π), we need special handling to avoid degenerate arcs
+            if angle >= 2 * math.pi - 0.001:
+                # Create full donut using two semicircular arcs with evenodd fill rule
+                path_commands = [
+                    # Outer circle - first semicircle (top to bottom)
+                    MoveTo(center_x, stroke_width / 2),  # Top
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        False,  # small arc
+                        True,  # clockwise
+                        center_x,
+                        center_y + (radius - stroke_width / 2),  # Bottom
+                    ),
+                    # Outer circle - second semicircle (bottom to top)
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        False,  # small arc
+                        True,  # clockwise
+                        center_x,
+                        stroke_width / 2,  # Back to top
+                    ),
+                    ClosePath(),
+                    # Inner circle - first semicircle (top to bottom, counter-clockwise)
+                    MoveTo(center_x, center_y - inner_radius),  # Top of inner circle
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        False,  # small arc
+                        False,  # counter-clockwise
+                        center_x,
+                        center_y + inner_radius,  # Bottom of inner circle
+                    ),
+                    # Inner circle - second semicircle (bottom to top, counter-clockwise)
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        False,  # small arc
+                        False,  # counter-clockwise
+                        center_x,
+                        center_y - inner_radius,  # Back to top
+                    ),
+                    ClosePath(),
+                ]
+                svg_style = "fill-rule:true;"
+            else:
+                # Partial donut using path: outer arc -> line to inner end -> inner arc (reverse) -> close
+                path_commands = [
+                    MoveTo(outer_start_x, outer_start_y),  # Start at outer edge
+                    Arc(
+                        radius - stroke_width / 2,
+                        radius - stroke_width / 2,
+                        0,
+                        large_arc,
+                        True,
+                        outer_end_x,
+                        outer_end_y,
+                    ),  # Outer arc
+                    LineTo(inner_end_x, inner_end_y),  # Line to inner edge
+                    Arc(
+                        inner_radius,
+                        inner_radius,
+                        0,
+                        large_arc,
+                        False,  # Reverse direction for inner arc
+                        inner_start_x,
+                        inner_start_y,
+                    ),  # Inner arc (reverse)
+                    ClosePath(),
+                ]
+
+            path = Path(
+                d=path_commands,
+                fill=fill,
+                stroke=stroke_color,
+                stroke_width=stroke_width,
+            )
+            elements.append(path)
 
         # Add label if requested
         if show_labels and not is_na(gt._tbl_data, original_val):
             label_text = str(original_val)
 
-            label_radius = (radius + inner_radius) / 2
-            label_angle = angle / 2
-            label_x = center_x + label_radius * math.sin(label_angle)
-            label_y = center_y - label_radius * math.cos(label_angle)
+            # Position label in the center of the donut
+            label_x = center_x
+            label_y = center_y
             font_size = size * 0.15
 
             text = Text(
@@ -1465,7 +1482,7 @@ def gt_plt_donut(
                 font_size=font_size,
                 text_anchor="middle",
                 dominant_baseline="central",
-                font_weight="bold" if angle >= 2 * math.pi - 0.001 else None,
+                font_weight="bold",
             )
             elements.append(text)
 
