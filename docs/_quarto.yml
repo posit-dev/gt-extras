@@ -91,7 +91,7 @@ quartodoc:
       contents:
         - add_text_img
         - fa_icon_repeat
-        - fmt_image_circle
+        - fmt_img_circle
         - gt_fa_rank_change
         - gt_fa_rating
         - img_header

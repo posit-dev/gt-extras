@@ -5,7 +5,7 @@ from great_tables._helpers import px
 from great_tables._tbl_data import SelectExpr
 from great_tables._text import Html
 
-__all__ = ["add_text_img", "img_header", "fmt_image_circle"]
+__all__ = ["add_text_img", "img_header", "fmt_img_circle"]
 
 
 def img_header(
@@ -247,7 +247,7 @@ def add_text_img(
     return combined_html
 
 
-def fmt_image_circle(
+def fmt_img_circle(
     gt: GT,
     columns: SelectExpr,
     color: str = "grey",
