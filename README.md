@@ -2,7 +2,7 @@
 
 [![Python Versions](https://img.shields.io/pypi/pyversions/gt_extras.svg)](https://pypi.python.org/pypi/gt-extras)
 [![PyPI](https://img.shields.io/pypi/v/gt-extras?logo=python&logoColor=white&color=orange)](https://pypi.org/project/gt-extras/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/gt-extras)](https://pypistats.org/packages/gt-extras)
+[![PyPI Downloads](https://static.pepy.tech/badge/gt-extras)](https://pepy.tech/projects/gt-extras)
 [![License](https://img.shields.io/github/license/posit-dev/gt-extras)](https://github.com/posit-dev/gt-extras/blob/main/LICENSE)
 
 [![Tests](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml)
@@ -70,6 +70,11 @@ gtcars_mini["efficiency"] = gtcars_mini["mpg_c"] / gtcars_mini["hp"] * 100
 
 ## Contributing
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/posit-dev/gt-extras/issues).
+
+In general, if you're interested in extending **Great Tables** functionality, [this subsection of the Great Tables get-started page](https://posit-dev.github.io/great-tables/get-started/extensions) is a great place to start.
+
+Some of the work that went into this project was featured on the [_great tables blog_](https://posit-dev.github.io/great-tables/blog/plots-in-tables/), if you choose to contribute hopefully that can give you a sense of the process!
+
 
 ## Code of Conduct
 Please note that the **gt-extras** project is released with a [contributor code of conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).<br>By participating in this project you agree to abide by its terms.

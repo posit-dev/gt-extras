@@ -226,7 +226,7 @@ def test_gt_two_column_layout_no_headers(two_dfs):
     assert "Subtitle" not in html
 
 
-def test_gt_two_column_layout_no_(two_dfs):
+def test_gt_two_column_layout_with_styles(two_dfs):
     df1, df2 = two_dfs
     gt1 = GT(df1)
     gt2 = GT(df2)
@@ -252,8 +252,8 @@ def test_gt_two_column_layout_no_(two_dfs):
     # Get the HTML output
     html = str(result)
 
-    assert "width:100%; font-family: Chivo;" in html
-    assert "width:100%; font-family: Chivo;font-weight: bold;" in html
+    assert 'style="width:100%; font-family: Chivo;"' in html
+    assert 'style="width:100%; font-family: Chivo;font-weight: bold;"' in html
 
 
 def test_gt_combined_layout_repr_html():
@@ -279,6 +279,16 @@ def test_gt_two_column_layout_invalid_target(two_dfs):
     gt2 = GT(df2)
     with pytest.raises(Exception, match="Unknown target display"):
         gt_two_column_layout(gt1, gt2, target="invalid")  # type: ignore
+
+
+def test_gt_combined_layout_save_incomplete(two_dfs):
+    df1, df2 = two_dfs
+    gt1 = GT(df1)
+    gt2 = GT(df2)
+    gt_combined = gt_two_column_layout(gt1, gt2)
+
+    with pytest.raises(NotImplementedError):
+        gt_combined.save()
 
 
 @pytest.mark.xfail(reason="Notebook target test not implemented yet")
