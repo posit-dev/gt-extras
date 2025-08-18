@@ -12,7 +12,7 @@ from great_tables._tbl_data import Agnostic, DataFrameLike, PlExpr, SelectExpr, 
 from great_tables._text import Html
 from great_tables._utils import is_valid_http_schema
 
-__all__ = ["add_text_img", "img_header", "fmt_img_circle"]
+__all__ = ["add_text_img", "img_header", "gt_fmt_img_circle"]
 
 
 def img_header(
@@ -254,7 +254,8 @@ def add_text_img(
     return combined_html
 
 
-def fmt_img_circle(
+# Copied from https://github.com/posit-dev/great-tables/pull/676
+def gt_fmt_img_circle(
     gt: GT,
     columns: SelectExpr = None,
     rows: int | list[int] | None = None,
@@ -270,11 +271,11 @@ def fmt_img_circle(
     encode: bool = True,
 ) -> GT:
     """Format image paths to generate circular images within table cells.
-    `fmt_img_circle()` is a utility function similar to [`fmt_image()`](`great_tables.fmt_image`),
+    `gt_fmt_img_circle()` is a utility function similar to [`fmt_image()`](`great_tables.fmt_image`),
     but it also accepts additional parameters for customizing the image border:
     `border_radius=`, `border_width=`, `border_color=`, and `border_style=`.
 
-    When calling `fmt_img_circle()`, **Great Tables** automatically sets `border_radius="50%"` to
+    When calling `gt_fmt_img_circle()`, **Great Tables** automatically sets `border_radius="50%"` to
     create a full circle. However, we can't assume whether you want the border to be visible.
     Therefore, you should supply at least one of the following: `border_width=`, `border_color=`,
     or `border_style=`. Based on your input, sensible defaults will be applied for any unset border
@@ -327,20 +328,20 @@ def fmt_img_circle(
     ```{python}
     import polars as pl
     from great_tables import GT, vals, html
+    import gt_extras as gte
 
-    posit_avatar = "https://avatars.githubusercontent.com/u/107264312?s=200&v=4"
     rich_avatar = "https://avatars.githubusercontent.com/u/5612024?v=4"
     michael_avatar = "https://avatars.githubusercontent.com/u/2574498?v=4"
+    jules_avatar = "https://avatars.githubusercontent.com/u/54960783?v=4"
 
-    title_img = vals.fmt_image_circle(posit_avatar, height=100, border_color="#D3D3D3")[0]
-    df = pl.DataFrame({"@rich-iannone": [rich_avatar], "@machow": [michael_avatar]})
+
+    df = pl.DataFrame({"@machow": [michael_avatar], "@rich-iannone": [rich_avatar], "@juleswg23": [jules_avatar]})
 
     (
         GT(df)
-        .fmt_image_circle(height=150, border_width=5)
-        .tab_header(html(title_img))
         .cols_align("center")
         .opt_stylize(color="green", style=6)
+        .pipe(gte.gt_fmt_img_circle, height=80)
     )
     ```
     """
