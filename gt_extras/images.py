@@ -4,6 +4,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, ClassVar
+from warnings import warn
 
 from great_tables import GT, html
 from great_tables._gt_data import FormatFns
@@ -366,45 +367,11 @@ def gt_fmt_img_circle(
 
     border_width, border_color, border_style = border_props.values()
 
-    return _fmt_image(
-        gt,
-        columns=columns,
-        rows=rows,
-        height=height,
-        width=width,
-        border_radius=border_radius,
-        border_width=border_width,
-        border_color=border_color,
-        border_style=border_style,
-        sep=sep,
-        path=path,
-        file_pattern=file_pattern,
-        encode=encode,
-    )
-
-
-def _fmt_image(
-    gt: GT,
-    columns: SelectExpr = None,
-    rows: int | list[int] | None = None,
-    height: str | int | None = None,
-    width: str | None = None,
-    border_radius: str | None = None,
-    border_width: str | int | None = None,
-    border_color: str | None = None,
-    border_style: str | None = None,
-    sep: str = " ",
-    path: str | Path | None = None,
-    file_pattern: str = "{}",
-    encode: bool = True,
-) -> GT:
-    # TODO: most parameter options should allow a polars expression (or from_column) ----
-    # can other fmt functions do this kind of thing?
     expr_cols = [height, width, sep, path, file_pattern, encode]
 
     if any(isinstance(x, PlExpr) for x in expr_cols):
         raise NotImplementedError(
-            "fmt_image currently does not support polars expressions for arguments other than"
+            "gt_fmt_img_circle currently does not support polars expressions for arguments other than"
             " columns and rows"
         )
 
@@ -470,20 +437,9 @@ class FmtImage:
         else:
             height = self.height
 
-        # TODO: note that only height can be numeric in the R program. Is this on purpose?
-        # In any event, raising explicitly for numeric width below.
-        if isinstance(self.width, (int, float)):
-            raise NotImplementedError(
-                "The `width=` argument must be specified as a string."
-            )
-        else:
-            width = self.width
+        width = self.width
 
         if self.border_radius is not None:
-            if not isinstance(self.border_radius, str):
-                raise NotImplementedError(
-                    "The `border_radius=` argument must be specified as a string."
-                )
             if not any(self.border_radius.endswith(suffix) for suffix in {"px", "%"}):
                 raise NotImplementedError(
                     'The `border_radius=` argument must end with either "px" or "%"'
@@ -538,9 +494,7 @@ class FmtImage:
         return span
 
     def to_latex(self, val: Any):
-        from warnings import warn
-
-        from ._gt_data import FormatterSkipElement
+        from great_tables._gt_data import FormatterSkipElement
 
         warn("fmt_image() is not currently implemented in LaTeX output.")
 
