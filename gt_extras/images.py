@@ -272,11 +272,11 @@ def gt_fmt_img_circle(
     encode: bool = True,
 ) -> GT:
     """Format image paths to generate circular images within table cells.
-    `gt_fmt_img_circle()` is a utility function similar to [`fmt_image()`](`great_tables.fmt_image`),
+    `gt_fmt_img_circle()` is a utility function similar to [`GT.fmt_image()`](https://posit-dev.github.io/great-tables/reference/GT.fmt_image),
     but it also accepts additional parameters for customizing the image border:
     `border_radius=`, `border_width=`, `border_color=`, and `border_style=`.
 
-    When calling `gt_fmt_img_circle()`, **Great Tables** automatically sets `border_radius="50%"` to
+    When calling `gt_fmt_img_circle()`, **gt-extras** automatically sets `border_radius="50%"` to
     create a full circle. However, we can't assume whether you want the border to be visible.
     Therefore, you should supply at least one of the following: `border_width=`, `border_color=`,
     or `border_style=`. Based on your input, sensible defaults will be applied for any unset border
@@ -287,33 +287,44 @@ def gt_fmt_img_circle(
     columns
         The columns to target. Can either be a single column name or a series of column names
         provided in a list.
+
     rows
         In conjunction with `columns=`, we can specify which of their rows should undergo
         formatting. The default is all rows, resulting in all rows in targeted columns being
         formatted. Alternatively, we can supply a list of row indices.
+
     height
         The height of the rendered images.
+
     width
         The width of the rendered images.
+
     border_radius
         The radius of the image border. Accepts values in pixels (`px`) or percentages (`%`).
         Defaults to `50%` to create a circular image.
+
     border_width
         The width of the image border.
+
     border_color
         The color of the image border.
+
     border_style
-        The style of the image border (e.g., solid, dashed, dotted).
+        The style of the image border (e.g., `"solid"`, `"dashed"`, `"dotted"`).
+
     sep
         In the output of images within a body cell, `sep=` provides the separator between each
         image.
+
     path
         An optional path to local image files or an HTTP/HTTPS URL.
         This is combined with the filenames to form the complete image paths.
+
     file_pattern
         The pattern to use for mapping input values in the body cells to the names of the graphics
         files. The string supplied should use `"{}"` in the pattern to map filename fragments to
         input strings.
+
     encode
         The option to always use Base64 encoding for image paths that are determined to be local. By
         default, this is `True`.
@@ -321,7 +332,7 @@ def gt_fmt_img_circle(
     Returns
     -------
     GT
-        The GT object is returned. This is the same object that the method is called on so that we
+        The `GT` object is returned. This is the same object that the method is called on so that we
         can facilitate method chaining.
 
     Examples
