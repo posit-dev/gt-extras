@@ -327,7 +327,7 @@ def gt_fmt_img_circle(
     --------
     ```{python}
     import polars as pl
-    from great_tables import GT, vals, html
+    from great_tables import GT
     import gt_extras as gte
 
     rich_avatar = "https://avatars.githubusercontent.com/u/5612024?v=4"
