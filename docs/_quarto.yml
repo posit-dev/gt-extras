@@ -93,6 +93,7 @@ quartodoc:
         - fa_icon_repeat
         - gt_fa_rank_change
         - gt_fa_rating
+        - gt_fmt_img_circle
         - img_header
 
     - title: Utilities

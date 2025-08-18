@@ -9,7 +9,7 @@ from .colors import (
 from .formatting import fmt_pct_extra, gt_duplicate_column, gt_two_column_layout
 from .html import gt_merge_stack, with_hyperlink, with_tooltip
 from .icons import fa_icon_repeat, gt_fa_rank_change, gt_fa_rating
-from .images import add_text_img, img_header
+from .images import add_text_img, gt_fmt_img_circle, img_header
 from .plotting import (
     gt_plt_bar,
     gt_plt_bar_pct,
@@ -68,6 +68,7 @@ __all__ = [
     "gt_two_column_layout",
     "add_text_img",
     "img_header",
+    "gt_fmt_img_circle",
     "gt_add_divider",
     "gt_plt_summary",
 ]
