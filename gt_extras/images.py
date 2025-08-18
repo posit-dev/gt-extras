@@ -347,7 +347,11 @@ def gt_fmt_img_circle(
     jules_avatar = "https://avatars.githubusercontent.com/u/54960783?v=4"
 
 
-    df = pl.DataFrame({"@machow": [michael_avatar], "@rich-iannone": [rich_avatar], "@juleswg23": [jules_avatar]})
+    df = pl.DataFrame({
+        "@machow": [michael_avatar],
+        "@rich-iannone": [rich_avatar],
+        "@juleswg23": [jules_avatar]
+    })
 
     (
         GT(df)
