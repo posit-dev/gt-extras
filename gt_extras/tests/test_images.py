@@ -183,7 +183,7 @@ def test_add_text_img_empty_url():
 
 
 def test_gt_fmt_img_circle_snapshot(snapshot):
-    df = pd.DataFrame({"img": ["avatar1.png", "avatar2.png"]})
+    df = pd.DataFrame({"img": ["https://www.avatar1.png", "https://www.avatar2.png"]})
     gt_test = GT(df)
 
     res = gt_fmt_img_circle(gt_test, columns="img", encode=False, border_width="2px")
