@@ -2,7 +2,7 @@
 
 [![Python Versions](https://img.shields.io/pypi/pyversions/gt_extras.svg)](https://pypi.python.org/pypi/gt-extras)
 [![PyPI](https://img.shields.io/pypi/v/gt-extras?logo=python&logoColor=white&color=orange)](https://pypi.org/project/gt-extras/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/gt-extras)](https://pypistats.org/packages/gt-extras)
+[![PyPI Downloads](https://static.pepy.tech/badge/gt-extras)](https://pepy.tech/projects/gt-extras)
 [![License](https://img.shields.io/github/license/posit-dev/gt-extras)](https://github.com/posit-dev/gt-extras/blob/main/LICENSE)
 
 [![Tests](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml/badge.svg)](https://github.com/posit-dev/gt-extras/actions/workflows/ci_tests.yml)

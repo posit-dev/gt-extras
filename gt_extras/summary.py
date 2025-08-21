@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 import statistics
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 import narwhals.stable.v1 as nw
@@ -417,12 +418,9 @@ def _plot_categorical(
             category_counts[item] = 1
 
     # Sort by count (descending order)
-    sorted_categories = sorted(
-        category_counts.items(), key=lambda x: x[1], reverse=True
-    )
+    categories, counts = zip(*Counter(data).most_common())
 
-    # Extract counts and calculate proportions
-    counts = [count for _, count in sorted_categories]
+    # calculate proportions
     total_count = sum(counts)
     proportions = [count / total_count for count in counts]
 
@@ -432,9 +430,7 @@ def _plot_categorical(
         fill=color_mapping["string"],
         plot_id=plot_id,
         proportions=proportions,
-        categories=[
-            category for category, _ in sorted_categories
-        ],  # maybe leave combined with counts?
+        categories=categories,
         counts=counts,
         interactivity=interactivity,
     )

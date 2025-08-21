@@ -472,6 +472,35 @@ gt.pipe(
 ```
 {{< include ./_show-last.qmd >}}
 
+### [gt_plt_donut](https://posit-dev.github.io/gt-extras/reference/gt_plt_donut.html){title="Click for reference"}
+```{python}
+# | label: gt_plt_donut
+from great_tables import GT
+from great_tables.data import gtcars
+import gt_extras as gte
+
+gtcars_mini = gtcars.loc[
+    9:17,
+    ["model", "mfr", "year", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"]
+]
+
+gt = (
+    GT(gtcars_mini, rowname_col="model")
+    .tab_stubhead(label="Car")
+    .cols_align("center")
+    .cols_align("left", columns="mfr")
+)
+
+gt.pipe(
+    gte.gt_plt_donut,
+    columns=["hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h"],
+    size=40,
+    fill="steelblue"
+)
+```
+{{< include ./_show-last.qmd >}}
+
+
 ### [gt_plt_dot](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot.html){title="Click for reference"}
 ```{python}
 # | label: gt_plt_dot
@@ -946,6 +975,29 @@ gt = (
 )
 
 gt.pipe(gte.gt_fa_rating, columns="rating", name="star")
+```
+{{< include ./_show-last.qmd >}}
+
+### [gt_fmt_img_circle](https://posit-dev.github.io/gt-extras/reference/gt_fmt_img_circle.html){title="Click for reference"}
+```{python}
+# | label: gt_fmt_img_circle
+import polars as pl
+from great_tables import GT
+import gt_extras as gte
+
+rich_avatar = "https://avatars.githubusercontent.com/u/5612024?v=4"
+michael_avatar = "https://avatars.githubusercontent.com/u/2574498?v=4"
+jules_avatar = "https://avatars.githubusercontent.com/u/54960783?v=4"
+
+
+df = pl.DataFrame({"@machow": [michael_avatar], "@rich-iannone": [rich_avatar], "@juleswg23": [jules_avatar]})
+
+(
+    GT(df)
+    .cols_align("center")
+    .opt_stylize(color="green", style=6)
+    .pipe(gte.gt_fmt_img_circle, height=80)
+)
 ```
 {{< include ./_show-last.qmd >}}
 

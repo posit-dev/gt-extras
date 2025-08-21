@@ -12,6 +12,18 @@
       </div>
   '''
 # ---
+# name: test_gt_fmt_img_circle_snapshot
+  '''
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left"><span style="white-space:nowrap;"><img src="https://www.avatar1.png" style="height: 2em;border-radius: 50%;border-width: 2px;border-color: #0A0A0A;border-style: solid;vertical-align: middle;"></span></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left"><span style="white-space:nowrap;"><img src="https://www.avatar2.png" style="height: 2em;border-radius: 50%;border-width: 2px;border-color: #0A0A0A;border-style: solid;vertical-align: middle;"></span></td>
+    </tr>
+  </tbody>
+  '''
+# ---
 # name: test_img_header_snapshot
   Html(text='<div style="text-align:center;">\n        <img src="https://example.com/image.png" style="\n        height:60px;\n        object-fit:contain;\n        object-position: bottom;\n        border-bottom:2px solid black;"\n    />\n        <div style="\n        font-size:12px;\n        color:black;\n        text-align:center;\n        width:100%;\n    ">\n        Test Label\n    </div>\n    </div>')
 # ---

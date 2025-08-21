@@ -9,6 +9,7 @@ from gt_extras import (
     gt_plt_bar_stack,
     gt_plt_bullet,
     gt_plt_conf_int,
+    gt_plt_donut,
     gt_plt_dot,
     gt_plt_dumbbell,
     gt_plt_winloss,
@@ -1304,3 +1305,118 @@ def test_gt_plt_bullet_scaling():
     assert 'x1="58.5px" y1="0" x2="58.5px" y2="30px"' in html
     assert 'x1="21.0px" y1="0" x2="21.0px" y2="30px"' in html
     assert 'x1="36.0px" y1="0" x2="36.0px" y2="30px"' in html
+
+
+def test_gt_plt_donut_snap(snapshot, mini_gt):
+    res = gt_plt_donut(gt=mini_gt, columns="num")
+
+    assert_rendered_body(snapshot, gt=res)
+
+
+def test_gt_plt_donut_basic(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"])
+    html = result.as_raw_html()
+
+    assert html.count("<svg") == 3
+    assert html.count('<svg style="fill-rule:true;"') == 1
+
+
+def test_gt_plt_donut_show_labels_true(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], show_labels=True)
+    html = result.as_raw_html()
+
+    assert ">33.33</text>" in html
+    assert ">2.222</text>" in html
+    assert ">0.1111</text>" in html
+    assert html.count('<text dominant-baseline="central" text-anchor="middle"') == 3
+
+
+def test_gt_plt_donut_show_labels_false(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], show_labels=False)
+    html = result.as_raw_html()
+
+    assert "</text>" not in html
+
+
+def test_gt_plt_donut_zero_values():
+    df = pd.DataFrame({"values": [0, 10, 0]})
+    gt_test = GT(df)
+    result = gt_plt_donut(gt=gt_test, columns="values", show_labels=True)
+    html = result.as_raw_html()
+
+    assert ">0</text>" in html
+    assert html.count('stroke-dasharray="3"') == 2
+
+
+def test_gt_plt_donut_full_circle():
+    df = pd.DataFrame({"values": [100, 100]})
+    gt_test = GT(df)
+    result = gt_plt_donut(gt=gt_test, columns="values")
+    html = result.as_raw_html()
+
+    assert 'style="fill-rule:true;"' in html
+
+
+def test_gt_plt_donut_custom_colors(mini_gt):
+    result = gt_plt_donut(
+        gt=mini_gt,
+        columns=["num"],
+        fill="red",
+        stroke_color="blue",
+        label_color="green",
+        show_labels=True,
+    )
+    html = result.as_raw_html()
+
+    assert 'fill="red"' in html
+    assert 'stroke="blue"' in html
+    assert 'fill="green"' in html
+
+
+def test_gt_plt_donut_no_stroke_color(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], stroke_color=None)
+    html = result.as_raw_html()
+    assert 'stroke="transparent"' in html
+
+
+def test_gt_plt_donut_keep_columns(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], keep_columns=True)
+    html = result.as_raw_html()
+
+    assert ">num plot</th>" in html
+    assert ">num</th>" in html
+    assert html.count("<svg") == 3
+
+
+def test_gt_plt_donut_with_na_values():
+    df = pd.DataFrame({"values": [10, np.nan, 20, None]})
+    gt_test = GT(df)
+    result = gt_plt_donut(gt=gt_test, columns="values")
+    html = result.as_raw_html()
+
+    assert isinstance(result, GT)
+    assert html.count('<div style="width:30px; height:30px;"></div>') == 2
+
+
+def test_gt_plt_donut_custom_size(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], size=50)
+    html = result.as_raw_html()
+
+    assert html.count('width="50" height="50"') == 3
+
+
+def test_gt_plt_donut_with_domain_expanded(mini_gt):
+    result = gt_plt_donut(gt=mini_gt, columns=["num"], domain=[0.1111, 33.33])
+    html = result.as_raw_html()
+
+    assert isinstance(result, GT)
+
+    assert '<circle stroke="black" stroke-dasharray="3"' in html
+    assert 'fill="transparent"' in html
+    assert '<svg style="fill-rule:true;"' in html
+    assert html.count("<svg") == 3
+
+
+def test_gt_plt_donut_non_numeric_column(mini_gt):
+    with pytest.raises(TypeError, match="Invalid column type provided"):
+        gt_plt_donut(gt=mini_gt, columns="char")

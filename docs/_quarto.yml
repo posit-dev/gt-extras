@@ -51,6 +51,7 @@ quartodoc:
         - gt_plt_bar_stack
         - gt_plt_bullet
         - gt_plt_conf_int
+        - gt_plt_donut
         - gt_plt_dot
         - gt_plt_dumbbell
         - gt_plt_summary
@@ -92,6 +93,7 @@ quartodoc:
         - fa_icon_repeat
         - gt_fa_rank_change
         - gt_fa_rating
+        - gt_fmt_img_circle
         - img_header
 
     - title: Utilities
