@@ -30,7 +30,14 @@ PLOT_HEIGHT_RATIO = 0.8
 FONT_SIZE_RATIO = 0.2  # height_px / 5
 
 
-def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
+def gt_plt_summary(
+    df: IntoDataFrame,
+    title: str | None = None,
+    show_desc_stats: bool = True,
+    add_mode: bool = False,
+    interactivity: bool = True,
+    new_color_mapping: dict | None = None,
+) -> GT:
     """
     Create a comprehensive data summary table with visualizations.
 
@@ -50,6 +57,20 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 
     title
         Optional title for the summary table. If `None`, defaults to "Summary Table".
+
+    show_desc_stats
+        Boolean that allows the hiding of the Mean, Median, and SD columns.
+
+    add_mode
+        Boolean that allows the addition of a Mode column.
+
+    interactivity
+        Boolean that toggles interactivity in Plot Overview column graphs. Interactivity refers to
+        hovering css and tooltips code applied to the graphs.
+
+    new_color_mapping
+        A dictionary that maps data types (string, numeric, datetime, boolean, and other) to their
+        corresponding color codes in hexadecimal format.
 
     Returns
     -------
@@ -114,13 +135,54 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     gte.gt_plt_summary(df)
     ```
 
+    And lastly, an example showing ocean swell data with changes to the default color mapping:
+    ```{python}
+    import polars as pl
+    from great_tables import GT
+    import gt_extras as gte
+    from datetime import datetime
+
+    df = pl.DataFrame({
+    "Date": [
+        datetime(2024, 7, 1, 6, 0),
+        datetime(2024, 7, 1, 12, 0),
+        datetime(2024, 7, 2, 6, 0),
+        datetime(2024, 7, 2, 12, 0),
+        datetime(2024, 7, 3, 6, 0),
+        datetime(2024, 7, 3, 12, 0),
+        datetime(2024, 7, 4, 6, 0),
+        datetime(2024, 7, 4, 12, 0),
+        datetime(2024, 7, 5, 6, 0),
+    ],
+    "Height_m": [1.2, 1.5, 2.1, 2.4, 1.8, None, 2.7, 3.0, 2.5],
+    "Period_s": [10, 12, 14, 15, 11, 9, 16, None, 13],
+    "Direction_deg": [210, 215, 220, 225, 205, 200, 230, 240, 235],
+    "WindSpeed_kts": [5, 7, 10, 12, 6, 4, 8, 11, None],
+    "Breaking": [True, True, True, False, True, False, True, True, True]
+    })
+
+    color_mapping = {
+        "date": "blue",
+        "numeric": "lightblue",
+        "boolean": "lightgreen",
+    }
+
+    gte.gt_plt_summary(df, new_color_mapping=color_mapping)
+    ```
+
     Note
     ---------
     The datatype (dtype) of each column in your dataframe will determine the classified type in the
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
-    summary_df = _create_summary_df(df)
+    summary_df = _create_summary_df(
+        df, show_desc_stats=show_desc_stats, add_mode=add_mode
+    )
+
+    color_mapping = COLOR_MAPPING.copy()
+    if new_color_mapping is not None:
+        color_mapping.update(new_color_mapping)
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -140,13 +202,10 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
     gt = (
         GT(summary_df)
         .tab_header(title=title, subtitle=subtitle)
-        # handle missing
-        .sub_missing(columns=["Mean", "Median", "SD"])
         # Add visuals
-        .fmt(_make_icon_html, columns="Type")
+        .fmt(lambda dtype: _make_icon_html(dtype, color_mapping), columns="Type")
         # Format numerics
         .fmt_percent(columns="Missing", decimals=1)
-        .fmt_number(columns=["Mean", "Median", "SD"], rows=numeric_cols)
         .tab_style(
             style=style.text(weight="bold"),
             locations=loc.body(columns="Column"),
@@ -154,6 +213,28 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
         # add style
         .cols_align(align="center", columns="Plot Overview")
     )
+
+    # Polars has strict column checking, so can't perform .sub_missing or .fmt_number etc on columns
+    # that aren't present in a df. Therefore, we need to check if those columns are present prior to
+    # handling missing and formatting.
+    cols_to_check = ["Mean", "Median", "SD"] + (["Mode"] if add_mode else [])
+    existing_desc_cols = [col for col in cols_to_check if col in nw_summary_df.columns]
+
+    # Mode stays as a string object, so we don't include in here.
+    columns_to_format_as_number = [
+        col for col in ["Mean", "Median", "SD"] if col in nw_summary_df.columns
+    ]
+
+    if show_desc_stats:
+        gt = (
+            # handle missing
+            gt.sub_missing(columns=existing_desc_cols).fmt_number(
+                columns=columns_to_format_as_number,
+                rows=numeric_cols,
+            )
+        )
+        if add_mode:
+            gt = gt.cols_align(align="right", columns="Mode")
 
     gt = gt_theme_espn(gt)
 
@@ -170,6 +251,8 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
                 nw_series=vals,
                 col_type=col_type,
                 plot_id=plot_id,
+                color_mapping=color_mapping,
+                interactivity=interactivity,
             ),
             columns="Plot Overview",
             rows=i,
@@ -180,7 +263,9 @@ def gt_plt_summary(df: IntoDataFrame, title: str | None = None) -> GT:
 ############### Helpers for gt_plt_summary ###############
 
 
-def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
+def _create_summary_df(
+    df: IntoDataFrameT, show_desc_stats: bool = True, add_mode: bool = False
+) -> IntoDataFrameT:
     nw_df = nw.from_native(df, eager_only=True)  # Should I be concerned about this?
 
     summary_data = {
@@ -188,9 +273,6 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         "Column": [],
         "Plot Overview": [],
         "Missing": [],
-        "Mean": [],
-        "Median": [],
-        "SD": [],
     }
 
     for col_name in nw_df.columns:
@@ -199,6 +281,7 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         mean_val = None
         median_val = None
         std_val = None
+        mode_val = None
 
         clean_col = _clean_series(col, col.dtype.is_numeric())
 
@@ -213,6 +296,17 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
             mean_val = clean_col.mean()
             median_val = clean_col.median()
             std_val = clean_col.std()
+            mode_val = clean_col.mode()
+            # If lengths are the same there's no mode, likely due to continuous data input.
+            if len(mode_val) == len(clean_col):
+                mode_val = "No Singular Mode"
+            # Limiting the number of modes displayed to two at maximum
+            elif len(mode_val) > 2:
+                mode_val = "Greater than 2 Modes"
+            # Converting to string, then listing together
+            else:
+                mode_val = sorted(mode_val.to_list())  # sorts from least to greatest
+                mode_val = ", ".join(str(i) for i in mode_val)
 
         elif col.dtype == nw.String:
             col_type = "string"
@@ -231,30 +325,34 @@ def _create_summary_df(df: IntoDataFrameT) -> IntoDataFrameT:
         summary_data["Column"].append(col_name)
         summary_data["Plot Overview"].append(None)
         summary_data["Missing"].append(missing_ratio)
-        summary_data["Mean"].append(mean_val)
-        summary_data["Median"].append(median_val)
-        summary_data["SD"].append(std_val)
+        # setdefault adds the column if it's not present
+        if show_desc_stats:
+            summary_data.setdefault("Mean", []).append(mean_val)
+            summary_data.setdefault("Median", []).append(median_val)
+            summary_data.setdefault("SD", []).append(std_val)
+        if show_desc_stats and add_mode:
+            summary_data.setdefault("Mode", []).append(mode_val)
 
     summary_nw_df = nw.from_dict(summary_data, backend=nw_df.implementation)
     return summary_nw_df.to_native()
 
 
-def _make_icon_html(dtype: str) -> str:
+def _make_icon_html(dtype: str, color_mapping: dict[str, str]) -> str:
     if dtype == "string":
         fa_name = "list"
-        color = COLOR_MAPPING["string"]
+        color = color_mapping["string"]
     elif dtype == "numeric":
         fa_name = "signal"
-        color = COLOR_MAPPING["numeric"]
+        color = color_mapping["numeric"]
     elif dtype == "datetime":
         fa_name = "clock"
-        color = COLOR_MAPPING["datetime"]
+        color = color_mapping["datetime"]
     elif dtype == "boolean":
         fa_name = "check"
-        color = COLOR_MAPPING["boolean"]
+        color = color_mapping["boolean"]
     else:
         fa_name = "question"
-        color = COLOR_MAPPING["other"]
+        color = color_mapping["other"]
 
     icon = icon_svg(name=fa_name, fill=color, width=f"{20}px", a11y="sem")
 
@@ -266,6 +364,8 @@ def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
     plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
 ) -> str:
     if len(nw_series) == 0:
         return "<div></div>"
@@ -273,18 +373,50 @@ def _make_summary_plot(
     clean_list = nw_series.to_native().to_list()
 
     if col_type == "string":
-        return _plot_categorical(clean_list, plot_id=plot_id)
+        return _plot_categorical(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     elif col_type == "numeric":
-        return _plot_numeric(clean_list, plot_id=plot_id)
+        return _plot_numeric(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     elif col_type == "datetime":
-        return _plot_datetime(clean_list, plot_id=plot_id)
+        return _plot_datetime(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     elif col_type == "boolean":
-        return _plot_boolean(clean_list, plot_id=plot_id)
+        return _plot_boolean(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     else:
         return "<div></div>"
 
 
-def _plot_categorical(data: list[str], plot_id: str) -> str:
+def _plot_categorical(
+    data: list[str],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
+) -> str:
+    category_counts = {}
+    for item in data:
+        if item in category_counts:
+            category_counts[item] += 1
+        else:
+            category_counts[item] = 1
+
     # Sort by count (descending order)
     categories, counts = zip(*Counter(data).most_common())
 
@@ -295,17 +427,23 @@ def _plot_categorical(data: list[str], plot_id: str) -> str:
     svg = _make_categories_bar_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["string"],
+        fill=color_mapping["string"],
         plot_id=plot_id,
         proportions=proportions,
         categories=categories,
         counts=counts,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
 
 
-def _plot_boolean(data: list[bool], plot_id: str) -> str:
+def _plot_boolean(
+    data: list[bool],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
+) -> str:
     true_count = sum(data)
     false_count = len(data) - true_count
     total_count = len(data)
@@ -331,12 +469,13 @@ def _plot_boolean(data: list[bool], plot_id: str) -> str:
     svg = _make_categories_bar_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["boolean"],
+        fill=color_mapping["boolean"],
         plot_id=plot_id,
         proportions=proportions,
         categories=categories,
         counts=counts,
         opacities=opacities,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
@@ -351,6 +490,7 @@ def _make_categories_bar_svg(
     categories: list[str],
     counts: list[int],
     opacities: list[float] | None = None,
+    interactivity: bool = True,
 ) -> SVG:
     plot_width_px = width_px * PLOT_WIDTH_RATIO
     plot_height_px = height_px * PLOT_HEIGHT_RATIO
@@ -364,15 +504,18 @@ def _make_categories_bar_svg(
     max_opacity = 1.0
     min_opacity = 0.2
 
-    hover_css = _generate_hover_css(
-        num_elements=len(proportions),
-        bar_highlight_style="opacity: 0.4;",
-        tooltip_class="category-tooltip",
-        use_hover_areas=False,
-        plot_id=plot_id,
-    )
+    if interactivity:
+        hover_css = _generate_hover_css(
+            num_elements=len(proportions),
+            bar_highlight_style="opacity: 0.4;",
+            tooltip_class="category-tooltip",
+            use_hover_areas=False,
+            plot_id=plot_id,
+        )
 
-    elements: list[Element] = [Style(text=hover_css)]
+        elements: list[Element] = [Style(text=hover_css)]
+    else:
+        elements: list[Element] = []
 
     for i, (proportion, category, count) in enumerate(
         zip(proportions, categories, counts)
@@ -406,62 +549,68 @@ def _make_categories_bar_svg(
         )
         elements.insert(1, visual_bar)
 
-        section_center_x = x_loc + section_width / 2
+        if interactivity:
+            section_center_x = x_loc + section_width / 2
 
-        row_label = "row" if count == 1 else "rows"
-        text_top = f"{count:.0f} {row_label}"
-        text_bottom = f'"{category}"'
+            row_label = "row" if count == 1 else "rows"
+            text_top = f"{count:.0f} {row_label}"
+            text_bottom = f'"{category}"'
 
-        # Estimate text width
-        max_text_width = max(
-            len(text_top) * font_size_px * 0.6,
-            len(text_bottom) * font_size_px * 0.6,
-        )
+            # Estimate text width
+            max_text_width = max(
+                len(text_top) * font_size_px * 0.6,
+                len(text_bottom) * font_size_px * 0.6,
+            )
 
-        tooltip_x = _calculate_text_position(
-            center_x=section_center_x,
-            text_width=max_text_width,
-            svg_width=width_px,
-            margin=5,
-        )
+            tooltip_x = _calculate_text_position(
+                center_x=section_center_x,
+                text_width=max_text_width,
+                svg_width=width_px,
+                margin=5,
+            )
 
-        # Use plot_id in tooltip ID and class
-        tooltip_id = f"{plot_id}-tooltip-{i}"
-        tooltip_class = f"{plot_id}-category-tooltip"
+            # Use plot_id in tooltip ID and class
+            tooltip_id = f"{plot_id}-tooltip-{i}"
+            tooltip_class = f"{plot_id}-category-tooltip"
 
-        tooltip = G(
-            id=tooltip_id,
-            class_=[tooltip_class],
-            elements=[
-                Text(
-                    text=text_top,
-                    x=tooltip_x,
-                    y=font_size_px * 1.25,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-                Text(
-                    text=text_bottom,
-                    x=tooltip_x,
-                    y=font_size_px * 2.5,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-            ],
-        )
-        elements.append(tooltip)
+            tooltip = G(
+                id=tooltip_id,
+                class_=[tooltip_class],
+                elements=[
+                    Text(
+                        text=text_top,
+                        x=tooltip_x,
+                        y=font_size_px * 1.25,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                    Text(
+                        text=text_bottom,
+                        x=tooltip_x,
+                        y=font_size_px * 2.5,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                ],
+            )
+            elements.append(tooltip)
         x_loc += section_width
 
     return SVG(height=height_px, width=width_px, elements=elements)
 
 
-def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
+def _plot_numeric(
+    data: list[float] | list[int],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
+) -> str:
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
 
@@ -505,13 +654,14 @@ def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
     svg = _make_histogram_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["numeric"],
+        fill=color_mapping["numeric"],
         plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
         data_min=str(round(data_min, 2)),
         counts=counts,
         bin_edges=bin_edges,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
@@ -520,6 +670,8 @@ def _plot_numeric(data: list[float] | list[int], plot_id: str) -> str:
 def _plot_datetime(
     dates: list[datetime],
     plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
 ) -> str:
     date_timestamps = [x.timestamp() for x in dates]
     data_min, data_max = min(date_timestamps), max(date_timestamps)
@@ -569,13 +721,14 @@ def _plot_datetime(
     svg = _make_histogram_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["datetime"],
+        fill=color_mapping["datetime"],
         plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max, tz=timezone.utc).date()),
         data_min=str(datetime.fromtimestamp(data_min, tz=timezone.utc).date()),
         counts=counts,
         bin_edges=bin_edges,
+        interactivity=interactivity,
     )
 
     return svg.as_str()
@@ -591,6 +744,7 @@ def _make_histogram_svg(
     data_max: str,
     counts: list[float],
     bin_edges: list[str],
+    interactivity: bool = True,
 ) -> SVG:
     max_count = max(counts)
     normalized_counts = [c / max_count for c in counts] if max_count > 0 else counts
@@ -615,14 +769,6 @@ def _make_histogram_svg(
         f"stroke: white; stroke-width: {line_stroke_width}; fill-opacity: 0.6;"
     )
 
-    hover_css = _generate_hover_css(
-        num_elements=len(counts),
-        bar_highlight_style=bar_highlight_style,
-        tooltip_class="tooltip",
-        use_hover_areas=True,
-        plot_id=plot_id,
-    )
-
     # Calculate text positioning to avoid overflow
     min_text_width = len(data_min) * font_size_px * 0.6
     max_text_width = len(data_max) * font_size_px * 0.6
@@ -640,9 +786,6 @@ def _make_histogram_svg(
     )
 
     elements: list[Element] = [
-        Style(
-            text=hover_css,
-        ),
         # Bottom line
         Line(
             x1=0,
@@ -678,6 +821,16 @@ def _make_histogram_svg(
             dominant_baseline="text-top",
         ),
     ]
+
+    if interactivity:
+        hover_css = _generate_hover_css(
+            num_elements=len(counts),
+            bar_highlight_style=bar_highlight_style,
+            tooltip_class="tooltip",
+            use_hover_areas=True,
+            plot_id=plot_id,
+        )
+        elements.append(Style(text=hover_css))
 
     # Make each bar, with an accompanying tooltip
     for i, (count, normalized_count) in enumerate(zip(counts, normalized_counts)):
@@ -722,32 +875,34 @@ def _make_histogram_svg(
         hover_area_id = f"{plot_id}-hover-area-{i}"
         hover_area_class = f"{plot_id}-hover-area"
 
-        tooltip = G(
-            id=tooltip_id,
-            class_=[tooltip_class],
-            elements=[
-                Text(
-                    text=text_top,
-                    x=x_loc_tooltip,
-                    y=font_size_px * 0.25,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-                Text(
-                    text=text_bottom,
-                    x=x_loc_tooltip,
-                    y=font_size_px * 1.5,
-                    fill="black",
-                    font_size=font_size_px,
-                    dominant_baseline="hanging",
-                    text_anchor="middle",
-                    font_weight="bold",
-                ),
-            ],
-        )
+        if interactivity:
+            tooltip = G(
+                id=tooltip_id,
+                class_=[tooltip_class],
+                elements=[
+                    Text(
+                        text=text_top,
+                        x=x_loc_tooltip,
+                        y=font_size_px * 0.25,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                    Text(
+                        text=text_bottom,
+                        x=x_loc_tooltip,
+                        y=font_size_px * 1.5,
+                        fill="black",
+                        font_size=font_size_px,
+                        dominant_baseline="hanging",
+                        text_anchor="middle",
+                        font_weight="bold",
+                    ),
+                ],
+            )
+            elements.append(tooltip)
 
         # Add invisible hover area that covers bar + tooltip space
         hover_area = Rect(
@@ -764,7 +919,6 @@ def _make_histogram_svg(
         # Insert bars at beginning, tooltips at end
         elements.insert(0, bar)
         elements.insert(0, hover_area)
-        elements.append(tooltip)
         x_loc += bin_width_px
 
     return SVG(height=height_px, width=width_px, elements=elements)
