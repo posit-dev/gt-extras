@@ -175,13 +175,13 @@ def gt_plt_summary(
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
     """
-    if new_color_mapping:
-        global COLOR_MAPPING
-        COLOR_MAPPING.update(new_color_mapping)
-
     summary_df = _create_summary_df(
         df, show_desc_stats=show_desc_stats, add_mode=add_mode
     )
+
+    color_mapping = COLOR_MAPPING.copy()
+    if new_color_mapping is not None:
+        color_mapping.update(new_color_mapping)
 
     nw_df = nw.from_native(df, eager_only=True)
     dim_df = nw_df.shape
@@ -202,7 +202,7 @@ def gt_plt_summary(
         GT(summary_df)
         .tab_header(title=title, subtitle=subtitle)
         # Add visuals
-        .fmt(_make_icon_html, columns="Type")
+        .fmt(lambda dtype: _make_icon_html(dtype, color_mapping), columns="Type")
         # Format numerics
         .fmt_percent(columns="Missing", decimals=1)
         .tab_style(
@@ -250,6 +250,7 @@ def gt_plt_summary(
                 nw_series=vals,
                 col_type=col_type,
                 plot_id=plot_id,
+                color_mapping=color_mapping,
                 interactivity=interactivity,
             ),
             columns="Plot Overview",
@@ -335,22 +336,22 @@ def _create_summary_df(
     return summary_nw_df.to_native()
 
 
-def _make_icon_html(dtype: str) -> str:
+def _make_icon_html(dtype: str, color_mapping: dict[str, str]) -> str:
     if dtype == "string":
         fa_name = "list"
-        color = COLOR_MAPPING["string"]
+        color = color_mapping["string"]
     elif dtype == "numeric":
         fa_name = "signal"
-        color = COLOR_MAPPING["numeric"]
+        color = color_mapping["numeric"]
     elif dtype == "datetime":
         fa_name = "clock"
-        color = COLOR_MAPPING["datetime"]
+        color = color_mapping["datetime"]
     elif dtype == "boolean":
         fa_name = "check"
-        color = COLOR_MAPPING["boolean"]
+        color = color_mapping["boolean"]
     else:
         fa_name = "question"
-        color = COLOR_MAPPING["other"]
+        color = color_mapping["other"]
 
     icon = icon_svg(name=fa_name, fill=color, width=f"{20}px", a11y="sem")
 
@@ -362,6 +363,7 @@ def _make_summary_plot(
     nw_series: nw.Series,
     col_type: str,
     plot_id: str,
+    color_mapping: dict[str, str],
     interactivity: bool = True,
 ) -> str:
     if len(nw_series) == 0:
@@ -371,19 +373,42 @@ def _make_summary_plot(
 
     if col_type == "string":
         return _plot_categorical(
-            clean_list, plot_id=plot_id, interactivity=interactivity
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
         )
     elif col_type == "numeric":
-        return _plot_numeric(clean_list, plot_id=plot_id, interactivity=interactivity)
+        return _plot_numeric(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     elif col_type == "datetime":
-        return _plot_datetime(clean_list, plot_id=plot_id, interactivity=interactivity)
+        return _plot_datetime(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     elif col_type == "boolean":
-        return _plot_boolean(clean_list, plot_id=plot_id, interactivity=interactivity)
+        return _plot_boolean(
+            clean_list,
+            plot_id=plot_id,
+            interactivity=interactivity,
+            color_mapping=color_mapping,
+        )
     else:
         return "<div></div>"
 
 
-def _plot_categorical(data: list[str], plot_id: str, interactivity: bool = True) -> str:
+def _plot_categorical(
+    data: list[str],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
+) -> str:
     category_counts = {}
     for item in data:
         if item in category_counts:
@@ -404,7 +429,7 @@ def _plot_categorical(data: list[str], plot_id: str, interactivity: bool = True)
     svg = _make_categories_bar_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["string"],
+        fill=color_mapping["string"],
         plot_id=plot_id,
         proportions=proportions,
         categories=[
@@ -417,7 +442,12 @@ def _plot_categorical(data: list[str], plot_id: str, interactivity: bool = True)
     return svg.as_str()
 
 
-def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = True) -> str:
+def _plot_boolean(
+    data: list[bool],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
+) -> str:
     true_count = sum(data)
     false_count = len(data) - true_count
     total_count = len(data)
@@ -443,7 +473,7 @@ def _plot_boolean(data: list[bool], plot_id: str, interactivity: bool = True) ->
     svg = _make_categories_bar_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["boolean"],
+        fill=color_mapping["boolean"],
         plot_id=plot_id,
         proportions=proportions,
         categories=categories,
@@ -580,7 +610,10 @@ def _make_categories_bar_svg(
 
 
 def _plot_numeric(
-    data: list[float] | list[int], plot_id: str, interactivity: bool = True
+    data: list[float] | list[int],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
 ) -> str:
     data_min, data_max = min(data), max(data)
     data_range = data_max - data_min
@@ -625,7 +658,7 @@ def _plot_numeric(
     svg = _make_histogram_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["numeric"],
+        fill=color_mapping["numeric"],
         plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(round(data_max, 2)),
@@ -639,7 +672,10 @@ def _plot_numeric(
 
 
 def _plot_datetime(
-    dates: list[datetime], plot_id: str, interactivity: bool = True
+    dates: list[datetime],
+    plot_id: str,
+    color_mapping: dict[str, str],
+    interactivity: bool = True,
 ) -> str:
     date_timestamps = [x.timestamp() for x in dates]
     data_min, data_max = min(date_timestamps), max(date_timestamps)
@@ -689,7 +725,7 @@ def _plot_datetime(
     svg = _make_histogram_svg(
         width_px=DEFAULT_WIDTH_PX,
         height_px=DEFAULT_HEIGHT_PX,
-        fill=COLOR_MAPPING["datetime"],
+        fill=color_mapping["datetime"],
         plot_id=plot_id,
         normalized_mean=normalized_mean,
         data_max=str(datetime.fromtimestamp(data_max, tz=timezone.utc).date()),
