@@ -33,6 +33,7 @@ from gt_extras._utils_column import (
     _scale_numeric_column,
     _validate_and_get_single_column,
 )
+from gt_extras._utils_column2 import ColumnExtractor
 
 __all__ = [
     "gt_plt_bar",
@@ -163,7 +164,9 @@ def gt_plt_bar(
     if stroke_color is None:
         stroke_color = "transparent"
 
-    def _make_bar(scaled_val: float, original_val: int | float) -> str:
+    def _make_bar(
+        scaled_val: float, original_val: int | float, label_color: str
+    ) -> str:
         svg = _make_bar_svg(
             scaled_val=scaled_val,
             original_val=original_val,
@@ -180,6 +183,8 @@ def gt_plt_bar(
 
     # Get names of columns
     columns_resolved = resolve_cols_c(data=gt, expr=columns)
+
+    _label_colors = ColumnExtractor(gt._tbl_data, label_color).resolve()
 
     res = gt
     for column in columns_resolved:
@@ -207,11 +212,14 @@ def gt_plt_bar(
             col_name = col_name + " plot"
 
         # Apply the scaled value for each row, so the bar is proportional
-        for i, scaled_val in enumerate(scaled_vals):
+        for i, (scaled_val, _label_color) in enumerate(zip(scaled_vals, _label_colors)):
             res = res.fmt(
-                lambda original_val, scaled_val=scaled_val: _make_bar(
+                lambda original_val,
+                scaled_val=scaled_val,
+                label_color=_label_color: _make_bar(
                     original_val=original_val,
                     scaled_val=scaled_val,
+                    label_color=label_color,
                 ),
                 columns=col_name,
                 rows=[i],
