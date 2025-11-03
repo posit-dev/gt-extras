@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import polars as pl
 import pytest
 from great_tables import GT, loc, style
 
@@ -973,6 +974,35 @@ def test_gt_plt_bar_stack_invalid_scale():
 
     with pytest.raises(ValueError):
         gt_plt_bar_stack(gt=gt_test, column="values", scale_type="invalid")  # type: ignore
+
+
+@pytest.mark.xfail(
+    reason="Will pass when https://github.com/posit-dev/gt-extras/issues/167 is resolved"
+)
+def test_gt_plt_bar_stack_with_polars_series():
+    df_dict = {
+        "team": ["A", "B"],
+        "values": [
+            [10, 20, 30],
+            [40, 30, 20],
+        ],
+    }
+
+    df = pl.DataFrame(df_dict)
+    gt_test = GT(df)
+
+    result = gt_plt_bar_stack(gt=gt_test, column="values")
+    html = result.as_raw_html()
+
+    assert html.count('width="32.0"') == 2
+    assert html.count('height="30"') == 8
+    assert html.count("<rect") == 6
+
+    assert html.count('height="30" fill="#000000"') == 2
+    assert html.count('height="30" fill="#25bce6"') == 2
+    assert html.count('height="30" fill="#9e9e9e"') == 2
+
+    assert html.count('<text dominant-baseline="central" text-anchor="middle"') == 6
 
 
 def test_gt_plt_bar_pct_snap(snapshot, mini_gt):
