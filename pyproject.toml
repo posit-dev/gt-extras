@@ -41,6 +41,7 @@ keywords = ["tables", "html"]
 [dependency-groups]
 dev = [
     "quartodoc>=0.8.1; python_version >= '3.9'",
+    "great-tables>=0.20.0",
     "griffe",
     "polars",
     "pandas",
