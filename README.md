@@ -16,9 +16,6 @@
 <img src="https://posit-dev.github.io/gt-extras/assets/2011-nfl-season.png" width="600px">
 </div>
 
-> ⚠️ **gt-extras is currently in development, expect breaking changes.**
-
-
 ### What is [gt-extras](https://posit-dev.github.io/gt-extras)?
 
 A collection of additional helper functions for creating beautiful tables with the [great-tables](https://posit-dev.github.io/great-tables/) package in Python.
