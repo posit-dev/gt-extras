@@ -11,7 +11,7 @@ from great_tables._data_color.base import (
 )
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
-from scipy.stats import sem, t, tmean
+from gt_extras._stats import mean as tmean, sem, t_interval
 from svg import (
     SVG,
     Arc,
@@ -884,7 +884,7 @@ def gt_plt_conf_int(
             if val is None or not isinstance(val, list) or len(val) == 0:
                 return (None, None, None)
             mean = tmean(val)
-            conf_int = t.interval(
+            conf_int = t_interval(
                 ci,
                 len(val) - 1,
                 loc=mean,
