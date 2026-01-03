@@ -1,10 +1,10 @@
 .PHONY: check
 
 test:
-	pytest --cov-report=xml
+	@uv run pytest --cov-report=xml
 
 test-update:
-	pytest --snapshot-update
+	@uv run pytest --snapshot-update
 
 lint: ## Run ruff linter and type checker
 	@uv run ruff check --fix
