@@ -6,6 +6,11 @@ test:
 test-update:
 	pytest --snapshot-update
 
+lint: ## Run ruff linter and type checker
+	@uv run ruff check --fix
+	@uv run ruff format
+	@uv run ty check .
+
 docs-build:
 	cd docs \
 	  && quartodoc build --verbose \

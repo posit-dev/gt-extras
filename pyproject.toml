@@ -25,16 +25,16 @@ dependencies = [
 ]
 
 authors = [
-    { name = "Jules Walzer-Goldfeld", email = "jules.walzergoldfeld@gmail.com"},
+    { name = "Jules Walzer-Goldfeld", email = "jules.walzergoldfeld@gmail.com" },
     { name = "Michael Chow", email = "mc_al_github@fastmail.com" },
-    { name = "Rich Iannone", email = "rich@posit.co"}
+    { name = "Rich Iannone", email = "rich@posit.co" },
 ]
 
 classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12"
+    "Programming Language :: Python :: 3.12",
 ]
 keywords = ["tables", "html"]
 
@@ -56,10 +56,6 @@ dev = [
 
 
 [tool.coverage.report]
-exclude_also = [
-    "if TYPE_CHECKING:"
-]
+exclude_also = ["if TYPE_CHECKING:"]
 include = ["gt_extras/*"]
-omit = [
-    "gt_extras/tests/*"
-]
+omit = ["gt_extras/tests/*"]
