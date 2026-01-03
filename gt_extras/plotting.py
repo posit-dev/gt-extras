@@ -11,7 +11,6 @@ from great_tables._data_color.base import (
 )
 from great_tables._locations import resolve_cols_c
 from great_tables._tbl_data import SelectExpr, is_na
-from gt_extras._stats import mean as tmean, sem, t_interval
 from svg import (
     SVG,
     Arc,
@@ -27,6 +26,8 @@ from svg import (
 )
 
 from gt_extras import gt_duplicate_column
+from gt_extras._stats import mean as tmean
+from gt_extras._stats import sem, t_interval
 from gt_extras._utils_color import _get_discrete_colors_from_palette
 from gt_extras._utils_column import (
     _format_numeric_text,
