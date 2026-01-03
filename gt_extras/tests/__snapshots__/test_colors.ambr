@@ -56,14 +56,23 @@
 # name: test_gt_data_color_by_group_multiple_groups_snap[pd_and_pl]
   '''
   <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th class="gt_group_heading" colspan="1">1</th>
+    </tr>
     <tr>
       <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">1</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <th class="gt_group_heading" colspan="1">2</th>
     </tr>
     <tr>
       <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">2</td>
     </tr>
     <tr>
       <td style="color: #000000; background-color: #9e9e9e;" class="gt_row gt_right">3</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <th class="gt_group_heading" colspan="1">3</th>
     </tr>
     <tr>
       <td style="color: #FFFFFF; background-color: #000000;" class="gt_row gt_right">4</td>

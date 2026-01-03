@@ -19,22 +19,21 @@ license.file = "LICENSE"
 dependencies = [
     "faicons>=0.2.2",
     "great-tables>=0.18.0",
-    "scipy>=1.13.1",
     "svg-py>=1.6.0",
     "narwhals>=1.0.0",
 ]
 
 authors = [
-    { name = "Jules Walzer-Goldfeld", email = "jules.walzergoldfeld@gmail.com"},
+    { name = "Jules Walzer-Goldfeld", email = "jules.walzergoldfeld@gmail.com" },
     { name = "Michael Chow", email = "mc_al_github@fastmail.com" },
-    { name = "Rich Iannone", email = "rich@posit.co"}
+    { name = "Rich Iannone", email = "rich@posit.co" },
 ]
 
 classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12"
+    "Programming Language :: Python :: 3.12",
 ]
 keywords = ["tables", "html"]
 
@@ -52,14 +51,12 @@ dev = [
     "quartodoc>=0.11.1",
     "quarto>=0.1.0",
     "pre-commit>=4.2.0",
+    "ruff>=0.14.10",
+    "ty>=0.0.8",
 ]
 
 
 [tool.coverage.report]
-exclude_also = [
-    "if TYPE_CHECKING:"
-]
+exclude_also = ["if TYPE_CHECKING:"]
 include = ["gt_extras/*"]
-omit = [
-    "gt_extras/tests/*"
-]
+omit = ["gt_extras/tests/*"]
