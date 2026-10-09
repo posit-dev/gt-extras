@@ -46,6 +46,15 @@ def gt_theme_538(gt: GT) -> GT:
 
     gt.pipe(gte.gt_theme_538)
     ```
+    See Also
+    -------
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.opt_table_font(font=google_font("Cairo"))
@@ -134,6 +143,15 @@ def gt_theme_espn(gt: GT) -> GT:
 
     gt.pipe(gte.gt_theme_espn)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.opt_all_caps()
@@ -188,6 +206,15 @@ def gt_theme_nytimes(gt: GT) -> GT:
 
     gt.pipe(gte.gt_theme_nytimes)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.tab_style(
@@ -255,6 +282,15 @@ def gt_theme_guardian(gt: GT) -> GT:
 
     gt.pipe(gte.gt_theme_guardian)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     ## Altered wrt R package to not include whitespace between lines
     gt_themed = (
@@ -352,6 +388,15 @@ def gt_theme_excel(gt: GT, color: str = "lightgrey") -> GT:
 
     gt.pipe(gte.gt_theme_excel)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.opt_row_striping()
@@ -447,6 +492,15 @@ def gt_theme_dot_matrix(gt: GT, color: str = "#b5dbb6") -> GT:
 
     gt.pipe(gte.gt_theme_dot_matrix)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.opt_row_striping()
@@ -505,6 +559,15 @@ def gt_theme_dark(gt: GT) -> GT:
 
     gt.pipe(gte.gt_theme_dark)
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_pff()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_pff)
     """
     gt_themed = (
         gt.tab_style(
@@ -591,6 +654,15 @@ def gt_theme_pff(
 
     gte.gt_theme_pff(gt, rank_col="trq")
     ```
+    See Also
+    -------
+    [`gt_theme_538()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_538)
+    [`gt_theme_espn()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_espn)
+    [`gt_theme_nytimes()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_nytimes)
+    [`gt_theme_guardian()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_guardian)
+    [`gt_theme_excel()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_excel)
+    [`gt_theme_dot_matrix()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dot_matrix)
+    [`gt_theme_dark()`](https://posit-dev.github.io/gt-extras/reference/gt_theme_dark)
     """
     gt_themed = (
         gt.opt_row_striping()
