@@ -96,7 +96,7 @@ def img_header(
     )
     ```
     See Also
-    -------
+    --------
     [`add_text_img()`](https://posit-dev.github.io/gt-extras/reference/add_text_img)
     """
 
@@ -360,7 +360,12 @@ def gt_fmt_img_circle(
         .pipe(gte.gt_fmt_img_circle, height=80)
     )
     ```
-    """
+    
+    See Also
+    --------
+    [`img_header()`](https://posit-dev.github.io/gt-extras/reference/img_header)
+    [`add_text_img()`](https://posit-dev.github.io/gt-extras/reference/add_text_img)
+"""
     default_border_props = {
         "border-width": "3px",
         "border-color": "#0A0A0A",

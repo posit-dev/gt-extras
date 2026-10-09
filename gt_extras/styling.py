@@ -95,7 +95,12 @@ def gt_add_divider(
         weight=5,
     )
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_highlight_cols()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols)
+    [`gt_highlight_rows()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_rows)
+"""
 
     locations: list[Loc] = [loc.body(columns=columns)]
 

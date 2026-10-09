@@ -175,7 +175,13 @@ def gt_plt_summary(
     The datatype (dtype) of each column in your dataframe will determine the classified type in the
     summary table. Keep in mind that sometimes pandas or polars have differing behaviors with
     datatypes, especially when null values are present.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_donut()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_donut)
+    [`gt_plt_dot()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot)
+"""
     summary_df = _create_summary_df(
         df, show_desc_stats=show_desc_stats, add_mode=add_mode
     )

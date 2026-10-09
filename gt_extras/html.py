@@ -69,7 +69,12 @@ def with_hyperlink(text: str, url: str, new_tab: bool = True) -> str:
 
     GT(df[["Package", "Github Stars"]])
     ```
-    """
+    
+    See Also
+    --------
+    [`with_tooltip()`](https://posit-dev.github.io/gt-extras/reference/with_tooltip)
+    [`gt_merge_stack()`](https://posit-dev.github.io/gt-extras/reference/gt_merge_stack)
+"""
     target = "_self"
     if new_tab:
         target = "_blank"
@@ -135,7 +140,12 @@ def with_tooltip(
 
     GT(df[["Package"]])
     ```
-    """
+    
+    See Also
+    --------
+    [`with_hyperlink()`](https://posit-dev.github.io/gt-extras/reference/with_hyperlink)
+    [`gt_merge_stack()`](https://posit-dev.github.io/gt-extras/reference/gt_merge_stack)
+"""
 
     # Throw if `text_decoration_style` is not one of the allowed values
     if text_decoration_style not in ["none", "solid", "dotted"]:
@@ -242,7 +252,13 @@ def gt_merge_stack(
         col2="team_division",
     )
     ```
-    """
+    
+    See Also
+    --------
+    [`with_tooltip()`](https://posit-dev.github.io/gt-extras/reference/with_tooltip)
+    [`with_hyperlink()`](https://posit-dev.github.io/gt-extras/reference/with_hyperlink)
+    [`add_text_img()`](https://posit-dev.github.io/gt-extras/reference/add_text_img)
+"""
 
     def _make_merge_stack_html(
         col1_val: str,
