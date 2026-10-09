@@ -75,7 +75,13 @@ def gt_data_color_by_group(
     ```
     Notice how in the fourth row, the color is at the green end of the palette because
     it is the highest in its group when we call `gt_data_color_by_group`.
-    """
+    
+    See Also
+    --------
+    [`gt_hulk_col_numeric()`](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric)
+    [`gt_color_box()`](https://posit-dev.github.io/gt-extras/reference/gt_color_box)
+    [`gt_highlight_cols()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols)
+"""
     for group in gt._stub.group_rows:
         gt = gt.data_color(columns, list(map(int, group.indices)), palette)
     return gt
@@ -150,7 +156,12 @@ def gt_highlight_cols(
 
     gt.pipe(gte.gt_highlight_cols, columns="hp")
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_highlight_rows()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_rows)
+    [`gt_hulk_col_numeric()`](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric)
+"""
     # Throw if `font_weight` is not one of the allowed values
     if isinstance(font_weight, str):
         if font_weight not in ["normal", "bold", "bolder", "lighter"]:
@@ -257,7 +268,12 @@ def gt_highlight_rows(
 
     gt.pipe(gte.gt_highlight_rows, rows=[2, 7])
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_highlight_cols()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols)
+    [`gt_hulk_col_numeric()`](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric)
+"""
     # Throw if `font_weight` is not one of the allowed values
     if isinstance(font_weight, str):
         if font_weight not in ["normal", "bold", "bolder", "lighter"]:
@@ -402,7 +418,13 @@ def gt_hulk_col_numeric(
 
     gt.pipe(gte.gt_hulk_col_numeric, columns=[1, 2, 3, 4, 5], domain = [-0.1, 0.23])
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_data_color_by_group()`](https://posit-dev.github.io/gt-extras/reference/gt_data_color_by_group)
+    [`gt_color_box()`](https://posit-dev.github.io/gt-extras/reference/gt_color_box)
+    [`gt_highlight_cols()`](https://posit-dev.github.io/gt-extras/reference/gt_highlight_cols)
+"""
     res = gt.data_color(
         columns=columns,
         palette=palette,
@@ -498,7 +520,12 @@ def gt_color_box(
     The exterior color box will expand to surround the widest cell in the column.
     The height and width parameters are given as `min_width` and `min_height` to ensure a color box
     always completely surrounds the text.
-    """
+    
+    See Also
+    --------
+    [`gt_hulk_col_numeric()`](https://posit-dev.github.io/gt-extras/reference/gt_hulk_col_numeric)
+    [`gt_data_color_by_group()`](https://posit-dev.github.io/gt-extras/reference/gt_data_color_by_group)
+"""
     # Get the underlying `GT` data
     data_table = gt._tbl_data
 

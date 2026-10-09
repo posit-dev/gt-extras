@@ -107,7 +107,12 @@ def fa_icon_repeat(
     --------
     See `icon_svg()` in the [`faicons`](https://github.com/posit-dev/py-faicons)
     package for further implementation details.
-    """
+    
+    See Also
+    --------
+    [`gt_fa_rating()`](https://posit-dev.github.io/gt-extras/reference/gt_fa_rating)
+    [`gt_fa_rank_change()`](https://posit-dev.github.io/gt-extras/reference/gt_fa_rank_change)
+"""
     # Throw if `a11y` is not one of the allowed values
     if a11y not in [None, "deco", "sem"]:
         raise ValueError("A11y must be one of `None`, 'deco', or 'sem'")
@@ -202,7 +207,12 @@ def gt_fa_rating(
 
     gt.pipe(gte.gt_fa_rating, columns="rating", name="r-project")
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_fa_rank_change()`](https://posit-dev.github.io/gt-extras/reference/gt_fa_rank_change)
+    [`fa_icon_repeat()`](https://posit-dev.github.io/gt-extras/reference/fa_icon_repeat)
+"""
 
     def _make_rating_html(rating_value):
         if rating_value is None or is_na(gt._tbl_data, rating_value):
@@ -357,7 +367,12 @@ def gt_fa_rank_change(
 
     gt
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_fa_rating()`](https://posit-dev.github.io/gt-extras/reference/gt_fa_rating)
+    [`fa_icon_repeat()`](https://posit-dev.github.io/gt-extras/reference/fa_icon_repeat)
+"""
 
     # TODO: consider in this and in others, do I really need to pass all these params in?
     # I can just get them from the parent function, but maybe that's less clean.

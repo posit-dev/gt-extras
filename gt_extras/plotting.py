@@ -144,7 +144,13 @@ def gt_plt_bar(
     Note
     --------
     Each column's bars are scaled independently based on that column's min/max values.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar_pct()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct)
+    [`gt_plt_bar_stack()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack)
+    [`gt_plt_bullet()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet)
+"""
     if bar_height > height:
         bar_height = height
         warnings.warn(
@@ -333,7 +339,13 @@ def gt_plt_bullet(
     ----
     Both data and target values are scaled to a common domain for consistent visualization.
     The scaling domain is automatically determined as `[0, max(data_values, target_values)]`.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_dot()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot)
+    [`gt_plt_dumbbell()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell)
+"""
     if bar_height > height:
         bar_height = height
         warnings.warn(
@@ -535,7 +547,13 @@ def gt_plt_dot(
     -------
     If your category label text is cut off or does not fit, you likely need to increase the `width`
     parameter to allow more space for the text and plot.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bullet()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet)
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_dumbbell()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell)
+"""
     # Get the underlying Dataframe
     data_table = gt._tbl_data
 
@@ -779,7 +797,13 @@ def gt_plt_conf_int(
     Note
     ----
     All confidence intervals are scaled to a common range for visual alignment.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_dumbbell()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dumbbell)
+    [`gt_plt_dot()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot)
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+"""
 
     def _make_conf_int_svg(
         mean: float,
@@ -1070,7 +1094,13 @@ def gt_plt_dumbbell(
     -------
     All dumbbells are scaled to a common range for visual alignment across rows.
     The `col2` column is automatically hidden from the final table display.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_conf_int()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_conf_int)
+    [`gt_plt_dot()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_dot)
+    [`gt_plt_bullet()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet)
+"""
 
     def _make_dumbbell_svg(
         value_1: float,
@@ -1318,7 +1348,13 @@ def gt_plt_donut(
     --------
     Each column's donut charts are scaled independently based on that column's min/max values.
     A value equal to the column maximum will display as a full circle (360 degrees).
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_bar_pct()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct)
+    [`gt_plt_winloss()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss)
+"""
 
     # Allow the user to hide the stroke
     if stroke_color is None:
@@ -1697,7 +1733,13 @@ def gt_plt_winloss(
         column="Games",
     )
     ```
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_donut()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_donut)
+    [`gt_plt_bar_stack()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack)
+"""
 
     def _make_winloss_svg(
         values: list[float],
@@ -1928,7 +1970,13 @@ def gt_plt_bar_stack(
     Note
     -------
     Values of `0` will not be displayed in the plots.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_bar_pct()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_pct)
+    [`gt_plt_winloss()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_winloss)
+"""
 
     def _make_bar_stack_svg(
         values: list[float],
@@ -2178,7 +2226,13 @@ def gt_plt_bar_pct(
     ```
     Finally, label colors are automatically adjusted based on the `fill` and `background` parameters
     to ensure optimal readability.
-    """
+    
+    See Also
+    --------
+    [`gt_plt_bar()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar)
+    [`gt_plt_bar_stack()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bar_stack)
+    [`gt_plt_bullet()`](https://posit-dev.github.io/gt-extras/reference/gt_plt_bullet)
+"""
 
     def _not_na(val, tbl_data) -> bool:
         return val is not None and not is_na(tbl_data, val)
